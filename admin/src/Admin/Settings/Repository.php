@@ -176,11 +176,21 @@ class Repository {
 
 				return in_array( $value, $allowed, true ) ? $value : (string) ( $definition['default'] ?? '' );
 
+			case 'number':
+			case 'unit':
+				return self::sanitize_number( $value, $definition );
+
 			case 'textarea':
 				return sanitize_textarea_field( (string) $value );
 
 			case 'color':
 				return sanitize_hex_color( (string) $value ) ?? (string) ( $definition['default'] ?? '' );
+
+			case 'gateway-rates':
+				return self::sanitize_gateway_rates( $value, $definition );
+
+			case 'installment-fees':
+				return self::sanitize_installment_fees( $value );
 
 			default:
 				if ( is_array( $value ) ) {
@@ -189,5 +199,123 @@ class Repository {
 
 				return sanitize_text_field( (string) $value );
 		}
+	}
+
+
+	/**
+	 * Clamp a numeric setting to the range its definition declares.
+	 *
+	 * Values are stored as strings, the way the 5.x option did, so migrated
+	 * data and freshly saved data are indistinguishable.
+	 *
+	 * @since 1.0.0
+	 * @param mixed $value | Incoming value
+	 * @param array<string,mixed> $definition | Field definition
+	 * @return string
+	 */
+	private static function sanitize_number( $value, $definition ) {
+		$raw = str_replace( ',', '.', (string) $value );
+
+		if ( '' === trim( $raw ) || ! is_numeric( $raw ) ) {
+			return (string) ( $definition['default'] ?? '0' );
+		}
+
+		$number = (float) $raw;
+
+		if ( isset( $definition['min'] ) && $number < (float) $definition['min'] ) {
+			$number = (float) $definition['min'];
+		}
+
+		if ( isset( $definition['max'] ) && $number > (float) $definition['max'] ) {
+			$number = (float) $definition['max'];
+		}
+
+		// Keep whole numbers whole: "12" reads better than "12.0" in a field the
+		// store owner will look at again.
+		return ( floor( $number ) === $number ) ? (string) (int) $number : (string) $number;
+	}
+
+
+	/**
+	 * Sanitize a per-gateway amount map.
+	 *
+	 * Shape: `array( 'gateway_id' => array( 'amount' => '10', 'type' => 'percentage' ) )`,
+	 * which is the shape the 5.x option used.
+	 *
+	 * @since 1.0.0
+	 * @param mixed $value | Incoming value
+	 * @param array<string,mixed> $definition | Field definition
+	 * @return array<string,array<string,string>>
+	 */
+	private static function sanitize_gateway_rates( $value, $definition ) {
+		if ( ! is_array( $value ) ) {
+			return array();
+		}
+
+		$methods = array_column( (array) ( $definition['methods'] ?? array() ), 'value' );
+		$clean = array();
+
+		foreach ( $value as $gateway_id => $rate ) {
+			$gateway_id = sanitize_text_field( (string) $gateway_id );
+
+			if ( '' === $gateway_id || ! is_array( $rate ) ) {
+				continue;
+			}
+
+			$amount = str_replace( ',', '.', (string) ( $rate['amount'] ?? '' ) );
+
+			if ( ! is_numeric( $amount ) ) {
+				continue;
+			}
+
+			$type = sanitize_text_field( (string) ( $rate['type'] ?? 'percentage' ) );
+
+			$clean[ $gateway_id ] = array(
+				'amount' => (string) max( 0, (float) $amount ),
+				'type' => in_array( $type, $methods, true ) ? $type : 'percentage',
+			);
+		}
+
+		return $clean;
+	}
+
+
+	/**
+	 * Sanitize the per-installment interest table.
+	 *
+	 * Shape: `array( 2 => array( 'amount' => '1.99' ) )` — the shape the 5.x
+	 * option used, kept so the ported calculation reads migrated data without a
+	 * conversion step.
+	 *
+	 * An empty row is dropped rather than stored as zero: zero means "charge no
+	 * interest", which is a different statement from "fall back to the global
+	 * rate".
+	 *
+	 * @since 1.0.0
+	 * @param mixed $value | Incoming value
+	 * @return array<int,array<string,string>>
+	 */
+	private static function sanitize_installment_fees( $value ) {
+		if ( ! is_array( $value ) ) {
+			return array();
+		}
+
+		$clean = array();
+
+		foreach ( $value as $installment => $fee ) {
+			$installment = (int) $installment;
+			$amount = is_array( $fee ) ? ( $fee['amount'] ?? '' ) : $fee;
+			$amount = str_replace( ',', '.', (string) $amount );
+
+			if ( $installment < 1 || '' === trim( $amount ) || ! is_numeric( $amount ) ) {
+				continue;
+			}
+
+			$clean[ $installment ] = array( 'amount' => (string) max( 0, (float) $amount ) );
+		}
+
+		ksort( $clean );
+
+		return $clean;
 	}
 }

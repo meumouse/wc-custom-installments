@@ -262,5 +262,20 @@ class Features {
 	 */
 	public static function flush() {
 		self::$availability = array();
+
+		// The settings schema derives every field's locked state from here, and
+		// caches the result for the request. A licence that changes mid-request
+		// would otherwise leave that map describing the world as it was a moment
+		// ago — which is exactly the request where it matters.
+		if ( class_exists('MeuMouse\\WC_Custom_Installments\\Admin\\Settings\\Registry') ) {
+			\MeuMouse\WC_Custom_Installments\Admin\Settings\Registry::flush();
+		}
+
+		/**
+		 * Fires when the resolved feature availability is discarded.
+		 *
+		 * @since 1.0.0
+		 */
+		do_action('WC_Custom_Installments/Features/Flushed');
 	}
 }

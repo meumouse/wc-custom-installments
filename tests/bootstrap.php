@@ -250,6 +250,102 @@ if ( ! function_exists('__') ) {
 	}
 }
 
+if ( ! function_exists('maybe_unserialize') ) {
+	/**
+	 * Unserialize a value that may or may not be serialized.
+	 *
+	 * @param mixed $value | Stored value
+	 * @return mixed
+	 */
+	function maybe_unserialize( $value ) {
+		if ( ! is_string( $value ) ) {
+			return $value;
+		}
+
+		$data = @unserialize( trim( $value ) );
+
+		return ( false === $data && 'b:0;' !== trim( $value ) ) ? $value : $data;
+	}
+}
+
+if ( ! function_exists('wp_json_encode') ) {
+	/**
+	 * Encode a value as JSON.
+	 *
+	 * @param mixed $value | Value to encode
+	 * @return string|false
+	 */
+	function wp_json_encode( $value ) {
+		return json_encode( $value );
+	}
+}
+
+if ( ! class_exists('WP_Error') ) {
+	/**
+	 * The subset of WP_Error the plugin uses.
+	 */
+	class WP_Error {
+
+		/**
+		 * Error code.
+		 *
+		 * @var string
+		 */
+		private $code;
+
+		/**
+		 * Error message.
+		 *
+		 * @var string
+		 */
+		private $message;
+
+
+		/**
+		 * Build the error.
+		 *
+		 * @param string $code | Error code
+		 * @param string $message | Human-readable message
+		 */
+		public function __construct( $code = '', $message = '' ) {
+			$this->code = $code;
+			$this->message = $message;
+		}
+
+
+		/**
+		 * Read the error code.
+		 *
+		 * @return string
+		 */
+		public function get_error_code() {
+			return $this->code;
+		}
+
+
+		/**
+		 * Read the error message.
+		 *
+		 * @return string
+		 */
+		public function get_error_message() {
+			return $this->message;
+		}
+	}
+}
+
+if ( ! function_exists('is_wp_error') ) {
+	/**
+	 * Whether a value is a WP_Error.
+	 *
+	 * @param mixed $value | Value to inspect
+	 * @return bool
+	 */
+	function is_wp_error( $value ) {
+		return $value instanceof WP_Error;
+	}
+}
+
 // The classes under test, loaded directly: the harness has no autoloader.
 require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
@@ -257,3 +353,6 @@ require_once __DIR__ . '/../admin/src/Compatibility/Hook_Aliases.php';
 require_once __DIR__ . '/../admin/src/Admin/Default_Options.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Registry.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Repository.php';
+require_once __DIR__ . '/../admin/src/Admin/Settings/Transfer.php';
+require_once __DIR__ . '/../admin/src/Core/Logger.php';
+require_once __DIR__ . '/../admin/src/Core/Migrator.php';
