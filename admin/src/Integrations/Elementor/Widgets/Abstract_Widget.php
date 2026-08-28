@@ -60,6 +60,28 @@ abstract class Abstract_Widget extends Widget_Base {
 	}
 
 	/**
+	 * What to show for a widget the licence does not cover.
+	 *
+	 * Nothing on the storefront: a customer should never read our licensing
+	 * state. In the editor it says why the box is empty, because a designer
+	 * who sees nothing assumes the widget is broken.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	protected function render_locked_state() {
+		if ( ! Helpers::is_builder_preview() ) {
+			return;
+		}
+
+		printf(
+			'<div class="wci-widget-placeholder">%s</div>',
+			esc_html__( 'This widget needs a feature your licence does not currently cover.', 'wc-custom-installments' )
+		);
+	}
+
+
+	/**
 	 * What to show when there is no product to render for.
 	 *
 	 * @since 1.0.0

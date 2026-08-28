@@ -101,7 +101,6 @@ class Default_Options {
 
 			// Pro — per gateway.
 			'gateway_discounts' => array(),
-			'gateway_discount_method' => 'percentage',
 
 			// Pro — per quantity.
 			'enable_functions_discount_per_quantity' => 'no',

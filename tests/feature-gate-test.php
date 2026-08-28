@@ -66,6 +66,28 @@ check( 'a Pro feature is not available without the add-on', false, Features::is_
 check( 'a Pro feature reports its tier', true, Features::is_pro('sale_badge') );
 check( 'an unknown feature is not treated as Pro', false, Features::is_pro('something_nobody_registered') );
 
+echo PHP_EOL, 'Every setting can be reached', PHP_EOL;
+
+// A default with no schema field can never be written: the repository only
+// writes what the schema declares. The setting then sits at its default
+// forever, and nothing reports it — this one surfaced only when the Pro
+// engine tried to read it, three phases later.
+$orphans = array_values( array_diff(
+	array_keys( MeuMouse\WC_Custom_Installments\Admin\Default_Options::get_defaults() ),
+	array_keys( Registry::get_field_definitions() )
+) );
+
+check( 'no setting is missing from the schema', array(), $orphans );
+
+// The reverse is just as bad in its own way: a field with no default reads as
+// an empty string on a fresh install, wherever it is used.
+$undefaulted = array_values( array_diff(
+	array_keys( Registry::get_field_definitions() ),
+	array_keys( MeuMouse\WC_Custom_Installments\Admin\Default_Options::get_defaults() )
+) );
+
+check( 'and no schema field is missing a default', array(), $undefaulted );
+
 echo PHP_EOL, 'Settings schema', PHP_EOL;
 
 $schema = Registry::get_schema();

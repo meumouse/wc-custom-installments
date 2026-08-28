@@ -419,10 +419,32 @@ class Registry {
 							)
 						),
 						self::toggle(
+							'enable_discount_per_unit_discount_per_quantity',
+							__( 'Apply it to every unit', 'wc-custom-installments' ),
+							__( 'Take the discount off each unit rather than once off the line. On three units at 10%, this is the difference between 10% and 30%.', 'wc-custom-installments' ),
+							array(
+								'feature' => 'quantity_discounts',
+								'depends_on' => array( 'enable_functions_discount_per_quantity' => 'yes' ),
+							)
+						),
+						self::toggle(
 							'message_discount_per_quantity',
 							__( 'Announce the quantity discount', 'wc-custom-installments' ),
 							__( 'Show a message telling the customer how to earn it.', 'wc-custom-installments' ),
 							array( 'feature' => 'quantity_discounts' )
+						),
+						self::select(
+							'discount_per_qtd_message_method',
+							__( 'Where the message goes', 'wc-custom-installments' ),
+							__( 'Automatically beside the price, or wherever you place the Elementor widget.', 'wc-custom-installments' ),
+							array(
+								array( 'value' => 'hook', 'label' => __( 'Automatically, beside the price', 'wc-custom-installments' ) ),
+								array( 'value' => 'widget', 'label' => __( 'Only where I place the widget', 'wc-custom-installments' ) ),
+							),
+							array(
+								'feature' => 'quantity_discounts',
+								'depends_on' => array( 'message_discount_per_quantity' => 'yes' ),
+							)
 						),
 					),
 				),
@@ -466,6 +488,41 @@ class Registry {
 							array(
 								'feature' => 'ticket_discount',
 								'depends_on' => array( 'enable_ticket_discount_main_price' => 'yes' ),
+							)
+						),
+					),
+				),
+				array(
+					'id' => 'discounts-custom-price',
+					'title' => __( 'Rewrite the displayed price', 'wc-custom-installments' ),
+					'description' => __( 'Replace the price shown on the storefront with one of your own, and add a note after it. The cart and checkout are not affected.', 'wc-custom-installments' ),
+					'fields' => array(
+						self::toggle(
+							'custom_text_after_price',
+							__( 'Rewrite the displayed price', 'wc-custom-installments' ),
+							__( 'Show your own price in place of the WooCommerce one on simple and variable products.', 'wc-custom-installments' )
+						),
+						self::text(
+							'custom_text_after_price_front',
+							__( 'Note after the price', 'wc-custom-installments' ),
+							__( 'For example: "with Pix".', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'custom_text_after_price' => 'yes' ) )
+						),
+						self::toggle(
+							'add_discount_custom_product_price',
+							__( 'Take a discount off it', 'wc-custom-installments' ),
+							__( 'Subtract a percentage from the price before showing it.', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'custom_text_after_price' => 'yes' ) )
+						),
+						self::number(
+							'discount_value_custom_product_price',
+							__( 'Discount (%)', 'wc-custom-installments' ),
+							__( 'How much to take off the displayed price.', 'wc-custom-installments' ),
+							array(
+								'step' => '0.01',
+								'min' => 0,
+								'max' => 100,
+								'depends_on' => array( 'add_discount_custom_product_price' => 'yes' ),
 							)
 						),
 					),

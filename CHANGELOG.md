@@ -41,3 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A one-time redirect on activation and a dismissible reminder afterwards; the wizard stays reachable by URL.
 - An upgrading store skips straight to the summary rather than being walked through choices it already made.
 - Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.
+
+### Fixed
+
+- Seven settings had a default but no field in the settings schema, so they could never be written and sat at that default forever. Four of them are the "rewrite the displayed price" group, which now has a card of its own; two govern quantity discounts; one was dead and has been removed.
