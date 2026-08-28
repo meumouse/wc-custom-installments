@@ -42,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An upgrading store skips straight to the summary rather than being walked through choices it already made.
 - Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.
 
+- Translation pipeline: 419 strings extracted from PHP and Vue into `wc-custom-installments.pot`.
+- `AGENTS.md`, `DEVELOPERS.md` and `docs/free-vs-pro.md`, the last two generated from the source so they cannot drift.
+- The `wcci_*` extension helpers, and a runnable example plugin using every extension point.
+
 ### Fixed
 
 - Seven settings had a default but no field in the settings schema, so they could never be written and sat at that default forever. Four of them are the "rewrite the displayed price" group, which now has a card of its own; two govern quantity discounts; one was dead and has been removed.

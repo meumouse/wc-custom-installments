@@ -291,6 +291,10 @@ class Product_Settings {
 	 * @return void
 	 */
 	public function save_quick_edit( $product ) {
+		if ( ! current_user_can( 'edit_post', $product->get_id() ) ) {
+			return;
+		}
+
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- WooCommerce verified its own before firing this.
 		foreach ( $this->list_field_keys() as $key ) {
 			update_post_meta( $product->get_id(), $key, isset( $_POST[ $key ] ) ? 'yes' : 'no' );
@@ -312,6 +316,10 @@ class Product_Settings {
 	 * @return void
 	 */
 	public function save_bulk_edit( $product ) {
+		if ( ! current_user_can( 'edit_post', $product->get_id() ) ) {
+			return;
+		}
+
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- WooCommerce verified its own before firing this.
 		foreach ( $this->list_field_keys() as $key ) {
 			if ( empty( $_POST[ $key ] ) ) {

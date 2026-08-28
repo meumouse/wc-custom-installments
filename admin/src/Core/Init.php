@@ -90,6 +90,10 @@ class Init {
 
 		$this->setup_constants();
 
+		// The extension helpers are plain functions, so they have to exist
+		// before anything could call them - which is any time from now on.
+		require_once WC_CUSTOM_INSTALLMENTS_SRC . 'Core/Functions.php';
+
 		add_action( 'init', array( $this, 'load_text_domain' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'declare_woocommerce_compatibility' ) );
 		add_action( 'plugins_loaded', array( $this, 'maybe_boot' ), 20 );

@@ -36,9 +36,12 @@ It renders the installment plan under the product price, on the shop loop and on
 
 = Elsewhere on the site =
 
-* Shortcodes for every element, usable in any page builder
+* Fifteen shortcodes, one per element, usable in any page builder
 * Elementor widgets for the price group and the installment table
-* Compatibility with popular WooCommerce themes
+* Compatibility with Astra, Woodmart, Shoptimizer, Machic and Ricky
+* Works alongside Tiered Pricing Table and Dynamic Pricing & Discounts
+* A setup wizard that gets a new store showing installments in about a minute
+* Per-product overrides, in the product panel and in quick edit
 
 == External services ==
 
@@ -68,3 +71,10 @@ Yes. The plan is calculated from the price of the selected variation.
 = 1.0.0 =
 
 * First release.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+Replaces the previous "Parcelas Customizadas para WooCommerce" plugin. Your settings are imported
+automatically and nothing from the old plugin is deleted. Deactivate the old plugin once you have
+checked your storefront.

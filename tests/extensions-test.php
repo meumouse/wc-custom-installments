@@ -18,7 +18,10 @@
 require_once __DIR__ . '/bootstrap.php';
 require_once __DIR__ . '/../admin/src/Admin/Product_Settings.php';
 require_once __DIR__ . '/../admin/src/Core/Init.php';
+require_once __DIR__ . '/../admin/src/Core/Functions.php';
 
+use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Product_Settings;
 use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Core\Init;
@@ -150,6 +153,57 @@ Features::flush();
 $settings->save_fields( 101 );
 
 check( 'and is written once the gate opens', '25', get_post_meta( 101, 'unit_discount_amount', true ) );
+
+echo PHP_EOL, 'The documented extension helpers', PHP_EOL;
+
+// DEVELOPERS.md tells third parties to call these. A helper that quietly does
+// nothing is worse than no helper: the developer follows the documentation and
+// their code never runs.
+wcci_register_feature( 'example_feature', array( 'label' => 'Example', 'tier' => 'pro' ) );
+check( 'a registered feature lands in the registry as Pro', true, Features::is_pro('example_feature') );
+
+wcci_register_settings_card( 'installments', array(
+	'id' => 'example-card',
+	'title' => 'Example',
+	'description' => '',
+	'fields' => array(),
+) );
+
+wcci_register_settings_field( 'example-card', array(
+	'type' => 'toggle',
+	'key' => 'example_setting',
+	'label' => 'Example',
+	'description' => '',
+	'default' => 'no',
+) );
+
+Registry::flush();
+
+$definitions = Registry::get_field_definitions();
+check( 'a registered field reaches the schema', true, isset( $definitions['example_setting'] ) );
+
+// Registering a field with a default has to register the default as well, or
+// the setting reads as an empty string on a fresh install.
+check(
+	'and brings its default with it',
+	'no',
+	Default_Options::get_defaults()['example_setting'] ?? 'MISSING'
+);
+
+wcci_register_product_setting( array(
+	'key' => 'example_product_note',
+	'type' => 'text',
+	'label' => 'Example',
+	'description' => '',
+	'feature' => '',
+	'quick_edit' => false,
+) );
+
+check(
+	'a registered product field reaches the panel',
+	true,
+	in_array( 'example_product_note', array_column( Product_Settings::get_fields(), 'key' ), true )
+);
 
 echo PHP_EOL, 'Class discovery', PHP_EOL;
 

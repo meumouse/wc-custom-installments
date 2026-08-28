@@ -1,0 +1,1626 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wc-custom-installments\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"x-domain: wc-custom-installments\n"
+
+#: admin/src/Admin/Product_Settings.php:267
+msgid "— No change —"
+msgstr ""
+
+#: app/src/components/fields/InstallmentFeesField.vue:74
+msgid "%dx"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:130
+#. translators: %s: field label
+msgid "%s (Pro)"
+msgstr ""
+
+#: admin/src/Frontend/Components.php:314
+#. translators: %s: discount percentage, e.g. "20%"
+msgid "%s OFF"
+msgstr ""
+
+#: app/src/pages/onboarding/components/PricePreview.vue:83
+msgid "%s paying upfront"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:71
+msgid ""
+"A copy is on its way to your inbox. Install the Pro add-on and paste this "
+"key into its licence screen."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:351
+msgid ""
+"A different discount for each gateway, applied to the cart and checkout "
+"totals."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:596
+msgid "A different rate for each gateway, applied to the cart and checkout totals."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:454
+msgid "A separate discount for customers paying with a bank slip."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:311
+msgid ""
+"A single discount applied to the displayed price, for upfront payments such "
+"as Pix."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:149
+msgid ""
+"A trial has already been issued for that e-mail address. Check your inbox, "
+"or use another address."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:641
+msgid "Add an \"approved instantly\" note beside the Pix badge."
+msgstr ""
+
+#: admin/src/Core/Features.php:99
+msgid "Additional Elementor widgets"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:579
+msgid "Adds a fee to the cart and checkout totals for the chosen payment method."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:850
+msgid "Advanced"
+msgstr ""
+
+#: admin/src/Core/Features.php:97
+msgid "Advanced design controls"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:248
+msgid "After the add-to-cart form"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:741
+msgid "After the bank slip price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:698
+msgid "After the discounted price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:791
+msgid "Alignment of the price group inside product cards."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:432
+msgid "Announce the quantity discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:764
+msgid "Appearance"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:700
+msgid "Appended to an installment that carries interest."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:701
+msgid "Appended to an installment with no interest."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:172
+msgid "Applied to every installment beyond the interest-free ones."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:379
+msgid "Applies to"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:374
+msgid "Apply a discount once the customer reaches a minimum quantity."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:423
+msgid "Apply it to every unit"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:339
+msgid "Apply the discount to the shipping cost as well as the products."
+msgstr ""
+
+#: admin/src/Frontend/Components.php:346
+#: admin/src/Frontend/Components.php:484
+msgid "Approved instantly"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:694
+msgid "Around the price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:233
+msgid "As a table on the page"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:439
+msgid "Automatically beside the price, or wherever you place the Elementor widget."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:441
+msgid "Automatically, beside the price"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:230
+msgid "Back"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:731
+msgid "Badges and messages"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:646
+msgid "Bank slip"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:453
+#: admin/src/Core/Features.php:91
+#: admin/src/Frontend/Element_Registry.php:95
+msgid "Bank slip discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:721
+msgid "Bank slip heading"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:722
+msgid "Bank slip instructions"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:185
+msgid "Bank slip:"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:699
+msgid "Before a variable product price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:247
+msgid "Before the add-to-cart form"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:740
+msgid "Before the bank slip price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:697
+msgid "Before the discounted price"
+msgstr ""
+
+#: admin/src/Frontend/Element_Registry.php:57
+msgid "Best installment"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:719
+msgid "Block heading"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:202
+msgid "Buy %d units and get %s off"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:83
+msgid "Cancel"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:180
+#: admin/src/Admin/Default_Options.php:200
+msgid "Cash price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:795
+msgid "Centre the price group"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:191
+msgid ""
+"Charge a different rate for each installment count instead of one monthly "
+"rate."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:574
+msgid "Charge the processing cost of a payment method back to the order."
+msgstr ""
+
+#: admin/src/Frontend/Components.php:388
+msgid "Charges:"
+msgstr ""
+
+#: admin/src/Frontend/Components.php:620
+msgid "Close"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:772
+msgid "Colour of the installment details link."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:235
+msgid "Continue"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:732
+msgid ""
+"Copy for the savings badge, the bank slip price and the quantity discount "
+"message."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:785
+msgid "Corner radius"
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:116
+msgid "Could not export the settings."
+msgstr ""
+
+#: app/src/composables/useSettings.js:132
+msgid "Could not import that file."
+msgstr ""
+
+#: app/src/composables/useSettings.js:97
+msgid "Could not restore the settings."
+msgstr ""
+
+#: app/src/composables/useSettings.js:75
+msgid "Could not save the settings."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:651
+msgid "Credit card"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:663
+#: app/src/pages/onboarding/OnboardingPage.vue:174
+msgid "Credit card brands"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:723
+msgid "Credit card heading"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:187
+msgid "Credit cards:"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:800
+msgid "CSS selectors"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:283
+msgid ""
+"CSS selectors, comma separated, for themes that switch variations their own "
+"way instead of through the WooCommerce form."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:254
+msgid "Custom hook"
+msgstr ""
+
+#: admin/src/Core/Features.php:94
+msgid "Custom installment text templates"
+msgstr ""
+
+#: admin/src/Admin/Menu.php:53
+#: admin/src/Admin/Menu.php:54
+#: admin/src/Admin/Product_Settings.php:103
+#: admin/src/Integrations/Elementor.php:59
+#: app/src/pages/settings/SettingsPage.vue:142
+msgid "Custom Installments"
+msgstr ""
+
+#: admin/src/Admin/Menu.php:62
+#: admin/src/Admin/Menu.php:63
+#: admin/src/Admin/Menu.php:73
+msgid "Custom Installments setup"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:656
+msgid "Debit card"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:670
+msgid "Debit card brands"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:724
+msgid "Debit card heading"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:188
+msgid "Debit cards:"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:889
+msgid "Debug mode"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:830
+msgid "Design controls"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:885
+msgid "Diagnostics and data."
+msgstr ""
+
+#: app/src/pages/settings/components/SettingsActionBar.vue:40
+msgid "Discard"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:519
+msgid "Discount (%)"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:326
+#: admin/src/Admin/Settings/Registry.php:412
+#: admin/src/Admin/Settings/Registry.php:474
+msgid "Discount amount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:310
+msgid "Discount on the product price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:356
+msgid "Discount per gateway"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:320
+#: admin/src/Admin/Settings/Registry.php:402
+#: admin/src/Admin/Settings/Registry.php:464
+msgid "Discount type"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:876
+msgid "Discounted price in product feeds"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:870
+#: admin/src/Core/Features.php:96
+msgid "Discounted price in structured data"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:305
+msgid "Discounts"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:350
+#: admin/src/Core/Features.php:88
+msgid "Discounts per payment method"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:368
+#: admin/src/Core/Features.php:90
+msgid "Discounts per quantity"
+msgstr ""
+
+#: admin/src/Core/Onboarding.php:160
+#: app/src/components/toasts/ToastStack.vue:30
+msgid "Dismiss"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:589
+msgid "Display a line in the order totals stating how much was added."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:344
+msgid "Display a line in the order totals stating how much was taken off."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:538
+msgid "Display how much the customer saves by paying with Pix."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:554
+msgid "Display the discount percentage over products on sale."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:240
+msgid "Display the installment plan for the cart total."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:155
+msgid "Display the installment plan on the shop loop and the product page."
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:66
+msgid "Do not apply or show the upfront-payment discount for this product."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:234
+msgid "Do not show the details"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:58
+msgid "Do not show the installment plan for this product."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:119
+msgid "Done"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:84
+msgid "Download the Pro add-on"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:122
+#: app/src/pages/onboarding/components/TrialForm.vue:123
+msgid "E-mail"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:631
+msgid "Each one becomes a row in the payment methods block."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:383
+msgid "Each product individually"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:824
+msgid "Element design"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:860
+msgid "Elementor widgets"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:315
+msgid "Enable discounts"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:583
+msgid "Enable interest"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:373
+msgid "Enable quantity discounts"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:458
+msgid "Enable the bank slip discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:690
+msgid "Every piece of copy the plugin puts on the storefront."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:382
+msgid "Every product"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:73
+msgid ""
+"Every setting goes back to how it shipped. This cannot be undone, so export "
+"first if you might want it back."
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:53
+msgid "Export settings"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:282
+msgid "Extra variation triggers"
+msgstr ""
+
+#: admin/src/Core/Onboarding.php:153
+msgid ""
+"Finish setting up Custom Installments and your store will be showing "
+"instalment plans in about a minute."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:112
+#: app/src/pages/onboarding/components/TrialForm.vue:113
+msgid "First name"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:948
+msgid "Fixed amount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:817
+msgid "Font Awesome class"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:697
+msgid "For example: \"Cash price\"."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:699
+msgid "For example: \"From\"."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:508
+#: admin/src/Admin/Settings/Registry.php:698
+msgid "For example: \"with Pix\"."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:182
+msgid "From"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:239
+msgid "Go to the settings"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:717
+msgid "Headings inside the accepted payment methods block."
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:57
+msgid "Hide installments"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:65
+msgid "Hide the discount"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:136
+msgid "Hide what is sent"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:533
+msgid "Highlight how much the customer saves."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:213
+msgid "Highlighted installment"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:145
+msgid ""
+"How many installments the store offers, what they cost, and where they "
+"appear."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:90
+msgid "How many instalments you accept, and what they cost."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:166
+msgid "How many of them are offered with no interest added."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:393
+msgid "How many units the customer has to buy for the discount to apply."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:520
+msgid "How much to take off the displayed price."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:266
+msgid ""
+"How prices behave when the customer picks a variation or changes the "
+"quantity."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:230
+msgid "How the full installment table is presented to the customer."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:809
+msgid "How the icons beside each element are rendered."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:765
+msgid "How the plugin looks inside your theme."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:813
+msgid "Icon format"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:808
+msgid "Icons"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:896
+msgid "Import and export"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:57
+msgid "Import settings"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:232
+msgid "In a popup"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:711
+msgid "In the installment table"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:338
+msgid "Include shipping in the discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:816
+msgid "Inline SVG"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:814
+msgid ""
+"Inline SVG works everywhere; icon fonts need Font Awesome loaded by your "
+"theme."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:183
+#: admin/src/Admin/Settings/Registry.php:229
+msgid "Installment details"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:726
+msgid "Installment details link"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:149
+msgid "Installment plan"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:769
+msgid "Installment popup"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:725
+msgid "Installment table heading"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:706
+msgid "Installment templates"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:144
+msgid "Installments"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:178
+msgid "Installments smaller than this are not offered."
+msgstr ""
+
+#: admin/src/Integrations/Elementor/Widgets/Installments_Table.php:37
+msgid "Installments table"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:165
+msgid "Installments without interest"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:189
+msgid "Installments:"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:89
+msgid "Instalments"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:640
+msgid "Instant approval badge"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:855
+msgid "Integrations"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:851
+msgid "Integrations, structured data and maintenance."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:573
+msgid "Interest"
+msgstr ""
+
+#: app/src/components/fields/InstallmentFeesField.vue:85
+msgid "Interest for %d installments"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:191
+msgid "interest free"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:578
+msgid "Interest on the order total"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:601
+msgid "Interest per gateway"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:185
+#: admin/src/Core/Features.php:87
+msgid "Interest per installment"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Core/Features.php:89
+msgid "Interest per payment method"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:700
+msgid "Interest suffix"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:197
+msgid "Interest table"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:701
+msgid "Interest-free suffix"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:780
+msgid "Large"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:117
+#: app/src/pages/onboarding/components/TrialForm.vue:118
+msgid "Last name"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:772
+msgid "Link colour"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:775
+msgid "Link size"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:890
+msgid "Log additional detail to WooCommerce > Status > Logs."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:884
+msgid "Maintenance"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:159
+msgid "Maximum installments"
+msgstr ""
+
+#: app/src/components/pro/ProUpsellModal.vue:59
+msgid "Maybe later"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:177
+msgid "Minimum installment amount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:392
+msgid "Minimum quantity"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:171
+msgid "Monthly interest rate (%)"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:897
+msgid "Move this configuration to another store, or restore the defaults."
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:269
+msgid "No"
+msgstr ""
+
+#: app/src/components/fields/GatewayRatesField.vue:77
+msgid "No payment gateway is enabled in WooCommerce yet."
+msgstr ""
+
+#: admin/src/Frontend/Shortcodes.php:351
+msgid ""
+"No product to price here. Use this shortcode on a product template, or pass "
+"one: [wc_custom_installments_group product=\"123\"]."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:779
+msgid "Normal"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:507
+msgid "Note after the price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:934
+msgid "Nowhere"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:249
+msgid "On a custom hook"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:710
+msgid "On the product page"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:709
+msgid "On the shop loop"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:198
+msgid ""
+"One rate per installment count. Leave a row empty to fall back to the "
+"global rate."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:442
+msgid "Only where I place the widget"
+msgstr ""
+
+#: admin/src/Core/Onboarding.php:155
+msgid "Open the setup"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:114
+msgid "Optional. Seven days of the paid features, with no card."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:831
+msgid "Order the elements and style each one for mobile and desktop."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:856
+msgid "Page builders and SEO plugins."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:192
+#: admin/src/Admin/Onboarding/Registry.php:101
+#: admin/src/Admin/Settings/Registry.php:625
+msgid "Payment methods"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:716
+msgid "Payment methods block"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:244
+msgid "Payment methods block position"
+msgstr ""
+
+#: admin/src/Core/Features.php:98
+msgid "Per-product discount overrides"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:947
+msgid "Percentage"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:127
+#: app/src/pages/onboarding/components/TrialForm.vue:128
+msgid "Phone"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:635
+msgid "Pix"
+msgstr ""
+
+#: admin/src/Frontend/Element_Registry.php:65
+msgid "Pix discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:720
+msgid "Pix heading"
+msgstr ""
+
+#: admin/src/Frontend/Element_Registry.php:80
+msgid "Pix savings"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:736
+#: admin/src/Core/Features.php:92
+msgid "Pix savings badge"
+msgstr ""
+
+#: admin/src/Frontend/Components.php:341
+#. translators: %s: discounted price
+msgid "Pix: %s"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:209
+msgid "Placement and presentation of the installment information."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:108
+msgid "Placement on the shop and the product page."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:114
+msgid "Please fill in your name, e-mail and phone number."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:133
+msgid ""
+"Pressing the button sends these four fields to %s to issue your key. "
+"Nothing has been sent yet, and skipping this step sends nothing at all."
+msgstr ""
+
+#: app/src/pages/onboarding/components/PricePreview.vue:69
+msgid "Preview"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:865
+msgid "Price group inside widgets"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:144
+msgid "Privacy"
+msgstr ""
+
+#: app/src/components/cards/SectionCard.vue:32
+#: app/src/components/fields/FieldRenderer.vue:124
+#: app/src/components/pro/ProUpsellModal.vue:35
+msgid "Pro"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:92
+msgid ""
+"Pro adds discounts per payment method, tiered discounts, extra badges and "
+"full design control."
+msgstr ""
+
+#: admin/src/Frontend/Element_Registry.php:49
+msgid "Product price"
+msgstr ""
+
+#: admin/src/Integrations/Elementor/Widgets/Single_Product_Price.php:38
+msgid "Product price with installments"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:744
+msgid "Quantity discount message"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:222
+msgid "Read the documentation"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:277
+msgid ""
+"Recalculate the displayed price and installments as the customer changes "
+"the quantity."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:861
+msgid "Register the plugin widgets in the Elementor editor."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:866
+msgid "Render the full price group where a widget shows a product price."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:270
+msgid "Replace the price range"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:498
+msgid ""
+"Replace the price shown on the storefront with one of your own, and add a "
+"note after it. The cart and checkout are not affected."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:186
+msgid ""
+"Replace the single monthly rate with one rate per installment count, "
+"matching what your acquirer bills you."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:871
+msgid "Report the discounted price to search engines instead of the list price."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:154
+msgid "Requesting…"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:70
+#: app/src/pages/settings/components/cards/TransferCard.vue:88
+msgid "Restore the defaults"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:79
+msgid "Restoring..."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:369
+msgid "Reward customers who buy more of the same product."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:306
+msgid "Reward customers who pay upfront."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:497
+#: admin/src/Admin/Settings/Registry.php:502
+msgid "Rewrite the displayed price"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:707
+msgid ""
+"Rewrite the installment line entirely. Available tokens: {{ parcelas }}, {{ "
+"valor }}, {{ juros }}."
+msgstr ""
+
+#: admin/src/Core/Features.php:93
+msgid "Sale badge"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:199
+msgid "Save %s with Pix"
+msgstr ""
+
+#: app/src/pages/settings/components/SettingsActionBar.vue:44
+msgid "Save changes"
+msgstr ""
+
+#: app/src/pages/settings/components/SettingsActionBar.vue:44
+msgid "Saving..."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:235
+msgid "Saving…"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:532
+msgid "Savings badges"
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:101
+msgid "See what Pro adds"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:357
+#: admin/src/Admin/Settings/Registry.php:602
+msgid "Set an amount for each payment method your store accepts."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:190
+msgid "Set the interest of each installment"
+msgstr ""
+
+#: admin/src/Admin/Menu.php:89
+msgid "Settings"
+msgstr ""
+
+#: admin/src/Rest/Settings_Import.php:60
+#: app/src/composables/useSettings.js:130
+msgid "Settings imported."
+msgstr ""
+
+#: admin/src/Rest/Settings_Reset.php:48
+#: app/src/composables/useSettings.js:95
+msgid "Settings restored to their defaults."
+msgstr ""
+
+#: admin/src/Rest/Settings_Save.php:54
+#: app/src/composables/useSettings.js:73
+msgid "Settings saved."
+msgstr ""
+
+#: admin/src/Rest/Onboarding_Complete.php:45
+msgid "Setup complete."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:790
+msgid "Shop loop"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:433
+msgid "Show a message telling the customer how to earn it."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:459
+msgid "Show a second discounted price for bank slip payments."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:271
+msgid ""
+"Show a single starting price instead of the \"from — to\" range on variable "
+"products."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:136
+msgid "Show exactly what is sent"
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:144
+msgid "Show installment plans, discounts and payment methods on your store."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:239
+msgid "Show installments in the cart"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:154
+msgid "Show installments on products"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:485
+msgid "Show the bank slip price on"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:647
+msgid "Show the bank slip row, with its badge and instructions."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:652
+msgid "Show the credit card row and the brands you accept."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:657
+msgid "Show the debit card row and the brands you accept."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:343
+msgid "Show the discount at checkout"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:332
+msgid "Show the discounted price on"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:223
+msgid "Show the highlighted installment on"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:588
+msgid "Show the interest at checkout"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:636
+msgid "Show the Pix row, with its badge and instructions."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:537
+msgid "Show the Pix savings badge"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:553
+msgid "Show the sale badge"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:543
+msgid "Show the savings badge on"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:503
+msgid ""
+"Show your own price in place of the WooCommerce one on simple and variable "
+"products."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:722
+msgid "Shown under the bank slip badge."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:129
+msgid "Skip setup"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:778
+msgid "Small"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:783
+msgid "Space above"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:784
+msgid "Space below"
+msgstr ""
+
+#: app/src/components/pro/ProUpsellModal.vue:55
+#: app/src/pages/onboarding/components/TrialForm.vue:154
+msgid "Start the free trial"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:245
+msgid "Step %1$d of %2$d"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:877
+msgid ""
+"Store the discounted price in a meta field for shopping feed plugins to "
+"read."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:514
+msgid "Subtract a percentage from the price before showing it."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:513
+msgid "Take a discount off it"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:424
+msgid ""
+"Take the discount off each unit rather than once off the line. On three "
+"units at 10%, this is the difference between 10% and 30%."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:142
+msgid "Terms"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:689
+msgid "Texts"
+msgstr ""
+
+#: app/src/composables/useOnboarding.js:58
+#: app/src/pages/onboarding/OnboardingPage.vue:94
+msgid "That did not save. Please try again."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:55
+msgid "That did not work. Please try again."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:121
+msgid "That e-mail address does not look right."
+msgstr ""
+
+#: admin/src/Admin/Settings/Transfer.php:74
+msgid "That file carries no settings."
+msgstr ""
+
+#: admin/src/Admin/Settings/Transfer.php:60
+#: app/src/pages/settings/SettingsPage.vue:129
+msgid "That file could not be read as settings."
+msgstr ""
+
+#: admin/src/Admin/Settings/Transfer.php:67
+msgid "That file was not exported by this plugin."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:255
+msgid "The action hook the payment methods block is attached to."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:664
+msgid "The badges shown in the credit card row."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:671
+msgid "The badges shown in the debit card row."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:626
+msgid "The block of accepted payment methods shown on the product page."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:160
+msgid "The highest number of installments the store accepts."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:217
+msgid "The largest installment, interest included"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:216
+msgid "The largest interest-free installment"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:158
+msgid ""
+"The licensing service could not issue a trial right now. Please try again "
+"later."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:726
+msgid "The link that opens the full installment table."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:770
+msgid "The link that opens the installment table, and the spacing around it."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:157
+msgid ""
+"The next few questions set the instalment rules. You can change any of them "
+"later."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:475
+msgid "The percentage or the amount taken off for bank slip payments."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:413
+msgid "The percentage or the amount taken off once the minimum is reached."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:327
+msgid "The percentage or the amount taken off the price."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:64
+msgid "The Pro add-on is already installed on this site."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:932
+msgid "The product page only"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:150
+msgid "The rules used to build every installment shown on the storefront."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:801
+msgid ""
+"The selectors the centring rule is applied to. Only change this if your "
+"theme needs it."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:931
+msgid "The shop loop and the product page"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:933
+msgid "The shop loop only"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:218
+msgid "The smallest installment allowed"
+msgstr ""
+
+#: admin/src/Assets/Admin_Assets.php:190
+msgid ""
+"The WC Custom Installments admin bundle is missing. Run \"npm run build\" "
+"in the app directory."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:695
+msgid "The words framing the discounted price and the installment line."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:211
+msgid ""
+"There is nothing else to set up. Review anything you like on the settings "
+"screen."
+msgstr ""
+
+#: app/src/components/pro/ProUpsellModal.vue:45
+msgid "This is part of the Pro add-on. Try it free for 7 days, with no card."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:146
+msgid ""
+"This plugin answers the question every shopper asks before buying: how much "
+"is it per month, and what do I save by paying it all at once."
+msgstr ""
+
+#: admin/src/Integrations/Elementor/Widgets/Abstract_Widget.php:79
+msgid "This widget needs a feature your licence does not currently cover."
+msgstr ""
+
+#: admin/src/Integrations/Elementor/Widgets/Abstract_Widget.php:97
+msgid ""
+"This widget renders the product it is placed on. Add it to a product "
+"template, or create a product to preview it."
+msgstr ""
+
+#: admin/src/Frontend/Render_Elements.php:387
+#. translators: %s: the copy shown after the discounted price, e.g. "with Pix"
+msgid "Total %s"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:184
+msgid "Transfers:"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:104
+msgid "Trials are not available from this site right now."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:107
+msgid "Try every Pro feature for %d days. No card, and nothing renews on its own."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:113
+msgid "Try Pro"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:316
+msgid "Turn the discount features on for the whole store."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:584
+msgid "Turn the interest features on for the whole store."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:825
+msgid ""
+"Typography, spacing and colours for each element of the price group, per "
+"breakpoint."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:197
+#: admin/src/Admin/Default_Options.php:198
+msgid "Up to {{ parcelas }}x {{ valor }} {{ juros }}"
+msgstr ""
+
+#: app/src/pages/onboarding/components/PricePreview.vue:76
+msgid "Up to %dx of %s interest free"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:276
+msgid "Update the price with the quantity"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:95
+msgid "Upfront discount"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:745
+msgid "Use %d for the quantity and %s for the discount."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:737
+msgid "Use %s where the saved amount should appear."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:796
+msgid "Useful for themes whose product cards are centre-aligned."
+msgstr ""
+
+#: admin/src/Core/Features.php:95
+msgid "Variable product price range control"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:265
+msgid "Variable products"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:219
+msgid "View your shop"
+msgstr ""
+
+#: admin/src/Core/Init.php:399
+#. translators: 1: required PHP version, 2: current PHP version
+msgid "WC Custom Installments requires PHP %1$s or higher. This site runs PHP %2$s."
+msgstr ""
+
+#: admin/src/Core/Init.php:420
+#. translators: %s: required WooCommerce version
+msgid ""
+"WC Custom Installments requires WooCommerce %s or higher to be installed "
+"and active."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Trial.php:139
+msgid "We could not reach the licensing service. Please try again in a moment."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:153
+msgid ""
+"We found settings from your previous installation and imported them. "
+"Nothing was changed — you can review everything on the settings screen."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:206
+msgid ""
+"We found the settings from your previous installation and imported them, "
+"exactly as they were. Nothing was changed, and your old options are still "
+"where they were in case you roll back."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:83
+msgid "Welcome"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:96
+msgid "What a customer saves by paying in one go."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:84
+msgid "What this plugin puts on your storefront, and what it needs from you."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:208
+msgid "Where installments appear"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:107
+msgid "Where it appears"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:245
+msgid "Where the accepted payment methods appear on the product page."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:438
+msgid "Where the message goes"
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:120
+msgid "Where to go from here."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:465
+msgid "Whether the bank slip discount is a percentage or a fixed amount."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:321
+msgid "Whether the discount is a percentage of the price or a fixed amount."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:403
+msgid "Whether the quantity discount is a percentage or a fixed amount."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:380
+msgid "Whether the rule is set once for the store or per product."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:214
+msgid "Which installment is shown under the price as the headline."
+msgstr ""
+
+#: admin/src/Admin/Onboarding/Registry.php:102
+msgid "Which methods and card brands to show."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:630
+msgid "Which methods to show"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:224
+#: admin/src/Admin/Settings/Registry.php:333
+#: admin/src/Admin/Settings/Registry.php:486
+#: admin/src/Admin/Settings/Registry.php:544
+msgid "Which storefront pages carry it."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:201
+msgid "with a bank slip"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:190
+msgid "with interest"
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:181
+#: admin/src/Admin/Default_Options.php:193
+msgid "with Pix"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:268
+msgid "Yes"
+msgstr ""
+
+#: app/src/pages/settings/components/cards/TransferCard.vue:79
+msgid "Yes, restore the defaults"
+msgstr ""
+
+#: admin/src/Core/Onboarding.php:175
+msgid "You are not allowed to do that."
+msgstr ""
+
+#: app/src/pages/settings/components/SettingsActionBar.vue:36
+msgid "You have unsaved changes."
+msgstr ""
+
+#: admin/src/Admin/Default_Options.php:186
+msgid "You will receive the payment details once you complete your order."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:212
+msgid ""
+"Your store is showing instalment plans. From here you can fine-tune the "
+"wording, the placement and the appearance."
+msgstr ""
+
+#: app/src/pages/onboarding/components/TrialForm.vue:68
+msgid "Your trial is ready."
+msgstr ""
+
+#: admin/src/Rest/Trial_Request.php:61
+msgid ""
+"Your trial is ready. The key is below, and a copy is on its way to your "
+"inbox."
+msgstr ""

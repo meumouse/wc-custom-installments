@@ -1,5 +1,6 @@
 .env
 node_modules/
+languages/node_modules/
 release/
 app/dist/
 admin/vendor/

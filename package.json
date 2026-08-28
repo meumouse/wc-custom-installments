@@ -11,7 +11,11 @@
 		"dev": "npm run dev --prefix app",
 		"release": "node scripts/build.mjs",
 		"deploy": "node scripts/deploy-svn.mjs",
-		"deploy:commit": "node scripts/deploy-svn.mjs --commit"
+		"deploy:commit": "node scripts/deploy-svn.mjs --commit",
+		"docs:hooks": "node scripts/generate-hook-docs.mjs",
+		"docs:check": "node scripts/generate-hook-docs.mjs --check && node scripts/generate-feature-docs.mjs --check",
+		"docs:features": "node scripts/generate-feature-docs.mjs",
+		"docs": "npm run docs:hooks && npm run docs:features"
 	},
 	"devDependencies": {
 		"archiver": "^7.0.1"
