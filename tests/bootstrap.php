@@ -250,6 +250,28 @@ if ( ! function_exists('__') ) {
 	}
 }
 
+if ( ! function_exists('__return_true') ) {
+	/**
+	 * Always true.
+	 *
+	 * @return bool
+	 */
+	function __return_true() {
+		return true;
+	}
+}
+
+if ( ! function_exists('__return_false') ) {
+	/**
+	 * Always false.
+	 *
+	 * @return bool
+	 */
+	function __return_false() {
+		return false;
+	}
+}
+
 if ( ! function_exists('maybe_unserialize') ) {
 	/**
 	 * Unserialize a value that may or may not be serialized.
@@ -346,10 +368,404 @@ if ( ! function_exists('is_wp_error') ) {
 	}
 }
 
+/* ── WooCommerce surface ─────────────────────────────────────────────────── */
+
+if ( ! function_exists('wc_format_decimal') ) {
+	/**
+	 * Normalise a decimal separator.
+	 *
+	 * @param mixed $value | Raw value
+	 * @return string
+	 */
+	function wc_format_decimal( $value ) {
+		return str_replace( ',', '.', (string) $value );
+	}
+}
+
+if ( ! function_exists('wc_price') ) {
+	/**
+	 * Format an amount as currency.
+	 *
+	 * @param float $value | Amount
+	 * @return string
+	 */
+	function wc_price( $value ) {
+		return 'R$' . number_format( (float) $value, 2, ',', '.' );
+	}
+}
+
+if ( ! function_exists('get_woocommerce_currency_symbol') ) {
+	/**
+	 * The store's currency symbol.
+	 *
+	 * @return string
+	 */
+	function get_woocommerce_currency_symbol() {
+		return 'R$';
+	}
+}
+
+if ( ! function_exists('wc_get_price_to_display') ) {
+	/**
+	 * The price a customer is shown.
+	 *
+	 * @param object $product | Product object
+	 * @param array $args | Optional price override
+	 * @return float
+	 */
+	function wc_get_price_to_display( $product, $args = array() ) {
+		if ( isset( $args['price'] ) ) {
+			return (float) $args['price'];
+		}
+
+		return (float) $product->get_price();
+	}
+}
+
+if ( ! function_exists('wc_get_price_excluding_tax') ) {
+	/**
+	 * The price before tax.
+	 *
+	 * @param object $product | Product object
+	 * @return float
+	 */
+	function wc_get_price_excluding_tax( $product ) {
+		return (float) $product->get_price();
+	}
+}
+
+if ( ! function_exists('wc_get_product') ) {
+	/**
+	 * Resolve a product; the harness has no store, so there is never one.
+	 *
+	 * @param int|bool $id | Product ID
+	 * @return false
+	 */
+	function wc_get_product( $id = false ) {
+		return false;
+	}
+}
+
+if ( ! function_exists('get_post_meta') ) {
+	/**
+	 * Read product meta from the in-memory store.
+	 *
+	 * @param int $id | Object ID
+	 * @param string $key | Meta key
+	 * @param bool $single | Whether one value is wanted
+	 * @return mixed
+	 */
+	function get_post_meta( $id, $key = '', $single = false ) {
+		return $GLOBALS['wp_test_meta'][ $id ][ $key ] ?? '';
+	}
+}
+
+if ( ! function_exists('is_product') ) {
+	/**
+	 * Whether a product page is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_product() {
+		return ! empty( $GLOBALS['wp_test_is_product'] );
+	}
+}
+
+if ( ! function_exists('is_archive') ) {
+	/**
+	 * Whether an archive is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_archive() {
+		return ! empty( $GLOBALS['wp_test_is_archive'] );
+	}
+}
+
+if ( ! function_exists('is_admin') ) {
+	/**
+	 * Whether this is an admin request.
+	 *
+	 * @return bool
+	 */
+	function is_admin() {
+		return false;
+	}
+}
+
+if ( ! function_exists('wp_doing_ajax') ) {
+	/**
+	 * Whether this is an AJAX request.
+	 *
+	 * @return bool
+	 */
+	function wp_doing_ajax() {
+		return false;
+	}
+}
+
+if ( ! function_exists('esc_attr') ) {
+	/**
+	 * Escape a value for an attribute.
+	 *
+	 * @param string $value | Raw value
+	 * @return string
+	 */
+	function esc_attr( $value ) {
+		return htmlspecialchars( (string) $value, ENT_QUOTES );
+	}
+}
+
+if ( ! function_exists('esc_html') ) {
+	/**
+	 * Escape a value for markup.
+	 *
+	 * @param string $value | Raw value
+	 * @return string
+	 */
+	function esc_html( $value ) {
+		return htmlspecialchars( (string) $value, ENT_QUOTES );
+	}
+}
+
+if ( ! function_exists('esc_url') ) {
+	/**
+	 * Escape a URL.
+	 *
+	 * @param string $value | Raw URL
+	 * @return string
+	 */
+	function esc_url( $value ) {
+		return (string) $value;
+	}
+}
+
+if ( ! function_exists('esc_html__') ) {
+	/**
+	 * Translate and escape.
+	 *
+	 * @param string $text | Text
+	 * @param string $domain | Text domain
+	 * @return string
+	 */
+	function esc_html__( $text, $domain = 'default' ) {
+		return $text;
+	}
+}
+
+if ( ! function_exists('esc_attr__') ) {
+	/**
+	 * Translate and escape for an attribute.
+	 *
+	 * @param string $text | Text
+	 * @param string $domain | Text domain
+	 * @return string
+	 */
+	function esc_attr__( $text, $domain = 'default' ) {
+		return $text;
+	}
+}
+
+if ( ! class_exists('WC_Product') ) {
+	/**
+	 * The slice of WC_Product the engine reads.
+	 */
+	class WC_Product {
+
+		/**
+		 * Product attributes.
+		 *
+		 * @var array<string,mixed>
+		 */
+		private $data;
+
+
+		/**
+		 * Build a product.
+		 *
+		 * @param array<string,mixed> $data | Attributes
+		 */
+		public function __construct( $data = array() ) {
+			$this->data = array_merge( array(
+				'id' => 1,
+				'parent_id' => 0,
+				'type' => 'simple',
+				'price' => 0.0,
+				'regular_price' => 0.0,
+				'sale_price' => 0.0,
+				'on_sale' => false,
+				'purchasable' => true,
+				'variation_prices' => array(),
+			), $data );
+		}
+
+
+		/**
+		 * The product ID.
+		 *
+		 * @return int
+		 */
+		public function get_id() {
+			return (int) $this->data['id'];
+		}
+
+
+		/**
+		 * The parent product ID.
+		 *
+		 * @return int
+		 */
+		public function get_parent_id() {
+			return (int) $this->data['parent_id'];
+		}
+
+
+		/**
+		 * The product type.
+		 *
+		 * @return string
+		 */
+		public function get_type() {
+			return (string) $this->data['type'];
+		}
+
+
+		/**
+		 * Whether the product is of a type.
+		 *
+		 * @param string|array $type | Type or types
+		 * @return bool
+		 */
+		public function is_type( $type ) {
+			return in_array( $this->get_type(), (array) $type, true );
+		}
+
+
+		/**
+		 * The current price.
+		 *
+		 * @return float
+		 */
+		public function get_price() {
+			return (float) $this->data['price'];
+		}
+
+
+		/**
+		 * The regular price.
+		 *
+		 * @return float
+		 */
+		public function get_regular_price() {
+			return (float) $this->data['regular_price'];
+		}
+
+
+		/**
+		 * The sale price.
+		 *
+		 * @return float
+		 */
+		public function get_sale_price() {
+			return (float) $this->data['sale_price'];
+		}
+
+
+		/**
+		 * Whether the product is on sale.
+		 *
+		 * @return bool
+		 */
+		public function is_on_sale() {
+			return (bool) $this->data['on_sale'];
+		}
+
+
+		/**
+		 * Whether the product can be bought.
+		 *
+		 * @return bool
+		 */
+		public function is_purchasable() {
+			return (bool) $this->data['purchasable'];
+		}
+
+
+		/**
+		 * The lowest or highest variation price.
+		 *
+		 * @param string $which | Either `min` or `max`
+		 * @param bool $display | Ignored in the harness
+		 * @return float
+		 */
+		public function get_variation_price( $which = 'min', $display = false ) {
+			$prices = $this->data['variation_prices']['price'] ?? array();
+
+			if ( empty( $prices ) ) {
+				return $this->get_price();
+			}
+
+			return (float) ( 'max' === $which ? max( $prices ) : min( $prices ) );
+		}
+
+
+		/**
+		 * The lowest or highest regular variation price.
+		 *
+		 * @param string $which | Either `min` or `max`
+		 * @param bool $display | Ignored in the harness
+		 * @return float
+		 */
+		public function get_variation_regular_price( $which = 'min', $display = false ) {
+			$prices = $this->data['variation_prices']['regular_price'] ?? array();
+
+			if ( empty( $prices ) ) {
+				return $this->get_regular_price();
+			}
+
+			return (float) ( 'max' === $which ? max( $prices ) : min( $prices ) );
+		}
+
+
+		/**
+		 * Every variation price, keyed by variation.
+		 *
+		 * @param bool $display | Ignored in the harness
+		 * @return array<string,array<int|string,mixed>>
+		 */
+		public function get_variation_prices( $display = false ) {
+			return $this->data['variation_prices'];
+		}
+	}
+}
+
+if ( ! function_exists('wc_test_product') ) {
+	/**
+	 * Build a product for a test.
+	 *
+	 * @param float $price | Current price
+	 * @param array<string,mixed> $data | Attribute overrides
+	 * @return WC_Product
+	 */
+	function wc_test_product( $price, $data = array() ) {
+		return new WC_Product( array_merge( array(
+			'price' => $price,
+			'regular_price' => $price,
+		), $data ) );
+	}
+}
+
+$GLOBALS['wp_test_meta'] = array();
+$GLOBALS['wp_test_is_product'] = false;
+$GLOBALS['wp_test_is_archive'] = false;
+
 // The classes under test, loaded directly: the harness has no autoloader.
 require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
 require_once __DIR__ . '/../admin/src/Compatibility/Hook_Aliases.php';
+require_once __DIR__ . '/../admin/src/Frontend/Element_Registry.php';
+require_once __DIR__ . '/../admin/src/Engine/Calculate_Values.php';
+require_once __DIR__ . '/../admin/src/Engine/Calculate_Installments.php';
 require_once __DIR__ . '/../admin/src/Admin/Default_Options.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Registry.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Repository.php';

@@ -73,6 +73,11 @@ function seed_legacy_install() {
 		'enable_visa_flag_credit' => 'yes',
 		'center_group_elements_loop' => 'yes',
 
+		// The 5.x tabs spelled the same placement three different ways.
+		'hook_display_best_installments' => 'only_loop_products',
+		'display_discount_price_hook' => 'hide',
+		'display_economy_pix_hook' => 'global',
+
 		// Pro settings the store had licensed.
 		'set_fee_per_installment' => 'yes',
 		'enable_sale_badge' => 'yes',
@@ -108,6 +113,19 @@ check( 'pt_BR copy transfers verbatim', 'À vista', Repository::get('text_before
 check( 'a payment method toggle transfers', 'yes', Repository::get('enable_pix_method_payment_form') );
 check( 'a card brand toggle transfers', 'yes', Repository::get('enable_visa_flag_credit') );
 check( 'a Pro toggle transfers even while unlicensed', 'yes', Repository::get('set_fee_per_installment') );
+
+echo PHP_EOL, 'Placement spellings', PHP_EOL;
+
+// Left untranslated these would survive migration but not be options the new
+// schema offers, so the first save from the settings screen would silently
+// reset each one to its default.
+check( 'only_loop_products becomes only_loop', 'only_loop', Repository::get('hook_display_best_installments') );
+check( 'hide becomes none', 'none', Repository::get('display_discount_price_hook') );
+check( 'global becomes the both-places value', 'display_loop_and_single_product', Repository::get('display_economy_pix_hook') );
+
+$definitions = Registry::get_field_definitions();
+$allowed = array_column( $definitions['hook_display_best_installments']['options'], 'value' );
+check( 'and the migrated value is one the schema offers', true, in_array( Repository::get('hook_display_best_installments'), $allowed, true ) );
 
 echo PHP_EOL, 'Sidecar options', PHP_EOL;
 

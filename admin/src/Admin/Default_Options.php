@@ -2,6 +2,8 @@
 
 namespace MeuMouse\WC_Custom_Installments\Admin;
 
+use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -114,7 +116,7 @@ class Default_Options {
 			'enable_ticket_discount_main_price' => 'no',
 			'discount_method_ticket' => 'percentage',
 			'discount_ticket' => '0',
-			'display_discount_ticket_hook' => 'global',
+			'display_discount_ticket_hook' => 'display_loop_and_single_product',
 
 			// Pro — badges.
 			'enable_economy_pix_badge' => 'no',
@@ -222,8 +224,10 @@ class Default_Options {
 			'selectors_group_for_center_elements' => '.archive .woo-custom-installments-group, .loop .woo-custom-installments-group, li.product .woo-custom-installments-group, li.wc-block-grid__product .woo-custom-installments-group, .product-grid-item .woo-custom-installments-group, .e-loop-item.product .woo-custom-installments-group, .swiper-slide .type-product .woo-custom-installments-group, .shopengine-single-product-item .woo-custom-installments-group, .products-list.grid .item-product .woo-custom-installments-group, .product-item.grid .woo-custom-installments-group, .card-product .woo-custom-installments-group, .owl-item .woo-custom-installments-group, .jet-woo-products__inner-box .woo-custom-installments-group',
 			'icon_format_elements' => 'class',
 
-			// Pro — the per-element, per-breakpoint design controls.
-			'elements_design' => array(),
+			// Pro — the per-element, per-breakpoint design controls. The default
+			// comes from the registry so a new element ships with its styles
+			// instead of needing the option every store already wrote to.
+			'elements_design' => Element_Registry::defaults(),
 		);
 	}
 

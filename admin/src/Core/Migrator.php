@@ -141,7 +141,7 @@ class Migrator {
 				continue;
 			}
 
-			$settings[ $key ] = $value;
+			$settings[ $key ] = self::normalize_value( $key, $value );
 			$report['migrated']++;
 		}
 
@@ -181,6 +181,54 @@ class Migrator {
 		do_action( 'WC_Custom_Installments/Migrate/Completed', $report );
 
 		return $report;
+	}
+
+
+	/**
+	 * Settings whose stored value is one of a fixed set of placements.
+	 *
+	 * @since 1.0.0
+	 * @var array<int,string>
+	 */
+	const PLACEMENT_SETTINGS = array(
+		'hook_display_best_installments',
+		'display_discount_price_hook',
+		'display_discount_ticket_hook',
+		'display_economy_pix_hook',
+	);
+
+	/**
+	 * The 5.x placement spellings, and what they are called now.
+	 *
+	 * The same idea was written three ways across the 5.x settings tabs, which
+	 * is why a migrated value has to be translated rather than copied: left as
+	 * it was, the first save from the new screen would fall back to the default
+	 * because the stored value is not one the schema offers.
+	 *
+	 * @since 1.0.0
+	 * @var array<string,string>
+	 */
+	const PLACEMENT_ALIASES = array(
+		'global' => 'display_loop_and_single_product',
+		'only_loop_products' => 'only_loop',
+		'hide' => 'none',
+	);
+
+
+	/**
+	 * Translate a stored value into the spelling the new schema uses.
+	 *
+	 * @since 1.0.0
+	 * @param string $key | Setting name
+	 * @param mixed $value | Stored value
+	 * @return mixed
+	 */
+	private static function normalize_value( $key, $value ) {
+		if ( ! in_array( $key, self::PLACEMENT_SETTINGS, true ) || ! is_string( $value ) ) {
+			return $value;
+		}
+
+		return self::PLACEMENT_ALIASES[ $value ] ?? $value;
 	}
 
 

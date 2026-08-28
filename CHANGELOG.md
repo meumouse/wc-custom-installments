@@ -24,3 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Component library: switch, input, textarea, select, button, colour input, section card and toast stack.
 - Field components for measurements, tokenised text, per-gateway rates and the interest table, resolved through a registry an add-on can extend.
 - `preview.html` and `tests/dump-bootstrap.php`, which render the real admin bundle against a generated fixture with no WordPress and no database.
+- Instalment and discount engine ported from the 5.x plugin, with its rounding and both interest formulas intact.
+- Storefront rendering: the price group, the payment methods block as a panel or a dialog, the instalment table, and the discount and savings badges.
+- `Frontend\Element_Registry`, which moves the price group's elements out of the settings default and into code.
+- Generated stylesheet driven by that registry, replacing four hundred lines of hand-written blocks.
+- Theme-overridable `single-product/price.php`.
