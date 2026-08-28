@@ -277,6 +277,15 @@ class Registry {
 							__( 'Recalculate the displayed price and installments as the customer changes the quantity.', 'wc-custom-installments' ),
 							array( 'feature' => 'variable_price_range' )
 						),
+						self::text(
+							'update_range_price_triggers',
+							__( 'Extra variation triggers', 'wc-custom-installments' ),
+							__( 'CSS selectors, comma separated, for themes that switch variations their own way instead of through the WooCommerce form.', 'wc-custom-installments' ),
+							array(
+								'placeholder' => '.my-theme-swatch, .variation-button',
+								'feature' => 'variable_price_range',
+							)
+						),
 					),
 				),
 			),

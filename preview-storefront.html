@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WC Custom Installments — storefront preview</title>
+    <link rel="stylesheet" href="./app/dist/styles/storefront.css" />
+    <style>
+      /* Stand in for a theme's product page. */
+      body {
+        margin: 0;
+        padding: 2rem;
+        background: #fff;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        color: #212529;
+      }
+
+      .preview-frame {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .preview-note {
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        background: #102033;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        font-size: 13px;
+      }
+
+      .preview-controls {
+        margin: 2rem 0;
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-frame">
+      <p class="preview-note">
+        Static harness for the storefront runtime. The markup below is what the PHP renders; the
+        parameters are a realistic payload. No jQuery, so the variation path stands down by design.
+      </p>
+
+      <!-- What Frontend\Render_Elements prints. -->
+      <div class="woo-custom-installments-group">
+        <div class="woo-custom-installments-group-main-price">
+          <span class="woo-custom-installments-price original-price has-discount"
+            ><span class="woocommerce-Price-amount amount">R$120,00</span></span
+          >
+          <span class="woo-custom-installments-price sale-price"
+            ><span class="woocommerce-Price-amount amount">R$97,00</span></span
+          >
+        </div>
+
+        <span class="woo-custom-installments-card-container">
+          <span class="woo-custom-installments-details-without-fee" data-end-installments="3">
+            <span class="woo-custom-installments-details best-value no-fee"
+              >Up to 3x <span class="woocommerce-Price-amount amount">R$32,33</span> interest free</span
+            >
+          </span>
+        </span>
+
+        <span class="woo-custom-installments-offer">
+          <span class="discount-before-price">Cash price</span>
+          <span class="discounted-price"
+            ><span class="woocommerce-Price-amount amount">R$87,30</span></span
+          >
+          <span class="discount-after-price">with Pix</span>
+        </span>
+
+        <span class="woo-custom-installments-economy-pix-badge">
+          <span class="discount-before-economy-pix"
+            >Save <span class="woocommerce-Price-amount amount">R$9,70</span> with Pix</span
+          >
+        </span>
+      </div>
+
+      <!-- What Frontend\Components::payment_methods_modal prints. -->
+      <button type="button" class="wci-open-popup">
+        <span class="open-popup-text">Installment details</span>
+      </button>
+
+      <div class="wci-popup-container">
+        <div class="wci-popup-content">
+          <div class="wci-popup-header">
+            <h5 class="wci-popup-title">Payment methods</h5>
+            <button type="button" class="btn-close wci-close-popup" aria-label="Close"></button>
+          </div>
+
+          <div class="wci-popup-body">
+            <div class="woo-custom-installments-pix-section">
+              <h4 class="pix-method-title">Transfers:</h4>
+              <div class="pix-method-container">
+                <span class="pix-method-name"
+                  >Pix: <span class="woocommerce-Price-amount amount">R$87,30</span></span
+                >
+              </div>
+            </div>
+
+            <h4 class="installments-title">Installments:</h4>
+            <div id="table-installments">
+              <table class="table table-hover woo-custom-installments-table">
+                <tbody data-default-text="{{ parcelas }}x {{ valor }} {{ juros }}">
+                  <tr class="no-fee">
+                    <th class="final-text">1x R$97,00 interest free</th>
+                    <th class="final-price">R$97,00</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What a theme's add-to-cart form provides. -->
+      <div class="preview-controls">
+        <label>
+          Quantity
+          <input type="number" name="quantity" value="1" min="1" step="1" />
+        </label>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * The payload Storefront_Assets localizes, with realistic values for a
+       * R$97 product: 12 instalments, 3 interest free, 2% a month, 10% off for
+       * paying upfront.
+       */
+      window.wcCustomInstallmentsParams = {
+        debug_mode: true,
+        dev_mode: false,
+        element_triggers: '',
+        active_price_range: 'no',
+        update_price_with_quantity: 'yes',
+        fee_per_installment: false,
+        product_variation_with_range: false,
+        tiered_pricing_active: false,
+        i18n: {
+          without_fee_label: ' interest free',
+          with_fee_label: 'with interest',
+          best_installments: 'Up to {{ parcelas }}x {{ valor }} {{ juros }}',
+        },
+        currency: {
+          symbol: 'R$',
+          decimals: 2,
+          decimal_separator: ',',
+          thousand_separator: '.',
+          format: '%s%v',
+        },
+        discounts: {
+          pix_discount: 10,
+          pix_discount_method: 'percentage',
+          slip_bank_discount: 0,
+          slip_bank_method: 'percentage',
+          enable_discount_per_unit: 'no',
+          discount_per_unit_method: '',
+          unit_discount_amount: '',
+        },
+        installments: {
+          max_installments: 12,
+          max_installments_no_fee: 3,
+          min_installment: 20,
+          fee: 2,
+          fees: {},
+        },
+        product: {
+          id: 1,
+          type: 'simple',
+          regular_price: 120,
+          sale_price: 97,
+          current_price: 97,
+        },
+      };
+    </script>
+
+    <script>
+      // Load fresh: the bundle has a fixed name and nothing versions it here.
+      const moduleTag = document.createElement('script');
+
+      moduleTag.type = 'module';
+      moduleTag.src = `./app/dist/storefront/app.js?t=${Date.now()}`;
+      document.body.appendChild(moduleTag);
+    </script>
+  </body>
+</html>

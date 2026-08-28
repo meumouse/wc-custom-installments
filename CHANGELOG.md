@@ -29,3 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Frontend\Element_Registry`, which moves the price group's elements out of the settings default and into code.
 - Generated stylesheet driven by that registry, replacing four hundred lines of hand-written blocks.
 - Theme-overridable `single-product/price.php`.
+- Storefront runtime rewritten as vanilla ES modules: the instalment panel and dialog, live price updates on variation and quantity changes, and the checkout refresh when the payment method changes.
+- Client-side instalment calculation mirroring the server's, so a price that moves in the browser lands where the server would have put it.
+- `preview-storefront.html`, which exercises the runtime against the real markup with no WordPress.

@@ -28,7 +28,8 @@ admin/                       All backend PHP, Composer included
   src/Views/                 The two page shells the Vue apps mount into
   vendor/                    Composer output (generated, not versioned)
 app/                         All frontend: Vue 3 + Vite + Tailwind, one entry per screen
-  src/entries/               settings.js, onboarding.js
+  src/entries/               settings.js, onboarding.js, storefront.js
+  src/storefront/            Vanilla runtime for the shop: no framework, no jQuery of our own
   dist/                      Vite output (generated, not versioned)
 assets/ templates/ languages/ scripts/ tests/ docs/ examples/
 ```
@@ -90,6 +91,27 @@ with any PHP 8.1+ binary.
 ```bash
 php tests/feature-gate-test.php
 ```
+
+```bash
+php tests/migration-test.php
+```
+
+```bash
+php tests/engine-test.php
+```
+
+### Previews
+
+Two static harnesses render the real built bundles with no WordPress and no database. Build first,
+then serve the plugin directory and open either page.
+
+```bash
+php tests/dump-bootstrap.php && python -m http.server 8791 --bind 127.0.0.1
+```
+
+`preview.html` renders the settings screen against a generated fixture; `preview-storefront.html`
+renders the storefront runtime against the markup the PHP produces. Neither ships in the release
+package.
 
 ## Documentation
 

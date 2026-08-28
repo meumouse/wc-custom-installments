@@ -22,6 +22,7 @@ export default defineConfig({
       input: {
         settings: resolve(__dirname, 'src/entries/settings.js'),
         onboarding: resolve(__dirname, 'src/entries/onboarding.js'),
+        storefront: resolve(__dirname, 'src/entries/storefront.js'),
       },
       output: {
         // Fixed names: the backend versions these by filemtime instead of a hash.

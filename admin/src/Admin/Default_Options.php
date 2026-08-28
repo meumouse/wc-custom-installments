@@ -78,6 +78,7 @@ class Default_Options {
 			'custom_fee_installments' => array(),
 			'remove_price_range' => 'no',
 			'update_price_with_quantity' => 'yes',
+			'update_range_price_triggers' => '',
 		);
 	}
 
