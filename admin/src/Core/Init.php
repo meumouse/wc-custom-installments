@@ -249,11 +249,7 @@ class Init {
 					continue;
 				}
 
-				if ( false !== strpos( $class, 'Abstract' ) || false !== strpos( $class, 'Interface' ) || false !== strpos( $class, 'Trait' ) ) {
-					continue;
-				}
-
-				if ( self::class === $class ) {
+				if ( ! self::is_discoverable( $class ) ) {
 					continue;
 				}
 
@@ -272,6 +268,35 @@ class Init {
 		 * @return array<int,string>
 		 */
 		return (array) apply_filters( 'WC_Custom_Installments/Init/Instance_Classes', $classes );
+	}
+
+
+	/**
+	 * Whether a class should be built as a service on boot.
+	 *
+	 * Public and static because the Pro add-on hands its own classes to the
+	 * same instantiation pass, and applying a second copy of this rule is how
+	 * the two would drift apart.
+	 *
+	 * @since 1.0.0
+	 * @param string $class | Fully qualified class name
+	 * @return bool
+	 */
+	public static function is_discoverable( $class ) {
+		// Abstracts, interfaces and traits exist to be extended.
+		if ( false !== strpos( $class, 'Abstract' ) || false !== strpos( $class, 'Interface' ) || false !== strpos( $class, 'Trait' ) ) {
+			return false;
+		}
+
+		// A page-builder widget is constructed by its own manager, with the
+		// arguments that manager supplies. Building one here would produce a
+		// second, unregistered copy of every widget.
+		if ( false !== strpos( $class, '\\Widgets\\' ) ) {
+			return false;
+		}
+
+		// The bootstrap is already running; it does not boot itself.
+		return self::class !== $class;
 	}
 
 

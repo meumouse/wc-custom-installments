@@ -759,6 +759,87 @@ $GLOBALS['wp_test_meta'] = array();
 $GLOBALS['wp_test_is_product'] = false;
 $GLOBALS['wp_test_is_archive'] = false;
 
+if ( ! function_exists('add_shortcode') ) {
+	/**
+	 * Record a shortcode registration.
+	 *
+	 * @param string $tag | Shortcode tag
+	 * @param callable $callback | What renders it
+	 * @return void
+	 */
+	function add_shortcode( $tag, $callback ) {
+		$GLOBALS['wp_test_shortcodes'][ $tag ] = $callback;
+	}
+}
+
+if ( ! function_exists('shortcode_atts') ) {
+	/**
+	 * Merge shortcode attributes over their defaults.
+	 *
+	 * @param array $pairs | Supported attributes and defaults
+	 * @param array $atts | Provided attributes
+	 * @return array
+	 */
+	function shortcode_atts( $pairs, $atts ) {
+		return array_merge( $pairs, array_intersect_key( (array) $atts, $pairs ) );
+	}
+}
+
+if ( ! function_exists('update_post_meta') ) {
+	/**
+	 * Write product meta into the in-memory store.
+	 *
+	 * @param int $id | Object ID
+	 * @param string $key | Meta key
+	 * @param mixed $value | Value to store
+	 * @return bool
+	 */
+	function update_post_meta( $id, $key, $value ) {
+		$GLOBALS['wp_test_meta'][ $id ][ $key ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists('current_user_can') ) {
+	/**
+	 * Whether the current user may do something; always yes in the harness.
+	 *
+	 * @param string $capability | Capability name
+	 * @param mixed ...$args | Additional arguments
+	 * @return bool
+	 */
+	function current_user_can( $capability, ...$args ) {
+		return true;
+	}
+}
+
+if ( ! function_exists('absint') ) {
+	/**
+	 * Cast to a non-negative integer.
+	 *
+	 * @param mixed $value | Raw value
+	 * @return int
+	 */
+	function absint( $value ) {
+		return abs( (int) $value );
+	}
+}
+
+if ( ! function_exists('wp_unslash') ) {
+	/**
+	 * Undo the slashes WordPress adds to request data.
+	 *
+	 * @param mixed $value | Raw value
+	 * @return mixed
+	 */
+	function wp_unslash( $value ) {
+		return is_string( $value ) ? stripslashes( $value ) : $value;
+	}
+}
+
+$GLOBALS['wp_test_shortcodes'] = array();
+
 // The classes under test, loaded directly: the harness has no autoloader.
 require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
@@ -772,3 +853,6 @@ require_once __DIR__ . '/../admin/src/Admin/Settings/Repository.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Transfer.php';
 require_once __DIR__ . '/../admin/src/Core/Logger.php';
 require_once __DIR__ . '/../admin/src/Core/Migrator.php';
+require_once __DIR__ . '/../admin/src/Frontend/Components.php';
+require_once __DIR__ . '/../admin/src/Frontend/Render_Elements.php';
+require_once __DIR__ . '/../admin/src/Frontend/Shortcodes.php';

@@ -32,3 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Storefront runtime rewritten as vanilla ES modules: the instalment panel and dialog, live price updates on variation and quantity changes, and the checkout refresh when the payment method changes.
 - Client-side instalment calculation mirroring the server's, so a price that moves in the browser lands where the server would have put it.
 - `preview-storefront.html`, which exercises the runtime against the real markup with no WordPress.
+- Per-product overrides in the product data panel, plus quick edit and bulk edit, driven by a field registry an add-on can extend.
+- All fifteen shortcodes, free, under both the 5.x and the current tag prefix, and usable outside a product template through a `product` attribute.
+- Theme corrections for Astra, Ricky, Machic and Shoptimizer as a registry rather than a class each.
+- Integrations with Woodmart, Tiered Pricing Table and Dynamic Pricing & Discounts.
+- Elementor widgets for the price group and the instalment table, keeping their 5.x names.

@@ -361,6 +361,34 @@ class Helpers {
 
 
 	/**
+	 * Any published product, for a builder preview to render against.
+	 *
+	 * An editor has no product in the loop, and a widget with nothing to price
+	 * shows the designer an empty box they will read as a broken plugin.
+	 *
+	 * @since 1.0.0
+	 * @return \WC_Product|false
+	 */
+	public static function get_first_product() {
+		if ( ! class_exists('WC_Product_Query') ) {
+			return false;
+		}
+
+		$query = new \WC_Product_Query( array(
+			'limit' => 1,
+			'orderby' => 'date',
+			'order' => 'DESC',
+			'status' => 'publish',
+			'return' => 'objects',
+		) );
+
+		$products = $query->get_products();
+
+		return ! empty( $products ) ? $products[0] : false;
+	}
+
+
+	/**
 	 * Whether a page builder is rendering its editor right now.
 	 *
 	 * In an editor there is no real product and no real request, so the price
