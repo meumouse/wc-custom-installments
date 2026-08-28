@@ -1017,6 +1017,7 @@ require_once __DIR__ . '/../admin/src/Admin/Settings/Repository.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Transfer.php';
 require_once __DIR__ . '/../admin/src/Core/Logger.php';
 require_once __DIR__ . '/../admin/src/Core/Migrator.php';
+require_once __DIR__ . '/../admin/src/Compatibility/Conflict_Guard.php';
 require_once __DIR__ . '/../admin/src/Frontend/Components.php';
 require_once __DIR__ . '/../admin/src/Frontend/Render_Elements.php';
 require_once __DIR__ . '/../admin/src/Frontend/Shortcodes.php';

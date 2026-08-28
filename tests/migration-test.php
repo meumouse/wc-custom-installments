@@ -21,6 +21,7 @@ use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Transfer;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Compatibility\Conflict_Guard;
 use MeuMouse\WC_Custom_Installments\Core\Migrator;
 
 $passed = 0;
@@ -210,6 +211,30 @@ Repository::save_settings( array(
 check( 'a value over the maximum is clamped', '48', Repository::get('max_qtd_installments') );
 check( 'a negative rate is clamped to zero', '0', Repository::get('fee_installments_global') );
 check( 'a comma decimal is accepted', '20.5', Repository::get('min_value_installments') );
+
+echo PHP_EOL, 'Living beside the 5.x plugin', PHP_EOL;
+
+// Two plugins on woocommerce_get_price_html means the shopper sees the price
+// group twice, and - since each reads its own copy of the settings - sometimes
+// with two different discounts.
+check( 'no conflict on a clean install', false, Conflict_Guard::has_conflict() );
+
+$all = array(
+	'MeuMouse\WC_Custom_Installments\Frontend\Render_Elements',
+	'MeuMouse\WC_Custom_Installments\Frontend\Shortcodes',
+	'MeuMouse\WC_Custom_Installments\Assets\Storefront_Assets',
+	'MeuMouse\WC_Custom_Installments\Admin\Menu',
+	'MeuMouse\WC_Custom_Installments\Core\Migrator',
+);
+
+$kept = Conflict_Guard::withhold_storefront( $all );
+
+check( 'nothing that renders a price survives the guard', array(), array_values( array_intersect( $kept, Conflict_Guard::STOREFRONT_CLASSES ) ) );
+
+// The admin has to keep working: this is where the store owner reads the
+// notice and presses the button that resolves it.
+check( 'the settings screen still loads', true, in_array( 'MeuMouse\WC_Custom_Installments\Admin\Menu', $kept, true ) );
+check( 'and the importer still runs', true, in_array( 'MeuMouse\WC_Custom_Installments\Core\Migrator', $kept, true ) );
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 

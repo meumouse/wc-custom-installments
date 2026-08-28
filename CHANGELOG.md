@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Translation pipeline: 419 strings extracted from PHP and Vue into `wc-custom-installments.pot`.
 - `AGENTS.md`, `DEVELOPERS.md` and `docs/free-vs-pro.md`, the last two generated from the source so they cannot drift.
 - The `wcci_*` extension helpers, and a runnable example plugin using every extension point.
+- `Compatibility\Conflict_Guard`: while the 5.x plugin is still active, this one renders nothing on the storefront, explains why, and offers to switch the old one off.
 
 ### Fixed
 

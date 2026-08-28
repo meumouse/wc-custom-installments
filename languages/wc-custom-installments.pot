@@ -325,6 +325,10 @@ msgstr ""
 msgid "Custom Installments setup"
 msgstr ""
 
+#: admin/src/Compatibility/Conflict_Guard.php:138
+msgid "Deactivate the older plugin"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:656
 msgid "Debit card"
 msgstr ""
@@ -848,6 +852,12 @@ msgstr ""
 msgid ""
 "One rate per installment count. Leave a row empty to fall back to the "
 "global rate."
+msgstr ""
+
+#: admin/src/Compatibility/Conflict_Guard.php:132
+msgid ""
+"Only the older one is showing prices on your store. This one waits until "
+"the older plugin is deactivated, so shoppers never see the price twice."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:442
@@ -1433,6 +1443,10 @@ msgstr ""
 msgid "Turn the interest features on for the whole store."
 msgstr ""
 
+#: admin/src/Compatibility/Conflict_Guard.php:131
+msgid "Two versions of Custom Installments are active."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:825
 msgid ""
 "Typography, spacing and colours for each element of the price group, per "
@@ -1480,12 +1494,12 @@ msgstr ""
 msgid "View your shop"
 msgstr ""
 
-#: admin/src/Core/Init.php:399
+#: admin/src/Core/Init.php:404
 #. translators: 1: required PHP version, 2: current PHP version
 msgid "WC Custom Installments requires PHP %1$s or higher. This site runs PHP %2$s."
 msgstr ""
 
-#: admin/src/Core/Init.php:420
+#: admin/src/Core/Init.php:425
 #. translators: %s: required WooCommerce version
 msgid ""
 "WC Custom Installments requires WooCommerce %s or higher to be installed "
@@ -1597,6 +1611,7 @@ msgstr ""
 msgid "Yes, restore the defaults"
 msgstr ""
 
+#: admin/src/Compatibility/Conflict_Guard.php:157
 #: admin/src/Core/Onboarding.php:175
 msgid "You are not allowed to do that."
 msgstr ""
@@ -1607,6 +1622,10 @@ msgstr ""
 
 #: admin/src/Admin/Default_Options.php:186
 msgid "You will receive the payment details once you complete your order."
+msgstr ""
+
+#: admin/src/Compatibility/Conflict_Guard.php:126
+msgid "Your settings have already been imported, so nothing is lost by switching."
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:212
