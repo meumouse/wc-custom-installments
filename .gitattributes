@@ -1,0 +1,9 @@
+# Normalize line endings: the team develops on Windows, the servers are not.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.zip binary

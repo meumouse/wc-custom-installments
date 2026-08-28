@@ -1,0 +1,19 @@
+{
+	"name": "wc-custom-installments",
+	"private": true,
+	"version": "1.0.0",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"lint:php": "node scripts/lint-php.mjs",
+		"build": "node scripts/build.mjs",
+		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",
+		"build:app": "npm run build --prefix app",
+		"dev": "npm run dev --prefix app",
+		"release": "node scripts/build.mjs",
+		"deploy": "node scripts/deploy-svn.mjs",
+		"deploy:commit": "node scripts/deploy-svn.mjs --commit"
+	},
+	"devDependencies": {
+		"archiver": "^7.0.1"
+	}
+}

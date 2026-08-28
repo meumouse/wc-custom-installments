@@ -1,0 +1,118 @@
+<?php
+
+namespace MeuMouse\WC_Custom_Installments\Admin;
+
+use MeuMouse\WC_Custom_Installments\Core\Helpers;
+use MeuMouse\WC_Custom_Installments\Core\Onboarding;
+
+defined('ABSPATH') || exit;
+
+/**
+ * Register the plugin's admin screens.
+ *
+ * The settings screen sits under WooCommerce, where a store owner looks for it.
+ * The setup wizard is reachable by URL only: it is a one-off flow, not a
+ * destination that belongs in a menu.
+ *
+ * @since 1.0.0
+ * @package MeuMouse\WC_Custom_Installments\Admin
+ * @author MeuMouse.com
+ */
+class Menu {
+
+	/**
+	 * Admin page slug of the settings screen.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	const SETTINGS_PAGE = 'wc-custom-installments';
+
+
+	/**
+	 * Register the admin menu hooks.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function __construct() {
+		add_action( 'admin_menu', array( $this, 'register_menu' ), 20 );
+		add_filter( 'plugin_action_links_' . WC_CUSTOM_INSTALLMENTS_BASENAME, array( $this, 'add_action_links' ) );
+	}
+
+
+	/**
+	 * Add the settings screen and the hidden wizard screen.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function register_menu() {
+		add_submenu_page(
+			'woocommerce',
+			esc_html__( 'Custom Installments', 'wc-custom-installments' ),
+			esc_html__( 'Custom Installments', 'wc-custom-installments' ),
+			Helpers::capability(),
+			self::SETTINGS_PAGE,
+			array( $this, 'render_settings_page' )
+		);
+
+		add_submenu_page(
+			'',
+			esc_html__( 'Custom Installments setup', 'wc-custom-installments' ),
+			esc_html__( 'Custom Installments setup', 'wc-custom-installments' ),
+			Helpers::capability(),
+			Onboarding::PAGE,
+			array( $this, 'render_onboarding_page' )
+		);
+
+		// A submenu registered under an empty parent never lands in the global
+		// $submenu array, so core cannot resolve a title and admin-header.php
+		// ends up passing null to strip_tags(). Seed it before the header runs.
+		if ( Onboarding::PAGE === Helpers::current_admin_page() ) {
+			$GLOBALS['title'] = esc_html__( 'Custom Installments setup', 'wc-custom-installments' );
+		}
+	}
+
+
+	/**
+	 * Add a Settings link to the plugins list row.
+	 *
+	 * @since 1.0.0
+	 * @param array<int,string> $links | Existing action links
+	 * @return array<int,string>
+	 */
+	public function add_action_links( $links ) {
+		$settings = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'admin.php?page=' . self::SETTINGS_PAGE ) ),
+			esc_html__( 'Settings', 'wc-custom-installments' )
+		);
+
+		array_unshift( $links, $settings );
+
+		return $links;
+	}
+
+
+	/**
+	 * Render the settings screen shell.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function render_settings_page() {
+		require WC_CUSTOM_INSTALLMENTS_SRC . 'Views/settings.php';
+	}
+
+
+	/**
+	 * Render the setup wizard shell.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function render_onboarding_page() {
+		require WC_CUSTOM_INSTALLMENTS_SRC . 'Views/onboarding.php';
+	}
+}

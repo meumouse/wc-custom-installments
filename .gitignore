@@ -1,0 +1,10 @@
+.env
+node_modules/
+release/
+app/dist/
+admin/vendor/
+.claude
+.history
+
+# WordPress.org SVN working copy created by scripts/deploy-svn.mjs.
+.wporg-svn/
