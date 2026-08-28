@@ -6,8 +6,24 @@
  * @return {{request: Function, get: Function, post: Function}} Client helpers.
  */
 export function createApiClient(bootstrap) {
-  const root = bootstrap?.rest?.root || '';
+  const root = String(bootstrap?.rest?.root || '').replace(/\/+$/, '');
   const nonce = bootstrap?.rest?.nonce || '';
+
+  /**
+   * Join the REST root and an endpoint path.
+   *
+   * WordPress always hands over an absolute root, but `new URL(path, base)`
+   * throws outright on a relative base — which is what a preview harness or a
+   * test double is most likely to supply. Concatenating leaves both cases
+   * working and costs nothing.
+   *
+   * @since 1.0.0
+   * @param {string} path - Endpoint path, relative to the plugin namespace.
+   * @return {string} The URL to request.
+   */
+  function buildUrl(path) {
+    return `${root}/${String(path).replace(/^\/+/, '')}`;
+  }
 
   /**
    * Send a JSON request to the WordPress REST API.
@@ -18,9 +34,7 @@ export function createApiClient(bootstrap) {
    * @return {Promise<Object>} Parsed JSON response.
    */
   async function request(path, options = {}) {
-    const url = new URL(String(path).replace(/^\//, ''), `${root}/`);
-
-    const response = await fetch(url.toString(), {
+    const response = await fetch(buildUrl(path), {
       method: options.method || 'GET',
       headers: {
         Accept: 'application/json',

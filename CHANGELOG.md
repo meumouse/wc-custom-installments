@@ -20,3 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Core\Migrator`, which imports a 5.x installation - the main option plus the three sidecar options holding gateway rates and the interest table - without deleting anything it read.
 - `Admin\Settings\Transfer` and the reset, export and import endpoints.
 - Sanitization per declared field type, including clamped numbers, per-gateway rate maps and the per-installment interest table.
+- Settings screen: section tabs, cards, dependency-driven visibility, the Pro lock treatment and its upsell, a save bar that appears only while there are unsaved changes, toasts, and import/export/reset.
+- Component library: switch, input, textarea, select, button, colour input, section card and toast stack.
+- Field components for measurements, tokenised text, per-gateway rates and the interest table, resolved through a registry an add-on can extend.
+- `preview.html` and `tests/dump-bootstrap.php`, which render the real admin bundle against a generated fixture with no WordPress and no database.

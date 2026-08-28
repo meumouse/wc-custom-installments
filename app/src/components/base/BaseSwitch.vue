@@ -1,6 +1,6 @@
 <script setup>
 /**
- * ToggleSwitch.vue — an on/off control bound to the stored 'yes'/'no' strings.
+ * BaseSwitch.vue - an on/off control bound to the stored 'yes'/'no' strings.
  *
  * @since 1.0.0
  */
