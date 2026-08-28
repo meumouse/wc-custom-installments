@@ -134,6 +134,11 @@ class Init {
 			'WC_CUSTOM_INSTALLMENTS_DOCS_URL'   => 'https://ajuda.meumouse.com/docs/wc-custom-installments/overview',
 			'WC_CUSTOM_INSTALLMENTS_STORE_URL'  => 'https://meumouse.com/plugins/wc-custom-installments/',
 			'WC_CUSTOM_INSTALLMENTS_API_URL'    => 'https://cloud.meumouse.com',
+
+			// The MDS record id of the Pro add-on, which the trial form asks
+			// for a licence against. Empty means the trial step offers a link
+			// instead of a form, and nothing ever leaves the site.
+			'WC_CUSTOM_INSTALLMENTS_PRO_PRODUCT_ID' => '',
 		);
 
 		foreach ( $constants as $key => $value ) {

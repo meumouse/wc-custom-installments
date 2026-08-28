@@ -16,6 +16,19 @@ defined('ABSPATH') || define( 'ABSPATH', __DIR__ . '/' );
 
 define( 'WC_CUSTOM_INSTALLMENTS_VERSION', '1.0.0' );
 define( 'WC_CUSTOM_INSTALLMENTS_DEBUG_MODE', false );
+define( 'WC_CUSTOM_INSTALLMENTS_DEV_MODE', false );
+define( 'WC_CUSTOM_INSTALLMENTS_SLUG', 'wc-custom-installments' );
+define( 'WC_CUSTOM_INSTALLMENTS_REST', 'wc-custom-installments/v1' );
+define( 'WC_CUSTOM_INSTALLMENTS_ASSETS', 'https://example.test/wp-content/plugins/wc-custom-installments/assets/' );
+define( 'WC_CUSTOM_INSTALLMENTS_TEMPLATES', dirname( __DIR__ ) . '/templates/' );
+define( 'WC_CUSTOM_INSTALLMENTS_LANGUAGES', dirname( __DIR__ ) . '/languages' );
+define( 'WC_CUSTOM_INSTALLMENTS_DOCS_URL', 'https://ajuda.meumouse.com/docs/wc-custom-installments/overview' );
+define( 'WC_CUSTOM_INSTALLMENTS_STORE_URL', 'https://meumouse.com/plugins/wc-custom-installments/' );
+define( 'WC_CUSTOM_INSTALLMENTS_API_URL', 'https://cloud.meumouse.com' );
+
+// Empty on purpose: with no product configured the trial step offers a link
+// and never contacts anything, which is the state the preview should show.
+define( 'WC_CUSTOM_INSTALLMENTS_PRO_PRODUCT_ID', '' );
 
 $GLOBALS['wp_test_options'] = array();
 $GLOBALS['wp_test_filters'] = array();
@@ -840,6 +853,157 @@ if ( ! function_exists('wp_unslash') ) {
 
 $GLOBALS['wp_test_shortcodes'] = array();
 
+if ( ! function_exists('admin_url') ) {
+	/**
+	 * Build an admin URL.
+	 *
+	 * @param string $path | Path relative to the admin
+	 * @return string
+	 */
+	function admin_url( $path = '' ) {
+		return 'https://example.test/wp-admin/' . ltrim( (string) $path, '/' );
+	}
+}
+
+if ( ! function_exists('home_url') ) {
+	/**
+	 * Build a site URL.
+	 *
+	 * @param string $path | Path relative to the site root
+	 * @return string
+	 */
+	function home_url( $path = '' ) {
+		return 'https://example.test/' . ltrim( (string) $path, '/' );
+	}
+}
+
+if ( ! function_exists('rest_url') ) {
+	/**
+	 * Build a REST URL.
+	 *
+	 * @param string $path | REST namespace and route
+	 * @return string
+	 */
+	function rest_url( $path = '' ) {
+		return 'https://example.test/wp-json/' . ltrim( (string) $path, '/' );
+	}
+}
+
+if ( ! function_exists('esc_url_raw') ) {
+	/**
+	 * Sanitise a URL for storage.
+	 *
+	 * @param string $url | Raw URL
+	 * @return string
+	 */
+	function esc_url_raw( $url ) {
+		return (string) $url;
+	}
+}
+
+if ( ! function_exists('wp_create_nonce') ) {
+	/**
+	 * Build a nonce; the harness has no session to tie one to.
+	 *
+	 * @param string $action | Nonce action
+	 * @return string
+	 */
+	function wp_create_nonce( $action = '' ) {
+		return 'preview';
+	}
+}
+
+if ( ! function_exists('wc_get_price_decimal_separator') ) {
+	/**
+	 * The store's decimal separator.
+	 *
+	 * @return string
+	 */
+	function wc_get_price_decimal_separator() {
+		return ',';
+	}
+}
+
+if ( ! function_exists('wc_get_price_thousand_separator') ) {
+	/**
+	 * The store's thousand separator.
+	 *
+	 * @return string
+	 */
+	function wc_get_price_thousand_separator() {
+		return '.';
+	}
+}
+
+if ( ! function_exists('wp_parse_url') ) {
+	/**
+	 * Parse a URL.
+	 *
+	 * @param string $url | The URL
+	 * @param int $component | Which part to return
+	 * @return mixed
+	 */
+	function wp_parse_url( $url, $component = -1 ) {
+		return parse_url( $url, $component );
+	}
+}
+
+if ( ! function_exists('set_transient') ) {
+	/**
+	 * Store a transient in memory.
+	 *
+	 * @param string $name | Transient name
+	 * @param mixed $value | Value to store
+	 * @param int $ttl | Lifetime, ignored here
+	 * @return bool
+	 */
+	function set_transient( $name, $value, $ttl = 0 ) {
+		$GLOBALS['wp_test_transients'][ $name ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists('get_transient') ) {
+	/**
+	 * Read a transient.
+	 *
+	 * @param string $name | Transient name
+	 * @return mixed
+	 */
+	function get_transient( $name ) {
+		return $GLOBALS['wp_test_transients'][ $name ] ?? false;
+	}
+}
+
+if ( ! function_exists('delete_transient') ) {
+	/**
+	 * Remove a transient.
+	 *
+	 * @param string $name | Transient name
+	 * @return bool
+	 */
+	function delete_transient( $name ) {
+		unset( $GLOBALS['wp_test_transients'][ $name ] );
+
+		return true;
+	}
+}
+
+if ( ! function_exists('is_email') ) {
+	/**
+	 * Whether a string looks like an e-mail address.
+	 *
+	 * @param string $value | Raw value
+	 * @return bool
+	 */
+	function is_email( $value ) {
+		return (bool) filter_var( $value, FILTER_VALIDATE_EMAIL );
+	}
+}
+
+$GLOBALS['wp_test_transients'] = array();
+
 // The classes under test, loaded directly: the harness has no autoloader.
 require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
@@ -856,3 +1020,7 @@ require_once __DIR__ . '/../admin/src/Core/Migrator.php';
 require_once __DIR__ . '/../admin/src/Frontend/Components.php';
 require_once __DIR__ . '/../admin/src/Frontend/Render_Elements.php';
 require_once __DIR__ . '/../admin/src/Frontend/Shortcodes.php';
+require_once __DIR__ . '/../admin/src/Admin/Menu.php';
+require_once __DIR__ . '/../admin/src/Core/Onboarding.php';
+require_once __DIR__ . '/../admin/src/Admin/Onboarding/Trial.php';
+require_once __DIR__ . '/../admin/src/Admin/Onboarding/Registry.php';

@@ -73,6 +73,15 @@ $json = json_encode( $payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON
 
 file_put_contents( $target, $json );
 
+// The wizard reads a payload of its own, assembled by its registry.
+$onboarding = \MeuMouse\WC_Custom_Installments\Admin\Onboarding\Registry::get_bootstrap_data();
+$onboarding['rest'] = array( 'root' => '/preview-api', 'nonce' => 'preview' );
+
+file_put_contents(
+	dirname( __DIR__ ) . '/preview-onboarding.json',
+	json_encode( $onboarding, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES )
+);
+
 printf(
 	'Wrote %s (%d fields, %d locked).%s',
 	basename( $target ),

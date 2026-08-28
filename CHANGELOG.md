@@ -37,3 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Theme corrections for Astra, Ricky, Machic and Shoptimizer as a registry rather than a class each.
 - Integrations with Woodmart, Tiered Pricing Table and Dynamic Pricing & Discounts.
 - Elementor widgets for the price group and the instalment table, keeping their 5.x names.
+- Setup wizard: seven steps, each saving as you leave it, with a live preview of the price the choices produce.
+- A one-time redirect on activation and a dismissible reminder afterwards; the wizard stays reachable by URL.
+- An upgrading store skips straight to the summary rather than being walked through choices it already made.
+- Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.

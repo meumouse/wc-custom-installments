@@ -109,9 +109,10 @@ then serve the plugin directory and open either page.
 php tests/dump-bootstrap.php && python -m http.server 8791 --bind 127.0.0.1
 ```
 
-`preview.html` renders the settings screen against a generated fixture; `preview-storefront.html`
-renders the storefront runtime against the markup the PHP produces. Neither ships in the release
-package.
+`preview.html` renders the settings screen, `preview-onboarding.html` the setup wizard, and
+`preview-storefront.html` the storefront runtime against the markup the PHP produces. The wizard
+preview takes `?migrated=1` to show what an upgrading store sees, and `?trial=1` to exercise the
+trial form as if a product were configured. None of them ships in the release package.
 
 ## Documentation
 

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WC Custom Installments — setup wizard preview</title>
+    <link rel="stylesheet" href="./app/dist/styles/bootstrap.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      .preview-frame {
+        padding: 1.5rem;
+      }
+
+      .preview-note {
+        max-width: 48rem;
+        margin: 0 auto 1rem;
+        border-radius: 0.75rem;
+        background: #102033;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-frame">
+      <p class="preview-note">
+        Static harness. The payload is the real one from the onboarding registry; step saves are
+        stubbed. Append <code>?migrated=1</code> to see what an upgrading store gets.
+      </p>
+
+      <div id="wc-custom-installments-onboarding-app">
+        <div class="wcci-skeleton" style="height: 480px"></div>
+      </div>
+    </div>
+
+    <script>
+      window.wcCustomInstallmentsBootstrap = {
+        restUrl: '/preview-api',
+        nonce: 'preview',
+        page: 'onboarding',
+        endpoint: 'admin/onboarding',
+      };
+
+      window.wp = {
+        i18n: {
+          __: (text) => text,
+          _n: (single, plural, number) => (number === 1 ? single : plural),
+          sprintf: (message, ...args) => {
+            let index = 0;
+
+            // Handles both %s / %d and the positional %1$d form the page uses.
+            return String(message)
+              .replace(/%(\d+)\$[ds]/g, (match, position) => args[Number(position) - 1])
+              .replace(/%[ds]/g, () => args[index++]);
+          },
+        },
+      };
+
+      const realFetch = window.fetch.bind(window);
+      const flags = new URLSearchParams(location.search);
+      const migrated = flags.has('migrated');
+
+      // With no product id configured the trial step offers a link and sends
+      // nothing, which is the state the fixture carries. `?trial=1` stands in
+      // for a configured product so the form path can be exercised too.
+      const trialConfigured = flags.has('trial');
+
+      window.fetch = async (input, init) => {
+        const url = String(input);
+        const method = (init && init.method) || 'GET';
+
+        if (url.includes('/preview-api/admin/onboarding') && method === 'GET') {
+          const response = await realFetch('./preview-onboarding.json');
+          const payload = await response.json();
+
+          payload.migrated = migrated;
+
+          if (trialConfigured) {
+            payload.pro = {
+              ...payload.pro,
+              trial_available: true,
+              trial_days: 7,
+              api_host: 'cloud.meumouse.com',
+            };
+          }
+
+          return new Response(JSON.stringify(payload), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+
+        if (url.includes('/preview-api/admin/onboarding/step')) {
+          const body = init && init.body ? JSON.parse(init.body) : {};
+
+          return new Response(
+            JSON.stringify({ status: 'success', settings: body.settings || {}, state: {} }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } },
+          );
+        }
+
+        if (url.includes('/preview-api/admin/onboarding')) {
+          return new Response(JSON.stringify({ status: 'success', state: {} }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+
+        if (url.includes('/preview-api/trial')) {
+          return new Response(
+            JSON.stringify({
+              status: 'success',
+              trial: { license_key: 'MDS-PREVIEW-0000-0000', expires_at: '', email: '' },
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } },
+          );
+        }
+
+        return realFetch(input, init);
+      };
+    </script>
+
+    <script>
+      const moduleTag = document.createElement('script');
+
+      moduleTag.type = 'module';
+      moduleTag.src = `./app/dist/onboarding/app.js?t=${Date.now()}`;
+      document.body.appendChild(moduleTag);
+    </script>
+  </body>
+</html>
