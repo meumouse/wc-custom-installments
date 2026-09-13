@@ -396,8 +396,7 @@ class Init {
 	 * @return void
 	 */
 	public function php_version_notice() {
-		printf(
-			'<div class="notice notice-error"><p>%s</p></div>',
+		wp_admin_notice(
 			esc_html(
 				sprintf(
 					/* translators: 1: required PHP version, 2: current PHP version */
@@ -405,7 +404,8 @@ class Init {
 					self::MIN_PHP_VERSION,
 					PHP_VERSION
 				)
-			)
+			),
+			array( 'type' => 'error' )
 		);
 	}
 
@@ -417,15 +417,15 @@ class Init {
 	 * @return void
 	 */
 	public function woocommerce_notice() {
-		printf(
-			'<div class="notice notice-error"><p>%s</p></div>',
+		wp_admin_notice(
 			esc_html(
 				sprintf(
 					/* translators: %s: required WooCommerce version */
 					__( 'Custom Installments for WooCommerce requires WooCommerce %s or higher to be installed and active.', 'wc-custom-installments' ),
 					self::MIN_WC_VERSION
 				)
-			)
+			),
+			array( 'type' => 'error' )
 		);
 	}
 }

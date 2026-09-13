@@ -186,9 +186,9 @@ class Admin_Assets extends Abstract_Assets {
 	 * @return void
 	 */
 	public function missing_build_notice() {
-		printf(
-			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'The WC Custom Installments admin bundle is missing. Run "npm run build" in the app directory.', 'wc-custom-installments' )
+		wp_admin_notice(
+			esc_html__( 'The Custom Installments for WooCommerce admin bundle is missing. Run "npm run build" in the app directory.', 'wc-custom-installments' ),
+			array( 'type' => 'error' )
 		);
 	}
 

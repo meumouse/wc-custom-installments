@@ -148,8 +148,8 @@ class Onboarding {
 			return;
 		}
 
-		printf(
-			'<div class="notice notice-info"><p>%s</p><p><a class="button button-primary" href="%s">%s</a> <a class="button-link" href="%s">%s</a></p></div>',
+		$message = sprintf(
+			'<p>%s</p><p><a class="button button-primary" href="%s">%s</a> <a class="button-link" href="%s">%s</a></p>',
 			esc_html__( 'Finish setting up Custom Installments and your store will be showing instalment plans in about a minute.', 'wc-custom-installments' ),
 			esc_url( admin_url( 'admin.php?page=' . self::PAGE ) ),
 			esc_html__( 'Open the setup', 'wc-custom-installments' ),
@@ -159,6 +159,11 @@ class Onboarding {
 			) ),
 			esc_html__( 'Dismiss', 'wc-custom-installments' )
 		);
+
+		wp_admin_notice( $message, array(
+			'type' => 'info',
+			'paragraph_wrap' => false,
+		) );
 	}
 
 

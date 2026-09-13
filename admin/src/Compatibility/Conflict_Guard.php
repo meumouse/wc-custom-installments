@@ -126,17 +126,22 @@ class Conflict_Guard {
 			? esc_html__( 'Your settings have already been imported, so nothing is lost by switching.', 'wc-custom-installments' )
 			: '';
 
-		printf(
-			'<div class="notice notice-warning"><p><strong>%s</strong> %s</p><p>%s</p><p><a class="button button-primary" href="%s">%s</a></p></div>',
+		$message = sprintf(
+			'<p><strong>%s</strong> %s</p><p>%s</p><p><a class="button button-primary" href="%s">%s</a></p>',
 			esc_html__( 'Two versions of Custom Installments are active.', 'wc-custom-installments' ),
 			esc_html__( 'Only the older one is showing prices on your store. This one waits until the older plugin is deactivated, so shoppers never see the price twice.', 'wc-custom-installments' ),
-			$imported, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+			$imported,
 			esc_url( wp_nonce_url(
 				admin_url('admin-post.php?action=wc_custom_installments_deactivate_legacy'),
 				'wc_custom_installments_deactivate_legacy'
 			) ),
 			esc_html__( 'Deactivate the older plugin', 'wc-custom-installments' )
 		);
+
+		wp_admin_notice( $message, array(
+			'type' => 'warning',
+			'paragraph_wrap' => false,
+		) );
 	}
 
 
