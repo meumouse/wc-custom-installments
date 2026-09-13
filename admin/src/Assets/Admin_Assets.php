@@ -69,6 +69,7 @@ class Admin_Assets extends Abstract_Assets {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
 		add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 2 );
 		add_filter( 'load_script_translation_file', array( __CLASS__, 'resolve_script_translation_file' ), 10, 3 );
+		add_filter( 'admin_body_class', array( $this, 'add_body_class' ) );
 	}
 
 
@@ -189,5 +190,25 @@ class Admin_Assets extends Abstract_Assets {
 			'<div class="notice notice-error"><p>%s</p></div>',
 			esc_html__( 'The WC Custom Installments admin bundle is missing. Run "npm run build" in the app directory.', 'wc-custom-installments' )
 		);
+	}
+
+
+	/**
+	 * Flag our admin screens on the body.
+	 *
+	 * The admin stylesheet paints the page background from this class, so the
+	 * apps sit on the same ground as Joinotify's instead of wp-admin's grey,
+	 * and no other screen is touched.
+	 *
+	 * @since 6.0.0
+	 * @param string $classes | Space-separated body classes
+	 * @return string
+	 */
+	public function add_body_class( $classes ) {
+		if ( ! isset( $this->entries[ Helpers::current_admin_page() ] ) ) {
+			return $classes;
+		}
+
+		return trim( $classes . ' wc-custom-installments-screen' );
 	}
 }

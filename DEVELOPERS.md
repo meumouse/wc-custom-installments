@@ -99,7 +99,12 @@ add_filter( 'WC_Custom_Installments/Admin/Default_Options', function( $defaults 
 ```
 
 Field types: `toggle`, `text`, `number`, `textarea`, `select`, `color`, `unit`, `placeholder-text`,
-`gateway-rates`, `installment-fees`. A type the browser does not know renders as a text input.
+`gateway-rates`, `installment-fees`. A type the browser does not know renders as a text input, or,
+when its value is structured, as a note that the control comes with the Pro add-on.
+
+A section you append becomes a tab. Give it an `icon` by name — `'icon' => 'tag'` — and the settings
+screen draws it beside the title; the names are the ones `app/src/components/base/BaseIcon.vue`
+maps. Markup is never accepted there.
 
 Read a setting with `Repository::get( 'my_setting' )`. For a toggle, prefer
 `Repository::is_active( 'my_setting' )` — it answers false when the gating feature is unavailable,

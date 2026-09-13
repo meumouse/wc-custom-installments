@@ -9,34 +9,28 @@
  */
 import { ref } from 'vue';
 import BaseButton from '../../../../components/base/BaseButton.vue';
+import BaseConfirmDialog from '../../../../components/base/BaseConfirmDialog.vue';
+import BaseFileInput from '../../../../components/base/BaseFileInput.vue';
+import BaseNotice from '../../../../components/base/BaseNotice.vue';
 import { __ } from '../../../../utils/i18n';
 
-const props = defineProps({
+defineProps({
   resetting: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['export', 'import', 'reset']);
 
-const fileInput = ref(null);
 const confirmingReset = ref(false);
 
 /**
  * Read a chosen file and hand its parsed contents up.
  *
- * @since 1.0.0
- * @param {Event} event - The file input change event.
+ * @since 6.0.0
+ * @param {File} file - The chosen file.
  * @return {Promise<void>}
  */
-async function onFileChosen(event) {
-  const file = event.target?.files?.[0];
-
-  if (!file) {
-    return;
-  }
-
+async function onFileChosen(file) {
   const text = await file.text();
-
-  event.target.value = '';
 
   try {
     emit('import', JSON.parse(text));
@@ -44,50 +38,53 @@ async function onFileChosen(event) {
     emit('import', null);
   }
 }
+
+/**
+ * Reset, once confirmed.
+ *
+ * @since 6.0.0
+ * @return {void}
+ */
+function onConfirmReset() {
+  emit('reset');
+  confirmingReset.value = false;
+}
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="flex flex-wrap gap-2">
-      <BaseButton variant="secondary" @click="emit('export')">
-        {{ __('Export settings') }}
-      </BaseButton>
+  <div class="flex flex-col gap-4 py-6">
+    <BaseNotice :title="__('Back up or move your configuration')">
+      {{ __('Download every setting as a JSON file, or load one exported from another store.') }}
 
-      <BaseButton variant="secondary" @click="fileInput?.click()">
-        {{ __('Import settings') }}
-      </BaseButton>
-
-      <input
-        ref="fileInput"
-        type="file"
-        accept="application/json,.json"
-        class="hidden"
-        @change="onFileChosen"
-      />
-    </div>
-
-    <div class="rounded-lg border border-danger/20 bg-danger/5 p-4">
-      <p class="m-0 text-sm font-semibold text-ink">{{ __('Restore the defaults') }}</p>
-
-      <p class="mt-1 text-sm leading-relaxed text-muted">
-        {{ __('Every setting goes back to how it shipped. This cannot be undone, so export first if you might want it back.') }}
-      </p>
-
-      <div class="mt-3 flex flex-wrap gap-2">
-        <template v-if="confirmingReset">
-          <BaseButton variant="danger" :disabled="resetting" @click="emit('reset'); confirmingReset = false">
-            {{ resetting ? __('Restoring...') : __('Yes, restore the defaults') }}
-          </BaseButton>
-
-          <BaseButton variant="ghost" @click="confirmingReset = false">
-            {{ __('Cancel') }}
-          </BaseButton>
-        </template>
-
-        <BaseButton v-else variant="danger" @click="confirmingReset = true">
-          {{ __('Restore the defaults') }}
+      <template #actions>
+        <BaseButton variant="secondary" icon="download" @click="emit('export')">
+          {{ __('Export settings') }}
         </BaseButton>
-      </div>
-    </div>
+
+        <BaseFileInput accept="application/json,.json" @select="onFileChosen">
+          {{ __('Import settings') }}
+        </BaseFileInput>
+      </template>
+    </BaseNotice>
+
+    <BaseNotice tone="danger" :title="__('Restore the defaults')">
+      {{ __('Every setting goes back to how it shipped. This cannot be undone, so export first if you might want it back.') }}
+
+      <template #actions>
+        <BaseButton variant="danger-outline" icon="refresh" :loading="resetting" @click="confirmingReset = true">
+          {{ resetting ? __('Restoring...') : __('Restore the defaults') }}
+        </BaseButton>
+      </template>
+    </BaseNotice>
+
+    <BaseConfirmDialog
+      :open="confirmingReset"
+      :title="__('Restore the defaults?')"
+      :description="__('Every setting goes back to how it shipped. This cannot be undone, so export first if you might want it back.')"
+      :confirm-label="__('Yes, restore the defaults')"
+      :busy="resetting"
+      @confirm="onConfirmReset"
+      @cancel="confirmingReset = false"
+    />
   </div>
 </template>

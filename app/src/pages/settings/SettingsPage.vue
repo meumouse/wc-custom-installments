@@ -5,19 +5,27 @@
  * Everything rendered here comes from the schema the bootstrap returned. The
  * page knows nothing about individual settings: adding one is a backend change.
  *
- * @since 1.0.0
+ * Layout, as in Joinotify: the page header with the logo, one segmented tab per
+ * section, and a single panel holding the active section, with the save bar at
+ * its foot.
+ *
+ * @since 6.0.0
  */
-import { computed, ref } from 'vue';
-import SectionTabs from './components/SectionTabs.vue';
+import { computed, ref, watch } from 'vue';
 import SettingsActionBar from './components/SettingsActionBar.vue';
 import TransferCard from './components/cards/TransferCard.vue';
-import SectionCard from '../../components/cards/SectionCard.vue';
+import BaseBadge from '../../components/base/BaseBadge.vue';
+import BaseButton from '../../components/base/BaseButton.vue';
+import BaseTabs from '../../components/base/BaseTabs.vue';
+import FieldGroup from '../../components/fields/FieldGroup.vue';
 import FieldRenderer from '../../components/fields/FieldRenderer.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
+import SettingsPanel from '../../components/layout/SettingsPanel.vue';
 import ProUpsellModal from '../../components/pro/ProUpsellModal.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import { isVisible, useSettings } from '../../composables/useSettings';
 import { useToasts } from '../../composables/useToasts';
-import { __ } from '../../utils/i18n';
+import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
   bootstrap: { type: Object, required: true },
@@ -37,9 +45,46 @@ const {
 
 const { toasts, push, dismiss } = useToasts();
 
+// Remembered per browser, so a reload or a save lands back on the same tab.
+const STORAGE_KEY = 'wc-custom-installments-settings-section';
+
 const storeUrl = computed(() => props.bootstrap.pro?.store_url || '');
-const activeSection = ref(schema.value[0]?.id || '');
+const docsUrl = computed(() => props.bootstrap.pro?.docs_url || '');
+const version = computed(() => props.bootstrap.version || '');
 const upsellField = ref(null);
+
+const tabs = computed(() =>
+  schema.value.map((section) => ({ id: section.id, title: section.title, icon: section.icon || '' })),
+);
+
+/**
+ * Read the remembered tab, if the browser allows storage.
+ *
+ * @since 6.0.0
+ * @return {string} Section id, or an empty string.
+ */
+function readStoredSection() {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) || '';
+  } catch (error) {
+    return '';
+  }
+}
+
+const storedSection = readStoredSection();
+
+const activeSection = ref(
+  schema.value.some((section) => section.id === storedSection) ? storedSection : schema.value[0]?.id || '',
+);
+
+watch(activeSection, (id) => {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, id);
+  } catch (error) {
+    // Private windows and locked-down browsers refuse storage; the tab simply
+    // is not remembered.
+  }
+});
 
 const currentSection = computed(
   () => schema.value.find((section) => section.id === activeSection.value) || schema.value[0] || null,
@@ -136,55 +181,74 @@ async function onImport(document_) {
 </script>
 
 <template>
-  <div class="pb-24">
-    <header class="flex flex-wrap items-end justify-between gap-4 pb-6">
-      <div>
-        <h1 class="m-0 text-2xl font-bold text-ink">{{ __('Custom Installments') }}</h1>
-        <p class="mt-1 text-sm text-muted">
-          {{ __('Show installment plans, discounts and payment methods on your store.') }}
-        </p>
-      </div>
-    </header>
+  <div class="pb-10 pt-4">
+    <PageHeader :title="__('Settings')">
+      <template #description>
+        {{ __('Show installment plans, discounts and payment methods on your store.') }}
+        <BaseButton v-if="docsUrl" variant="link" :href="docsUrl" external class="ml-1 font-semibold underline">
+          {{ __('Read the documentation') }}
+        </BaseButton>
+      </template>
 
-    <SectionTabs :sections="schema" :active="activeSection" @select="activeSection = $event" />
+      <template #actions>
+        <BaseBadge v-if="version" tone="neutral">{{ sprintf(__('Version %s'), version) }}</BaseBadge>
+      </template>
+    </PageHeader>
 
-    <section v-if="currentSection" class="mt-6 flex flex-col gap-5">
-      <p v-if="currentSection.description" class="text-sm text-muted">
+    <BaseTabs
+      v-model="activeSection"
+      class="mt-10"
+      :tabs="tabs"
+      :aria-label="__('Settings sections')"
+      id-prefix="wcci-section"
+    />
+
+    <SettingsPanel
+      v-if="currentSection"
+      :id="`wcci-section-panel-${currentSection.id}`"
+      :labelled-by="`wcci-section-${currentSection.id}`"
+      class="mt-8"
+    >
+      <p v-if="currentSection.description" class="mb-10 max-w-3xl text-[15px] leading-6 text-slate-500">
         {{ currentSection.description }}
       </p>
 
-      <SectionCard
-        v-for="card in visibleCards"
-        :key="card.id"
-        :title="card.title"
-        :description="card.description"
-        :locked="Boolean(card.locked)"
-      >
-        <TransferCard
-          v-if="card.component === 'settings-transfer'"
-          :resetting="isResetting"
-          @export="onExport"
-          @import="onImport"
-          @reset="onReset"
-        />
-
-        <template v-else>
-          <FieldRenderer
-            v-for="field in (card.fields || []).filter((one) => isVisible(one, settings))"
-            :key="field.key"
-            v-model="settings[field.key]"
-            :unit-value="field.unit_key ? settings[field.unit_key] : ''"
-            :field="field"
-            :context="fieldContext"
-            :show-lock-badge="!card.locked"
-            @update:unit-value="field.unit_key ? (settings[field.unit_key] = $event) : null"
-            @locked-click="upsellField = $event"
+      <div class="flex flex-col gap-4">
+        <FieldGroup
+          v-for="card in visibleCards"
+          :key="card.id"
+          :title="card.title"
+          :description="card.description"
+          :locked="Boolean(card.locked)"
+        >
+          <TransferCard
+            v-if="card.component === 'settings-transfer'"
+            :resetting="isResetting"
+            @export="onExport"
+            @import="onImport"
+            @reset="onReset"
           />
-        </template>
-      </SectionCard>
-    </section>
 
-    <SettingsActionBar :dirty="isDirty" :saving="isSaving" @save="onSave" @discard="onDiscard" />
+          <template v-else>
+            <FieldRenderer
+              v-for="field in (card.fields || []).filter((one) => isVisible(one, settings))"
+              :key="field.key"
+              v-model="settings[field.key]"
+              :unit-value="field.unit_key ? settings[field.unit_key] : ''"
+              :field="field"
+              :context="fieldContext"
+              :show-lock-badge="!card.locked"
+              @update:unit-value="field.unit_key ? (settings[field.unit_key] = $event) : null"
+              @locked-click="upsellField = $event"
+            />
+          </template>
+        </FieldGroup>
+      </div>
+
+      <template #footer>
+        <SettingsActionBar :dirty="isDirty" :saving="isSaving" @save="onSave" @discard="onDiscard" />
+      </template>
+    </SettingsPanel>
 
     <ProUpsellModal :field="upsellField" :store-url="storeUrl" @close="upsellField = null" />
 

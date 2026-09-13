@@ -141,6 +141,7 @@ class Registry {
 	private static function section_installments() {
 		return array(
 			'id' => 'installments',
+			'icon' => 'credit-card',
 			'title' => __( 'Installments', 'wc-custom-installments' ),
 			'description' => __( 'How many installments the store offers, what they cost, and where they appear.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -302,6 +303,7 @@ class Registry {
 	private static function section_discounts() {
 		return array(
 			'id' => 'discounts',
+			'icon' => 'tag',
 			'title' => __( 'Discounts', 'wc-custom-installments' ),
 			'description' => __( 'Reward customers who pay upfront.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -570,6 +572,7 @@ class Registry {
 	private static function section_interests() {
 		return array(
 			'id' => 'interests',
+			'icon' => 'percentage',
 			'title' => __( 'Interest', 'wc-custom-installments' ),
 			'description' => __( 'Charge the processing cost of a payment method back to the order.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -622,6 +625,7 @@ class Registry {
 	private static function section_payment_methods() {
 		return array(
 			'id' => 'payment-methods',
+			'icon' => 'wallet',
 			'title' => __( 'Payment methods', 'wc-custom-installments' ),
 			'description' => __( 'The block of accepted payment methods shown on the product page.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -686,6 +690,7 @@ class Registry {
 	private static function section_texts() {
 		return array(
 			'id' => 'texts',
+			'icon' => 'paragraph',
 			'title' => __( 'Texts', 'wc-custom-installments' ),
 			'description' => __( 'Every piece of copy the plugin puts on the storefront.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -761,6 +766,7 @@ class Registry {
 	private static function section_styles() {
 		return array(
 			'id' => 'styles',
+			'icon' => 'palette',
 			'title' => __( 'Appearance', 'wc-custom-installments' ),
 			'description' => __( 'How the plugin looks inside your theme.', 'wc-custom-installments' ),
 			'cards' => array(
@@ -847,6 +853,7 @@ class Registry {
 	private static function section_advanced() {
 		return array(
 			'id' => 'advanced',
+			'icon' => 'cog',
 			'title' => __( 'Advanced', 'wc-custom-installments' ),
 			'description' => __( 'Integrations, structured data and maintenance.', 'wc-custom-installments' ),
 			'cards' => array(
