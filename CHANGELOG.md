@@ -5,7 +5,9 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.0.0] - Unreleased
+
+First release of the rebuilt plugin. The version continues the numbering of "Parcelas Customizadas para WooCommerce" 5.x, which this plugin replaces.
 
 ### Added
 
@@ -20,8 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Core\Migrator`, which imports a 5.x installation - the main option plus the three sidecar options holding gateway rates and the interest table - without deleting anything it read.
 - `Admin\Settings\Transfer` and the reset, export and import endpoints.
 - Sanitization per declared field type, including clamped numbers, per-gateway rate maps and the per-installment interest table.
-- Settings screen: section tabs, cards, dependency-driven visibility, the Pro lock treatment and its upsell, a save bar that appears only while there are unsaved changes, toasts, and import/export/reset.
-- Component library: switch, input, textarea, select, button, colour input, section card and toast stack.
+- Settings screen in the design system MeuMouse shares with Joinotify: a header carrying the plugin logo, one segmented tab per section with its icon, a single panel with the label beside each control, and a save bar that stays inside the panel instead of covering the WordPress menu. Dependency-driven visibility, the Pro lock treatment and its upsell, toasts, and import/export/reset with a confirmation dialog.
+- Component library: button and icon button, input and input group, searchable select, textarea, switch, checkbox, colour input, file input, label, badge, notice, modal and confirmation dialog, tabs, progress bar, stepper, code and form. Every other screen is assembled from these; `npm run lint:ui` fails the build if one renders a native control of its own.
+- Admin styles scoped to the plugin's screens: Tailwind's reset no longer reaches the WordPress menu, the admin bar or other plugins' notices.
 - Field components for measurements, tokenised text, per-gateway rates and the interest table, resolved through a registry an add-on can extend.
 - `preview.html` and `tests/dump-bootstrap.php`, which render the real admin bundle against a generated fixture with no WordPress and no database.
 - Instalment and discount engine ported from the 5.x plugin, with its rounding and both interest formulas intact.
@@ -37,12 +40,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Theme corrections for Astra, Ricky, Machic and Shoptimizer as a registry rather than a class each.
 - Integrations with Woodmart, Tiered Pricing Table and Dynamic Pricing & Discounts.
 - Elementor widgets for the price group and the instalment table, keeping their 5.x names.
-- Setup wizard: seven steps, each saving as you leave it, with a live preview of the price the choices produce.
+- Setup wizard: seven steps, each saving as you leave it, with a live preview of the price the choices produce. It wears the same header, logo and components as the settings screen.
 - A one-time redirect on activation and a dismissible reminder afterwards; the wizard stays reachable by URL.
 - An upgrading store skips straight to the summary rather than being walked through choices it already made.
 - Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.
 
-- Translation pipeline: 419 strings extracted from PHP and Vue into `wc-custom-installments.pot`.
+- Translation pipeline: 408 strings extracted from PHP and Vue into `wc-custom-installments.pot`, the plugin header included.
+- Brazilian Portuguese translation, shipped with the plugin until WordPress.org delivers a language pack. A Brazilian store sees the plugin under the name it already knows, "Parcelas Customizadas para WooCommerce".
+- The plugin is published as "Custom Installments for WooCommerce", with the slug and text domain `wc-custom-installments`. WordPress.org no longer accepts new slugs beginning with "woo".
+- Admin notices rendered through `wp_admin_notice()`.
 - `AGENTS.md`, `DEVELOPERS.md` and `docs/free-vs-pro.md`, the last two generated from the source so they cannot drift.
 - The `wcci_*` extension helpers, and a runnable example plugin using every extension point.
 - `Compatibility\Conflict_Guard`: while the 5.x plugin is still active, this one renders nothing on the storefront, explains why, and offers to switch the old one off.
