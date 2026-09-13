@@ -24,6 +24,7 @@ import Cog from '@boxicons/vue/Cog';
 import CreditCard from '@boxicons/vue/CreditCard';
 import Crown from '@boxicons/vue/Crown';
 import InfoCircle from '@boxicons/vue/InfoCircle';
+import Key from '@boxicons/vue/Key';
 import Link from '@boxicons/vue/Link';
 import Lock from '@boxicons/vue/Lock';
 import Palette from '@boxicons/vue/Palette';
@@ -52,6 +53,7 @@ const ICONS = {
   'credit-card': CreditCard,
   crown: Crown,
   'info-circle': InfoCircle,
+  key: Key,
   link: Link,
   lock: Lock,
   palette: Palette,

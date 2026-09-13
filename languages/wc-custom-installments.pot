@@ -277,7 +277,7 @@ msgstr ""
 msgid "Corner radius"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:161
+#: app/src/pages/settings/SettingsPage.vue:189
 msgid "Could not export the settings."
 msgstr ""
 
@@ -1078,7 +1078,7 @@ msgid "Quantity discount message"
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:219
-#: app/src/pages/settings/SettingsPage.vue:189
+#: app/src/pages/settings/SettingsPage.vue:217
 msgid "Read the documentation"
 msgstr ""
 
@@ -1202,7 +1202,7 @@ msgid "Set the interest of each installment"
 msgstr ""
 
 #: admin/src/Admin/Menu.php:89
-#: app/src/pages/settings/SettingsPage.vue:185
+#: app/src/pages/settings/SettingsPage.vue:213
 msgid "Settings"
 msgstr ""
 
@@ -1221,7 +1221,7 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:202
+#: app/src/pages/settings/SettingsPage.vue:230
 msgid "Settings sections"
 msgstr ""
 
@@ -1263,7 +1263,7 @@ msgstr ""
 msgid "Show exactly what is sent"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:187
+#: app/src/pages/settings/SettingsPage.vue:215
 msgid "Show installment plans, discounts and payment methods on your store."
 msgstr ""
 
@@ -1408,7 +1408,7 @@ msgid "That file carries no settings."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:60
-#: app/src/pages/settings/SettingsPage.vue:174
+#: app/src/pages/settings/SettingsPage.vue:202
 msgid "That file could not be read as settings."
 msgstr ""
 
@@ -1540,6 +1540,16 @@ msgstr ""
 msgid "This screen could not start. Please reload the page."
 msgstr ""
 
+#: app/src/components/sections/ExternalSection.vue:116
+msgid ""
+"This section comes from an add-on that did not load. Reload the page, or "
+"check that the add-on is active and up to date."
+msgstr ""
+
+#: app/src/components/sections/ExternalSection.vue:120
+msgid "This section could not be displayed. Reload the page and try again."
+msgstr ""
+
 #: admin/src/Integrations/Elementor/Widgets/Abstract_Widget.php:79
 msgid "This widget needs a feature your licence does not currently cover."
 msgstr ""
@@ -1630,7 +1640,7 @@ msgstr ""
 msgid "Variable products"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:194
+#: app/src/pages/settings/SettingsPage.vue:222
 msgid "Version %s"
 msgstr ""
 

@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "x-domain: wc-custom-installments\n"
-"PO-Revision-Date: 2026-09-13 17:38:52+0000\n"
+"PO-Revision-Date: 2026-09-13 22:15:14+0000\n"
 "Last-Translator: MeuMouse.com\n"
 "Language-Team: Portuguese (Brazil)\n"
 "Language: pt_BR\n"
@@ -299,7 +299,7 @@ msgstr ""
 msgid "Corner radius"
 msgstr "Arredondamento dos cantos"
 
-#: app/src/pages/settings/SettingsPage.vue:161
+#: app/src/pages/settings/SettingsPage.vue:189
 msgid "Could not export the settings."
 msgstr "Não foi possível exportar as configurações."
 
@@ -1129,7 +1129,7 @@ msgid "Quantity discount message"
 msgstr "Mensagem de desconto por quantidade"
 
 #: app/src/pages/onboarding/OnboardingPage.vue:219
-#: app/src/pages/settings/SettingsPage.vue:189
+#: app/src/pages/settings/SettingsPage.vue:217
 msgid "Read the documentation"
 msgstr "Ler a documentação"
 
@@ -1263,7 +1263,7 @@ msgid "Set the interest of each installment"
 msgstr "Definir os juros de cada parcela"
 
 #: admin/src/Admin/Menu.php:89
-#: app/src/pages/settings/SettingsPage.vue:185
+#: app/src/pages/settings/SettingsPage.vue:213
 msgid "Settings"
 msgstr "Configurações"
 
@@ -1282,7 +1282,7 @@ msgstr "Configurações restauradas para o padrão."
 msgid "Settings saved."
 msgstr "Configurações salvas."
 
-#: app/src/pages/settings/SettingsPage.vue:202
+#: app/src/pages/settings/SettingsPage.vue:230
 msgid "Settings sections"
 msgstr "Seções de configurações"
 
@@ -1326,7 +1326,7 @@ msgstr ""
 msgid "Show exactly what is sent"
 msgstr "Mostrar exatamente o que é enviado"
 
-#: app/src/pages/settings/SettingsPage.vue:187
+#: app/src/pages/settings/SettingsPage.vue:215
 msgid "Show installment plans, discounts and payment methods on your store."
 msgstr "Exiba parcelamentos, descontos e formas de pagamento na sua loja."
 
@@ -1477,7 +1477,7 @@ msgid "That file carries no settings."
 msgstr "Esse arquivo não contém configurações."
 
 #: admin/src/Admin/Settings/Transfer.php:60
-#: app/src/pages/settings/SettingsPage.vue:174
+#: app/src/pages/settings/SettingsPage.vue:202
 msgid "That file could not be read as settings."
 msgstr "Não foi possível ler esse arquivo como configurações."
 
@@ -1621,6 +1621,18 @@ msgstr ""
 msgid "This screen could not start. Please reload the page."
 msgstr "Não foi possível iniciar esta tela. Recarregue a página."
 
+#: app/src/components/sections/ExternalSection.vue:116
+msgid ""
+"This section comes from an add-on that did not load. Reload the page, or "
+"check that the add-on is active and up to date."
+msgstr ""
+"Esta seção vem de um complemento que não carregou. Recarregue a página ou "
+"verifique se o complemento está ativo e atualizado."
+
+#: app/src/components/sections/ExternalSection.vue:120
+msgid "This section could not be displayed. Reload the page and try again."
+msgstr "Não foi possível exibir esta seção. Recarregue a página e tente novamente."
+
 #: admin/src/Integrations/Elementor/Widgets/Abstract_Widget.php:79
 msgid "This widget needs a feature your licence does not currently cover."
 msgstr "Este widget precisa de um recurso que sua licença não cobre no momento."
@@ -1717,7 +1729,7 @@ msgstr "Controle da faixa de preço de produtos variáveis"
 msgid "Variable products"
 msgstr "Produtos variáveis"
 
-#: app/src/pages/settings/SettingsPage.vue:194
+#: app/src/pages/settings/SettingsPage.vue:222
 msgid "Version %s"
 msgstr "Versão %s"
 

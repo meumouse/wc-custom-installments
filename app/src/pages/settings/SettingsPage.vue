@@ -22,6 +22,7 @@ import FieldRenderer from '../../components/fields/FieldRenderer.vue';
 import PageHeader from '../../components/layout/PageHeader.vue';
 import SettingsPanel from '../../components/layout/SettingsPanel.vue';
 import ProUpsellModal from '../../components/pro/ProUpsellModal.vue';
+import ExternalSection from '../../components/sections/ExternalSection.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import { isVisible, useSettings } from '../../composables/useSettings';
 import { useToasts } from '../../composables/useToasts';
@@ -71,11 +72,30 @@ function readStoredSection() {
   }
 }
 
-const storedSection = readStoredSection();
+/**
+ * The tab to open first.
+ *
+ * A `?section=` in the address wins, so a link can land on a given tab — the
+ * add-on's licence notices and its old page redirect there. Otherwise the tab
+ * remembered from the last visit, and failing that the first one.
+ *
+ * @since 6.0.0
+ * @return {string} Section id.
+ */
+function initialSection() {
+  const exists = (id) => Boolean(id) && schema.value.some((section) => section.id === id);
+  const requested = new URLSearchParams(window.location.search).get('section') || '';
 
-const activeSection = ref(
-  schema.value.some((section) => section.id === storedSection) ? storedSection : schema.value[0]?.id || '',
-);
+  if (exists(requested)) {
+    return requested;
+  }
+
+  const stored = readStoredSection();
+
+  return exists(stored) ? stored : schema.value[0]?.id || '';
+}
+
+const activeSection = ref(initialSection());
 
 watch(activeSection, (id) => {
   try {
@@ -93,6 +113,14 @@ const currentSection = computed(
 const visibleCards = computed(() =>
   (currentSection.value?.cards || []).filter((card) => isVisible(card, settings)),
 );
+
+// An add-on section holds no settings, so the save bar has nothing to do there
+// — unless changes made on another tab are still waiting, which must not be
+// lost by wandering over here.
+const showsActionBar = computed(() => !currentSection.value?.component || isDirty.value);
+
+// What an add-on section needs to talk to the REST API on its own.
+const sectionContext = computed(() => ({ rest: props.bootstrap.rest || {} }));
 
 // The interest table renders one row per installment the store offers, so it
 // has to follow that setting as the reader changes it.
@@ -213,7 +241,14 @@ async function onImport(document_) {
         {{ currentSection.description }}
       </p>
 
-      <div class="flex flex-col gap-4">
+      <ExternalSection
+        v-if="currentSection.component"
+        :key="currentSection.id"
+        :name="currentSection.component"
+        :context="sectionContext"
+      />
+
+      <div v-else class="flex flex-col gap-4">
         <FieldGroup
           v-for="card in visibleCards"
           :key="card.id"
@@ -245,7 +280,7 @@ async function onImport(document_) {
         </FieldGroup>
       </div>
 
-      <template #footer>
+      <template v-if="showsActionBar" #footer>
         <SettingsActionBar :dirty="isDirty" :saving="isSaving" @save="onSave" @discard="onDiscard" />
       </template>
     </SettingsPanel>

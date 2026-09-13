@@ -69,7 +69,7 @@ function onKeydown(event, index) {
 </script>
 
 <template>
-  <div class="max-w-full overflow-x-auto">
+  <div class="max-w-full overflow-x-auto [scrollbar-width:thin]">
     <div
       ref="list"
       role="tablist"
@@ -93,7 +93,13 @@ function onKeydown(event, index) {
         :class="
           variant === 'segmented'
             ? [
-                'min-w-[150px] px-6 py-5 text-[14px] uppercase tracking-wide xl:min-w-[165px] xl:text-[15px]',
+                'uppercase tracking-wide',
+                // Joinotify's roomy tabs fit five or six across a wp-admin
+                // screen. Past that — an add-on appends its own — they tighten
+                // until the screen is wide enough for the full size.
+                tabs.length > 6
+                  ? 'px-4 py-4 text-[13px] 2xl:min-w-[150px] 2xl:px-6 2xl:py-5 2xl:text-[15px]'
+                  : 'min-w-[150px] px-6 py-5 text-[14px] xl:min-w-[165px] xl:text-[15px]',
                 index > 0 ? 'border-l border-[#dbdee1]' : '',
                 index === 0 ? 'rounded-l-[8px]' : '',
                 index === tabs.length - 1 ? 'rounded-r-[8px]' : '',
