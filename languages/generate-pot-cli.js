@@ -385,6 +385,35 @@ function extractStringsFromFile(filePath) {
   return results;
 }
 
+// The plugin header fields WordPress translates on the Plugins screen, in the
+// order `wp i18n make-pot` writes them. Without them in the catalogue the
+// plugin keeps its English name in every locale.
+const PLUGIN_HEADERS = ["Plugin Name", "Plugin URI", "Description", "Author", "Author URI"];
+
+function extractPluginHeaders() {
+  const mainFile = path.join(PLUGIN_ROOT, `${TEXT_DOMAIN}.php`);
+  const source = fs.readFileSync(mainFile, "utf8");
+  const header = source.slice(0, 8192);
+  const results = [];
+
+  for (const name of PLUGIN_HEADERS) {
+    const match = header.match(new RegExp(`^[ \\t/*#@]*${name}:(.*)$`, "mi"));
+    const value = match ? match[1].trim() : "";
+
+    if (!value) {
+      continue;
+    }
+
+    results.push({
+      msgid: value,
+      translatorsComment: `${name} of the plugin`,
+      reference: `${TEXT_DOMAIN}.php`,
+    });
+  }
+
+  return results;
+}
+
 function buildPotData(entries) {
   const translations = { "": {} };
 
@@ -443,7 +472,7 @@ function buildPotData(entries) {
 
 function main() {
   const files = walkFiles(PLUGIN_ROOT);
-  const extractedEntries = files.flatMap(extractStringsFromFile);
+  const extractedEntries = [...extractPluginHeaders(), ...files.flatMap(extractStringsFromFile)];
   const dedupedEntries = extractedEntries.sort((left, right) => {
     if (left.msgid !== right.msgid) {
       return left.msgid.localeCompare(right.msgid);

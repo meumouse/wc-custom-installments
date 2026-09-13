@@ -36,11 +36,10 @@ const STATIC_IMPORT_PATTERN =
 // `import("y")`.
 const DYNAMIC_IMPORT_PATTERN = /\bimport\s*\(\s*["']([^"']+)["']\s*\)/g;
 
-// Entries whose handle cannot be read from a `mountPage()` call. The OTP login
-// widget is a public-facing bundle that mounts its own Vue apps, and its handle
-// lives in PHP (Otp_Login\Frontend_Assets::HANDLE).
+// Entries whose handle cannot be read from a `mountPage()` call. The storefront
+// runtime mounts no app; its handle lives in PHP (Assets\Storefront_Assets).
 const HANDLE_OVERRIDES = {
-  "src/entries/otp-login.js": "wc-custom-installments-otp-login",
+  "src/entries/storefront.js": "wc-custom-installments-storefront",
 };
 
 const MOUNT_PAGE_PATTERN = /mountPage\(\s*["']([^"']+)["']/;

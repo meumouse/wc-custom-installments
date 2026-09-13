@@ -21,10 +21,10 @@
  *   --engine=<name>       Translation engine for --translate (default: openai).
  *   --no-install          Skip dependency install steps (npm ci / composer install deps).
  *   --no-zip              Stage files but don't create the .zip.
- *   --ship-locales        Also ship the compiled locales (.po/.mo/.l10n.php/.json).
- *                         Off by default: WordPress.org serves translations from
- *                         translate.wordpress.org, and its reviewers ask that the
- *                         package carry only wc-custom-installments.pot — see languageFilter().
+ *   --ship-locales        Ship every compiled locale (.po/.mo/.l10n.php/.json).
+ *   --pot-only            Ship wc-custom-installments.pot alone, with no locale.
+ *                         By default the package carries the .pot plus pt_BR —
+ *                         see languageFilter().
  */
 
 import { spawnSync } from 'node:child_process';
@@ -47,6 +47,12 @@ const slug = 'wc-custom-installments';
 // root (see .env.example); the child processes inherit them from here.
 loadEnv(root);
 
+// Locales the package carries by default. pt_BR ships until translate.wordpress.org
+// delivers a language pack of its own: the installed base is Brazilian, and without
+// it the plugin — its name included — would read in English on every one of those
+// stores. A language pack, once it exists, takes precedence over the bundled file.
+const BUNDLED_LOCALES = ['pt_BR'];
+
 const releaseDir = path.join(root, 'release');
 const stagingDir = path.join(releaseDir, slug);
 
@@ -68,9 +74,8 @@ const opts = {
 	engine: getOpt('--engine', 'openai'),
 	install: !hasFlag('--no-install'),
 	zip: !hasFlag('--no-zip'),
-	// WordPress.org distributes translations itself, so the package ships the
-	// .pot alone unless a build explicitly asks for the compiled locales.
-	potOnly: !hasFlag('--ship-locales'),
+	// Which compiled locales ship beside the .pot; null means every one.
+	locales: hasFlag('--pot-only') ? [] : hasFlag('--ship-locales') ? null : BUNDLED_LOCALES,
 };
 
 /* ---------------------------------------------------------------- helpers */
@@ -155,13 +160,16 @@ const languageFilter = (src) => {
 		return true;
 	}
 
-	// Only wc-custom-installments.pot ships. WordPress.org generates and delivers every locale
-	// from translate.wordpress.org, and bundling compiled catalogues duplicates
-	// that channel — the plugin review team asks for them to be left out. Pass
-	// --ship-locales to build a package that carries them, which is what installs
-	// outside the directory need, since they get no language packs.
-	if (opts.potOnly && path.extname(name) !== '.pot') {
-		return false;
+	// The template always ships. A compiled catalogue ships only for a bundled
+	// locale (see BUNDLED_LOCALES): WordPress.org delivers the rest from
+	// translate.wordpress.org. --ship-locales packs every one, which is what
+	// installs outside the directory need; --pot-only packs none.
+	if (path.extname(name) !== '.pot' && opts.locales !== null) {
+		const locale = new RegExp(`^${slug}-([a-z]{2,3}(?:_[A-Z]{2})?)[.-]`).exec(name)?.[1];
+
+		if (!locale || !opts.locales.includes(locale)) {
+			return false;
+		}
 	}
 
 	// Keep .l10n.php and friends; drop the *-cli.js pipeline scripts.
@@ -287,10 +295,10 @@ async function stageFiles() {
 	// Static assets.
 	await copyDir('assets', 'assets', baseFilter);
 
-	// PHP templates read at runtime through JOINOTIFY_DIR (the OTP login
-	// partials). Templates::render() returns silently when a file is missing,
-	// so leaving these out produced a package where the OTP screens rendered
-	// nothing at all, with no error to point at the cause.
+	// PHP templates read at runtime (the single-product price override).
+	// Frontend\Templates returns silently when a file is missing, so leaving
+	// these out would produce a package that renders nothing where the template
+	// is used, with no error to point at the cause.
 	await copyDir('templates', 'templates', baseFilter);
 
 	// Compiled translation artifacts only.
@@ -338,8 +346,10 @@ async function main() {
 	const version = await resolveVersion(root, slug, warn);
 	console.log(`\n\x1b[1mBuilding ${slug} v${version}\x1b[0m\n`);
 
-	if (!opts.potOnly) {
-		log('Translations: shipping the compiled locales alongside wc-custom-installments.pot.');
+	if (opts.locales === null) {
+		log('Translations: shipping every compiled locale alongside the .pot.');
+	} else {
+		log(`Translations: shipping the .pot${opts.locales.length ? ` plus ${opts.locales.join(', ')}` : ' alone'}.`);
 	}
 
 	// The UI rule of AGENTS.md §7 is checked before anything is built, so a

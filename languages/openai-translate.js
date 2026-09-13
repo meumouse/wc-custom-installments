@@ -2,7 +2,7 @@
  * AI translation engine backed by the OpenAI Chat Completions API.
  *
  * Unlike a plain machine-translation service, the model is instructed to
- * preserve sprintf placeholders, HTML markup, WC Custom Installments template tokens and
+ * preserve sprintf placeholders, HTML markup, the plugin's copy tokens and
  * brand names, and to detect the source language per string (the POT mixes
  * Portuguese legacy strings with English frontend strings).
  *
@@ -21,7 +21,7 @@ function sleep(ms) {
 
 function buildSystemPrompt(targetLanguage) {
   return [
-    "You are a professional software localizer for WC Custom Installments, a WordPress plugin that automates WhatsApp messaging.",
+    "You are a professional software localizer for Custom Installments for WooCommerce, a WooCommerce plugin that displays installment plans, upfront-payment discounts and accepted payment methods on product pages.",
     `Translate each UI string into ${targetLanguage} (natural, concise, as used in software interfaces).`,
     "",
     "Strict rules:",
@@ -29,7 +29,9 @@ function buildSystemPrompt(targetLanguage) {
     `- If a string is already written in ${targetLanguage}, return it unchanged.`,
     "- Preserve EXACTLY, without translating or reordering: sprintf placeholders (%s, %d, %1$s, %2$s, %%), HTML tags and their attributes (e.g. <span class=\"builder-placeholder\">), HTML entities, URLs, email addresses, and template tokens such as {{ field_id=[FIELD_ID] }}.",
     "- Keep leading and trailing whitespace, line breaks and surrounding punctuation identical to the source.",
-    "- Do NOT translate brand/product names: WC Custom Installments, WhatsApp, WooCommerce, WPForms, Elementor, PayPal, Pix, Flexify Checkout, OpenAI, ChatGPT, MeuMouse.com.",
+    "- Do NOT translate brand/product names: WooCommerce, Elementor, PayPal, Pix, Mercado Pago, PagSeguro, Stripe, MeuMouse.com.",
+    "- The plugin name is translated: in Portuguese (Brazil), \"Custom Installments for WooCommerce\" is \"Parcelas Customizadas para WooCommerce\" and \"Custom Installments\" is \"Parcelas Customizadas\".",
+    "- Keep the copy tokens {{ parcelas }}, {{ valor }}, {{ juros }} and any other {{ … }} token exactly as written.",
     "- Translate UI text only. Never add explanations, quotes or extra characters.",
     "",
     "You will receive a JSON object whose values are strings keyed by numeric ids.",
