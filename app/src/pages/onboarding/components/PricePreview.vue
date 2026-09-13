@@ -8,6 +8,7 @@
  * @since 6.0.0
  */
 import { computed } from 'vue';
+import BaseBadge from '../../../components/base/BaseBadge.vue';
 import { __, sprintf } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -68,24 +69,21 @@ const discounted = computed(() => {
 </script>
 
 <template>
-  <div class="rounded-xl border border-shell-100 bg-shell-50 p-5">
-    <p class="m-0 mb-3 text-[11px] font-bold uppercase tracking-wide text-muted">
+  <div class="rounded-lg border border-slate-200 bg-slate-50/80 p-5">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-shell-500">
       {{ __('Preview') }}
     </p>
 
     <div class="flex flex-col items-start gap-2">
       <span class="text-xl font-semibold text-ink">{{ money(price) }}</span>
 
-      <span class="text-sm text-ink">
+      <span class="text-[14px] text-slate-700">
         {{ sprintf(__('Up to %dx of %s interest free'), best.count, money(best.value)) }}
       </span>
 
-      <span
-        v-if="discounted !== null"
-        class="rounded-md bg-success/15 px-3 py-1.5 text-sm font-medium text-success"
-      >
+      <BaseBadge v-if="discounted !== null" tone="success" class="!text-[13px] !normal-case !tracking-normal">
         {{ sprintf(__('%s paying upfront'), money(discounted)) }}
-      </span>
+      </BaseBadge>
     </div>
   </div>
 </template>

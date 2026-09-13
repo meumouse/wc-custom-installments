@@ -10,7 +10,11 @@
  */
 import { computed, reactive, ref } from 'vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
+import BaseCode from '../../../components/base/BaseCode.vue';
+import BaseForm from '../../../components/base/BaseForm.vue';
 import BaseInput from '../../../components/base/BaseInput.vue';
+import BaseLabel from '../../../components/base/BaseLabel.vue';
+import BaseNotice from '../../../components/base/BaseNotice.vue';
 import { __, sprintf } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -30,6 +34,14 @@ const canSubmit = computed(() =>
 );
 
 const payload = computed(() => JSON.stringify({ productId: '…', ...form }, null, 2));
+
+// The four fields, described once: the form renders them from this list.
+const FIELDS = [
+  { key: 'first_name', label: () => __('First name'), type: 'text', autocomplete: 'given-name' },
+  { key: 'last_name', label: () => __('Last name'), type: 'text', autocomplete: 'family-name' },
+  { key: 'email', label: () => __('E-mail'), type: 'email', autocomplete: 'email' },
+  { key: 'phone', label: () => __('Phone'), type: 'tel', autocomplete: 'tel' },
+];
 
 /**
  * Ask for the trial.
@@ -60,99 +72,80 @@ async function submit() {
 </script>
 
 <template>
-  <div v-if="pro.active" class="rounded-xl border border-shell-100 bg-shell-50 p-5 text-sm text-muted">
+  <BaseNotice v-if="pro.active" tone="info">
     {{ __('The Pro add-on is already installed on this site.') }}
-  </div>
+  </BaseNotice>
 
-  <div v-else-if="trial" class="rounded-xl border border-success/30 bg-success/5 p-5">
-    <p class="m-0 text-sm font-semibold text-ink">{{ __('Your trial is ready.') }}</p>
+  <BaseNotice v-else-if="trial" tone="success" :title="__('Your trial is ready.')">
+    <p>{{ __('A copy is on its way to your inbox. Install the Pro add-on and paste this key into its licence screen.') }}</p>
 
-    <p class="mt-1 text-sm text-muted">
-      {{ __('A copy is on its way to your inbox. Install the Pro add-on and paste this key into its licence screen.') }}
-    </p>
+    <div class="mt-3">
+      <BaseCode>{{ trial.license_key }}</BaseCode>
+    </div>
 
-    <code class="mt-3 block break-all rounded-lg bg-white px-3 py-2 font-mono text-sm text-ink">
-      {{ trial.license_key }}
-    </code>
-
-    <a
-      :href="pro.store_url"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-3 inline-block text-sm font-semibold text-primary"
-    >
-      {{ __('Download the Pro add-on') }}
-    </a>
-  </div>
+    <template #actions>
+      <BaseButton :href="pro.store_url" external icon="download">
+        {{ __('Download the Pro add-on') }}
+      </BaseButton>
+    </template>
+  </BaseNotice>
 
   <!-- With no product configured there is nothing to ask for, so the step
        offers a link and sends nothing. -->
-  <div v-else-if="!pro.trial_available" class="rounded-xl border border-shell-100 bg-shell-50 p-5">
-    <p class="m-0 text-sm text-muted">
-      {{ __('Pro adds discounts per payment method, tiered discounts, extra badges and full design control.') }}
-    </p>
+  <BaseNotice v-else-if="!pro.trial_available" icon="crown">
+    {{ __('Pro adds discounts per payment method, tiered discounts, extra badges and full design control.') }}
 
-    <a
-      :href="pro.store_url"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-3 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white no-underline hover:bg-primary-800"
-    >
-      {{ __('See what Pro adds') }}
-    </a>
-  </div>
+    <template #actions>
+      <BaseButton :href="pro.store_url" external icon="crown">
+        {{ __('See what Pro adds') }}
+      </BaseButton>
+    </template>
+  </BaseNotice>
 
-  <form v-else class="flex flex-col gap-4" @submit.prevent="submit">
-    <p class="m-0 text-sm text-muted">
+  <BaseForm v-else class="flex flex-col gap-5" @submit="submit">
+    <p class="text-[14px] leading-6 text-slate-600">
       {{ sprintf(__('Try every Pro feature for %d days. No card, and nothing renews on its own.'), pro.trial_days) }}
     </p>
 
-    <div class="grid gap-3 sm:grid-cols-2">
-      <label class="flex flex-col gap-1 text-sm font-medium text-ink">
-        {{ __('First name') }}
-        <BaseInput v-model="form.first_name" :aria-label="__('First name')" />
-      </label>
-
-      <label class="flex flex-col gap-1 text-sm font-medium text-ink">
-        {{ __('Last name') }}
-        <BaseInput v-model="form.last_name" :aria-label="__('Last name')" />
-      </label>
-
-      <label class="flex flex-col gap-1 text-sm font-medium text-ink">
-        {{ __('E-mail') }}
-        <BaseInput v-model="form.email" type="email" :aria-label="__('E-mail')" />
-      </label>
-
-      <label class="flex flex-col gap-1 text-sm font-medium text-ink">
-        {{ __('Phone') }}
-        <BaseInput v-model="form.phone" :aria-label="__('Phone')" />
-      </label>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div v-for="input in FIELDS" :key="input.key" class="flex flex-col gap-2">
+        <BaseLabel :for="`wcci-trial-${input.key}`" size="sm">{{ input.label() }}</BaseLabel>
+        <BaseInput
+          :id="`wcci-trial-${input.key}`"
+          v-model="form[input.key]"
+          :type="input.type"
+          :autocomplete="input.autocomplete"
+          required
+        />
+      </div>
     </div>
 
-    <div class="rounded-lg bg-shell-50 p-3 text-xs leading-relaxed text-muted">
+    <BaseNotice icon="info-circle">
       {{ sprintf(__('Pressing the button sends these four fields to %s to issue your key. Nothing has been sent yet, and skipping this step sends nothing at all.'), pro.api_host || 'the licensing service') }}
 
-      <button type="button" class="ml-1 font-semibold text-primary underline" @click="showPayload = !showPayload">
-        {{ showPayload ? __('Hide what is sent') : __('Show exactly what is sent') }}
-      </button>
+      <div v-if="showPayload" class="mt-3">
+        <BaseCode block>{{ payload }}</BaseCode>
+      </div>
 
-      <pre v-if="showPayload" class="mt-2 overflow-x-auto rounded bg-white p-2 font-mono text-[11px] text-ink">{{ payload }}</pre>
+      <template #actions>
+        <BaseButton variant="link" @click="showPayload = !showPayload">
+          {{ showPayload ? __('Hide what is sent') : __('Show exactly what is sent') }}
+        </BaseButton>
+        <span class="text-slate-300" aria-hidden="true">·</span>
+        <BaseButton variant="link" :href="links.terms_url" external>{{ __('Terms') }}</BaseButton>
+        <span class="text-slate-300" aria-hidden="true">·</span>
+        <BaseButton variant="link" :href="links.privacy_url" external>{{ __('Privacy') }}</BaseButton>
+      </template>
+    </BaseNotice>
 
-      <p class="mt-2">
-        <a :href="links.terms_url" target="_blank" rel="noopener noreferrer" class="text-primary">{{ __('Terms') }}</a>
-        ·
-        <a :href="links.privacy_url" target="_blank" rel="noopener noreferrer" class="text-primary">{{ __('Privacy') }}</a>
-      </p>
-    </div>
-
-    <p v-if="error" class="m-0 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger" role="alert">
+    <BaseNotice v-if="error" tone="danger" live>
       {{ error }}
-    </p>
+    </BaseNotice>
 
     <div>
-      <BaseButton type="submit" :disabled="!canSubmit">
+      <BaseButton type="submit" icon="crown" :loading="isSending" :disabled="!canSubmit">
         {{ isSending ? __('Requesting…') : __('Start the free trial') }}
       </BaseButton>
     </div>
-  </form>
+  </BaseForm>
 </template>
