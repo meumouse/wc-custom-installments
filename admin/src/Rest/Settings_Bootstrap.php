@@ -63,7 +63,9 @@ class Settings_Bootstrap extends Abstract_Route {
 				'docs_url' => esc_url_raw( WC_CUSTOM_INSTALLMENTS_DOCS_URL ),
 			),
 			'environment' => array(
-				'currency_symbol' => get_woocommerce_currency_symbol(),
+				// Decoded: WooCommerce returns entities, and the app renders text.
+				'currency_symbol' => html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ),
+				'price_format' => html_entity_decode( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format() ), ENT_QUOTES, 'UTF-8' ),
 				'decimal_separator' => wc_get_price_decimal_separator(),
 				'thousand_separator' => wc_get_price_thousand_separator(),
 			),

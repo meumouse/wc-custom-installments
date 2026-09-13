@@ -172,7 +172,10 @@ class Registry {
 				'api_host' => wp_parse_url( WC_CUSTOM_INSTALLMENTS_API_URL, PHP_URL_HOST ),
 			),
 			'environment' => array(
-				'currency_symbol' => get_woocommerce_currency_symbol(),
+				// WooCommerce hands symbols over as HTML entities (R$ is "&#82;&#36;"),
+				// and Vue prints text, not markup, so the entities would show as-is.
+				'currency_symbol' => html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ),
+				'price_format' => html_entity_decode( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format() ), ENT_QUOTES, 'UTF-8' ),
 				'decimal_separator' => wc_get_price_decimal_separator(),
 				'thousand_separator' => wc_get_price_thousand_separator(),
 			),
