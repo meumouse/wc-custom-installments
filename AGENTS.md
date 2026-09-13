@@ -1,7 +1,8 @@
 # AGENTS.md
 
-Guide for anyone — person or agent — working on **WC Custom Installments**, the free WooCommerce
-plugin distributed on WordPress.org, and its commercial companion
+Guide for anyone — person or agent — working on **Custom Installments for WooCommerce** (shown in
+Brazilian Portuguese as *Parcelas Customizadas para WooCommerce*), the free WooCommerce plugin
+distributed on WordPress.org, and its commercial companion
 [`wc-custom-installments-pro`](../wc-custom-installments-pro).
 
 Read this before editing anything. The plugin's hardest constraints are not visible from a single
@@ -22,6 +23,13 @@ file.
 5. **Match the surrounding code.** Tabs in PHP, `array()`, spaces inside parentheses, two blank
    lines between methods, a docblock on every class and public method.
 6. **Do not commit or push unless asked.**
+7. **Commit messages are English, Conventional Commits, and carry no attribution.** Write
+   `type(scope): summary` in the imperative, as the history does (`fix(admin): …`,
+   `feat(compat): …`), with a body explaining *why* when the change is not obvious. Never add
+   `Co-Authored-By`, "Generated with …", or any other co-authorship or tool-attribution line — not
+   in commits, pull requests, the changelog or the code.
+8. **The admin UI is built from components, never hand-written HTML.** See §7. Vue 3 is the
+   framework; do not bring a second one into the bundle.
 
 ---
 
@@ -33,7 +41,27 @@ upfront-payment discount under the product price, on the shop loop and the produ
 payment methods the store accepts.
 
 It replaces `woo-custom-installments` 5.x, which was a single paid plugin. This is a free plugin
-with a paid add-on, and §5 exists because the 5.x installed base has to survive the move.
+with a paid add-on, and §5 exists because the 5.x installed base has to survive the move. The
+version numbering continues from 5.x: the first release of this codebase is **6.0.0**, and `@since`
+on new code is the version about to ship.
+
+### Name and slug
+
+The display name is **Custom Installments for WooCommerce**. It is authored in English like every
+other string and translated — the bundled pt_BR catalogue turns it into *Parcelas Customizadas para
+WooCommerce*, so a Brazilian store sees the name it already knows.
+
+The slug and text domain are `wc-custom-installments`, and they are not negotiable:
+
+- WordPress.org no longer accepts new slugs starting with `woo`; it requires `wc` instead.
+- The text domain of a WordPress.org plugin must equal its slug.
+- 5.x was never on WordPress.org, so there is no existing `woo-custom-installments` listing to
+  inherit. It updated from MeuMouse's own server.
+- A display name must not start with a trademark, which rules out "WooCommerce …" and "WC …".
+  "… for WooCommerce" at the end is the accepted form.
+
+WordPress.org derives the slug from the display name on submission. Ask the reviewers for
+`wc-custom-installments` when submitting.
 
 | | Free | Pro |
 |---|---|---|
@@ -168,7 +196,87 @@ else:
 
 ---
 
-## 7. Working on it
+## 7. The admin UI
+
+The settings page and the setup wizard are Vue 3 apps (`app/src`) built by Vite and styled with
+Tailwind. They follow the design system MeuMouse shares with **Joinotify** — same tokens, same page
+shell, same component shapes — so the plugins read as one family.
+
+### Components only
+
+Pages and feature components are assembled from components. Nothing else renders a control.
+
+- Native controls — `button`, `input`, `select`, `textarea`, `label`, `a`, `form`, `dialog` — appear
+  **only inside `app/src/components/base/`**. Anywhere else, use the `Base*` component.
+- Layout and text tags (`div`, `span`, `p`, `h1`–`h3`, `ul`, `li`) are fine in any template.
+- No `v-html`, no `innerHTML`. Icons are components (`BaseIcon`), not SVG strings.
+- A visual pattern used twice becomes a component. A "Pro" pill is `BaseBadge`, a callout is
+  `BaseNotice`, a dialog is `BaseModal`.
+- `npm run lint:ui` enforces the list above and runs in the build.
+
+PHP renders admin markup only where WordPress or WooCommerce owns it:
+
+- Admin notices go through `wp_admin_notice()`, never a hand-written `<div class="notice">`.
+- Product fields use `woocommerce_wp_*`; quick and bulk edit keep the markup WooCommerce's
+  inline-edit script expects.
+- The view files in `admin/src/Views/` print a mount point and a skeleton, nothing more.
+- The storefront stays server-rendered, with no framework: its markup and classes are the §5
+  contract and it runs on every product card.
+
+### Tokens
+
+Defined once in `app/tailwind.config.js`, mirrored as `--wcci-*` custom properties in
+`app/src/styles/main.css`. Do not hard-code a colour a token already names.
+
+| Token | Value | Used for |
+|---|---|---|
+| `primary-700` | `#0a8cff` | Buttons, the active tab, switches, focus borders |
+| `primary-800` | `#0267bf` | Hover on primary |
+| `primary-100` | `#d3e6f6` | Focus ring (`ring-4`) |
+| `shell-50` | `#f4f7fb` | Page background |
+| `ink` | `#102033` | Headings |
+| `slate-*` | Tailwind | Text (800 titles, 500 descriptions), borders (200), dividers (100) |
+| `success` / `danger` / `warning` / `info` | `#22c55e` / `#ef4444` / `#ffba08` / `#0ea5e9` | Toasts, notices, badges |
+
+Radius is 8px (`rounded-[8px]`, `rounded-lg`) almost everywhere, full for pills. Field labels are
+`text-[15px] font-semibold`, descriptions `text-[13px] text-slate-500`, controls `text-[14px]`.
+
+Tailwind is scoped: `important: '.wc-custom-installments-app'` and preflight disabled, with a small
+reset under that class in `main.css`. The WordPress menu, admin bar and notices on the same screen
+must never pick up our styles. Anything teleported (modals, listboxes, toasts) goes to the portal
+`mountPage()` creates, which carries the scoping class.
+
+### Page shell
+
+Every internal page follows the same structure:
+
+1. **`PageHeader`** — eyebrow with the plugin name, the logo (`BrandMark`, 40px), the page title,
+   a description, and an `actions` slot on the right.
+2. **`BaseTabs`** (segmented) — one tab per settings section, each with its icon.
+3. **`SettingsPanel`** — one white card holding the active section. Each schema card becomes a
+   `FieldGroup`; each field a `FieldRow`, label on the left (420px) and control on the right (460px)
+   from `lg` up, stacked below it.
+4. **`SettingsActionBar`** — sticky inside the panel, never across the viewport.
+
+The logo is `assets/brand/logo.svg`, imported through the `@brand` Vite alias so it ships inside the
+bundle. Never build its URL from a hard-coded `/wp-content/plugins/…` path.
+
+### Component catalogue
+
+| Folder | Components |
+|---|---|
+| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput`, `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
+| `components/brand/` | `BrandMark` |
+| `components/layout/` | `PageHeader`, `SettingsPanel` |
+| `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |
+| `components/toasts/` | `ToastStack` |
+
+Icons come from `@boxicons/vue` through `BaseIcon`, which maps a name to a component. A settings
+section names its icon in `Settings\Registry` (`'icon' => 'credit-card'`) — a name, never markup.
+
+---
+
+## 8. Working on it
 
 ```bash
 cd admin && composer install
@@ -179,6 +287,7 @@ npm install                    # from the root
 npm run build                  # full pipeline → release/wc-custom-installments-<version>.zip
 npm run docs                   # regenerate the hook table and the free/Pro page
 npm run lint:php               # parses every file with a real PHP 8.1 binary
+npm run lint:ui                # no native controls, v-html or innerHTML outside components/base
 ```
 
 `lint:php` needs a genuine **8.1** binary — linting against a newer runtime accepts syntax the
@@ -210,11 +319,13 @@ flag, a stuck CSS transition and a URL builder that threw on a relative base.
 
 - [ ] Every harness passes.
 - [ ] `npm run build` produces a package.
+- [ ] `npm run lint:ui` is clean: the UI is made of components (§7).
 - [ ] `npm run docs:check` is clean if you touched hooks or features.
 - [ ] New strings go through `__()` / `wp.i18n.__` and the `.pot` was regenerated.
-- [ ] `@since` / `@version` docblocks updated.
+- [ ] `@since` on new code is the version about to ship; `@version` updated where it exists.
 - [ ] `CHANGELOG.md` records what a store owner would notice.
 - [ ] Nothing in §5 was renamed.
+- [ ] If you commit: English, Conventional Commits, no co-authorship or attribution trailer.
 
 ---
 
