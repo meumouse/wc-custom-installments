@@ -11,6 +11,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
+      // The plugin's brand assets live at the plugin root, beside the other
+      // static assets, and are pulled into the bundle from there.
+      '@brand': resolve(__dirname, '../assets/brand'),
+    },
+  },
+  server: {
+    fs: {
+      allow: [resolve(__dirname, '..')],
     },
   },
   build: {

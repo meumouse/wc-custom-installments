@@ -1,5 +1,7 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import { createPinia } from 'pinia';
+import BaseNotice from '../components/base/BaseNotice.vue';
+import { __ } from './i18n';
 
 /**
  * Read the minimal bootstrap config WordPress localized for this screen.
@@ -44,22 +46,20 @@ async function fetchBootstrap(config) {
 }
 
 /**
- * Render a minimal error message into the mount element.
+ * Render an error message into the mount element.
  *
- * @since 1.0.0
+ * Mounted as its own small app, so even the failure path is made of the same
+ * components as the page it replaces.
+ *
+ * @since 6.0.0
  * @param {HTMLElement} mount - Mount element.
  * @param {string} message - Message to display.
  * @return {void}
  */
 function renderBootstrapError(mount, message) {
-  mount.innerHTML = '';
-
-  const notice = document.createElement('div');
-  notice.className = 'notice notice-error';
-  notice.setAttribute('role', 'alert');
-  notice.innerHTML = `<p>${message}</p>`;
-
-  mount.appendChild(notice);
+  createApp({
+    render: () => h(BaseNotice, { tone: 'danger', live: true }, () => message),
+  }).mount(mount);
 }
 
 /**
@@ -80,10 +80,14 @@ export async function mountPage(mountId, component) {
     return null;
   }
 
+  // Every utility is scoped under this class (tailwind.config.js), so the app
+  // claims it itself rather than trusting each view file to carry it.
+  mount.classList.add('wc-custom-installments-app');
+
   const config = readBootstrapConfig();
 
   if (!config) {
-    renderBootstrapError(mount, 'This screen could not start. Please reload the page.');
+    renderBootstrapError(mount, __('This screen could not start. Please reload the page.'));
 
     return null;
   }
@@ -97,7 +101,7 @@ export async function mountPage(mountId, component) {
       bootstrap.page = config.page;
     }
   } catch (error) {
-    renderBootstrapError(mount, 'Could not load this page. Please reload and try again.');
+    renderBootstrapError(mount, __('Could not load this page. Please reload and try again.'));
 
     return null;
   }

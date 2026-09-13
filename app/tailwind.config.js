@@ -1,7 +1,24 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * Tailwind configuration for the admin apps.
+ *
+ * The tokens are the ones MeuMouse shares with Joinotify. Two settings keep them
+ * from leaking into the rest of wp-admin, which loads on the same screen:
+ *
+ * - `important` is a selector, not `true`: every utility is scoped under the
+ *   app's mount class, so it outranks core styles without reaching the menu,
+ *   the admin bar or another plugin's notice.
+ * - Preflight is off. It is a global reset; main.css carries a small one scoped
+ *   to the same class instead.
+ *
+ * @since 6.0.0
+ * @type {import('tailwindcss').Config}
+ */
 export default {
-  content: ['./src/**/*.{vue,js,ts}', '../templates/**/*.php'],
-  important: true,
+  content: ['./src/**/*.{vue,js,ts}'],
+  important: '.wc-custom-installments-app',
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {
       colors: {
@@ -43,6 +60,9 @@ export default {
       },
       boxShadow: {
         soft: '0 18px 50px rgba(16, 32, 51, 0.12)',
+        card: '0 1px 0 rgba(0, 0, 0, 0.02)',
+        dropdown: '0 20px 45px rgba(15, 23, 42, 0.12)',
+        toast: '0 0.275rem 1.25rem rgba(11, 15, 25, 0.05), 0 0.25rem 0.5625rem rgba(11, 15, 25, 0.03)',
       },
       borderRadius: {
         '2xl': '1.25rem',

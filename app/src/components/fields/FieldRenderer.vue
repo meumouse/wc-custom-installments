@@ -10,7 +10,9 @@
  */
 import { computed } from 'vue';
 import { resolveFieldComponent } from './fieldRegistry';
+import FieldRow from './FieldRow.vue';
 import BaseInput from '../base/BaseInput.vue';
+import BaseNotice from '../base/BaseNotice.vue';
 import { __ } from '../../utils/i18n';
 
 const props = defineProps({
@@ -23,16 +25,35 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'update:unitValue', 'locked-click']);
 
+// Controls made of several parts: the label names the group, not one input.
+const COMPOSITE = ['unit', 'placeholder-text', 'gateway-rates', 'installment-fees', 'element-design'];
+
 const isLocked = computed(() => Boolean(props.field?.locked));
 const isWide = computed(() =>
   ['gateway-rates', 'installment-fees', 'element-design', 'textarea'].includes(props.field?.type),
 );
 
-const component = computed(() => resolveFieldComponent(props.field) || BaseInput);
+const controlId = computed(() =>
+  COMPOSITE.includes(props.field?.type) ? '' : `wcci-field-${String(props.field?.key || '').replace(/[^\w-]/g, '-')}`,
+);
+
+const resolved = computed(() => resolveFieldComponent(props.field));
+const component = computed(() => resolved.value || BaseInput);
+
+// A structured setting whose control nobody registered - the Pro design panel
+// in the free build - has no text form to fall back to. Say where it comes
+// from rather than printing the object into an input.
+const isUnavailable = computed(
+  () => !resolved.value && props.modelValue !== null && typeof props.modelValue === 'object',
+);
 
 const controlProps = computed(() => {
   const field = props.field;
   const shared = { disabled: isLocked.value, ariaLabel: field.label };
+
+  if (controlId.value) {
+    shared.id = controlId.value;
+  }
 
   switch (field.type) {
     case 'select':
@@ -59,6 +80,10 @@ const controlProps = computed(() => {
 
     case 'installment-fees':
       return { ...shared, field, maxInstallments: props.context.maxInstallments ?? 12 };
+
+    case 'toggle':
+    case 'color':
+      return shared;
 
     default:
       return { ...shared, placeholder: field.placeholder || '', inputmode: field.inputmode || '' };
@@ -108,32 +133,21 @@ function onLockedClick() {
 </script>
 
 <template>
-  <div
-    class="border-b border-shell-100 py-4 last:border-b-0"
-    :class="isWide ? 'flex flex-col gap-3' : 'flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-8'"
+  <FieldRow
+    :label="field.label"
+    :description="field.description"
+    :control-id="controlId"
+    :wide="isWide"
+    :locked="isLocked && showLockBadge"
+    :class="isLocked ? 'cursor-pointer' : ''"
     @click="onLockedClick"
   >
-    <div class="min-w-0 flex-1">
-      <div class="flex items-center gap-2">
-        <span class="text-sm font-semibold text-ink">{{ field.label }}</span>
+    <div :class="isLocked ? 'pointer-events-none opacity-60' : ''">
+      <BaseNotice v-if="isUnavailable" tone="info" icon="crown">
+        {{ __('This control comes with the Pro add-on.') }}
+      </BaseNotice>
 
-        <span
-          v-if="isLocked && showLockBadge"
-          class="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-primary-800"
-        >
-          {{ __('Pro') }}
-        </span>
-      </div>
-
-      <p v-if="field.description" class="mt-1 text-sm leading-relaxed text-muted">
-        {{ field.description }}
-      </p>
+      <component :is="component" v-else v-model="model" v-bind="{ ...controlProps, ...unitBinding }" />
     </div>
-
-    <div
-      :class="[isWide ? 'w-full' : 'shrink-0 sm:w-72', isLocked ? 'pointer-events-none opacity-60' : '']"
-    >
-      <component :is="component" v-model="model" v-bind="{ ...controlProps, ...unitBinding }" />
-    </div>
-  </div>
+  </FieldRow>
 </template>

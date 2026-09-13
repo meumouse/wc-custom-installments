@@ -8,6 +8,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
+  id: { type: String, default: '' },
   disabled: { type: Boolean, default: false },
   placeholder: { type: String, default: '' },
   rows: { type: Number, default: 3 },
@@ -25,12 +26,13 @@ const model = computed({
 
 <template>
   <textarea
+    :id="id || undefined"
     v-model="model"
     :disabled="disabled"
     :placeholder="placeholder || undefined"
     :rows="rows"
     :aria-label="ariaLabel || undefined"
-    class="w-full rounded-lg border border-shell-200 bg-white px-3 py-2 leading-relaxed text-ink transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:bg-shell-50"
-    :class="monospace ? 'font-mono text-xs' : 'text-sm'"
+    class="block w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 leading-6 text-slate-700 transition-colors focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+    :class="monospace ? 'font-mono text-[13px]' : 'text-[14px]'"
   />
 </template>

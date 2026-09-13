@@ -8,6 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@boxicons/vue": "^1.0.1",
     "@headlessui/vue": "^1.7.23",
     "@vueuse/core": "^13.0.0",
     "@wordpress/i18n": "^6.16.0",

@@ -1,43 +1,233 @@
 /*
  * main.css — shared admin stylesheet.
  *
- * @since 1.0.0
+ * Tailwind's preflight is disabled (see tailwind.config.js), so this file owns
+ * the reset, and scopes it to `.wc-custom-installments-app`: the mount points,
+ * and the portal teleported content lands in. Nothing here may style an element
+ * outside that class, except the page background on our own screens.
+ *
+ * The reset selectors are written with element specificity on purpose. They tie
+ * with wp-admin's forms.css (`input[type=text]`, `…:focus`) and win by coming
+ * later, while every utility — one class deeper — still wins over them.
+ *
+ * @since 6.0.0
  */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
+  .wc-custom-installments-app {
     color-scheme: light;
     --wcci-primary: #0088ff;
+    --wcci-primary-700: #0a8cff;
+    --wcci-primary-800: #0267bf;
+    --wcci-primary-100: #d3e6f6;
+    --wcci-shell-50: #f4f7fb;
     --wcci-ink: #102033;
     --wcci-success: #22c55e;
     --wcci-danger: #ef4444;
     --wcci-warning: #ffba08;
+    --wcci-info: #0ea5e9;
     --wcci-muted: #6b7280;
+
+    color: var(--wcci-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wc-custom-installments-app *,
+  .wc-custom-installments-app *::before,
+  .wc-custom-installments-app *::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e2e8f0;
+  }
+
+  .wc-custom-installments-app :is(h1, h2, h3, h4, h5, h6, p, ul, ol, pre, figure, blockquote) {
+    margin: 0;
+  }
+
+  .wc-custom-installments-app :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    padding: 0;
+  }
+
+  .wc-custom-installments-app :is(ul, ol) {
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Plain element selectors: an `:is(a:hover)` would carry the pseudo-class's
+     weight and outrank the colour utilities it is meant to yield to. */
+  .wc-custom-installments-app a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  .wc-custom-installments-app a:focus,
+  .wc-custom-installments-app button:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .wc-custom-installments-app :is(button, input, select, textarea) {
+    color: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    margin: 0;
+  }
+
+  .wc-custom-installments-app button {
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+    padding: 0;
+    text-transform: none;
+  }
+
+  .wc-custom-installments-app :is(button, [role='button']):disabled {
+    cursor: not-allowed;
+  }
+
+  .wc-custom-installments-app :is(input, select, textarea) {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    height: auto;
+    max-width: 100%;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .wc-custom-installments-app :is(input, select, textarea):focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .wc-custom-installments-app :is(input, textarea)::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+  }
+
+  .wc-custom-installments-app :is(img, svg) {
+    display: block;
+    vertical-align: middle;
+  }
+
+  .wc-custom-installments-app img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .wc-custom-installments-app :is(code, kbd, pre) {
+    background: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: 1em;
+    padding: 0;
+  }
+
+  /* The page background, on our screens only — wp-admin paints #f0f0f1. */
+  body.wc-custom-installments-screen,
+  body.wc-custom-installments-screen #wpwrap {
+    background-color: #f4f7fb;
   }
 }
 
 @layer components {
   .wcci-skeleton {
-    @apply w-full rounded-2xl bg-shell-100;
-    animation: wcci-pulse 1.6s ease-in-out infinite;
+    width: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #dce5ef 0%, #eef3f8 50%, #dce5ef 100%);
+    background-size: 200% 100%;
+    animation: wcci-shimmer 1.5s ease-in-out infinite;
   }
 }
 
-/* The WordPress admin wraps our mount point; reset what it imposes. */
-.wc-custom-installments-app {
-  @apply text-ink;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+@keyframes wcci-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
-@keyframes wcci-pulse {
-  0%,
-  100% {
+/* The bar under a toast, running out with its remaining time. */
+@keyframes wcci-toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/*
+ * Entrances are keyframe animations, not <Transition> classes. A Vue enter
+ * transition removes its "from" class on the next animation frame, and a
+ * browser that is not painting the tab never delivers one: the dialog or toast
+ * then sits at opacity 0, present and focusable but invisible. An animation
+ * needs no frame callback to finish.
+ */
+@keyframes wcci-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
-  50% {
-    opacity: 0.55;
+}
+
+@keyframes wcci-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wcci-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.wcci-fade-in {
+  animation: wcci-fade-in 0.2s ease-out both;
+}
+
+.wcci-pop-in {
+  animation: wcci-pop-in 0.2s ease-out both;
+}
+
+.wcci-slide-in {
+  animation: wcci-slide-in 0.2s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wcci-skeleton,
+  .wcci-fade-in,
+  .wcci-pop-in,
+  .wcci-slide-in {
+    animation: none;
   }
 }

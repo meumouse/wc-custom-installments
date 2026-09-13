@@ -9,6 +9,7 @@
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
+import BaseInputGroup from '../base/BaseInputGroup.vue';
 import BaseSelect from '../base/BaseSelect.vue';
 
 const props = defineProps({
@@ -36,7 +37,7 @@ const unit = computed({
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <BaseInputGroup :disabled="disabled">
     <BaseInput
       v-model="amount"
       type="number"
@@ -44,10 +45,13 @@ const unit = computed({
       :step="field.step || '0.05'"
       :disabled="disabled"
       :aria-label="field.label"
+      bare
     />
 
-    <div class="w-24 shrink-0">
-      <BaseSelect v-model="unit" :options="unitOptions" :disabled="disabled" :aria-label="field.label" />
-    </div>
-  </div>
+    <template #suffix>
+      <div class="w-24">
+        <BaseSelect v-model="unit" :options="unitOptions" :disabled="disabled" :aria-label="field.label" bare />
+      </div>
+    </template>
+  </BaseInputGroup>
 </template>

@@ -37,9 +37,11 @@ export function useToasts() {
 
     const id = counter;
 
-    toasts.value = [...toasts.value, { id, message, type }];
+    const duration = type === 'error' ? 8000 : 4000;
 
-    setTimeout(() => dismiss(id), type === 'error' ? 8000 : 4000);
+    toasts.value = [...toasts.value, { id, message, type, duration }];
+
+    setTimeout(() => dismiss(id), duration);
   }
 
   return { toasts, push, dismiss };

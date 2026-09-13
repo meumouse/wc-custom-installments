@@ -10,8 +10,9 @@
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
+import BaseNotice from '../base/BaseNotice.vue';
 import BaseSelect from '../base/BaseSelect.vue';
-import { __ } from '../../utils/i18n';
+import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
@@ -72,19 +73,19 @@ function update(id, key, value) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <p v-if="!gateways.length" class="text-sm text-muted">
+  <div class="flex flex-col gap-2">
+    <BaseNotice v-if="!gateways.length" tone="info">
       {{ __('No payment gateway is enabled in WooCommerce yet.') }}
-    </p>
+    </BaseNotice>
 
     <div
       v-for="gateway in gateways"
       :key="gateway.id"
-      class="flex flex-wrap items-center gap-3 rounded-lg border border-shell-100 px-3 py-2"
+      class="flex flex-wrap items-center gap-4 rounded-lg border border-slate-200 bg-white px-5 py-3"
     >
-      <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink">{{ gateway.label }}</span>
+      <span class="min-w-0 flex-1 truncate text-[14px] font-semibold text-slate-700">{{ gateway.label }}</span>
 
-      <div class="w-32">
+      <div class="w-36">
         <BaseInput
           :model-value="rate(gateway.id, 'amount')"
           type="number"
@@ -93,17 +94,17 @@ function update(id, key, value) {
           min="0"
           placeholder="0"
           :disabled="disabled"
-          :aria-label="gateway.label"
+          :aria-label="sprintf(__('Amount for %s'), gateway.label)"
           @update:model-value="update(gateway.id, 'amount', $event)"
         />
       </div>
 
-      <div class="w-40">
+      <div class="w-44">
         <BaseSelect
           :model-value="rate(gateway.id, 'type')"
           :options="methods"
           :disabled="disabled"
-          :aria-label="gateway.label"
+          :aria-label="sprintf(__('Type for %s'), gateway.label)"
           @update:model-value="update(gateway.id, 'type', $event)"
         />
       </div>

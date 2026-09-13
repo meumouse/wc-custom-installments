@@ -10,6 +10,7 @@
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
+import BaseInputGroup from '../base/BaseInputGroup.vue';
 import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
@@ -64,15 +65,13 @@ function update(installment, value) {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-    <label
-      v-for="installment in rows"
-      :key="installment"
-      class="flex items-center gap-2 rounded-lg border border-shell-100 px-2 py-1.5"
-    >
-      <span class="w-10 shrink-0 text-xs font-semibold text-muted">
-        {{ sprintf(__('%dx'), installment) }}
-      </span>
+  <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4">
+    <BaseInputGroup v-for="installment in rows" :key="installment" :disabled="disabled">
+      <template #prefix>
+        <span class="w-14 text-center text-[13px] font-semibold text-slate-500">
+          {{ sprintf(__('%dx'), installment) }}
+        </span>
+      </template>
 
       <BaseInput
         :model-value="amount(installment)"
@@ -83,8 +82,13 @@ function update(installment, value) {
         placeholder="—"
         :disabled="disabled"
         :aria-label="sprintf(__('Interest for %d installments'), installment)"
+        bare
         @update:model-value="update(installment, $event)"
       />
-    </label>
+
+      <template #suffix>
+        <span class="px-3 text-[13px]">%</span>
+      </template>
+    </BaseInputGroup>
   </div>
 </template>

@@ -9,7 +9,9 @@
  * @since 6.0.0
  */
 import { computed } from 'vue';
+import BaseButton from '../base/BaseButton.vue';
 import BaseInput from '../base/BaseInput.vue';
+import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -47,17 +49,19 @@ function append(token) {
   <div class="flex flex-col gap-2">
     <BaseInput v-model="model" :disabled="disabled" :aria-label="field.label" />
 
-    <div class="flex flex-wrap gap-1.5">
-      <button
-        v-for="token in field.tokens || []"
+    <div v-if="(field.tokens || []).length" class="flex flex-wrap gap-1.5">
+      <BaseButton
+        v-for="token in field.tokens"
         :key="token"
-        type="button"
+        variant="secondary"
+        size="sm"
+        class="font-mono !text-[12px]"
         :disabled="disabled"
-        class="rounded-md bg-shell-100 px-2 py-1 font-mono text-[11px] text-ink transition-colors hover:bg-shell-200 disabled:cursor-not-allowed disabled:opacity-60"
+        :aria-label="sprintf(__('Insert %s'), token)"
         @click="append(token)"
       >
         {{ token }}
-      </button>
+      </BaseButton>
     </div>
   </div>
 </template>
