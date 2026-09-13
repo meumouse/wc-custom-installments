@@ -54,16 +54,16 @@ class Product_Settings {
 			array(
 				'key' => '__disable_installments',
 				'type' => 'checkbox',
-				'label' => __( 'Hide installments', 'wc-custom-installments' ),
-				'description' => __( 'Do not show the installment plan for this product.', 'wc-custom-installments' ),
+				'label' => __( 'Ocultar parcelas', 'wc-custom-installments' ),
+				'description' => __( 'Não exibir o parcelamento para este produto.', 'wc-custom-installments' ),
 				'feature' => '',
 				'quick_edit' => true,
 			),
 			array(
 				'key' => '__disable_discount_main_price',
 				'type' => 'checkbox',
-				'label' => __( 'Hide the discount', 'wc-custom-installments' ),
-				'description' => __( 'Do not apply or show the upfront-payment discount for this product.', 'wc-custom-installments' ),
+				'label' => __( 'Ocultar o desconto', 'wc-custom-installments' ),
+				'description' => __( 'Não aplicar nem exibir o desconto à vista para este produto.', 'wc-custom-installments' ),
 				'feature' => '',
 				'quick_edit' => true,
 			),
@@ -100,7 +100,7 @@ class Product_Settings {
 
 		printf(
 			'<p class="form-field"><strong>%s</strong></p>',
-			esc_html__( 'Custom Installments', 'wc-custom-installments' )
+			esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' )
 		);
 
 		foreach ( self::get_fields() as $field ) {
@@ -264,9 +264,9 @@ class Product_Settings {
 					'<label class="alignleft"><span class="title">%s</span><span class="input-text-wrap"><select name="%s"><option value="">%s</option><option value="yes">%s</option><option value="no">%s</option></select></span></label>',
 					esc_html( $field['label'] ),
 					esc_attr( $field['key'] ),
-					esc_html__( '— No change —', 'wc-custom-installments' ),
-					esc_html__( 'Yes', 'wc-custom-installments' ),
-					esc_html__( 'No', 'wc-custom-installments' )
+					esc_html__( '— Sem alteração —', 'wc-custom-installments' ),
+					esc_html__( 'Sim', 'wc-custom-installments' ),
+					esc_html__( 'Não', 'wc-custom-installments' )
 				);
 
 				continue;

@@ -3,8 +3,8 @@
  *
  * Unlike a plain machine-translation service, the model is instructed to
  * preserve sprintf placeholders, HTML markup, the plugin's copy tokens and
- * brand names, and to detect the source language per string (the POT mixes
- * Portuguese legacy strings with English frontend strings).
+ * brand names, and to detect the source language per string (the POT is
+ * written in Brazilian Portuguese; a stray English string is still handled).
  *
  * Uses the global `fetch` (Node 18+), so no extra dependency is required.
  */
@@ -30,7 +30,7 @@ function buildSystemPrompt(targetLanguage) {
     "- Preserve EXACTLY, without translating or reordering: sprintf placeholders (%s, %d, %1$s, %2$s, %%), HTML tags and their attributes (e.g. <span class=\"builder-placeholder\">), HTML entities, URLs, email addresses, and template tokens such as {{ field_id=[FIELD_ID] }}.",
     "- Keep leading and trailing whitespace, line breaks and surrounding punctuation identical to the source.",
     "- Do NOT translate brand/product names: WooCommerce, Elementor, PayPal, Pix, Mercado Pago, PagSeguro, Stripe, MeuMouse.com.",
-    "- The plugin name is translated: in Portuguese (Brazil), \"Custom Installments for WooCommerce\" is \"Parcelas Customizadas para WooCommerce\" and \"Custom Installments\" is \"Parcelas Customizadas\".",
+    "- The source strings are Brazilian Portuguese. The plugin name is translated: in English it is \"Custom Installments for WooCommerce\" (\"Parcelas Customizadas para WooCommerce\") and \"Custom Installments\" (\"Parcelas Customizadas\"); in other languages, translate it the same way, keeping \"WooCommerce\".",
     "- Keep the copy tokens {{ parcelas }}, {{ valor }}, {{ juros }} and any other {{ … }} token exactly as written.",
     "- Translate UI text only. Never add explanations, quotes or extra characters.",
     "",

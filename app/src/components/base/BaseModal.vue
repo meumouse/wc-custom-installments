@@ -148,7 +148,7 @@ onBeforeUnmount(() => {
           <BaseIconButton
             v-if="dismissible"
             icon="x"
-            :label="__('Close')"
+            :label="__('Fechar')"
             data-modal-close="true"
             class="-mr-2 -mt-2"
             @click="requestClose"

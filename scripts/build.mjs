@@ -23,7 +23,7 @@
  *   --no-zip              Stage files but don't create the .zip.
  *   --ship-locales        Ship every compiled locale (.po/.mo/.l10n.php/.json).
  *   --pot-only            Ship wc-custom-installments.pot alone, with no locale.
- *                         By default the package carries the .pot plus pt_BR —
+ *                         By default the package carries the .pot plus en_US —
  *                         see languageFilter().
  */
 
@@ -47,11 +47,12 @@ const slug = 'wc-custom-installments';
 // root (see .env.example); the child processes inherit them from here.
 loadEnv(root);
 
-// Locales the package carries by default. pt_BR ships until translate.wordpress.org
-// delivers a language pack of its own: the installed base is Brazilian, and without
-// it the plugin — its name included — would read in English on every one of those
-// stores. A language pack, once it exists, takes precedence over the bundled file.
-const BUNDLED_LOCALES = ['pt_BR'];
+// Locales the package carries by default. The strings are written in Brazilian
+// Portuguese, and translate.wordpress.org has no English (United States) locale
+// to translate them into, so en_US would never arrive as a language pack: without
+// the bundled catalogue an English-language store would read the plugin — its
+// name included — in Portuguese. Every other locale comes from language packs.
+const BUNDLED_LOCALES = ['en_US'];
 
 const releaseDir = path.join(root, 'release');
 const stagingDir = path.join(releaseDir, slug);

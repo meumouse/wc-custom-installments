@@ -55,7 +55,7 @@ export function useOnboarding(bootstrap) {
 
       return true;
     } catch (requestError) {
-      error.value = requestError.message || __('That did not save. Please try again.');
+      error.value = requestError.message || __('Não foi possível salvar. Tente novamente.');
 
       return false;
     } finally {

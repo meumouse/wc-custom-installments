@@ -57,7 +57,7 @@ class Settings_Import extends Abstract_Route {
 		}
 
 		return $this->success_response( array(
-			'message' => __( 'Settings imported.', 'wc-custom-installments' ),
+			'message' => __( 'Configurações importadas.', 'wc-custom-installments' ),
 			'settings' => $result,
 			'schema' => Registry::get_schema(),
 		) );

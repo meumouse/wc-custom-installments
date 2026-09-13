@@ -26,16 +26,16 @@ const emit = defineEmits(['save', 'discard']);
     class="sticky inset-x-0 bottom-0 z-[20] flex flex-wrap items-center justify-between gap-4 rounded-b-[8px] border-t border-black/10 bg-white/80 px-6 py-5 backdrop-blur-[5px] sm:px-12 sm:py-6"
   >
     <p class="text-[14px] text-slate-500" aria-live="polite">
-      {{ dirty ? __('You have unsaved changes.') : __('Everything is saved.') }}
+      {{ dirty ? __('Você tem alterações não salvas.') : __('Tudo está salvo.') }}
     </p>
 
     <div class="flex flex-wrap items-center gap-3">
       <BaseButton v-if="dirty" variant="secondary" size="lg" :disabled="saving" @click="emit('discard')">
-        {{ __('Discard') }}
+        {{ __('Descartar') }}
       </BaseButton>
 
       <BaseButton size="lg" icon="save" :loading="saving" :disabled="!dirty" @click="emit('save')">
-        {{ saving ? __('Saving...') : __('Save changes') }}
+        {{ saving ? __('Salvando...') : __('Salvar alterações') }}
       </BaseButton>
     </div>
   </div>

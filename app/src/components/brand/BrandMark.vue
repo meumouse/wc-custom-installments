@@ -27,7 +27,7 @@ const height = computed(() => HEIGHTS[props.size] || HEIGHTS.md);
 <template>
   <img
     :src="logoUrl"
-    :alt="decorative ? '' : __('Custom Installments for WooCommerce')"
+    :alt="decorative ? '' : __('Parcelas Customizadas para WooCommerce')"
     :height="height"
     :style="{ height: `${height}px`, width: 'auto' }"
     class="block shrink-0"

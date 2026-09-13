@@ -53,35 +53,35 @@ function onConfirmReset() {
 
 <template>
   <div class="flex flex-col gap-4 py-6">
-    <BaseNotice :title="__('Back up or move your configuration')">
-      {{ __('Download every setting as a JSON file, or load one exported from another store.') }}
+    <BaseNotice :title="__('Faça backup ou transfira sua configuração')">
+      {{ __('Baixe todas as configurações em um arquivo JSON ou carregue um exportado de outra loja.') }}
 
       <template #actions>
         <BaseButton variant="secondary" icon="download" @click="emit('export')">
-          {{ __('Export settings') }}
+          {{ __('Exportar configurações') }}
         </BaseButton>
 
         <BaseFileInput accept="application/json,.json" @select="onFileChosen">
-          {{ __('Import settings') }}
+          {{ __('Importar configurações') }}
         </BaseFileInput>
       </template>
     </BaseNotice>
 
-    <BaseNotice tone="danger" :title="__('Restore the defaults')">
-      {{ __('Every setting goes back to how it shipped. This cannot be undone, so export first if you might want it back.') }}
+    <BaseNotice tone="danger" :title="__('Restaurar os padrões')">
+      {{ __('Todas as configurações voltam ao padrão original. Isso não pode ser desfeito, então exporte antes se quiser recuperá-las.') }}
 
       <template #actions>
         <BaseButton variant="danger-outline" icon="refresh" :loading="resetting" @click="confirmingReset = true">
-          {{ resetting ? __('Restoring...') : __('Restore the defaults') }}
+          {{ resetting ? __('Restaurando...') : __('Restaurar os padrões') }}
         </BaseButton>
       </template>
     </BaseNotice>
 
     <BaseConfirmDialog
       :open="confirmingReset"
-      :title="__('Restore the defaults?')"
-      :description="__('Every setting goes back to how it shipped. This cannot be undone, so export first if you might want it back.')"
-      :confirm-label="__('Yes, restore the defaults')"
+      :title="__('Restaurar os padrões?')"
+      :description="__('Todas as configurações voltam ao padrão original. Isso não pode ser desfeito, então exporte antes se quiser recuperá-las.')"
+      :confirm-label="__('Sim, restaurar os padrões')"
       :busy="resetting"
       @confirm="onConfirmReset"
       @cancel="confirmingReset = false"

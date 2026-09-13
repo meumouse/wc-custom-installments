@@ -30,15 +30,15 @@ const isOpen = computed(() => Boolean(props.field));
       <BaseBadge tone="pro" icon="crown">{{ __('Pro') }}</BaseBadge>
     </template>
 
-    <p>{{ __('This is part of the Pro add-on. Try it free for 7 days, with no card.') }}</p>
+    <p>{{ __('Isto faz parte do complemento Pro. Teste grátis por 7 dias, sem cartão.') }}</p>
 
     <template #actions>
       <BaseButton variant="secondary" @click="emit('close')">
-        {{ __('Maybe later') }}
+        {{ __('Talvez depois') }}
       </BaseButton>
 
       <BaseButton :href="storeUrl" external icon="crown">
-        {{ __('Start the free trial') }}
+        {{ __('Começar o teste grátis') }}
       </BaseButton>
     </template>
   </BaseModal>

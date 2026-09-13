@@ -51,7 +51,7 @@ class Settings_Save extends Abstract_Route {
 		$saved = Repository::save_settings( $settings );
 
 		return $this->success_response( array(
-			'message' => __( 'Settings saved.', 'wc-custom-installments' ),
+			'message' => __( 'Configurações salvas.', 'wc-custom-installments' ),
 			'settings' => $saved,
 		) );
 	}

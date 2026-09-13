@@ -1,3 +1,5 @@
+import { __ } from './i18n';
+
 /**
  * Create a REST client backed by the page bootstrap payload.
  *
@@ -49,7 +51,7 @@ export function createApiClient(bootstrap) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data?.message || 'Request failed.');
+      throw new Error(data?.message || __('A solicitação falhou.'));
     }
 
     return data;

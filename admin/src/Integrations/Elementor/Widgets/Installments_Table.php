@@ -34,7 +34,7 @@ class Installments_Table extends Abstract_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Installments table', 'wc-custom-installments' );
+		return esc_html__( 'Tabela de parcelas', 'wc-custom-installments' );
 	}
 
 	/**

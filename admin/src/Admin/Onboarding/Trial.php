@@ -101,7 +101,7 @@ class Trial {
 		if ( ! self::is_available() ) {
 			return new WP_Error(
 				'wcci_trial_unavailable',
-				__( 'Trials are not available from this site right now.', 'wc-custom-installments' )
+				__( 'Os testes não estão disponíveis a partir deste site no momento.', 'wc-custom-installments' )
 			);
 		}
 
@@ -111,14 +111,14 @@ class Trial {
 		if ( ! empty( $missing ) ) {
 			return new WP_Error(
 				'wcci_trial_incomplete',
-				__( 'Please fill in your name, e-mail and phone number.', 'wc-custom-installments' )
+				__( 'Preencha seu nome, e-mail e telefone.', 'wc-custom-installments' )
 			);
 		}
 
 		if ( ! is_email( $body['email'] ) ) {
 			return new WP_Error(
 				'wcci_trial_invalid_email',
-				__( 'That e-mail address does not look right.', 'wc-custom-installments' )
+				__( 'Esse endereço de e-mail não parece correto.', 'wc-custom-installments' )
 			);
 		}
 
@@ -136,7 +136,7 @@ class Trial {
 
 			return new WP_Error(
 				'wcci_trial_unreachable',
-				__( 'We could not reach the licensing service. Please try again in a moment.', 'wc-custom-installments' )
+				__( 'Não conseguimos acessar o serviço de licenças. Tente novamente em instantes.', 'wc-custom-installments' )
 			);
 		}
 
@@ -146,7 +146,7 @@ class Trial {
 		if ( 409 === $status ) {
 			return new WP_Error(
 				'wcci_trial_exists',
-				__( 'A trial has already been issued for that e-mail address. Check your inbox, or use another address.', 'wc-custom-installments' )
+				__( 'Já foi emitido um teste para esse endereço de e-mail. Verifique sua caixa de entrada ou use outro endereço.', 'wc-custom-installments' )
 			);
 		}
 
@@ -155,7 +155,7 @@ class Trial {
 
 			return new WP_Error(
 				'wcci_trial_refused',
-				__( 'The licensing service could not issue a trial right now. Please try again later.', 'wc-custom-installments' )
+				__( 'O serviço de licenças não conseguiu emitir um teste agora. Tente novamente mais tarde.', 'wc-custom-installments' )
 			);
 		}
 

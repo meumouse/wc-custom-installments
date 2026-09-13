@@ -348,7 +348,7 @@ class Shortcodes {
 
 		return sprintf(
 			'<span class="wci-shortcode-notice">%s</span>',
-			esc_html__( 'No product to price here. Use this shortcode on a product template, or pass one: [wc_custom_installments_group product="123"].', 'wc-custom-installments' )
+			esc_html__( 'Não há produto para exibir o preço aqui. Use este shortcode em um modelo de produto ou informe um: [wc_custom_installments_group product="123"].', 'wc-custom-installments' )
 		);
 	}
 }

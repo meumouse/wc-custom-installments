@@ -400,7 +400,7 @@ class Init {
 			esc_html(
 				sprintf(
 					/* translators: 1: required PHP version, 2: current PHP version */
-					__( 'Custom Installments for WooCommerce requires PHP %1$s or higher. This site runs PHP %2$s.', 'wc-custom-installments' ),
+					__( 'O Parcelas Customizadas para WooCommerce requer PHP %1$s ou superior. Este site usa PHP %2$s.', 'wc-custom-installments' ),
 					self::MIN_PHP_VERSION,
 					PHP_VERSION
 				)
@@ -421,7 +421,7 @@ class Init {
 			esc_html(
 				sprintf(
 					/* translators: %s: required WooCommerce version */
-					__( 'Custom Installments for WooCommerce requires WooCommerce %s or higher to be installed and active.', 'wc-custom-installments' ),
+					__( 'O Parcelas Customizadas para WooCommerce requer o WooCommerce %s ou superior instalado e ativo.', 'wc-custom-installments' ),
 					self::MIN_WC_VERSION
 				)
 			),

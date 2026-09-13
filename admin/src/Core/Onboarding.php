@@ -150,14 +150,14 @@ class Onboarding {
 
 		$message = sprintf(
 			'<p>%s</p><p><a class="button button-primary" href="%s">%s</a> <a class="button-link" href="%s">%s</a></p>',
-			esc_html__( 'Finish setting up Custom Installments and your store will be showing instalment plans in about a minute.', 'wc-custom-installments' ),
+			esc_html__( 'Termine de configurar o Parcelas Customizadas e sua loja estará exibindo parcelamentos em cerca de um minuto.', 'wc-custom-installments' ),
 			esc_url( admin_url( 'admin.php?page=' . self::PAGE ) ),
-			esc_html__( 'Open the setup', 'wc-custom-installments' ),
+			esc_html__( 'Abrir a configuração', 'wc-custom-installments' ),
 			esc_url( wp_nonce_url(
 				admin_url('admin-post.php?action=wc_custom_installments_dismiss_onboarding'),
 				'wc_custom_installments_dismiss_onboarding'
 			) ),
-			esc_html__( 'Dismiss', 'wc-custom-installments' )
+			esc_html__( 'Dispensar', 'wc-custom-installments' )
 		);
 
 		wp_admin_notice( $message, array(
@@ -177,7 +177,7 @@ class Onboarding {
 		check_admin_referer('wc_custom_installments_dismiss_onboarding');
 
 		if ( ! current_user_can( Helpers::capability() ) ) {
-			wp_die( esc_html__( 'You are not allowed to do that.', 'wc-custom-installments' ) );
+			wp_die( esc_html__( 'Você não tem permissão para fazer isso.', 'wc-custom-installments' ) );
 		}
 
 		self::update_state( array( 'dismissed' => true ) );

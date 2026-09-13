@@ -56,7 +56,7 @@ class Elementor {
 	 */
 	public function register_category( $manager ) {
 		$manager->add_category( self::CATEGORY, array(
-			'title' => esc_html__( 'Custom Installments', 'wc-custom-installments' ),
+			'title' => esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' ),
 			'icon' => 'eicon-product-price',
 		) );
 	}

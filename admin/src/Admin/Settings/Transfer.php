@@ -57,21 +57,21 @@ class Transfer {
 		if ( ! is_array( $payload ) ) {
 			return new \WP_Error(
 				'wcci_invalid_import',
-				__( 'That file could not be read as settings.', 'wc-custom-installments' )
+				__( 'Não foi possível ler esse arquivo como configurações.', 'wc-custom-installments' )
 			);
 		}
 
 		if ( ( $payload['signature'] ?? '' ) !== self::SIGNATURE ) {
 			return new \WP_Error(
 				'wcci_foreign_import',
-				__( 'That file was not exported by this plugin.', 'wc-custom-installments' )
+				__( 'Esse arquivo não foi exportado por este plugin.', 'wc-custom-installments' )
 			);
 		}
 
 		if ( empty( $payload['settings'] ) || ! is_array( $payload['settings'] ) ) {
 			return new \WP_Error(
 				'wcci_empty_import',
-				__( 'That file carries no settings.', 'wc-custom-installments' )
+				__( 'Esse arquivo não contém configurações.', 'wc-custom-installments' )
 			);
 		}
 

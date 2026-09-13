@@ -13,19 +13,19 @@ Pro, and cannot be saved or take effect until a licence answers for it.
 
 | Capability | Gate |
 |---|---|
-| Interest per installment | `fee_per_installment` |
-| Discounts per payment method | `gateway_discounts` |
-| Interest per payment method | `gateway_interests` |
-| Discounts per quantity | `quantity_discounts` |
-| Bank slip discount | `ticket_discount` |
-| Pix savings badge | `pix_economy_badge` |
-| Sale badge | `sale_badge` |
-| Custom installment text templates | `custom_placeholders` |
-| Variable product price range control | `variable_price_range` |
-| Discounted price in structured data | `seo_schema` |
-| Advanced design controls | `advanced_design` |
-| Per-product discount overrides | `product_overrides` |
-| Additional Elementor widgets | `elementor_widgets_pro` |
+| Juros por parcela | `fee_per_installment` |
+| Descontos por forma de pagamento | `gateway_discounts` |
+| Juros por forma de pagamento | `gateway_interests` |
+| Descontos por quantidade | `quantity_discounts` |
+| Desconto no boleto | `ticket_discount` |
+| Selo de economia no Pix | `pix_economy_badge` |
+| Selo de promoção | `sale_badge` |
+| Modelos de texto de parcelas personalizados | `custom_placeholders` |
+| Controle da faixa de preço de produtos variáveis | `variable_price_range` |
+| Preço com desconto nos dados estruturados | `seo_schema` |
+| Controles avançados de design | `advanced_design` |
+| Descontos personalizados por produto | `product_overrides` |
+| Widgets adicionais do Elementor | `elementor_widgets_pro` |
 
 ## How the split works
 

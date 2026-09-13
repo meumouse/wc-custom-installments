@@ -123,19 +123,19 @@ class Conflict_Guard {
 		}
 
 		$imported = Migrator::has_legacy_data()
-			? esc_html__( 'Your settings have already been imported, so nothing is lost by switching.', 'wc-custom-installments' )
+			? esc_html__( 'Suas configurações já foram importadas, então nada se perde com a troca.', 'wc-custom-installments' )
 			: '';
 
 		$message = sprintf(
 			'<p><strong>%s</strong> %s</p><p>%s</p><p><a class="button button-primary" href="%s">%s</a></p>',
-			esc_html__( 'Two versions of Custom Installments are active.', 'wc-custom-installments' ),
-			esc_html__( 'Only the older one is showing prices on your store. This one waits until the older plugin is deactivated, so shoppers never see the price twice.', 'wc-custom-installments' ),
+			esc_html__( 'Duas versões do Parcelas Customizadas estão ativas.', 'wc-custom-installments' ),
+			esc_html__( 'Apenas o antigo está exibindo preços na sua loja. Este aguarda até que o plugin antigo seja desativado, para que os clientes nunca vejam o preço duas vezes.', 'wc-custom-installments' ),
 			$imported,
 			esc_url( wp_nonce_url(
 				admin_url('admin-post.php?action=wc_custom_installments_deactivate_legacy'),
 				'wc_custom_installments_deactivate_legacy'
 			) ),
-			esc_html__( 'Deactivate the older plugin', 'wc-custom-installments' )
+			esc_html__( 'Desativar o plugin antigo', 'wc-custom-installments' )
 		);
 
 		wp_admin_notice( $message, array(
@@ -159,7 +159,7 @@ class Conflict_Guard {
 		check_admin_referer('wc_custom_installments_deactivate_legacy');
 
 		if ( ! current_user_can('activate_plugins') ) {
-			wp_die( esc_html__( 'You are not allowed to do that.', 'wc-custom-installments' ) );
+			wp_die( esc_html__( 'Você não tem permissão para fazer isso.', 'wc-custom-installments' ) );
 		}
 
 		$legacy = self::find_legacy_plugin();

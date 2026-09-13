@@ -70,9 +70,9 @@ export function useSettings(bootstrap) {
 
       adopt(response);
 
-      return { ok: true, message: response.message || __('Settings saved.') };
+      return { ok: true, message: response.message || __('Configurações salvas.') };
     } catch (error) {
-      return { ok: false, message: error.message || __('Could not save the settings.') };
+      return { ok: false, message: error.message || __('Não foi possível salvar as configurações.') };
     } finally {
       isSaving.value = false;
     }
@@ -92,9 +92,9 @@ export function useSettings(bootstrap) {
 
       adopt(response);
 
-      return { ok: true, message: response.message || __('Settings restored to their defaults.') };
+      return { ok: true, message: response.message || __('Configurações restauradas para o padrão.') };
     } catch (error) {
-      return { ok: false, message: error.message || __('Could not restore the settings.') };
+      return { ok: false, message: error.message || __('Não foi possível restaurar as configurações.') };
     } finally {
       isResetting.value = false;
     }
@@ -127,9 +127,9 @@ export function useSettings(bootstrap) {
 
       adopt(response);
 
-      return { ok: true, message: response.message || __('Settings imported.') };
+      return { ok: true, message: response.message || __('Configurações importadas.') };
     } catch (error) {
-      return { ok: false, message: error.message || __('Could not import that file.') };
+      return { ok: false, message: error.message || __('Não foi possível importar esse arquivo.') };
     }
   }
 

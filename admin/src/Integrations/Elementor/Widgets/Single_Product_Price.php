@@ -35,7 +35,7 @@ class Single_Product_Price extends Abstract_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product price with installments', 'wc-custom-installments' );
+		return esc_html__( 'Preço do produto com parcelas', 'wc-custom-installments' );
 	}
 
 	/**

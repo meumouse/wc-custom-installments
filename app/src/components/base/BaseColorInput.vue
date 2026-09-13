@@ -40,7 +40,7 @@ const swatch = computed({
     <button
       type="button"
       :disabled="disabled"
-      :aria-label="ariaLabel ? `${ariaLabel} — ${__('Pick a colour')}` : __('Pick a colour')"
+      :aria-label="ariaLabel ? `${ariaLabel} — ${__('Escolher uma cor')}` : __('Escolher uma cor')"
       class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-slate-200 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-100 disabled:cursor-not-allowed disabled:opacity-60"
       :style="{ backgroundColor: isHex ? modelValue : 'transparent' }"
       @click="picker?.click()"

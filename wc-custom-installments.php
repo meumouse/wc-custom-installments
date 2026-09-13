@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Plugin Name: 			Custom Installments for WooCommerce
- * Description: 			Display installment plans, discounts and accepted payment methods on your WooCommerce store.
+ * Plugin Name: 			Parcelas Customizadas para WooCommerce
+ * Description: 			Exiba parcelamentos, descontos e as formas de pagamento aceitas na sua loja WooCommerce.
  * Plugin URI: 				https://meumouse.com/plugins/wc-custom-installments/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/

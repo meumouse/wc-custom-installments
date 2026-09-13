@@ -100,7 +100,7 @@ async function onNext() {
   await next();
 
   if (index.value === before && !isLast.value) {
-    push(__('That did not save. Please try again.'), 'error');
+    push(__('Não foi possível salvar. Tente novamente.'), 'error');
   }
 }
 
@@ -130,17 +130,17 @@ async function onSkip() {
 
 <template>
   <div class="mx-auto max-w-3xl pb-10 pt-4">
-    <PageHeader :title="__('Setup')" :description="sprintf(__('Step %1$d of %2$d'), index + 1, steps.length)">
+    <PageHeader :title="__('Configuração')" :description="sprintf(__('Etapa %1$d de %2$d'), index + 1, steps.length)">
       <template #actions>
         <BaseButton variant="ghost" size="sm" :disabled="isSaving" @click="onSkip">
-          {{ __('Skip setup') }}
+          {{ __('Pular configuração') }}
         </BaseButton>
       </template>
     </PageHeader>
 
     <div class="mt-8 flex flex-col gap-4">
-      <BaseStepper :steps="steps" :index="index" :aria-label="__('Setup steps')" @select="goTo" />
-      <BaseProgress :value="progress" :label="__('Setup progress')" />
+      <BaseStepper :steps="steps" :index="index" :aria-label="__('Etapas da configuração')" @select="goTo" />
+      <BaseProgress :value="progress" :label="__('Progresso da configuração')" />
     </div>
 
     <SettingsPanel class="mt-6">
@@ -151,15 +151,15 @@ async function onSkip() {
         <!-- Welcome -->
         <div v-if="current?.id === 'welcome'" class="flex flex-col gap-4 text-[14px] leading-6 text-slate-600">
           <p>
-            {{ __('This plugin answers the question every shopper asks before buying: how much is it per month, and what do I save by paying it all at once.') }}
+            {{ __('Este plugin responde à pergunta que todo cliente faz antes de comprar: quanto fica por mês e quanto eu economizo pagando à vista.') }}
           </p>
 
           <BaseNotice v-if="migrated" tone="success">
-            {{ __('We found settings from your previous installation and imported them. Nothing was changed — you can review everything on the settings screen.') }}
+            {{ __('Encontramos as configurações da sua instalação anterior e as importamos. Nada foi alterado — você pode revisar tudo na tela de configurações.') }}
           </BaseNotice>
 
           <p>
-            {{ __('The next few questions set the instalment rules. You can change any of them later.') }}
+            {{ __('As próximas perguntas definem as regras de parcelamento. Você pode alterar qualquer uma delas depois.') }}
           </p>
         </div>
 
@@ -176,7 +176,7 @@ async function onSkip() {
 
           <!-- Card brands only matter once the card row is on. -->
           <div v-if="current?.id === 'payment-methods' && settings.enable_credit_card_method_payment_form === 'yes'">
-            <BaseLabel>{{ __('Credit card brands') }}</BaseLabel>
+            <BaseLabel>{{ __('Bandeiras de cartão de crédito') }}</BaseLabel>
 
             <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
               <BaseCheckbox
@@ -200,23 +200,23 @@ async function onSkip() {
           <!-- A migrated store lands straight here, so this is where it has to
                be told what happened to its old settings. -->
           <BaseNotice v-if="migrated" tone="success">
-            {{ __('We found the settings from your previous installation and imported them, exactly as they were. Nothing was changed, and your old options are still where they were in case you roll back.') }}
+            {{ __('Encontramos as configurações da sua instalação anterior e as importamos exatamente como estavam. Nada foi alterado, e suas opções antigas continuam onde estavam caso você volte à versão anterior.') }}
           </BaseNotice>
 
           <p class="text-[14px] leading-6 text-slate-600">
             {{ migrated
-              ? __('There is nothing else to set up. Review anything you like on the settings screen.')
-              : __('Your store is showing instalment plans. From here you can fine-tune the wording, the placement and the appearance.') }}
+              ? __('Não há mais nada para configurar. Revise o que quiser na tela de configurações.')
+              : __('Sua loja está exibindo parcelamentos. A partir daqui, você pode ajustar os textos, a posição e a aparência.') }}
           </p>
 
           <PricePreview :settings="settings" :environment="environment" />
 
           <div class="flex flex-wrap gap-3">
             <BaseButton v-if="links.shop_url" variant="secondary" icon="store" :href="links.shop_url" external>
-              {{ __('View your shop') }}
+              {{ __('Ver sua loja') }}
             </BaseButton>
             <BaseButton v-if="links.docs_url" variant="secondary" icon="book-open" :href="links.docs_url" external>
-              {{ __('Read the documentation') }}
+              {{ __('Ler a documentação') }}
             </BaseButton>
           </div>
         </div>
@@ -225,7 +225,7 @@ async function onSkip() {
       <template #footer>
         <div class="flex items-center justify-between gap-3 border-t border-slate-100 px-6 py-5 sm:px-10">
           <BaseButton v-if="!isFirst" variant="secondary" icon="arrow-left" :disabled="isSaving" @click="back">
-            {{ __('Back') }}
+            {{ __('Voltar') }}
           </BaseButton>
           <span v-else />
 
@@ -236,11 +236,11 @@ async function onSkip() {
             :loading="isSaving"
             @click="onNext"
           >
-            {{ isSaving ? __('Saving…') : __('Continue') }}
+            {{ isSaving ? __('Salvando…') : __('Continuar') }}
           </BaseButton>
 
           <BaseButton v-else icon="check" :loading="isSaving || finished" @click="onFinish">
-            {{ __('Go to the settings') }}
+            {{ __('Ir para as configurações') }}
           </BaseButton>
         </div>
       </template>

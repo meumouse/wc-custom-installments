@@ -46,7 +46,7 @@ class Element_Registry {
 			'price' => self::element(
 				'wci_product_price',
 				'.woo-custom-installments-group-main-price',
-				__( 'Product price', 'wc-custom-installments' ),
+				__( 'Preço do produto', 'wc-custom-installments' ),
 				1,
 				array( 'class' => '', 'image' => '' ),
 				array( 'font_size' => '1.225', 'font_weight' => '600', 'font_color' => '#343A40' )
@@ -54,7 +54,7 @@ class Element_Registry {
 			'installments' => self::element(
 				'wci_best_installments',
 				'.woo-custom-installments-card-container',
-				__( 'Best installment', 'wc-custom-installments' ),
+				__( 'Melhor parcela', 'wc-custom-installments' ),
 				2,
 				array( 'class' => 'fa-regular fa-credit-card', 'image' => '' ),
 				array( 'font_weight' => '400', 'margin' => array( 'top' => '0.5', 'bottom' => '1' ) )
@@ -62,7 +62,7 @@ class Element_Registry {
 			'discount_pix' => self::element(
 				'wci_discount_pix',
 				'.woo-custom-installments-offer',
-				__( 'Pix discount', 'wc-custom-installments' ),
+				__( 'Desconto no Pix', 'wc-custom-installments' ),
 				3,
 				array( 'class' => 'fa-brands fa-pix', 'image' => '' ),
 				array(
@@ -77,7 +77,7 @@ class Element_Registry {
 			'pix_economy' => self::element(
 				'wci_pix_economy',
 				'.woo-custom-installments-economy-pix-badge',
-				__( 'Pix savings', 'wc-custom-installments' ),
+				__( 'Economia no Pix', 'wc-custom-installments' ),
 				4,
 				array( 'class' => 'fa-solid fa-circle-info', 'image' => '' ),
 				array(
@@ -92,7 +92,7 @@ class Element_Registry {
 			'discount_slip_bank' => self::element(
 				'wci_discount_slip_bank',
 				'.woo-custom-installments-ticket-discount',
-				__( 'Bank slip discount', 'wc-custom-installments' ),
+				__( 'Desconto no boleto', 'wc-custom-installments' ),
 				5,
 				array( 'class' => 'fa-solid fa-barcode', 'image' => '' ),
 				array(

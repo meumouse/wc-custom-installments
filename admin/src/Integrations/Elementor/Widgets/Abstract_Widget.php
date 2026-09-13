@@ -76,7 +76,7 @@ abstract class Abstract_Widget extends Widget_Base {
 
 		printf(
 			'<div class="wci-widget-placeholder">%s</div>',
-			esc_html__( 'This widget needs a feature your licence does not currently cover.', 'wc-custom-installments' )
+			esc_html__( 'Este widget precisa de um recurso que sua licença não cobre no momento.', 'wc-custom-installments' )
 		);
 	}
 
@@ -94,7 +94,7 @@ abstract class Abstract_Widget extends Widget_Base {
 
 		printf(
 			'<div class="wci-widget-placeholder">%s</div>',
-			esc_html__( 'This widget renders the product it is placed on. Add it to a product template, or create a product to preview it.', 'wc-custom-installments' )
+			esc_html__( 'Este widget exibe o produto em que é colocado. Adicione-o a um modelo de produto ou crie um produto para visualizá-lo.', 'wc-custom-installments' )
 		);
 	}
 }

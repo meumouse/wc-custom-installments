@@ -37,10 +37,10 @@ const payload = computed(() => JSON.stringify({ productId: '…', ...form }, nul
 
 // The four fields, described once: the form renders them from this list.
 const FIELDS = [
-  { key: 'first_name', label: () => __('First name'), type: 'text', autocomplete: 'given-name' },
-  { key: 'last_name', label: () => __('Last name'), type: 'text', autocomplete: 'family-name' },
+  { key: 'first_name', label: () => __('Nome'), type: 'text', autocomplete: 'given-name' },
+  { key: 'last_name', label: () => __('Sobrenome'), type: 'text', autocomplete: 'family-name' },
   { key: 'email', label: () => __('E-mail'), type: 'email', autocomplete: 'email' },
-  { key: 'phone', label: () => __('Phone'), type: 'tel', autocomplete: 'tel' },
+  { key: 'phone', label: () => __('Telefone'), type: 'tel', autocomplete: 'tel' },
 ];
 
 /**
@@ -64,7 +64,7 @@ async function submit() {
 
     trial.value = response.trial;
   } catch (requestError) {
-    error.value = requestError.message || __('That did not work. Please try again.');
+    error.value = requestError.message || __('Não funcionou. Tente novamente.');
   } finally {
     isSending.value = false;
   }
@@ -73,11 +73,11 @@ async function submit() {
 
 <template>
   <BaseNotice v-if="pro.active" tone="info">
-    {{ __('The Pro add-on is already installed on this site.') }}
+    {{ __('O complemento Pro já está instalado neste site.') }}
   </BaseNotice>
 
-  <BaseNotice v-else-if="trial" tone="success" :title="__('Your trial is ready.')">
-    <p>{{ __('A copy is on its way to your inbox. Install the Pro add-on and paste this key into its licence screen.') }}</p>
+  <BaseNotice v-else-if="trial" tone="success" :title="__('Seu teste está pronto.')">
+    <p>{{ __('Uma cópia está a caminho do seu e-mail. Instale o complemento Pro e cole esta chave na tela de licença dele.') }}</p>
 
     <div class="mt-3">
       <BaseCode>{{ trial.license_key }}</BaseCode>
@@ -85,7 +85,7 @@ async function submit() {
 
     <template #actions>
       <BaseButton :href="pro.store_url" external icon="download">
-        {{ __('Download the Pro add-on') }}
+        {{ __('Baixar o complemento Pro') }}
       </BaseButton>
     </template>
   </BaseNotice>
@@ -93,18 +93,18 @@ async function submit() {
   <!-- With no product configured there is nothing to ask for, so the step
        offers a link and sends nothing. -->
   <BaseNotice v-else-if="!pro.trial_available" icon="crown">
-    {{ __('Pro adds discounts per payment method, tiered discounts, extra badges and full design control.') }}
+    {{ __('O Pro adiciona descontos por forma de pagamento, descontos progressivos, selos extras e controle total do design.') }}
 
     <template #actions>
       <BaseButton :href="pro.store_url" external icon="crown">
-        {{ __('See what Pro adds') }}
+        {{ __('Veja o que o Pro adiciona') }}
       </BaseButton>
     </template>
   </BaseNotice>
 
   <BaseForm v-else class="flex flex-col gap-5" @submit="submit">
     <p class="text-[14px] leading-6 text-slate-600">
-      {{ sprintf(__('Try every Pro feature for %d days. No card, and nothing renews on its own.'), pro.trial_days) }}
+      {{ sprintf(__('Teste todos os recursos Pro por %d dias. Sem cartão e sem renovação automática.'), pro.trial_days) }}
     </p>
 
     <div class="grid gap-4 sm:grid-cols-2">
@@ -121,7 +121,7 @@ async function submit() {
     </div>
 
     <BaseNotice icon="info-circle">
-      {{ sprintf(__('Pressing the button sends these four fields to %s to issue your key. Nothing has been sent yet, and skipping this step sends nothing at all.'), pro.api_host || 'the licensing service') }}
+      {{ sprintf(__('Ao clicar no botão, estes quatro campos são enviados para %s para emitir sua chave. Nada foi enviado ainda, e pular esta etapa não envia nada.'), pro.api_host || __('o serviço de licenças')) }}
 
       <div v-if="showPayload" class="mt-3">
         <BaseCode block>{{ payload }}</BaseCode>
@@ -129,12 +129,12 @@ async function submit() {
 
       <template #actions>
         <BaseButton variant="link" @click="showPayload = !showPayload">
-          {{ showPayload ? __('Hide what is sent') : __('Show exactly what is sent') }}
+          {{ showPayload ? __('Ocultar o que é enviado') : __('Mostrar exatamente o que é enviado') }}
         </BaseButton>
         <span class="text-slate-300" aria-hidden="true">·</span>
-        <BaseButton variant="link" :href="links.terms_url" external>{{ __('Terms') }}</BaseButton>
+        <BaseButton variant="link" :href="links.terms_url" external>{{ __('Termos') }}</BaseButton>
         <span class="text-slate-300" aria-hidden="true">·</span>
-        <BaseButton variant="link" :href="links.privacy_url" external>{{ __('Privacy') }}</BaseButton>
+        <BaseButton variant="link" :href="links.privacy_url" external>{{ __('Privacidade') }}</BaseButton>
       </template>
     </BaseNotice>
 
@@ -144,7 +144,7 @@ async function submit() {
 
     <div>
       <BaseButton type="submit" icon="crown" :loading="isSending" :disabled="!canSubmit">
-        {{ isSending ? __('Requesting…') : __('Start the free trial') }}
+        {{ isSending ? __('Solicitando…') : __('Começar o teste grátis') }}
       </BaseButton>
     </div>
   </BaseForm>

@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
       @keydown="onTriggerKeydown"
     >
       <span class="truncate" :class="selected ? '' : 'text-slate-400'">
-        {{ selected ? selected.label : placeholder || __('Select an option') }}
+        {{ selected ? selected.label : placeholder || __('Selecione uma opção') }}
       </span>
 
       <BaseIcon
@@ -328,8 +328,8 @@ onBeforeUnmount(() => {
               aria-autocomplete="list"
               :aria-controls="`${uid}-listbox`"
               :aria-activedescendant="activeIndex >= 0 ? `${uid}-option-${activeIndex}` : undefined"
-              :aria-label="__('Search')"
-              :placeholder="__('Search…')"
+              :aria-label="__('Buscar')"
+              :placeholder="__('Buscar…')"
               class="w-full rounded-md border border-slate-200 bg-white py-2 pl-9 pr-3 text-[13px] text-slate-700 focus:border-primary-700 focus:ring-4 focus:ring-primary-100"
             />
           </div>
@@ -362,7 +362,7 @@ onBeforeUnmount(() => {
           </li>
 
           <li v-if="!filtered.length" class="px-3 py-2 text-[13px] text-slate-400">
-            {{ __('Nothing matches your search.') }}
+            {{ __('Nada corresponde à sua busca.') }}
           </li>
         </ul>
       </div>

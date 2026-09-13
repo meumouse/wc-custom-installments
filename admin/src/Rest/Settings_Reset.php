@@ -45,7 +45,7 @@ class Settings_Reset extends Abstract_Route {
 		$defaults = Repository::reset_settings();
 
 		return $this->success_response( array(
-			'message' => __( 'Settings restored to their defaults.', 'wc-custom-installments' ),
+			'message' => __( 'Configurações restauradas para o padrão.', 'wc-custom-installments' ),
 			'settings' => $defaults,
 			'schema' => Registry::get_schema(),
 		) );

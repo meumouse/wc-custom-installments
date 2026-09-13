@@ -75,7 +75,7 @@ function update(id, key, value) {
 <template>
   <div class="flex flex-col gap-2">
     <BaseNotice v-if="!gateways.length" tone="info">
-      {{ __('No payment gateway is enabled in WooCommerce yet.') }}
+      {{ __('Nenhuma forma de pagamento está ativa no WooCommerce ainda.') }}
     </BaseNotice>
 
     <div
@@ -94,7 +94,7 @@ function update(id, key, value) {
           min="0"
           placeholder="0"
           :disabled="disabled"
-          :aria-label="sprintf(__('Amount for %s'), gateway.label)"
+          :aria-label="sprintf(__('Valor para %s'), gateway.label)"
           @update:model-value="update(gateway.id, 'amount', $event)"
         />
       </div>
@@ -104,7 +104,7 @@ function update(id, key, value) {
           :model-value="rate(gateway.id, 'type')"
           :options="methods"
           :disabled="disabled"
-          :aria-label="sprintf(__('Type for %s'), gateway.label)"
+          :aria-label="sprintf(__('Tipo para %s'), gateway.label)"
           @update:model-value="update(gateway.id, 'type', $event)"
         />
       </div>

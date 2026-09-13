@@ -343,7 +343,7 @@ class Components {
 		) . '</span>';
 
 		if ( Repository::is_active('enable_instant_approval_badge') ) {
-			$html .= '<span class="instant-approval-badge">' . esc_html__( 'Approved instantly', 'wc-custom-installments' ) . '</span>';
+			$html .= '<span class="instant-approval-badge">' . esc_html__( 'Aprovação imediata', 'wc-custom-installments' ) . '</span>';
 		}
 
 		$html .= '</div>';
@@ -385,7 +385,7 @@ class Components {
 			: ( $product instanceof \WC_Product ? $product->get_price() : 0 );
 
 		$html = '<div class="woo-custom-installments-ticket-section">';
-		$html .= '<h4 class="ticket-method-title">' . esc_html__( 'Charges:', 'wc-custom-installments' ) . '</h4>';
+		$html .= '<h4 class="ticket-method-title">' . esc_html__( 'Cobranças:', 'wc-custom-installments' ) . '</h4>';
 		$html .= '<span class="ticket-method-name">' . esc_html( Repository::get('text_ticket_container') ) . ' ' . wc_price( $price ) . '</span>';
 		$html .= '<div class="ticket-method-container">';
 		$html .= '<span class="ticket-instructions">' . esc_html( Repository::get('text_instructions_ticket_container') ) . '</span>';
@@ -481,7 +481,7 @@ class Components {
 
 		if ( Repository::is_active('enable_instant_approval_badge') ) {
 			$html .= '<div class="' . esc_attr( $type ) . '-card-method-container">';
-			$html .= '<span class="instant-approval-badge">' . esc_html__( 'Approved instantly', 'wc-custom-installments' ) . '</span>';
+			$html .= '<span class="instant-approval-badge">' . esc_html__( 'Aprovação imediata', 'wc-custom-installments' ) . '</span>';
 			$html .= '</div>';
 		}
 
@@ -617,7 +617,7 @@ class Components {
 			<div class="wci-popup-content">
 				<div class="wci-popup-header">
 					<h5 class="wci-popup-title"><?php echo esc_html( Repository::get('text_container_payment_forms') ); ?></h5>
-					<button type="button" class="btn-close wci-close-popup" aria-label="<?php esc_attr_e( 'Close', 'wc-custom-installments' ); ?>"></button>
+					<button type="button" class="btn-close wci-close-popup" aria-label="<?php esc_attr_e( 'Fechar', 'wc-custom-installments' ); ?>"></button>
 				</div>
 
 				<?php

@@ -58,7 +58,7 @@ class Trial_Request extends Abstract_Route {
 		}
 
 		return $this->success_response( array(
-			'message' => __( 'Your trial is ready. The key is below, and a copy is on its way to your inbox.', 'wc-custom-installments' ),
+			'message' => __( 'Seu teste está pronto. A chave está abaixo, e uma cópia está a caminho do seu e-mail.', 'wc-custom-installments' ),
 			'trial' => $result,
 		) );
 	}

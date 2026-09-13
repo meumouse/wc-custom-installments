@@ -42,7 +42,7 @@ class Onboarding_Complete extends Abstract_Route {
 	 */
 	public function handle( WP_REST_Request $request ) {
 		return $this->success_response( array(
-			'message' => __( 'Setup complete.', 'wc-custom-installments' ),
+			'message' => __( 'Configuração concluída.', 'wc-custom-installments' ),
 			'state' => Onboarding::complete(),
 		) );
 	}

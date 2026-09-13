@@ -27,7 +27,7 @@ const emit = defineEmits(['confirm', 'cancel']);
 <template>
   <BaseModal
     :open="open"
-    :eyebrow="__('Confirmation')"
+    :eyebrow="__('Confirmação')"
     :title="title"
     :description="description"
     size="sm"
@@ -38,11 +38,11 @@ const emit = defineEmits(['confirm', 'cancel']);
 
     <template #actions>
       <BaseButton variant="secondary" :disabled="busy" @click="emit('cancel')">
-        {{ cancelLabel || __('Cancel') }}
+        {{ cancelLabel || __('Cancelar') }}
       </BaseButton>
 
       <BaseButton :variant="tone === 'danger' ? 'danger' : 'primary'" :loading="busy" @click="emit('confirm')">
-        {{ confirmLabel || __('Confirm') }}
+        {{ confirmLabel || __('Confirmar') }}
       </BaseButton>
     </template>
   </BaseModal>

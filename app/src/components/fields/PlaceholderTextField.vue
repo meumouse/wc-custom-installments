@@ -57,7 +57,7 @@ function append(token) {
         size="sm"
         class="font-mono !text-[12px]"
         :disabled="disabled"
-        :aria-label="sprintf(__('Insert %s'), token)"
+        :aria-label="sprintf(__('Inserir %s'), token)"
         @click="append(token)"
       >
         {{ token }}

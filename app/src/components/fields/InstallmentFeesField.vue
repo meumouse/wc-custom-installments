@@ -81,7 +81,7 @@ function update(installment, value) {
         min="0"
         placeholder="—"
         :disabled="disabled"
-        :aria-label="sprintf(__('Interest for %d installments'), installment)"
+        :aria-label="sprintf(__('Juros para %d parcelas'), installment)"
         bare
         @update:model-value="update(installment, $event)"
       />

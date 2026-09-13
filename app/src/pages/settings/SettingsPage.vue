@@ -186,7 +186,7 @@ async function onExport() {
 
     URL.revokeObjectURL(url);
   } catch (error) {
-    push(error.message || __('Could not export the settings.'), 'error');
+    push(error.message || __('Não foi possível exportar as configurações.'), 'error');
   }
 }
 
@@ -199,7 +199,7 @@ async function onExport() {
  */
 async function onImport(document_) {
   if (!document_) {
-    push(__('That file could not be read as settings.'), 'error');
+    push(__('Não foi possível ler esse arquivo como configurações.'), 'error');
 
     return;
   }
@@ -210,16 +210,16 @@ async function onImport(document_) {
 
 <template>
   <div class="pb-10 pt-4">
-    <PageHeader :title="__('Settings')">
+    <PageHeader :title="__('Configurações')">
       <template #description>
-        {{ __('Show installment plans, discounts and payment methods on your store.') }}
+        {{ __('Exiba parcelamentos, descontos e formas de pagamento na sua loja.') }}
         <BaseButton v-if="docsUrl" variant="link" :href="docsUrl" external class="ml-1 font-semibold underline">
-          {{ __('Read the documentation') }}
+          {{ __('Ler a documentação') }}
         </BaseButton>
       </template>
 
       <template #actions>
-        <BaseBadge v-if="version" tone="neutral">{{ sprintf(__('Version %s'), version) }}</BaseBadge>
+        <BaseBadge v-if="version" tone="neutral">{{ sprintf(__('Versão %s'), version) }}</BaseBadge>
       </template>
     </PageHeader>
 
@@ -227,7 +227,7 @@ async function onImport(document_) {
       v-model="activeSection"
       class="mt-10"
       :tabs="tabs"
-      :aria-label="__('Settings sections')"
+      :aria-label="__('Seções de configurações')"
       id-prefix="wcci-section"
     />
 

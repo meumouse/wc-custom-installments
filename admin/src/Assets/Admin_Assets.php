@@ -187,7 +187,7 @@ class Admin_Assets extends Abstract_Assets {
 	 */
 	public function missing_build_notice() {
 		wp_admin_notice(
-			esc_html__( 'The Custom Installments for WooCommerce admin bundle is missing. Run "npm run build" in the app directory.', 'wc-custom-installments' ),
+			esc_html__( 'O pacote de administração do Parcelas Customizadas para WooCommerce está ausente. Execute "npm run build" no diretório app.', 'wc-custom-installments' ),
 			array( 'type' => 'error' )
 		);
 	}

@@ -113,11 +113,11 @@ onBeforeUnmount(() => {
     <div v-if="state === 'waiting'" class="wcci-skeleton" style="height: 240px" />
 
     <BaseNotice v-else-if="state === 'missing'" tone="warning">
-      {{ __('This section comes from an add-on that did not load. Reload the page, or check that the add-on is active and up to date.') }}
+      {{ __('Esta seção vem de um complemento que não carregou. Recarregue a página ou verifique se o complemento está ativo e atualizado.') }}
     </BaseNotice>
 
     <BaseNotice v-else-if="state === 'failed'" tone="danger">
-      {{ __('This section could not be displayed. Reload the page and try again.') }}
+      {{ __('Não foi possível exibir esta seção. Recarregue a página e tente novamente.') }}
     </BaseNotice>
 
     <div v-show="state === 'mounted'" ref="target" />

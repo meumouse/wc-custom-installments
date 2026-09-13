@@ -21,7 +21,7 @@ defineProps({
   <header class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
     <div class="min-w-0 space-y-2">
       <p class="text-xs font-semibold uppercase tracking-[0.22em] text-shell-500">
-        {{ __('Custom Installments') }}
+        {{ __('Parcelas Customizadas') }}
       </p>
 
       <div class="flex items-center gap-3">

@@ -84,19 +84,19 @@ class Features {
 		self::$bootstrapped = true;
 
 		$definitions = array(
-			'fee_per_installment' => __( 'Interest per installment', 'wc-custom-installments' ),
-			'gateway_discounts' => __( 'Discounts per payment method', 'wc-custom-installments' ),
-			'gateway_interests' => __( 'Interest per payment method', 'wc-custom-installments' ),
-			'quantity_discounts' => __( 'Discounts per quantity', 'wc-custom-installments' ),
-			'ticket_discount' => __( 'Bank slip discount', 'wc-custom-installments' ),
-			'pix_economy_badge' => __( 'Pix savings badge', 'wc-custom-installments' ),
-			'sale_badge' => __( 'Sale badge', 'wc-custom-installments' ),
-			'custom_placeholders' => __( 'Custom installment text templates', 'wc-custom-installments' ),
-			'variable_price_range' => __( 'Variable product price range control', 'wc-custom-installments' ),
-			'seo_schema' => __( 'Discounted price in structured data', 'wc-custom-installments' ),
-			'advanced_design' => __( 'Advanced design controls', 'wc-custom-installments' ),
-			'product_overrides' => __( 'Per-product discount overrides', 'wc-custom-installments' ),
-			'elementor_widgets_pro' => __( 'Additional Elementor widgets', 'wc-custom-installments' ),
+			'fee_per_installment' => __( 'Juros por parcela', 'wc-custom-installments' ),
+			'gateway_discounts' => __( 'Descontos por forma de pagamento', 'wc-custom-installments' ),
+			'gateway_interests' => __( 'Juros por forma de pagamento', 'wc-custom-installments' ),
+			'quantity_discounts' => __( 'Descontos por quantidade', 'wc-custom-installments' ),
+			'ticket_discount' => __( 'Desconto no boleto', 'wc-custom-installments' ),
+			'pix_economy_badge' => __( 'Selo de economia no Pix', 'wc-custom-installments' ),
+			'sale_badge' => __( 'Selo de promoção', 'wc-custom-installments' ),
+			'custom_placeholders' => __( 'Modelos de texto de parcelas personalizados', 'wc-custom-installments' ),
+			'variable_price_range' => __( 'Controle da faixa de preço de produtos variáveis', 'wc-custom-installments' ),
+			'seo_schema' => __( 'Preço com desconto nos dados estruturados', 'wc-custom-installments' ),
+			'advanced_design' => __( 'Controles avançados de design', 'wc-custom-installments' ),
+			'product_overrides' => __( 'Descontos personalizados por produto', 'wc-custom-installments' ),
+			'elementor_widgets_pro' => __( 'Widgets adicionais do Elementor', 'wc-custom-installments' ),
 		);
 
 		foreach ( $definitions as $id => $label ) {

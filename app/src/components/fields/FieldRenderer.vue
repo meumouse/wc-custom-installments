@@ -144,7 +144,7 @@ function onLockedClick() {
   >
     <div :class="isLocked ? 'pointer-events-none opacity-60' : ''">
       <BaseNotice v-if="isUnavailable" tone="info" icon="crown">
-        {{ __('This control comes with the Pro add-on.') }}
+        {{ __('Este controle faz parte do complemento Pro.') }}
       </BaseNotice>
 
       <component :is="component" v-else v-model="model" v-bind="{ ...controlProps, ...unitBinding }" />

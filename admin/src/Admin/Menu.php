@@ -50,8 +50,8 @@ class Menu {
 	public function register_menu() {
 		add_submenu_page(
 			'woocommerce',
-			esc_html__( 'Custom Installments', 'wc-custom-installments' ),
-			esc_html__( 'Custom Installments', 'wc-custom-installments' ),
+			esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' ),
+			esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' ),
 			Helpers::capability(),
 			self::SETTINGS_PAGE,
 			array( $this, 'render_settings_page' )
@@ -59,8 +59,8 @@ class Menu {
 
 		add_submenu_page(
 			'',
-			esc_html__( 'Custom Installments setup', 'wc-custom-installments' ),
-			esc_html__( 'Custom Installments setup', 'wc-custom-installments' ),
+			esc_html__( 'Configuração do Parcelas Customizadas', 'wc-custom-installments' ),
+			esc_html__( 'Configuração do Parcelas Customizadas', 'wc-custom-installments' ),
 			Helpers::capability(),
 			Onboarding::PAGE,
 			array( $this, 'render_onboarding_page' )
@@ -70,7 +70,7 @@ class Menu {
 		// $submenu array, so core cannot resolve a title and admin-header.php
 		// ends up passing null to strip_tags(). Seed it before the header runs.
 		if ( Onboarding::PAGE === Helpers::current_admin_page() ) {
-			$GLOBALS['title'] = esc_html__( 'Custom Installments setup', 'wc-custom-installments' );
+			$GLOBALS['title'] = esc_html__( 'Configuração do Parcelas Customizadas', 'wc-custom-installments' );
 		}
 	}
 
@@ -86,7 +86,7 @@ class Menu {
 		$settings = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( 'admin.php?page=' . self::SETTINGS_PAGE ) ),
-			esc_html__( 'Settings', 'wc-custom-installments' )
+			esc_html__( 'Configurações', 'wc-custom-installments' )
 		);
 
 		array_unshift( $links, $settings );

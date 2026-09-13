@@ -87,7 +87,7 @@ export async function mountPage(mountId, component) {
   const config = readBootstrapConfig();
 
   if (!config) {
-    renderBootstrapError(mount, __('This screen could not start. Please reload the page.'));
+    renderBootstrapError(mount, __('Não foi possível iniciar esta tela. Recarregue a página.'));
 
     return null;
   }
@@ -101,7 +101,7 @@ export async function mountPage(mountId, component) {
       bootstrap.page = config.page;
     }
   } catch (error) {
-    renderBootstrapError(mount, __('Could not load this page. Please reload and try again.'));
+    renderBootstrapError(mount, __('Não foi possível carregar esta página. Recarregue e tente novamente.'));
 
     return null;
   }

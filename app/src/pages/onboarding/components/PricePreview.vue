@@ -71,18 +71,18 @@ const discounted = computed(() => {
 <template>
   <div class="rounded-lg border border-slate-200 bg-slate-50/80 p-5">
     <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-shell-500">
-      {{ __('Preview') }}
+      {{ __('Pré-visualização') }}
     </p>
 
     <div class="flex flex-col items-start gap-2">
       <span class="text-xl font-semibold text-ink">{{ money(price) }}</span>
 
       <span class="text-[14px] text-slate-700">
-        {{ sprintf(__('Up to %dx of %s interest free'), best.count, money(best.value)) }}
+        {{ sprintf(__('Em até %dx de %s sem juros'), best.count, money(best.value)) }}
       </span>
 
       <BaseBadge v-if="discounted !== null" tone="success" class="!text-[13px] !normal-case !tracking-normal">
-        {{ sprintf(__('%s paying upfront'), money(discounted)) }}
+        {{ sprintf(__('%s à vista'), money(discounted)) }}
       </BaseBadge>
     </div>
   </div>

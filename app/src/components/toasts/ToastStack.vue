@@ -22,10 +22,10 @@ const emit = defineEmits(['dismiss']);
 const portal = ensurePortal();
 
 const TYPES = {
-  success: { header: 'bg-success text-white', bar: 'bg-success', icon: 'check-circle', title: () => __('Success') },
-  error: { header: 'bg-danger text-white', bar: 'bg-danger', icon: 'alert-circle', title: () => __('Error') },
-  warning: { header: 'bg-warning text-dark', bar: 'bg-warning', icon: 'alert-triangle', title: () => __('Warning') },
-  info: { header: 'bg-info text-white', bar: 'bg-info', icon: 'info-circle', title: () => __('Information') },
+  success: { header: 'bg-success text-white', bar: 'bg-success', icon: 'check-circle', title: () => __('Sucesso') },
+  error: { header: 'bg-danger text-white', bar: 'bg-danger', icon: 'alert-circle', title: () => __('Erro') },
+  warning: { header: 'bg-warning text-dark', bar: 'bg-warning', icon: 'alert-triangle', title: () => __('Atenção') },
+  info: { header: 'bg-info text-white', bar: 'bg-info', icon: 'info-circle', title: () => __('Informação') },
 };
 
 /**
@@ -55,7 +55,7 @@ function look(type) {
           <BaseIconButton
             icon="x"
             :size="18"
-            :label="__('Dismiss')"
+            :label="__('Dispensar')"
             :tone="toast.type === 'warning' ? 'muted' : 'inverse'"
             @click="emit('dismiss', toast.id)"
           />
