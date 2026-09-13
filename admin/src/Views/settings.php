@@ -6,7 +6,7 @@
  * The Vue app replaces this markup once its bootstrap request resolves; the
  * skeleton below is what the store owner looks at meanwhile.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 defined('ABSPATH') || exit; ?>

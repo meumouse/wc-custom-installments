@@ -4,13 +4,13 @@
  * The discount depends on which gateway is selected, so the totals are stale
  * the moment the customer picks another one.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 /**
  * Ask WooCommerce to recalculate.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 export function initCheckout() {

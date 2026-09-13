@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * from its number rather than the product's: otherwise a customer buying ten
  * sees the tier price and instalments calculated from the single-unit price.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Tiered_Pricing_Table {
 	/**
 	 * Register the hooks, when the plugin is here.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -37,7 +37,7 @@ class Tiered_Pricing_Table {
 	/**
 	 * Whether the plugin is active.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_active() {
@@ -48,7 +48,7 @@ class Tiered_Pricing_Table {
 	/**
 	 * Build the plan from the tier price when one applies.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $price | Price resolved so far
 	 * @param object $product | Product object
 	 * @return float
@@ -76,7 +76,7 @@ class Tiered_Pricing_Table {
 	 * Without this the runtime would recalculate the price from the quantity
 	 * itself and overwrite what the tier plugin just wrote.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $params | Runtime parameters
 	 * @return array<string,mixed>
 	 */

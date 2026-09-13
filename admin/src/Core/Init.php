@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * its namespace, so a new class is wired up simply by living under admin/src
  * with the right namespace.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Init {
 	/**
 	 * Minimum PHP version required to boot.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const MIN_PHP_VERSION = '8.1';
@@ -34,7 +34,7 @@ class Init {
 	/**
 	 * Minimum WooCommerce version required to boot.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const MIN_WC_VERSION = '8.0';
@@ -42,7 +42,7 @@ class Init {
 	/**
 	 * Plugin main file path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	private $plugin_file;
@@ -50,7 +50,7 @@ class Init {
 	/**
 	 * Plugin version.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	private $plugin_version;
@@ -58,7 +58,7 @@ class Init {
 	/**
 	 * Cache of instantiated classes, keyed by fully qualified class name.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,object>
 	 */
 	private $instantiated_classes = array();
@@ -67,7 +67,7 @@ class Init {
 	/**
 	 * Define constants, check requirements and schedule the boot.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $plugin_file | Absolute path of the plugin main file
 	 * @param string $plugin_version | Plugin version
 	 * @return void
@@ -79,7 +79,7 @@ class Init {
 		/**
 		 * Fires before anything else, while the plugin file is still loading.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 */
 		do_action('WC_Custom_Installments/Core/Before_Init');
 
@@ -102,7 +102,7 @@ class Init {
 		/**
 		 * Fires after the plugin has scheduled its boot.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 */
 		do_action('WC_Custom_Installments/Core/Init');
 	}
@@ -114,7 +114,7 @@ class Init {
 	 * Guarding each one lets wp-config.php override any of them, which is how a
 	 * staging site points at a different API host.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	private function setup_constants() {
@@ -157,7 +157,7 @@ class Init {
 	/**
 	 * Load the plugin text domain.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function load_text_domain() {
@@ -168,7 +168,7 @@ class Init {
 	/**
 	 * Declare compatibility with the WooCommerce features we are aware of.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function declare_woocommerce_compatibility() {
@@ -184,7 +184,7 @@ class Init {
 	/**
 	 * Boot only when every requirement is satisfied.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function maybe_boot() {
@@ -205,7 +205,7 @@ class Init {
 	/**
 	 * Whether WooCommerce is active and new enough.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	private function is_woocommerce_compatible() {
@@ -220,7 +220,7 @@ class Init {
 	/**
 	 * Instantiate every plugin class found in the Composer classmap.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function instance_classes() {
@@ -248,7 +248,7 @@ class Init {
 	 * Abstracts, interfaces and traits are skipped: they exist to be extended,
 	 * not instantiated.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,string>
 	 */
 	private function get_instantiable_classes() {
@@ -277,7 +277,7 @@ class Init {
 		 * This is how an add-on injects its own classes into the plugin's
 		 * lifecycle without touching the core.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,string> $classes | Fully qualified class names
 		 * @return array<int,string>
 		 */
@@ -292,7 +292,7 @@ class Init {
 	 * same instantiation pass, and applying a second copy of this rule is how
 	 * the two would drift apart.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $class | Fully qualified class name
 	 * @return bool
 	 */
@@ -317,7 +317,7 @@ class Init {
 	/**
 	 * Resolve the hook a class should be instantiated on.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $class | Fully qualified class name
 	 * @return string
 	 */
@@ -331,7 +331,7 @@ class Init {
 		/**
 		 * Filter the hook a class is instantiated on.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $hook | Hook name
 		 * @param string $class | Fully qualified class name
 		 * @return string
@@ -347,7 +347,7 @@ class Init {
 	 * fataled: discovery is automatic, so one malformed class must not take the
 	 * whole store down.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $class | Fully qualified class name
 	 * @return object|null
 	 */
@@ -392,7 +392,7 @@ class Init {
 	/**
 	 * Notice shown when the site runs an unsupported PHP version.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function php_version_notice() {
@@ -401,7 +401,7 @@ class Init {
 			esc_html(
 				sprintf(
 					/* translators: 1: required PHP version, 2: current PHP version */
-					__( 'WC Custom Installments requires PHP %1$s or higher. This site runs PHP %2$s.', 'wc-custom-installments' ),
+					__( 'Custom Installments for WooCommerce requires PHP %1$s or higher. This site runs PHP %2$s.', 'wc-custom-installments' ),
 					self::MIN_PHP_VERSION,
 					PHP_VERSION
 				)
@@ -413,7 +413,7 @@ class Init {
 	/**
 	 * Notice shown when WooCommerce is missing or too old.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function woocommerce_notice() {
@@ -422,7 +422,7 @@ class Init {
 			esc_html(
 				sprintf(
 					/* translators: %s: required WooCommerce version */
-					__( 'WC Custom Installments requires WooCommerce %s or higher to be installed and active.', 'wc-custom-installments' ),
+					__( 'Custom Installments for WooCommerce requires WooCommerce %s or higher to be installed and active.', 'wc-custom-installments' ),
 					self::MIN_WC_VERSION
 				)
 			)

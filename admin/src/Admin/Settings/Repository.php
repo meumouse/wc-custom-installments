@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * what makes the feature gate enforceable: a locked field is rejected in one
  * place, so no endpoint, importer or wizard step can slip past it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin\Settings
  * @author MeuMouse.com
  */
@@ -24,7 +24,7 @@ class Repository {
 	/**
 	 * Option holding every setting.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const OPTION = 'wc_custom_installments_settings';
@@ -33,7 +33,7 @@ class Repository {
 	/**
 	 * Read the current settings, merged with the defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_settings() {
@@ -46,7 +46,7 @@ class Repository {
 	/**
 	 * Read one setting.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param mixed $fallback | Returned when the key is absent
 	 * @return mixed
@@ -65,7 +65,7 @@ class Repository {
 	 * value stored while the add-on was licensed keep taking effect after the
 	 * licence lapsed.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @return bool
 	 */
@@ -87,7 +87,7 @@ class Repository {
 	 * Unknown keys are ignored, locked fields keep their stored value, and every
 	 * accepted value is sanitized by its declared type.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $incoming | Payload submitted by the client
 	 * @return array<string,mixed>
 	 */
@@ -128,7 +128,7 @@ class Repository {
 		 * The useful signal is rarely the new value on its own — it is the
 		 * transition, so the previous values travel along.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $sanitized | Settings as stored
 		 * @param array<string,mixed> $current | Settings as they were
 		 */
@@ -141,7 +141,7 @@ class Repository {
 	/**
 	 * Restore every setting to its default.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function reset_settings() {
@@ -158,7 +158,7 @@ class Repository {
 	/**
 	 * Sanitize one value according to its field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @param array<string,mixed> $definition | Field definition
 	 * @return mixed
@@ -208,7 +208,7 @@ class Repository {
 	 * Values are stored as strings, the way the 5.x option did, so migrated
 	 * data and freshly saved data are indistinguishable.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @param array<string,mixed> $definition | Field definition
 	 * @return string
@@ -242,7 +242,7 @@ class Repository {
 	 * Shape: `array( 'gateway_id' => array( 'amount' => '10', 'type' => 'percentage' ) )`,
 	 * which is the shape the 5.x option used.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @param array<string,mixed> $definition | Field definition
 	 * @return array<string,array<string,string>>
@@ -291,7 +291,7 @@ class Repository {
 	 * interest", which is a different statement from "fall back to the global
 	 * rate".
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @return array<int,array<string,string>>
 	 */

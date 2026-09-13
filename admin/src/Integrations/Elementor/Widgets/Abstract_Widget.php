@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * and in the editor there is no loop - so resolving the product, and saying so
  * when there is none, is the same job each time.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations\Elementor\Widgets
  * @author MeuMouse.com
  */
@@ -24,7 +24,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	/**
 	 * The categories this widget appears under.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,string>
 	 */
 	public function get_categories() {
@@ -34,7 +34,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	/**
 	 * Keywords that find this widget in the panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,string>
 	 */
 	public function get_keywords() {
@@ -44,7 +44,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	/**
 	 * Resolve the product this widget renders for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return \WC_Product|false
 	 */
 	protected function resolve_product() {
@@ -66,7 +66,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	 * state. In the editor it says why the box is empty, because a designer
 	 * who sees nothing assumes the widget is broken.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	protected function render_locked_state() {
@@ -84,7 +84,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	/**
 	 * What to show when there is no product to render for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	protected function render_empty_state() {

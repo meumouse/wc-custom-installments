@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * A route registers itself: subclassing this and declaring `$route` is all it
  * takes, because the class is discovered and instantiated automatically.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -23,7 +23,7 @@ abstract class Abstract_Route {
 	/**
 	 * Route path, including the leading slash.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '';
@@ -31,7 +31,7 @@ abstract class Abstract_Route {
 	/**
 	 * Allowed HTTP method or comma-separated method list.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'GET';
@@ -39,7 +39,7 @@ abstract class Abstract_Route {
 	/**
 	 * REST argument schema.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,mixed>
 	 */
 	protected $args = array();
@@ -48,7 +48,7 @@ abstract class Abstract_Route {
 	/**
 	 * Register the route when WordPress builds its REST endpoints.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -61,7 +61,7 @@ abstract class Abstract_Route {
 	/**
 	 * Decide whether this route should exist on this site.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	protected function should_register() {
@@ -72,7 +72,7 @@ abstract class Abstract_Route {
 	/**
 	 * Register the route.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function register_route() {
@@ -88,7 +88,7 @@ abstract class Abstract_Route {
 	/**
 	 * Default permission check.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return bool
 	 */
@@ -100,7 +100,7 @@ abstract class Abstract_Route {
 	/**
 	 * Handle the request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return mixed
 	 */
@@ -110,7 +110,7 @@ abstract class Abstract_Route {
 	/**
 	 * Build a standard success response.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $data | Pairs merged into the response body
 	 * @return WP_REST_Response
 	 */
@@ -122,7 +122,7 @@ abstract class Abstract_Route {
 	/**
 	 * Build a standard error response.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $message | Human-readable description, already escaped
 	 * @param array<string,mixed> $data | Additional pairs
 	 * @return WP_REST_Response

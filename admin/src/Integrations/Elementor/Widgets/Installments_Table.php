@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 /**
  * The full instalment table, without the panel or dialog around it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations\Elementor\Widgets
  * @author MeuMouse.com
  */
@@ -20,7 +20,7 @@ class Installments_Table extends Abstract_Widget {
 	 *
 	 * Unchanged from 5.x, for the reason given on the price widget.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_name() {
@@ -30,7 +30,7 @@ class Installments_Table extends Abstract_Widget {
 	/**
 	 * The widget title shown in the panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_title() {
@@ -40,7 +40,7 @@ class Installments_Table extends Abstract_Widget {
 	/**
 	 * The widget icon.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_icon() {
@@ -50,7 +50,7 @@ class Installments_Table extends Abstract_Widget {
 	/**
 	 * Render the widget.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	protected function render() {

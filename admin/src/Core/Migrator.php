@@ -24,7 +24,7 @@ defined('ABSPATH') || exit;
  *      whatever we think the sensible default is, including for settings whose
  *      default changed between the two plugins.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -33,7 +33,7 @@ class Migrator {
 	/**
 	 * Option recording the schema version the database is at.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const VERSION_OPTION = 'wc_custom_installments_db_version';
@@ -41,7 +41,7 @@ class Migrator {
 	/**
 	 * Current schema version.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var int
 	 */
 	const VERSION = 1;
@@ -49,7 +49,7 @@ class Migrator {
 	/**
 	 * The 5.x main settings option.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const LEGACY_OPTION = 'woo-custom-installments-setting';
@@ -57,7 +57,7 @@ class Migrator {
 	/**
 	 * The 5.x sidecar options, mapped to their new setting names.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	const LEGACY_SIDECARS = array(
@@ -74,7 +74,7 @@ class Migrator {
 	 * uploading a ZIP over the old plugin never fires an activation, and a
 	 * network activation fires it on the wrong site.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -85,7 +85,7 @@ class Migrator {
 	/**
 	 * Migrate when the database is behind, and only then.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function maybe_migrate() {
@@ -109,7 +109,7 @@ class Migrator {
 	 * Safe to call twice: it reads the legacy options and writes the new one,
 	 * with no destructive step anywhere.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed> What was imported, what was skipped.
 	 */
 	public static function migrate() {
@@ -163,7 +163,7 @@ class Migrator {
 		 * Runs before anything is written, so an add-on can map a setting the
 		 * free plugin dropped into one of its own.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $settings | Settings about to be stored
 		 * @param array<string,mixed> $legacy | The 5.x option, as found
 		 * @return array<string,mixed>
@@ -175,7 +175,7 @@ class Migrator {
 		/**
 		 * Fires after a 5.x installation has been imported.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $report | What was imported and what was skipped
 		 */
 		do_action( 'WC_Custom_Installments/Migrate/Completed', $report );
@@ -187,7 +187,7 @@ class Migrator {
 	/**
 	 * Settings whose stored value is one of a fixed set of placements.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<int,string>
 	 */
 	const PLACEMENT_SETTINGS = array(
@@ -205,7 +205,7 @@ class Migrator {
 	 * it was, the first save from the new screen would fall back to the default
 	 * because the stored value is not one the schema offers.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	const PLACEMENT_ALIASES = array(
@@ -218,7 +218,7 @@ class Migrator {
 	/**
 	 * Translate a stored value into the spelling the new schema uses.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param mixed $value | Stored value
 	 * @return mixed
@@ -235,7 +235,7 @@ class Migrator {
 	/**
 	 * Whether any of the 5.x sidecar options exists.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	private static function has_sidecars() {
@@ -255,7 +255,7 @@ class Migrator {
 	 * The setup wizard asks: an install that already has settings should not be
 	 * walked through choosing them again.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function has_legacy_data() {

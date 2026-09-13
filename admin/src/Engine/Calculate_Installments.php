@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 /**
  * Build the instalment plan of a product, and describe it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Engine
  * @author MeuMouse.com
  */
@@ -24,7 +24,7 @@ class Calculate_Installments {
 	 * The first one on a product page is the main price; everything after is a
 	 * loop item, and the two use different copy.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var int
 	 */
 	public static $count = 0;
@@ -33,7 +33,7 @@ class Calculate_Installments {
 	/**
 	 * Which context the current price group is being rendered in.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string Either `main_price` or `loop`.
 	 */
 	public static function hook() {
@@ -44,7 +44,7 @@ class Calculate_Installments {
 	/**
 	 * Whether this is the main price of a product page.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_main_product_price() {
@@ -55,7 +55,7 @@ class Calculate_Installments {
 	/**
 	 * Build every instalment the store offers for a price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array $append | Extra instalments to merge in
 	 * @param float|null $price | Price to build from; resolved from the product when null
 	 * @param object|null $product | Product object; resolved from the request when null
@@ -83,7 +83,7 @@ class Calculate_Installments {
 		/**
 		 * Filter the base price the instalments are built from.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $price | Base price
 		 * @param object $product | Product object
 		 * @return float
@@ -119,7 +119,7 @@ class Calculate_Installments {
 		/**
 		 * Filter the full instalment list.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array $result | Every instalment
 		 * @param object $product | Product object
 		 * @return array
@@ -131,7 +131,7 @@ class Calculate_Installments {
 	/**
 	 * Render the largest interest-free instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array $installments | Every instalment
 	 * @param object $product | Product object
 	 * @return string
@@ -160,7 +160,7 @@ class Calculate_Installments {
 	/**
 	 * Render the largest instalment that carries interest.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array $installments | Every instalment
 	 * @param object $product | Product object
 	 * @return string
@@ -193,7 +193,7 @@ class Calculate_Installments {
 	/**
 	 * Render one highlighted instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $best | The instalment to show
 	 * @param object $product | Product object
 	 * @param string $variant | Either `with-fee` or `without-fee`
@@ -213,7 +213,7 @@ class Calculate_Installments {
 		/**
 		 * Filter the highlighted instalment text.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $text | Rendered text
 		 * @param array $best | The instalment being shown
 		 * @param object $product | Product object
@@ -248,7 +248,7 @@ class Calculate_Installments {
 	 * Rewriting it is a Pro capability. Without it the store gets the default
 	 * wording, never an empty line.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Either `main_price` or `loop`
 	 * @return string
 	 */
@@ -271,7 +271,7 @@ class Calculate_Installments {
 	/**
 	 * The interest suffix of one instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $installment | The instalment
 	 * @return string
 	 */
@@ -285,7 +285,7 @@ class Calculate_Installments {
 		/**
 		 * Filter the interest suffix.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $text | Suffix text
 		 * @param bool $interest_fee | Whether this instalment carries interest
 		 * @param string $hook | Rendering context
@@ -298,7 +298,7 @@ class Calculate_Installments {
 	/**
 	 * Describe one instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $price | Value of one instalment
 	 * @param float $final_price | Total paid
 	 * @param bool $interest_fee | Whether interest applies
@@ -310,7 +310,7 @@ class Calculate_Installments {
 		/**
 		 * Filter one instalment's description.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array $installment_info | The instalment
 		 * @return array
 		 */
@@ -327,7 +327,7 @@ class Calculate_Installments {
 	/**
 	 * Build an interest-free instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $total | Base amount
 	 * @param int $i | Number of instalments
 	 * @return array<string,mixed>
@@ -343,7 +343,7 @@ class Calculate_Installments {
 	/**
 	 * Build an instalment that carries interest.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $total | Base amount
 	 * @param float $fee | Interest rate
 	 * @param int $i | Number of instalments

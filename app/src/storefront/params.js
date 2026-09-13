@@ -5,7 +5,7 @@
  * page where the product could not be resolved, must leave the runtime inert
  * rather than throwing on the first property access.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 const DEFAULTS = {
@@ -43,7 +43,7 @@ const DEFAULTS = {
 /**
  * Merge one level deep, so a partial payload keeps the shape callers expect.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object} defaults - The full shape.
  * @param {object} incoming - What the backend sent.
  * @return {object} The merged parameters.
@@ -71,12 +71,12 @@ export const params = merge(
 /**
  * Log a message, when the store asked for them.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {...unknown} args - What to log.
  * @return {void}
  */
 export function debug(...args) {
   if (params.debug_mode || params.dev_mode) {
-    console.log('[WC Custom Installments]', ...args);
+    console.log('[Custom Installments]', ...args);
   }
 }

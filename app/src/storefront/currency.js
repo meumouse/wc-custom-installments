@@ -7,14 +7,14 @@
  * price. This implements the WooCommerce format string directly, so there is
  * one answer.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { params } from './params';
 
 /**
  * Format an amount as the store's currency.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} amount - The amount.
  * @return {string} The formatted price, markup included.
  */

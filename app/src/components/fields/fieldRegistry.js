@@ -5,7 +5,7 @@
  * its own control registers it here through the global exposed at the bottom,
  * which is the versioned contract between the free bundle and the Pro one.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BaseInput from '../base/BaseInput.vue';
@@ -22,7 +22,7 @@ const registry = new Map();
 /**
  * Normalize a type name into a lookup key.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} name - Raw field type or component name.
  * @return {string} Normalized key.
  */
@@ -36,7 +36,7 @@ function normalize(name) {
 /**
  * Register a component under a type name.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} name - Field type or component name.
  * @param {object} component - Vue component.
  * @return {void}
@@ -59,7 +59,7 @@ export function registerFieldComponent(name, component) {
  * how a Pro control replaces the rendering of a setting the free plugin
  * declared.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object} field - Field definition from the schema.
  * @return {object|null} The component, or null when nothing matches.
  */
@@ -82,7 +82,7 @@ export function resolveFieldComponent(field) {
 /**
  * List the registered type names.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {string[]} Registered keys.
  */
 export function getRegisteredFieldTypes() {
@@ -103,7 +103,7 @@ registerFieldComponent('installment-fees', InstallmentFeesField);
 /**
  * Publish the registry so a separately built bundle can add to it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {object|null} The global registry, or null outside a browser.
  */
 function syncGlobal() {
@@ -125,7 +125,7 @@ function syncGlobal() {
  * The flag matters as much as the event: a bundle that loads after this one
  * would miss the event entirely, and polling for a global is not an API.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function announceReady() {

@@ -6,7 +6,7 @@
  * left out rather than stored as zero, because zero means "charge no interest"
  * and blank means "use the global rate" - two different instructions.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
@@ -30,7 +30,7 @@ const rows = computed(() => {
 /**
  * Read the stored rate of one installment count.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} installment - Installment count.
  * @return {string} The stored amount, or an empty string.
  */
@@ -41,7 +41,7 @@ function amount(installment) {
 /**
  * Write one rate, dropping the row when it empties.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} installment - Installment count.
  * @param {string} value - The new amount.
  * @return {void}

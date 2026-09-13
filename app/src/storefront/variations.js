@@ -7,7 +7,7 @@
  * that is not a dependency of ours, it is the shape of WooCommerce's API - and
  * still works without it for the parts that are real DOM events.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { all, one } from './dom';
 import { debug, params } from './params';
@@ -15,7 +15,7 @@ import { debug, params } from './params';
 /**
  * Register the variation listeners.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Function} onChange - Called with the new prices.
  * @return {void}
  */
@@ -81,7 +81,7 @@ export function initVariations(onChange) {
 /**
  * Swap the price group for the chosen variation's own price.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number|string} variationId - The chosen variation.
  * @return {void}
  */
@@ -108,7 +108,7 @@ function showVariationPrice(variationId) {
 /**
  * Put the range back when the customer clears their choice.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function clearVariationPrice() {
@@ -128,7 +128,7 @@ function clearVariationPrice() {
 /**
  * The prices the runtime started with.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {{regular: number, current: number}} The unit prices.
  */
 export function currentPrices() {

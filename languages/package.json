@@ -1,7 +1,7 @@
 {
   "name": "wc-custom-installments-translations",
-  "version": "1.0.0",
-  "description": "Translation pipeline for the WC Custom Installments WordPress plugin",
+  "version": "6.0.0",
+  "description": "Translation pipeline for the Custom Installments for WooCommerce WordPress plugin",
   "type": "module",
   "scripts": {
     "pot": "node generate-pot-cli.js",

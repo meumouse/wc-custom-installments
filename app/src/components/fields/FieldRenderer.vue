@@ -6,7 +6,7 @@
  * the store owner can see what the feature looks like before buying it. The
  * lock here is presentation: the server is what refuses the write.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import { resolveFieldComponent } from './fieldRegistry';
@@ -97,7 +97,7 @@ const unitBinding = computed(() => {
 /**
  * Open the upsell when the store owner reaches for a locked control.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function onLockedClick() {

@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * at all, which is what lets the price group, the shortcodes and the page
  * builder widgets share one implementation.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -31,7 +31,7 @@ class Components {
 	 * them written into its settings and a display rule that silently stopped
 	 * matching would blank the element.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $placement | The stored placement value
 	 * @return bool
 	 */
@@ -70,7 +70,7 @@ class Components {
 	 * A variation inherits its parent's opt-out: the setting lives on the
 	 * product a store owner edits, not on each generated variation.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @param string $meta_key | The opt-out meta key
 	 * @return bool
@@ -93,7 +93,7 @@ class Components {
 	/**
 	 * The highlighted instalment under the price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -136,7 +136,7 @@ class Components {
 	/**
 	 * The discounted price for paying upfront.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -175,7 +175,7 @@ class Components {
 	/**
 	 * The discounted price for paying with a bank slip.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -214,7 +214,7 @@ class Components {
 	/**
 	 * How much the customer saves by paying upfront.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -267,7 +267,7 @@ class Components {
 	/**
 	 * The percentage-off badge over a product on sale.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -321,7 +321,7 @@ class Components {
 	/**
 	 * The Pix row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -371,7 +371,7 @@ class Components {
 	/**
 	 * The bank slip row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -401,7 +401,7 @@ class Components {
 	/**
 	 * The brand badges of one card row.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $card_type | Either `credit-card` or `debit-card`
 	 * @param string $type | Either `credit` or `debit`
 	 * @return string
@@ -416,7 +416,7 @@ class Components {
 		/**
 		 * Filter the badge image of each brand.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,string> $flags | Brand key => image URL
 		 * @param string $card_type | Row type
 		 * @param string $type | Either `credit` or `debit`
@@ -443,7 +443,7 @@ class Components {
 	/**
 	 * The credit card row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function render_credit_card_flags() {
@@ -454,7 +454,7 @@ class Components {
 	/**
 	 * The debit card row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function render_debit_card_flags() {
@@ -465,7 +465,7 @@ class Components {
 	/**
 	 * Build one card row.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $type | Either `credit` or `debit`
 	 * @return string
 	 */
@@ -496,7 +496,7 @@ class Components {
 	/**
 	 * The full instalment table.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -548,7 +548,7 @@ class Components {
 	/**
 	 * The payment methods block, as a collapsible panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -570,7 +570,7 @@ class Components {
 					/**
 					 * Fires at the top of the payment methods panel.
 					 *
-					 * @since 1.0.0
+					 * @since 6.0.0
 					 * @param object $product | Product object
 					 */
 					Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/Accordion_Header', $product );
@@ -583,7 +583,7 @@ class Components {
 				/**
 				 * Fires at the bottom of the payment methods panel.
 				 *
-				 * @since 1.0.0
+				 * @since 6.0.0
 				 * @param object $product | Product object
 				 */
 				Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/Accordion_Footer', $product );
@@ -599,7 +599,7 @@ class Components {
 	/**
 	 * The payment methods block, as a dialog.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -624,7 +624,7 @@ class Components {
 				/**
 				 * Fires at the top of the payment methods dialog.
 				 *
-				 * @since 1.0.0
+				 * @since 6.0.0
 				 * @param object $product | Product object
 				 */
 				Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/Modal_Header', $product );
@@ -638,7 +638,7 @@ class Components {
 				/**
 				 * Fires at the bottom of the payment methods dialog.
 				 *
-				 * @since 1.0.0
+				 * @since 6.0.0
 				 * @param object $product | Product object
 				 */
 				Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/Modal_Footer', $product );
@@ -654,7 +654,7 @@ class Components {
 	/**
 	 * What goes inside either payment methods container.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -672,7 +672,7 @@ class Components {
 	/**
 	 * The message telling a customer how to earn the quantity discount.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return string
 	 */
@@ -733,7 +733,7 @@ class Components {
 	 * The four badges differ only in their classes, icon and copy, and having
 	 * written them four times is how the 5.x file reached 1,300 lines.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $wrapper_class | Class of the outer span
 	 * @param string $element | Element key in the registry
 	 * @param string $icon_class | Class of the icon

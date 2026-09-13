@@ -10,7 +10,7 @@ import { __ } from '../utils/i18n';
  * comes back with the value that is actually stored. Trusting the request would
  * leave the screen showing a setting the store does not have.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object} bootstrap - Payload from the settings bootstrap endpoint.
  * @return {object} State and actions for the settings screen.
  */
@@ -34,7 +34,7 @@ export function useSettings(bootstrap) {
   /**
    * Replace the local state with what the server reports it stored.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {object} response - Response body from a settings endpoint.
    * @return {void}
    */
@@ -59,7 +59,7 @@ export function useSettings(bootstrap) {
   /**
    * Persist the settings.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<{ok: boolean, message: string}>} What to tell the reader.
    */
   async function save() {
@@ -81,7 +81,7 @@ export function useSettings(bootstrap) {
   /**
    * Restore every setting to its default.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<{ok: boolean, message: string}>} What to tell the reader.
    */
   async function reset() {
@@ -103,7 +103,7 @@ export function useSettings(bootstrap) {
   /**
    * Fetch the current configuration as a portable document.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<object>} The export document.
    */
   async function exportSettings() {
@@ -113,7 +113,7 @@ export function useSettings(bootstrap) {
   /**
    * Apply an exported configuration.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {object} document - A previously exported document.
    * @return {Promise<{ok: boolean, message: string}>} What to tell the reader.
    */
@@ -154,7 +154,7 @@ export function useSettings(bootstrap) {
  * A node declares `depends_on` as { setting: expectedValue }. Every entry has
  * to match: dependencies here are narrowing, never alternatives.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object} node - A card or field definition.
  * @param {object} settings - Current setting values.
  * @return {boolean} Whether the node should render.

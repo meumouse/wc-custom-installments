@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * applying a behaviour. There is no second place to keep in step, and no way to
  * unlock a feature by editing markup in the browser.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Features {
 	/**
 	 * Tier of a feature included in the free plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const TIER_FREE = 'free';
@@ -35,7 +35,7 @@ class Features {
 	/**
 	 * Tier of a feature that requires the Pro add-on.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const TIER_PRO = 'pro';
@@ -43,7 +43,7 @@ class Features {
 	/**
 	 * Registered features, keyed by id.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,array<string,mixed>>
 	 */
 	private static $features = array();
@@ -51,7 +51,7 @@ class Features {
 	/**
 	 * Availability cache for the current request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,bool>
 	 */
 	private static $availability = array();
@@ -59,7 +59,7 @@ class Features {
 	/**
 	 * Whether the built-in definitions have been registered.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var bool
 	 */
 	private static $bootstrapped = false;
@@ -73,7 +73,7 @@ class Features {
 	 * registered yet when the schema was built would silently unlock. Doing it
 	 * lazily makes that ordering impossible to get wrong.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	private static function bootstrap() {
@@ -112,7 +112,7 @@ class Features {
 		 * An add-on registering features of its own hooks here, so its
 		 * definitions exist before any schema is built.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 */
 		do_action('WC_Custom_Installments/Features/Register');
 	}
@@ -121,7 +121,7 @@ class Features {
 	/**
 	 * Register a feature.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @param array $args | Feature arguments: label, description, tier
 	 * @return void
@@ -154,7 +154,7 @@ class Features {
 	 * An unregistered id resolves to true: a feature nobody gated is not a
 	 * feature anybody should be denied.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @return bool
 	 */
@@ -182,7 +182,7 @@ class Features {
 			 * behaviour, which is the site owner's decision to make, not a
 			 * theme's.
 			 *
-			 * @since 1.0.0
+			 * @since 6.0.0
 			 * @param bool $available | Whether the feature is available
 			 * @param string $id | Feature identifier
 			 * @param array $feature | The registered feature definition
@@ -200,7 +200,7 @@ class Features {
 	/**
 	 * Whether a feature belongs to the Pro tier.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @return bool
 	 */
@@ -216,7 +216,7 @@ class Features {
 	/**
 	 * Get one registered feature.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @return array<string,mixed>|null
 	 */
@@ -235,7 +235,7 @@ class Features {
 	 * This is what the settings bootstrap hands to the browser, so the UI can
 	 * lock a field without knowing anything about licences.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,array<string,mixed>>
 	 */
 	public static function all() {
@@ -257,7 +257,7 @@ class Features {
 	 *
 	 * Called after a licence changes, so the next read reflects it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function flush() {
@@ -274,7 +274,7 @@ class Features {
 		/**
 		 * Fires when the resolved feature availability is discarded.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 */
 		do_action('WC_Custom_Installments/Features/Flushed');
 	}

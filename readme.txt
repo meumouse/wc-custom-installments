@@ -1,10 +1,10 @@
-=== WC Custom Installments ===
+=== Custom Installments for WooCommerce ===
 Contributors: meumouse
 Tags: woocommerce, installments, discount, pix, payment methods
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 6.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Show installment plans, upfront-payment discounts and accepted payment methods o
 
 == Description ==
 
-WC Custom Installments answers the question every shopper asks before buying: *how much is it per month, and what do I save if I pay it all at once?*
+Custom Installments for WooCommerce answers the question every shopper asks before buying: *how much is it per month, and what do I save if I pay it all at once?*
 
 It renders the installment plan under the product price, on the shop loop and on the product page, using the interest rate your acquirer actually charges. It shows the discounted price for upfront payment, carries that discount through the cart and checkout, and displays the card brands and payment methods you accept.
 
@@ -68,13 +68,14 @@ Yes. The plan is calculated from the price of the selected variation.
 
 == Changelog ==
 
-= 1.0.0 =
+= 6.0.0 =
 
-* First release.
+* Rebuilt from the ground up as a free plugin. Continues the numbering of "Parcelas Customizadas para WooCommerce" 5.x.
+* Settings screen redesigned, with the plugin logo in the header.
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 6.0.0 =
 Replaces the previous "Parcelas Customizadas para WooCommerce" plugin. Your settings are imported
 automatically and nothing from the old plugin is deleted. Deactivate the old plugin once you have
 checked your storefront.

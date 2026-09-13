@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
 /**
  * Shared runtime context for the asset loaders.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Assets
  * @author MeuMouse.com
  */
@@ -16,7 +16,7 @@ abstract class Abstract_Assets {
 	/**
 	 * Base URL of the static assets directory.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $assets_url = '';
@@ -24,7 +24,7 @@ abstract class Abstract_Assets {
 	/**
 	 * Current plugin version.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $version = '';
@@ -32,7 +32,7 @@ abstract class Abstract_Assets {
 	/**
 	 * Whether debug mode is enabled.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var bool
 	 */
 	protected $debug_mode = false;
@@ -40,7 +40,7 @@ abstract class Abstract_Assets {
 	/**
 	 * Whether developer mode is enabled.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var bool
 	 */
 	protected $dev_mode = false;
@@ -49,7 +49,7 @@ abstract class Abstract_Assets {
 	/**
 	 * Read the shared context from the plugin constants.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {

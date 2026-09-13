@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * stale bundle. Every asset is therefore versioned by its own modification
  * time.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Scripts {
 	/**
 	 * Path of the Vite manifest, relative to the plugin root.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const MANIFEST_PATH = 'app/dist/.vite/manifest.json';
@@ -29,7 +29,7 @@ class Scripts {
 	/**
 	 * Path of the Vite output directory, relative to the plugin root.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const DIST_PATH = 'app/dist/';
@@ -38,7 +38,7 @@ class Scripts {
 	/**
 	 * Get the script URL, stylesheets and cache-busting version of an entry.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $entry_source | Entry source path, e.g. src/entries/settings.js
 	 * @return array<string,mixed> Empty when the entry is not in the manifest.
 	 */
@@ -61,7 +61,7 @@ class Scripts {
 	/**
 	 * Whether the frontend has been built.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_built() {
@@ -72,7 +72,7 @@ class Scripts {
 	/**
 	 * Resolve a cache-busting version from a built file's modification time.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $relative_path | Asset path relative to the dist root
 	 * @return string|null
 	 */
@@ -96,7 +96,7 @@ class Scripts {
 	/**
 	 * Find a manifest entry by its source path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $entry_source | Entry source path
 	 * @param array<string,mixed>|null $manifest | Decoded manifest
 	 * @return array<string,mixed>
@@ -137,7 +137,7 @@ class Scripts {
 	/**
 	 * Collect the stylesheets of an entry and of every chunk it imports.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $entry | Manifest entry
 	 * @param array<string,mixed> $manifest | Decoded manifest
 	 * @param array<string,bool> $visited | Recursion guard
@@ -183,7 +183,7 @@ class Scripts {
 	/**
 	 * Decode the manifest once per request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function get_manifest() {
@@ -219,7 +219,7 @@ class Scripts {
 	/**
 	 * Build the public URL of a built asset.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $relative_path | Asset path relative to the dist root
 	 * @return string
 	 */

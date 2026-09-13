@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 /**
  * The full price group: price, instalment, discount and badges.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations\Elementor\Widgets
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Single_Product_Price extends Abstract_Widget {
 	 * Unchanged from 5.x: this string is stored inside every page using the
 	 * widget, and renaming it would delete the widget from those pages.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_name() {
@@ -31,7 +31,7 @@ class Single_Product_Price extends Abstract_Widget {
 	/**
 	 * The widget title shown in the panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_title() {
@@ -41,7 +41,7 @@ class Single_Product_Price extends Abstract_Widget {
 	/**
 	 * The widget icon.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function get_icon() {
@@ -51,7 +51,7 @@ class Single_Product_Price extends Abstract_Widget {
 	/**
 	 * Render the widget.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	protected function render() {

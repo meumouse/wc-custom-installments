@@ -5,7 +5,7 @@
  * events, which cannot be observed any other way, and the runtime degrades to
  * doing less rather than throwing when it is absent.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import './styles/storefront.css';
 import { initAccordion, initModal } from './panels';
@@ -25,7 +25,7 @@ const state = {
 /**
  * Repaint everything from the current state.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function refresh() {
@@ -44,7 +44,7 @@ const runtime = {
   /**
    * Boot the runtime.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {void}
    */
   init() {
@@ -83,7 +83,7 @@ const runtime = {
  * event are the 5.x public API. Store owners have snippets bound to them, and
  * a rename of ours is not a reason for those to stop working.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function announce() {

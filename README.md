@@ -1,10 +1,10 @@
-# WC Custom Installments
+# Custom Installments for WooCommerce
 
 Free WooCommerce plugin that shows installment plans, upfront-payment discounts and accepted payment
 methods on the storefront. Distributed on WordPress.org under the GPLv2 or later.
 
 The commercial capabilities live in a separate add-on,
-[WC Custom Installments Pro](../wc-custom-installments-pro), which this plugin knows nothing about
+[Custom Installments for WooCommerce Pro](../wc-custom-installments-pro), which this plugin knows nothing about
 beyond one filter.
 
 ## Architecture

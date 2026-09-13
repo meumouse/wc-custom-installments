@@ -12,7 +12,7 @@
  *
  *   php tests/extensions-test.php
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 require_once __DIR__ . '/bootstrap.php';

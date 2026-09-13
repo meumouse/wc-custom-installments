@@ -5,7 +5,7 @@
  * The text field is the one that matters: a store owner pasting a brand hex
  * from a style guide should not have to find it on a colour wheel.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 

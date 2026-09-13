@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
  * tolerated — a warning would be us asking the store owner to pay for our
  * refactor.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Compatibility
  * @author MeuMouse.com
  */
@@ -28,7 +28,7 @@ class Hook_Aliases {
 	/**
 	 * Namespace prefix used by the current plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const PREFIX = 'WC_Custom_Installments/';
@@ -36,7 +36,7 @@ class Hook_Aliases {
 	/**
 	 * Namespace prefix used by the 5.x plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const LEGACY_PREFIX = 'Woo_Custom_Installments/';
@@ -48,7 +48,7 @@ class Hook_Aliases {
 	 * path here, because the name a third party wrote down is the contract, not
 	 * the file it happened to live in.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	private static $overrides = array(
@@ -60,7 +60,7 @@ class Hook_Aliases {
 	/**
 	 * Resolve the 5.x name of a hook.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Canonical hook name
 	 * @return string Empty when the hook has no 5.x counterpart.
 	 */
@@ -80,7 +80,7 @@ class Hook_Aliases {
 	/**
 	 * Apply a filter under both names.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Canonical hook name
 	 * @param mixed $value | Value being filtered
 	 * @param mixed ...$args | Additional arguments passed to the listeners
@@ -102,7 +102,7 @@ class Hook_Aliases {
 	/**
 	 * Fire an action under both names.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Canonical hook name
 	 * @param mixed ...$args | Arguments passed to the listeners
 	 * @return void
@@ -126,7 +126,7 @@ class Hook_Aliases {
 	 *
 	 * Useful where building the filtered value is itself expensive.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Canonical hook name
 	 * @return bool
 	 */
@@ -147,7 +147,7 @@ class Hook_Aliases {
 	 * An add-on that publishes a hook of its own can map it here so the same
 	 * guarantee covers it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $hook | Canonical hook name
 	 * @param string $legacy | Name to keep firing alongside it
 	 * @return void
@@ -164,7 +164,7 @@ class Hook_Aliases {
 	/**
 	 * Get the full alias map, for documentation generation.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,string>
 	 */
 	public static function get_overrides() {

@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * The setup wizard is reachable by URL only: it is a one-off flow, not a
  * destination that belongs in a menu.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin
  * @author MeuMouse.com
  */
@@ -23,7 +23,7 @@ class Menu {
 	/**
 	 * Admin page slug of the settings screen.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const SETTINGS_PAGE = 'wc-custom-installments';
@@ -32,7 +32,7 @@ class Menu {
 	/**
 	 * Register the admin menu hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -44,7 +44,7 @@ class Menu {
 	/**
 	 * Add the settings screen and the hidden wizard screen.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function register_menu() {
@@ -78,7 +78,7 @@ class Menu {
 	/**
 	 * Add a Settings link to the plugins list row.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<int,string> $links | Existing action links
 	 * @return array<int,string>
 	 */
@@ -98,7 +98,7 @@ class Menu {
 	/**
 	 * Render the settings screen shell.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_settings_page() {
@@ -109,7 +109,7 @@ class Menu {
 	/**
 	 * Render the setup wizard shell.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_onboarding_page() {

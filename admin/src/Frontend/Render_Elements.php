@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
  * return value. The priority is filterable because themes and other plugins
  * hook the same filter, and which one wins is site-specific.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -28,7 +28,7 @@ class Render_Elements {
 	/**
 	 * Register the storefront hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -39,7 +39,7 @@ class Render_Elements {
 		/**
 		 * Filter the priority of the price group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param int $priority | Filter priority
 		 * @return int
 		 */
@@ -77,7 +77,7 @@ class Render_Elements {
 	/**
 	 * Attach the payment methods block wherever the store asked for it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	private function register_payment_methods_hook() {
@@ -111,7 +111,7 @@ class Render_Elements {
 	/**
 	 * Replace the WooCommerce price with the full price group.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $price | Price HTML WooCommerce built
 	 * @param object $product | Product object
 	 * @return string
@@ -126,7 +126,7 @@ class Render_Elements {
 		/**
 		 * Fires before the price group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Price/Before_Group', $product );
@@ -134,7 +134,7 @@ class Render_Elements {
 		/**
 		 * Filter the classes of the price group wrapper.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $classes | Space-separated classes
 		 * @param object $product | Product object
 		 * @return string
@@ -148,7 +148,7 @@ class Render_Elements {
 		/**
 		 * Fires at the top of the price group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Price/Prepend_Group', $product );
@@ -158,7 +158,7 @@ class Render_Elements {
 		/**
 		 * Fires after the price itself, inside the group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Price/Append_Group', $product );
@@ -173,7 +173,7 @@ class Render_Elements {
 		/**
 		 * Fires after the price group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Price/After_Group', $product );
@@ -189,7 +189,7 @@ class Render_Elements {
 	/**
 	 * The price itself, in whichever shape the product calls for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @param Components $components | Component builder
 	 * @return string
@@ -249,7 +249,7 @@ class Render_Elements {
 	/**
 	 * Flag a variable product whose variations differ in price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $classes | Current classes
 	 * @param object $product | Product object
 	 * @return string
@@ -266,7 +266,7 @@ class Render_Elements {
 	/**
 	 * Print the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object|null $product | Product object
 	 * @return void
 	 */
@@ -280,7 +280,7 @@ class Render_Elements {
 		/**
 		 * Filter the product the payment methods block is built for.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object|null $product | Product object
 		 * @return object|null
 		 */
@@ -300,7 +300,7 @@ class Render_Elements {
 		/**
 		 * Fires before the payment methods block.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/Before_Installments_Container', $product );
@@ -318,7 +318,7 @@ class Render_Elements {
 		/**
 		 * Fires after the payment methods block.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param object $product | Product object
 		 */
 		Hook_Aliases::do_action( 'WC_Custom_Installments/Elements/After_Installments_Container', $product );
@@ -328,7 +328,7 @@ class Render_Elements {
 	/**
 	 * Print each variation's price, for the script to swap between.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return void
 	 */
@@ -364,7 +364,7 @@ class Render_Elements {
 	/**
 	 * Add a row to the cart totals with what the upfront price would be.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function display_discount_on_cart() {
@@ -391,7 +391,7 @@ class Render_Elements {
 		/**
 		 * Filter the title of the cart total row.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $row_title | Row title
 		 * @return string
 		 */
@@ -409,7 +409,7 @@ class Render_Elements {
 	/**
 	 * Rewrite the price with a fixed discount and a trailing note.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $price | Price HTML
 	 * @param object $product | Product object
 	 * @return string
@@ -444,7 +444,7 @@ class Render_Elements {
 	/**
 	 * Centre the price group inside page-builder widgets.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public static function align_center_group_prices() {
@@ -455,7 +455,7 @@ class Render_Elements {
 	/**
 	 * Print the quantity discount message.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $product_id | Product ID, when the hook supplies one
 	 * @return void
 	 */

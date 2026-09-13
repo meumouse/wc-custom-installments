@@ -6,7 +6,7 @@
  * offered as buttons that append at the end. Appending rather than inserting at
  * the caret is deliberate: it needs no focus tracking and is never surprising.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
@@ -27,7 +27,7 @@ const model = computed({
 /**
  * Append a token to the current value.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} token - The token to append.
  * @return {void}
  */

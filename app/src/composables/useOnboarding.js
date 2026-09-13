@@ -9,7 +9,7 @@ import { __ } from '../utils/i18n';
  * A wizard that loses four answers because the fifth request failed is worse
  * than no wizard.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object} bootstrap - Payload from the onboarding bootstrap endpoint.
  * @return {object} State and actions for the wizard.
  */
@@ -38,7 +38,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Persist the current step.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<boolean>} Whether it saved.
    */
   async function persist() {
@@ -66,7 +66,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Save and move on.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<void>}
    */
   async function next() {
@@ -82,7 +82,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Go back, without saving.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {void}
    */
   function back() {
@@ -94,7 +94,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Jump to a step the reader has already reached.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {number} target - Step index.
    * @return {void}
    */
@@ -107,7 +107,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Finish the wizard.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<void>}
    */
   async function complete() {
@@ -125,7 +125,7 @@ export function useOnboarding(bootstrap) {
   /**
    * Leave without finishing.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @return {Promise<void>}
    */
   async function skip() {

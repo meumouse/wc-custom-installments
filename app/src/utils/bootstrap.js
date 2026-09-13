@@ -7,7 +7,7 @@ import { createPinia } from 'pinia';
  * Only what the client needs to fetch its payload is embedded in the page: the
  * REST root, a nonce, the page slug and the endpoint to request.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Object|null} Bootstrap config, or null when it is unavailable.
  */
 export function readBootstrapConfig() {
@@ -19,7 +19,7 @@ export function readBootstrapConfig() {
 /**
  * Fetch the page payload from the REST API.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Object} config - Bootstrap config from readBootstrapConfig().
  * @return {Promise<Object>} Parsed payload.
  */
@@ -68,7 +68,7 @@ function renderBootstrapError(mount, message) {
  * The skeleton already inside the mount element stays visible until then; Vue
  * replaces it when the component mounts.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} mountId - DOM id of the mount point.
  * @param {Object} component - Vue component to mount.
  * @return {Promise<import('vue').App|null>} Mounted app, or null.

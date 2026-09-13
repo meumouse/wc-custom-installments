@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  *
  * The service decides the plan and the duration; nothing here chooses either.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin\Onboarding
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Trial {
 	/**
 	 * Endpoint that issues a trial licence.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const ENDPOINT = '/v1/licenses/demo';
@@ -37,7 +37,7 @@ class Trial {
 	 * The service is the authority; this is what the screen promises, and the
 	 * two have to be configured to agree.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var int
 	 */
 	const DAYS = 7;
@@ -46,7 +46,7 @@ class Trial {
 	/**
 	 * Whether the trial can be offered on this site.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_available() {
@@ -61,7 +61,7 @@ class Trial {
 	/**
 	 * The product a trial is issued for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public static function product_id() {
@@ -75,7 +75,7 @@ class Trial {
 	 * A consent notice that describes the request in prose is a promise. This
 	 * is the request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,string> $input | The details the person typed
 	 * @return array<string,string>
 	 */
@@ -93,7 +93,7 @@ class Trial {
 	/**
 	 * Request a trial licence.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,string> $input | The details the person typed
 	 * @return array<string,mixed>|WP_Error
 	 */
@@ -174,7 +174,7 @@ class Trial {
 	/**
 	 * The full endpoint URL.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	private static function url() {

@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
  * where nothing can migrate it, so renaming one would blank it on every page
  * that uses it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -28,7 +28,7 @@ class Shortcodes {
 	/**
 	 * Shortcode tag suffix to the method that renders it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	const TAGS = array(
@@ -53,7 +53,7 @@ class Shortcodes {
 	/**
 	 * Register every shortcode, under both prefixes.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -70,7 +70,7 @@ class Shortcodes {
 	/**
 	 * The whole price group.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -90,7 +90,7 @@ class Shortcodes {
 	/**
 	 * The payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -112,7 +112,7 @@ class Shortcodes {
 	/**
 	 * The highlighted instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -124,7 +124,7 @@ class Shortcodes {
 	/**
 	 * The full instalment table.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -136,7 +136,7 @@ class Shortcodes {
 	/**
 	 * The Pix row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -148,7 +148,7 @@ class Shortcodes {
 	/**
 	 * The bank slip row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -160,7 +160,7 @@ class Shortcodes {
 	/**
 	 * The credit card row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function render_credit_card_flags() {
@@ -173,7 +173,7 @@ class Shortcodes {
 	/**
 	 * The debit card row of the payment methods block.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function render_debit_card_flags() {
@@ -186,7 +186,7 @@ class Shortcodes {
 	/**
 	 * The discounted price badge.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -198,7 +198,7 @@ class Shortcodes {
 	/**
 	 * The bank slip discount badge.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -210,7 +210,7 @@ class Shortcodes {
 	/**
 	 * The savings badge.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -222,7 +222,7 @@ class Shortcodes {
 	/**
 	 * The sale badge.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -234,7 +234,7 @@ class Shortcodes {
 	/**
 	 * The discounted price, on its own.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -252,7 +252,7 @@ class Shortcodes {
 	/**
 	 * The bank slip price, on its own.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -270,7 +270,7 @@ class Shortcodes {
 	/**
 	 * The savings amount, on its own.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
 	 */
@@ -288,7 +288,7 @@ class Shortcodes {
 	/**
 	 * Render one component for the resolved product.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $method | Method on the component builder
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return string
@@ -312,7 +312,7 @@ class Shortcodes {
 	 * An explicit `product` attribute wins, which is what makes these usable on
 	 * a landing page rather than only inside a product template.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $atts | Shortcode attributes
 	 * @return \WC_Product|false
 	 */
@@ -338,7 +338,7 @@ class Shortcodes {
 	 * Visible to an editor, silent to a shopper: a customer should never read
 	 * our diagnostics, and an editor needs to know why the box is empty.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	private function no_product() {

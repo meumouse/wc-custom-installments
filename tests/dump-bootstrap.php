@@ -14,7 +14,7 @@
  *
  *   python -m http.server 8791 --bind 127.0.0.1
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 require_once __DIR__ . '/bootstrap.php';

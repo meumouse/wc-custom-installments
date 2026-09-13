@@ -6,14 +6,14 @@
  * changes, and a customer watching the number move must not see it land
  * somewhere the server would not have put it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { params } from './params';
 
 /**
  * The interest rate applying to one instalment count.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} count - Instalment count.
  * @return {number} The rate, as a percentage.
  */
@@ -29,7 +29,7 @@ function feeFor(count) {
 /**
  * Build every instalment the store offers for a price.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} price - The base amount.
  * @return {Array<object>} One entry per instalment.
  */
@@ -84,7 +84,7 @@ export function buildPlan(price) {
 /**
  * Round to the cent, the way the server does before multiplying.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} value - The amount.
  * @return {number} The rounded amount.
  */

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 /**
  * Transient feedback messages.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {object} The toast list and the helpers that drive it.
  */
 export function useToasts() {
@@ -13,7 +13,7 @@ export function useToasts() {
   /**
    * Remove one toast.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {number} id - Toast id.
    * @return {void}
    */
@@ -27,7 +27,7 @@ export function useToasts() {
    * An error stays twice as long: it is the one the reader has to act on, and
    * losing it mid-sentence means doing the whole action again to read it.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {string} message - What to say.
    * @param {string} [type] - Either 'success' or 'error'.
    * @return {void}

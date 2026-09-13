@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * own. Every label and description is translated here, so the payload reaches
  * the browser already in the site's language.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin\Settings
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ class Registry {
 	/**
 	 * Build the full schema.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_schema() {
@@ -44,7 +44,7 @@ class Registry {
 		 *
 		 * This is how an add-on appends its own sections, cards and fields.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,array<string,mixed>> $schema | Settings schema
 		 * @return array<int,array<string,mixed>>
 		 */
@@ -57,7 +57,7 @@ class Registry {
 	/**
 	 * Cached field definitions for the current request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,array<string,mixed>>|null
 	 */
 	private static $definitions = null;
@@ -69,7 +69,7 @@ class Registry {
 	 * The repository sanitizes against this, so a field absent from the schema
 	 * cannot be written through the settings endpoint.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_field_definitions() {
@@ -124,7 +124,7 @@ class Registry {
 	 * Needed after a licence change, which flips the locked state of every
 	 * gated field, and by the tests.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function flush() {
@@ -135,7 +135,7 @@ class Registry {
 	/**
 	 * Installments section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_installments() {
@@ -296,7 +296,7 @@ class Registry {
 	/**
 	 * Discounts section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_discounts() {
@@ -564,7 +564,7 @@ class Registry {
 	/**
 	 * Interests section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_interests() {
@@ -616,7 +616,7 @@ class Registry {
 	/**
 	 * Payment methods section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_payment_methods() {
@@ -680,7 +680,7 @@ class Registry {
 	/**
 	 * Texts section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_texts() {
@@ -755,7 +755,7 @@ class Registry {
 	/**
 	 * Styles section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_styles() {
@@ -841,7 +841,7 @@ class Registry {
 	/**
 	 * Advanced section.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function section_advanced() {
@@ -905,7 +905,7 @@ class Registry {
 	/**
 	 * Build the badge toggles of one card row.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $type | Either `credit` or `debit`
 	 * @return array<int,array<string,mixed>>
 	 */
@@ -923,7 +923,7 @@ class Registry {
 	/**
 	 * The storefront placements a display setting can take.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,string>>
 	 */
 	private static function display_hook_options() {
@@ -939,7 +939,7 @@ class Registry {
 	/**
 	 * Percentage or fixed amount.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,string>>
 	 */
 	private static function discount_method_options() {
@@ -956,7 +956,7 @@ class Registry {
 	 * WooCommerce is not always loaded when the schema is built — during a CLI
 	 * run, for instance — so an empty list is a valid answer rather than a fatal.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,string>>
 	 */
 	private static function get_payment_gateways() {
@@ -983,7 +983,7 @@ class Registry {
 	 * The value still travels to the browser, so the store owner sees what the
 	 * feature does; the repository is what refuses to write it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<int,array<string,mixed>> $schema | Settings schema
 	 * @return array<int,array<string,mixed>>
 	 */
@@ -1020,7 +1020,7 @@ class Registry {
 	/**
 	 * Build a toggle field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1035,7 +1035,7 @@ class Registry {
 	/**
 	 * Build a text field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1050,7 +1050,7 @@ class Registry {
 	/**
 	 * Build a select field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1066,7 +1066,7 @@ class Registry {
 	/**
 	 * Build a numeric field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1081,7 +1081,7 @@ class Registry {
 	/**
 	 * Build a textarea field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1096,7 +1096,7 @@ class Registry {
 	/**
 	 * Build a colour field definition.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1111,7 +1111,7 @@ class Registry {
 	/**
 	 * Build a text field that offers the installment tokens.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name
 	 * @param string $label | Field label
 	 * @param string $description | Field description
@@ -1128,7 +1128,7 @@ class Registry {
 	/**
 	 * Build a measurement field: a number plus the unit it is expressed in.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Setting name holding the amount
 	 * @param string $unit_key | Setting name holding the unit
 	 * @param string $label | Field label
@@ -1148,7 +1148,7 @@ class Registry {
 	/**
 	 * Build a field definition of any type.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $type | Field type
 	 * @param string $key | Setting name
 	 * @param string $label | Field label

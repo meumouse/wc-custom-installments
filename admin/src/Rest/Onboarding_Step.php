@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 /**
  * Persist one step of the setup wizard.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Onboarding_Step extends Abstract_Route {
 	/**
 	 * Route path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '/admin/onboarding/step';
@@ -29,7 +29,7 @@ class Onboarding_Step extends Abstract_Route {
 	/**
 	 * Allowed HTTP methods.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'POST';
@@ -42,7 +42,7 @@ class Onboarding_Step extends Abstract_Route {
 	 * reaches the repository, so a malformed step can never touch a setting the
 	 * wizard does not show.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
 	 */

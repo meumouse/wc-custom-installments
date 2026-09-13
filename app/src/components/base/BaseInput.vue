@@ -2,7 +2,7 @@
 /**
  * BaseInput.vue - a single-line text or numeric input.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 

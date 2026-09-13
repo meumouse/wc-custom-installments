@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * endpoint — and requests the rest over REST, so no heavy payload is embedded
  * in the HTML.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Assets
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Admin_Assets extends Abstract_Assets {
 	/**
 	 * Admin page slug to Vite entry source.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	private $entries = array(
@@ -37,7 +37,7 @@ class Admin_Assets extends Abstract_Assets {
 	/**
 	 * Admin page slug to script handle.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,string>
 	 */
 	private $handles = array(
@@ -48,7 +48,7 @@ class Admin_Assets extends Abstract_Assets {
 	/**
 	 * Admin page slug to bootstrap page name and REST endpoint.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,array<string,string>>
 	 */
 	private $bootstrap = array(
@@ -60,7 +60,7 @@ class Admin_Assets extends Abstract_Assets {
 	/**
 	 * Register the asset hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -75,7 +75,7 @@ class Admin_Assets extends Abstract_Assets {
 	/**
 	 * Enqueue the app built for the current admin screen.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function enqueue_assets() {
@@ -130,7 +130,7 @@ class Admin_Assets extends Abstract_Assets {
 	 * the tag would drop those and the app would render untranslated, so the
 	 * attribute is injected into this handle's own tag alone, matched by its id.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $tag | Printed script markup
 	 * @param string $handle | Script handle
 	 * @return string
@@ -157,7 +157,7 @@ class Admin_Assets extends Abstract_Assets {
 	 * Vite hashes nothing in the entry path we can predict ahead of the build,
 	 * so a stable md5-based name cannot be generated; remap instead.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string|false $file | Path core resolved
 	 * @param string $handle | Script handle
 	 * @param string $domain | Text domain
@@ -181,7 +181,7 @@ class Admin_Assets extends Abstract_Assets {
 	 * Only a developer running from a Git checkout can see this — a released
 	 * package always carries app/dist.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function missing_build_notice() {

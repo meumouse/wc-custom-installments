@@ -5,7 +5,7 @@
  * Built from the same numbers the server will use, on a made-up product, so
  * the reader can see the effect of a setting before committing to it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import { __, sprintf } from '../../../utils/i18n';
@@ -19,7 +19,7 @@ const props = defineProps({
 /**
  * Format an amount the way the store does.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} amount - The amount.
  * @return {string} The formatted price.
  */

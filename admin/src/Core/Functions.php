@@ -9,7 +9,7 @@
  * keystrokes. Everything here can be done with `add_filter` instead, and
  * DEVELOPERS.md documents both.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -22,7 +22,7 @@ if ( ! function_exists('wcci_register_feature') ) {
 	/**
 	 * Register a gated capability.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @param array<string,mixed> $args | label, description, tier
 	 * @return void
@@ -36,7 +36,7 @@ if ( ! function_exists('wcci_is_feature_available') ) {
 	/**
 	 * Whether a feature may run on this site.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | Feature identifier
 	 * @return bool
 	 */
@@ -49,7 +49,7 @@ if ( ! function_exists('wcci_register_settings_section') ) {
 	/**
 	 * Add a tab to the settings screen.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $section | id, title, description, cards
 	 * @param int $priority | Filter priority
 	 * @return void
@@ -79,7 +79,7 @@ if ( ! function_exists('wcci_register_settings_card') ) {
 	/**
 	 * Add a card to an existing settings tab.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $section_id | The tab to add it to
 	 * @param array<string,mixed> $card | id, title, description, fields
 	 * @param int $priority | Filter priority
@@ -106,7 +106,7 @@ if ( ! function_exists('wcci_register_settings_field') ) {
 	/**
 	 * Add a field to an existing card.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $card_id | The card to add it to
 	 * @param array<string,mixed> $field | type, key, label, description, default
 	 * @param int $priority | Filter priority
@@ -141,7 +141,7 @@ if ( ! function_exists('wcci_register_default_options') ) {
 	/**
 	 * Declare the default value of one or more settings.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $defaults | Setting name => default value
 	 * @param int $priority | Filter priority
 	 * @return void
@@ -157,7 +157,7 @@ if ( ! function_exists('wcci_register_product_setting') ) {
 	/**
 	 * Add a field to the product data panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $field | key, type, label, description, feature
 	 * @param int $priority | Filter priority
 	 * @return void
@@ -179,7 +179,7 @@ if ( ! function_exists('wcci_register_price_element') ) {
 	/**
 	 * Add an element to the storefront price group.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Element key
 	 * @param array<string,mixed> $element | id, selector, order, icon, styles
 	 * @param int $priority | Filter priority
@@ -198,7 +198,7 @@ if ( ! function_exists('wcci_register_elementor_widget') ) {
 	/**
 	 * Add a widget to the plugin's Elementor category.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $class | Fully qualified widget class name
 	 * @param int $priority | Filter priority
 	 * @return void

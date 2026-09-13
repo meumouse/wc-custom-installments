@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * debug mode is on; warnings and errors always are, because a silent failure in
  * a pricing plugin is worse than a noisy one.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Logger {
 	/**
 	 * Log source used for every entry.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const SOURCE = 'wc-custom-installments';
@@ -30,7 +30,7 @@ class Logger {
 	/**
 	 * Write a debug entry, when debug mode is enabled.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $message | Message to record
 	 * @param array $context | Additional context to append
 	 * @return void
@@ -47,7 +47,7 @@ class Logger {
 	/**
 	 * Write a warning entry.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $message | Message to record
 	 * @param array $context | Additional context to append
 	 * @return void
@@ -60,7 +60,7 @@ class Logger {
 	/**
 	 * Write an error entry.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $message | Message to record
 	 * @param array $context | Additional context to append
 	 * @return void
@@ -76,7 +76,7 @@ class Logger {
 	 * Falls back to error_log() only when WooCommerce is not loaded yet, which
 	 * happens for bootstrap-level failures.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $level | PSR-3 log level
 	 * @param string $message | Message to record
 	 * @param array $context | Additional context to append

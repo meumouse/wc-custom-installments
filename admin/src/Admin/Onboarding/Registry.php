@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * same repository, so there is one place that decides what a setting means and
  * one place that decides whether it may be written.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin\Onboarding
  * @author MeuMouse.com
  */
@@ -30,7 +30,7 @@ class Registry {
 	 * Everything else on the settings screen is out of its reach, so a
 	 * malformed step payload can never touch an unrelated setting.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,string>
 	 */
 	public static function allowed_keys() {
@@ -59,7 +59,7 @@ class Registry {
 		/**
 		 * Filter the settings the setup wizard may write.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,string> $keys | Setting names
 		 * @return array<int,string>
 		 */
@@ -73,7 +73,7 @@ class Registry {
 	 * Titles live here rather than in the browser so they go through the same
 	 * translation pipeline as the rest of the backend copy.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_steps() {
@@ -125,7 +125,7 @@ class Registry {
 		/**
 		 * Filter the setup wizard steps.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,array<string,mixed>> $steps | The steps, in order
 		 * @return array<int,array<string,mixed>>
 		 */
@@ -136,7 +136,7 @@ class Registry {
 	/**
 	 * Build the payload the wizard hydrates itself with.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_bootstrap_data() {
@@ -146,7 +146,7 @@ class Registry {
 		/**
 		 * Filter the setup wizard bootstrap payload.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $payload | Bootstrap payload
 		 * @return array<string,mixed>
 		 */
@@ -197,7 +197,7 @@ class Registry {
 	/**
 	 * Narrow the settings to what the wizard actually shows.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $settings | Full settings
 	 * @return array<string,mixed>
 	 */
@@ -213,7 +213,7 @@ class Registry {
 	 * Copying their labels and options here would be two descriptions of one
 	 * field, and they would disagree the first time either changed.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<int,array<string,mixed>> $schema | Settings schema
 	 * @return array<string,array<string,mixed>>
 	 */

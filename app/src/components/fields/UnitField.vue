@@ -5,7 +5,7 @@
  * Two settings behind one control, which is why it emits an object rather than
  * a scalar.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';

@@ -9,12 +9,12 @@
  * way WordPress does for the inputs the tests exercise — a stub that quietly
  * diverges would make the suite lie.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 defined('ABSPATH') || define( 'ABSPATH', __DIR__ . '/' );
 
-define( 'WC_CUSTOM_INSTALLMENTS_VERSION', '1.0.0' );
+define( 'WC_CUSTOM_INSTALLMENTS_VERSION', '6.0.0' );
 define( 'WC_CUSTOM_INSTALLMENTS_DEBUG_MODE', false );
 define( 'WC_CUSTOM_INSTALLMENTS_DEV_MODE', false );
 define( 'WC_CUSTOM_INSTALLMENTS_SLUG', 'wc-custom-installments' );

@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * to refuse an import that would not mean what it says — a file from a much
  * newer plugin, or from something else entirely.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin\Settings
  * @author MeuMouse.com
  */
@@ -20,7 +20,7 @@ class Transfer {
 	/**
 	 * Marker identifying a file this plugin produced.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const SIGNATURE = 'wc-custom-installments-settings';
@@ -29,7 +29,7 @@ class Transfer {
 	/**
 	 * Build the export payload.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function export() {
@@ -49,7 +49,7 @@ class Transfer {
 	 * imported into an unlicensed store leaves that setting untouched, exactly
 	 * as if it had been submitted from the settings screen.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $payload | Decoded export document
 	 * @return array<string,mixed>|\WP_Error
 	 */

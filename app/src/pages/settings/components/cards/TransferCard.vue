@@ -5,7 +5,7 @@
  * The reset asks first. It is the one control here that destroys work, and an
  * accidental click would cost a store its whole configuration.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { ref } from 'vue';
 import BaseButton from '../../../../components/base/BaseButton.vue';

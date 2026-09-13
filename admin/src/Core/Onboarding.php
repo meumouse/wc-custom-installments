@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * most once per user, a bulk activation never redirects at all, and the wizard
  * stays reachable by URL afterwards.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ class Onboarding {
 	/**
 	 * Option holding the wizard state.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const OPTION = 'wc_custom_installments_onboarding';
@@ -33,7 +33,7 @@ class Onboarding {
 	/**
 	 * Transient set on activation to trigger the one-time redirect.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const ACTIVATION_KEY = 'wc_custom_installments_activation_redirect';
@@ -41,7 +41,7 @@ class Onboarding {
 	/**
 	 * User meta recording that this user already landed on the wizard.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const SEEN_META = 'wc_custom_installments_onboarding_seen';
@@ -49,7 +49,7 @@ class Onboarding {
 	/**
 	 * Admin page slug of the wizard.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const PAGE = 'wc-custom-installments-onboarding';
@@ -58,7 +58,7 @@ class Onboarding {
 	/**
 	 * Register the hooks that surface the wizard.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -75,7 +75,7 @@ class Onboarding {
 	 * Bulk activations are filtered out later, where the request that would be
 	 * redirected can actually be inspected.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function on_activation() {
@@ -90,7 +90,7 @@ class Onboarding {
 	/**
 	 * Send the activating user to the wizard, once.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function maybe_redirect() {
@@ -132,7 +132,7 @@ class Onboarding {
 	/**
 	 * Remind the store owner the wizard is there, on our own screens only.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_notice() {
@@ -165,7 +165,7 @@ class Onboarding {
 	/**
 	 * Stop showing the reminder.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function handle_dismiss() {
@@ -189,7 +189,7 @@ class Onboarding {
 	 * document underneath from scrolling. Locking it from CSS costs nothing and
 	 * works before any JavaScript has run.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $classes | Space-separated body classes
 	 * @return string
 	 */
@@ -205,7 +205,7 @@ class Onboarding {
 	/**
 	 * Read the stored wizard state.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_state() {
@@ -224,7 +224,7 @@ class Onboarding {
 	/**
 	 * Persist a partial state update.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $changes | Keys to merge into the stored state
 	 * @return array<string,mixed> The state as stored.
 	 */
@@ -240,7 +240,7 @@ class Onboarding {
 	/**
 	 * Whether the wizard has been completed.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_completed() {
@@ -253,7 +253,7 @@ class Onboarding {
 	/**
 	 * Whether the reminder has been dismissed.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_dismissed() {
@@ -266,7 +266,7 @@ class Onboarding {
 	/**
 	 * Mark the wizard as completed.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function complete() {

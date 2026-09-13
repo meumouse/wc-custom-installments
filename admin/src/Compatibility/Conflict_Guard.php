@@ -20,7 +20,7 @@ defined('ABSPATH') || exit;
  * admin still works, the settings are still there, and the import has already
  * run — only the storefront waits.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Compatibility
  * @author MeuMouse.com
  */
@@ -32,7 +32,7 @@ class Conflict_Guard {
 	 * Everything else — the settings screen, the REST routes, the migrator —
 	 * carries on, because none of it is visible to a shopper.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<int,string>
 	 */
 	const STOREFRONT_CLASSES = array(
@@ -55,7 +55,7 @@ class Conflict_Guard {
 	 * registered there would arrive after the list it is meant to shorten had
 	 * already been read.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function bootstrap() {
@@ -70,7 +70,7 @@ class Conflict_Guard {
 	/**
 	 * Register the admin surface.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -86,7 +86,7 @@ class Conflict_Guard {
 	/**
 	 * Whether the 5.x plugin is running alongside this one.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function has_conflict() {
@@ -102,7 +102,7 @@ class Conflict_Guard {
 	 * it simply is not on this list and renders, which is the safe default for
 	 * anything that is not a price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<int,string> $classes | Classes about to be instantiated
 	 * @return array<int,string>
 	 */
@@ -114,7 +114,7 @@ class Conflict_Guard {
 	/**
 	 * Explain the situation, and offer the one action that resolves it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_notice() {
@@ -147,7 +147,7 @@ class Conflict_Guard {
 	 * a rollback needs, and a store owner who wants them gone can remove it
 	 * from the plugins screen like anything else.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function handle_deactivate() {
@@ -180,7 +180,7 @@ class Conflict_Guard {
 	 * Found by looking rather than assumed: the folder can be renamed, and a
 	 * hard-coded path would quietly fail on exactly the sites that need this.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string Empty when it is not installed.
 	 */
 	public static function find_legacy_plugin() {

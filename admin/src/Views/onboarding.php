@@ -3,7 +3,7 @@
 /**
  * Setup wizard shell.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 defined('ABSPATH') || exit; ?>

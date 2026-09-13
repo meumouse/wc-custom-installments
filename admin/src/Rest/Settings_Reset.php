@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 /**
  * Restore every setting to its default.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -20,7 +20,7 @@ class Settings_Reset extends Abstract_Route {
 	/**
 	 * Route path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '/admin/settings/reset';
@@ -28,7 +28,7 @@ class Settings_Reset extends Abstract_Route {
 	/**
 	 * Allowed HTTP methods.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'POST';
@@ -37,7 +37,7 @@ class Settings_Reset extends Abstract_Route {
 	/**
 	 * Handle the request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
 	 */

@@ -2,7 +2,7 @@
 /**
  * BaseSwitch.vue - an on/off control bound to the stored 'yes'/'no' strings.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 
@@ -21,7 +21,7 @@ const isOn = computed(() => props.modelValue === props.trueValue || props.modelV
 /**
  * Flip the value, unless the control is disabled.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function toggle() {

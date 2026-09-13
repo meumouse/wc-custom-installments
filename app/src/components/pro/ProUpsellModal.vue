@@ -6,7 +6,7 @@
  * from this dialog: the trial form lives in the setup wizard, behind an
  * explicit consent step.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import BaseButton from '../base/BaseButton.vue';

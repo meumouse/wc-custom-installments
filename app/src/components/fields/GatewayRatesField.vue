@@ -6,7 +6,7 @@
  * with no amount is simply absent, so disabling a gateway in WooCommerce never
  * leaves a rate silently applying.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
@@ -27,7 +27,7 @@ const methods = computed(() => props.field.methods || []);
 /**
  * Read the stored rate of one gateway.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} id - Gateway id.
  * @param {string} key - Either 'amount' or 'type'.
  * @return {string} The stored value, or a sensible blank.
@@ -45,7 +45,7 @@ function rate(id, key) {
 /**
  * Write one half of a gateway rate, dropping the row when it empties.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} id - Gateway id.
  * @param {string} key - Either 'amount' or 'type'.
  * @param {string} value - The new value.

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WC Custom Installments — settings preview</title>
+    <title>Custom Installments for WooCommerce — settings preview</title>
     <link rel="stylesheet" href="./app/dist/styles/bootstrap.css" />
     <style>
       /* Stand in for the WordPress admin frame the screen normally sits inside. */
@@ -76,7 +76,7 @@
           return new Response(
             JSON.stringify({
               signature: 'wc-custom-installments-settings',
-              version: '1.0.0',
+              version: '6.0.0',
               settings: payload.settings,
             }),
             { status: 200, headers: { 'Content-Type': 'application/json' } },

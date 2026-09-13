@@ -56,7 +56,7 @@ const fieldContext = computed(() => ({ maxInstallments: settings.max_qtd_install
 /**
  * Report the outcome of an action.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {{ok: boolean, message: string}} result - What the action returned.
  * @return {void}
  */
@@ -67,7 +67,7 @@ function report(result) {
 /**
  * Save, and say what happened.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onSave() {
@@ -77,7 +77,7 @@ async function onSave() {
 /**
  * Restore the defaults, and say what happened.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onReset() {
@@ -87,7 +87,7 @@ async function onReset() {
 /**
  * Throw away the unsaved changes by reloading the screen.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function onDiscard() {
@@ -97,7 +97,7 @@ function onDiscard() {
 /**
  * Download the current configuration as a JSON file.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onExport() {
@@ -120,7 +120,7 @@ async function onExport() {
 /**
  * Apply a chosen export file.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {object|null} document_ - The parsed file, or null when it would not parse.
  * @return {Promise<void>}
  */

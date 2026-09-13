@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name: WC Custom Installments — extension example
- * Description: A runnable example of every extension point. Drop it in wp-content/plugins and activate it beside WC Custom Installments.
- * Version:     1.0.0
+ * Plugin Name: Custom Installments for WooCommerce — extension example
+ * Description: A runnable example of every extension point. Drop it in wp-content/plugins and activate it beside Custom Installments for WooCommerce.
+ * Version:     6.0.0
  * Author:      MeuMouse.com
  * License:     GPLv2 or later
  *

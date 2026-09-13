@@ -1,7 +1,7 @@
 /**
  * quantity.js - follow the quantity field.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { delegate } from './dom';
 import { params } from './params';
@@ -9,7 +9,7 @@ import { params } from './params';
 /**
  * Register the quantity listener.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Function} onChange - Called with the new quantity.
  * @return {void}
  */

@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
  * Its adjusted price is the one the customer will be charged, so it is the one
  * the instalment plan has to be built from.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations
  * @author MeuMouse.com
  */
@@ -19,7 +19,7 @@ class Dynamic_Pricing_Discounts {
 	/**
 	 * Register the hook, when the plugin is here.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -34,7 +34,7 @@ class Dynamic_Pricing_Discounts {
 	/**
 	 * Whether the plugin is active.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_active() {
@@ -45,7 +45,7 @@ class Dynamic_Pricing_Discounts {
 	/**
 	 * Use the plugin's adjusted price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $price | Price resolved so far
 	 * @param object $product | Product object
 	 * @return float

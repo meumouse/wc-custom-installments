@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
  * The fields are a registry, so the Pro add-on adds its own through a filter
  * instead of the core knowing about them.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin
  * @author MeuMouse.com
  */
@@ -28,7 +28,7 @@ class Product_Settings {
 	/**
 	 * Register the product screen hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -46,7 +46,7 @@ class Product_Settings {
 	/**
 	 * Every per-product field the plugin offers.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_fields() {
@@ -75,7 +75,7 @@ class Product_Settings {
 		 * This is how the Pro add-on adds the per-product discount overrides
 		 * without the free plugin knowing they exist.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,array<string,mixed>> $fields | Registered fields
 		 * @return array<int,array<string,mixed>>
 		 */
@@ -86,7 +86,7 @@ class Product_Settings {
 	/**
 	 * Print the fields inside the product data panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_fields() {
@@ -118,7 +118,7 @@ class Product_Settings {
 	 * store owner should be able to see what the add-on would give them from
 	 * the screen where they would use it.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $field | Field definition
 	 * @param int $post_id | Product ID
 	 * @return void
@@ -172,7 +172,7 @@ class Product_Settings {
 	/**
 	 * Persist the fields when the product is saved.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $post_id | Product ID
 	 * @return void
 	 */
@@ -213,7 +213,7 @@ class Product_Settings {
 	/**
 	 * Print the quick edit controls.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_quick_edit_fields() {
@@ -224,7 +224,7 @@ class Product_Settings {
 	/**
 	 * Print the bulk edit controls.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_bulk_edit_fields() {
@@ -239,7 +239,7 @@ class Product_Settings {
 	 * worth making without opening the product, and a discount table is not one
 	 * of them.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $context | Either `quick` or `bulk`
 	 * @return void
 	 */
@@ -286,7 +286,7 @@ class Product_Settings {
 	/**
 	 * Save the quick edit controls.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return void
 	 */
@@ -311,7 +311,7 @@ class Product_Settings {
 	 * same, and bulk-clearing every product's setting by accident is not a
 	 * mistake anyone recovers from quickly.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return void
 	 */
@@ -342,7 +342,7 @@ class Product_Settings {
 	 * WordPress builds the quick edit form from the row's markup, so a value
 	 * that is not printed into the row cannot be pre-filled.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $column | Column being rendered
 	 * @return void
 	 */
@@ -374,7 +374,7 @@ class Product_Settings {
 	/**
 	 * The field keys that appear in the products list.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<int,string>
 	 */
 	private function list_field_keys() {

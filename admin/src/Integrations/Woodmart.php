@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * price group has to be told which product it is looking at and which widgets
  * carry a price worth decorating.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations
  * @author MeuMouse.com
  */
@@ -22,7 +22,7 @@ class Woodmart {
 	/**
 	 * Register the theme hooks, when the theme is here.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -43,7 +43,7 @@ class Woodmart {
 	 * Four checks because the theme has been distributed under several names
 	 * and a child theme may define only one of them.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_active() {
@@ -58,7 +58,7 @@ class Woodmart {
 	/**
 	 * Correct the theme's price layout.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_styles() {
@@ -77,7 +77,7 @@ class Woodmart {
 	/**
 	 * Tell the Elementor integration about the theme's own widgets.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,string> $widgets | Widget name => style section
 	 * @return array<string,string>
 	 */
@@ -93,7 +93,7 @@ class Woodmart {
 	/**
 	 * Supply the product when the theme is previewing a single-product layout.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object|false $product | Product resolved so far
 	 * @return object|false
 	 */
@@ -113,7 +113,7 @@ class Woodmart {
 	/**
 	 * Supply the product id the storefront runtime should configure for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $product_id | Product ID resolved so far
 	 * @return int
 	 */

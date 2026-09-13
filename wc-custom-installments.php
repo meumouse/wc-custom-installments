@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Plugin Name: 			WC Custom Installments
+ * Plugin Name: 			Custom Installments for WooCommerce
  * Description: 			Display installment plans, discounts and accepted payment methods on your WooCommerce store.
  * Plugin URI: 				https://meumouse.com/plugins/wc-custom-installments/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.0.0
+ * Version: 				6.0.0
  * Requires at least: 		6.5
  * Requires PHP: 			8.1
  * Requires Plugins: 		woocommerce
@@ -33,7 +33,7 @@ if ( file_exists( $wc_custom_installments_autoload ) ) {
 	require_once $wc_custom_installments_autoload;
 }
 
-$wc_custom_installments_plugin_version = '1.0.0';
+$wc_custom_installments_plugin_version = '6.0.0';
 
 /**
  * Flag a fresh activation so the first admin request opens the setup wizard.

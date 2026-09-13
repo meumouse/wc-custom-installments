@@ -1,4 +1,4 @@
-# WC Custom Installments — Rebuild Plan
+# Custom Installments for WooCommerce — Rebuild Plan
 
 Plan to rebuild `woo-custom-installments` as a **free WordPress.org plugin** (`wc-custom-installments`)
 plus a **commercial add-on** (`wc-custom-installments-pro`), with an API-first backend and a
@@ -418,7 +418,7 @@ add_action( 'mds_sdk_loaded', function() {
         'api_base_url'    => WC_CUSTOM_INSTALLMENTS_PRO_MDS_API_URL,     // https://cloud.meumouse.com
         'api_key'         => WC_CUSTOM_INSTALLMENTS_PRO_MDS_API_KEY,
         'public_key'      => WC_CUSTOM_INSTALLMENTS_PRO_MDS_PUBLIC_KEY,
-        'item_name'       => 'WC Custom Installments Pro',
+        'item_name'       => 'Custom Installments for WooCommerce Pro',
         'text_domain'     => 'wc-custom-installments-pro',
         'mode'            => 'full',
         'features'        => array(
@@ -623,7 +623,7 @@ which is worth scripting as `scripts/release-mds.mjs`.
 | `DEVELOPERS.md` | The extension API and the full hook reference, including every preserved legacy name |
 | `README.md` | Overview, architecture, install, build |
 | `readme.txt` | WordPress.org page, incl. **External services** (the trial endpoint) |
-| `CHANGELOG.md` | Keep a Changelog, English, starting at `1.0.0` |
+| `CHANGELOG.md` | Keep a Changelog, English, starting at `6.0.0`, continuing the 5.x numbering |
 | `docs/free-vs-pro.md` | The feature matrix, kept in sync with `Features` |
 | `docs/migration-from-5.x.md` | The compatibility contract of §12, for support to hand to customers |
 | `examples/wc-custom-installments-extension-example.php` | Runnable third-party extension |
@@ -631,7 +631,7 @@ which is worth scripting as `scripts/release-mds.mjs`.
 In `docs-meumouse-products`, the existing `docs/woo-custom-installments/` category is **kept and
 extended**, not replaced: `installation.md` gains the free + Pro split, `license-activation.md` is
 rewritten for the MDS flow, `widgets.md` and `shortcodes.md` gain free/Pro markers, and a new
-`migration-5x-to-1x.md` mirrors §12. Add a `wc-custom-installments-pro` sidebar entry only if the two
+`migration-5x-to-6x.md` mirrors §12. Add a `wc-custom-installments-pro` sidebar entry only if the two
 products end up needing separate navigation.
 
 ---
@@ -753,7 +753,7 @@ Sizing is relative: **S** ≈ up to a week, **M** ≈ 1–2 weeks, **L** ≈ 3�
 
 ### Phase 0 — Decisions and prerequisites · S
 
-Freeze the feature matrix (§2) and the compatibility contract (§12). Reserve the WordPress.org slug.
+Freeze the feature matrix (§2) and the compatibility contract (§12). Reserve the WordPress.org slug: the directory derives it from the display name (`custom-installments-for-woocommerce`), so ask the reviewers for `wc-custom-installments` when submitting. A `woo-` prefix is no longer accepted for new plugins.
 Write the new `AGENTS.md`. **Kick off the MDS server-side work now, because it blocks Phase 8:**
 create the `wc-custom-installments-pro` product, issue its API key and ed25519 key pair, configure
 the 7-day demo plan, and plan the import of existing licenses from the legacy license server.

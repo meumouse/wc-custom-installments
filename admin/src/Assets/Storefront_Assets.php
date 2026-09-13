@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * The runtime carries no framework: it is the price group's behaviour and
  * nothing else, so a product page pays a few kilobytes rather than a bundle.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Assets
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ class Storefront_Assets extends Abstract_Assets {
 	/**
 	 * Script handle of the storefront runtime.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const HANDLE = 'wc-custom-installments-storefront';
@@ -34,7 +34,7 @@ class Storefront_Assets extends Abstract_Assets {
 	/**
 	 * Register the storefront hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -48,7 +48,7 @@ class Storefront_Assets extends Abstract_Assets {
 	/**
 	 * Enqueue the runtime where the price group can appear.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function enqueue_assets() {
@@ -63,7 +63,7 @@ class Storefront_Assets extends Abstract_Assets {
 		 * theme prints a price: shortcodes, builders, related products. A store
 		 * that knows better can narrow it.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param bool $should_load | Whether to enqueue
 		 * @return bool
 		 */
@@ -97,7 +97,7 @@ class Storefront_Assets extends Abstract_Assets {
 	/**
 	 * Build what the runtime needs to recalculate prices in the browser.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public function frontend_params() {
@@ -106,7 +106,7 @@ class Storefront_Assets extends Abstract_Assets {
 		/**
 		 * Filter the product the storefront runtime is configured for.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param int $product_id | Product ID, or 0
 		 * @return int
 		 */
@@ -161,7 +161,7 @@ class Storefront_Assets extends Abstract_Assets {
 		/**
 		 * Filter the storefront runtime parameters.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $params | What the runtime receives
 		 * @return array<string,mixed>
 		 */
@@ -175,7 +175,7 @@ class Storefront_Assets extends Abstract_Assets {
 	 * A gated discount is reported as absent rather than as zero: zero would
 	 * have the runtime recalculate a badge the server never rendered.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $product_id | Product ID, or 0
 	 * @return array<string,mixed>
 	 */
@@ -203,7 +203,7 @@ class Storefront_Assets extends Abstract_Assets {
 	/**
 	 * The prices the runtime starts from.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object|false $product | Product object
 	 * @return array<string,mixed>
 	 */
@@ -244,7 +244,7 @@ class Storefront_Assets extends Abstract_Assets {
 	 * Injected into this handle's own tag rather than rebuilt, so the inline
 	 * scripts WordPress prepends - the localized parameters among them - survive.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $tag | Printed script markup
 	 * @param string $handle | Script handle
 	 * @return string

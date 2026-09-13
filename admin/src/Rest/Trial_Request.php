@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Ask the licensing service for a trial key, on the store owner's say-so.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -19,7 +19,7 @@ class Trial_Request extends Abstract_Route {
 	/**
 	 * Route path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '/trial';
@@ -27,7 +27,7 @@ class Trial_Request extends Abstract_Route {
 	/**
 	 * Allowed HTTP methods.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'POST';
@@ -39,7 +39,7 @@ class Trial_Request extends Abstract_Route {
 	 * Nothing leaves the site until this route is called, and this route is
 	 * only called when someone fills in the form and presses the button.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
 	 */

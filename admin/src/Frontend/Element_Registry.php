@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * The array shape is the 5.x one, so migrated `elements_design` data drops
  * straight in.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ class Element_Registry {
 	/**
 	 * Cached registry for the current request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var array<string,array<string,mixed>>|null
 	 */
 	private static $elements = null;
@@ -34,7 +34,7 @@ class Element_Registry {
 	/**
 	 * Get every registered element.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,array<string,mixed>>
 	 */
 	public static function all() {
@@ -109,7 +109,7 @@ class Element_Registry {
 		/**
 		 * Filter the elements of the price group.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,array<string,mixed>> $elements | Registered elements
 		 * @return array<string,array<string,mixed>>
 		 */
@@ -125,7 +125,7 @@ class Element_Registry {
 	 * Always returns a complete element, so a caller never has to guard against
 	 * a missing key on a store that saved a partial structure.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Element key
 	 * @param array<string,mixed> $stored | The stored `elements_design` array
 	 * @return array<string,mixed>
@@ -145,7 +145,7 @@ class Element_Registry {
 	/**
 	 * Get the icon of one element.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $key | Element key
 	 * @param array<string,mixed> $stored | The stored `elements_design` array
 	 * @return array<string,string>
@@ -163,7 +163,7 @@ class Element_Registry {
 	/**
 	 * The default value of the `elements_design` setting.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,array<string,mixed>>
 	 */
 	public static function defaults() {
@@ -174,7 +174,7 @@ class Element_Registry {
 	/**
 	 * Forget the cached registry.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public static function flush() {
@@ -188,7 +188,7 @@ class Element_Registry {
 	 * Every element carries the same style keys for both breakpoints, so the
 	 * CSS writer never has to ask whether a property exists.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $id | DOM id used by the settings preview
 	 * @param string $selector | CSS selector the element's styles target
 	 * @param string $title | Human-readable name
@@ -218,7 +218,7 @@ class Element_Registry {
 	/**
 	 * The style properties every element starts from.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function style_defaults() {
@@ -240,7 +240,7 @@ class Element_Registry {
 	/**
 	 * Merge one array over another, recursing into nested arrays.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $base | Values to start from
 	 * @param array<string,mixed> $overrides | Values that win
 	 * @return array<string,mixed>

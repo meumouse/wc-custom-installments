@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * which is what an acquirer actually charges and what the previous plugin
  * displayed. Changing it would silently move every total on every store.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Engine
  * @author MeuMouse.com
  */
@@ -30,7 +30,7 @@ class Calculate_Values {
 	 * whole price, because that is how the acquirer quotes it. With one global
 	 * rate it is compound interest over the instalment count.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $value | Base amount
 	 * @param float $fee | Interest rate, as a percentage
 	 * @param int $installments | Number of instalments
@@ -60,7 +60,7 @@ class Calculate_Values {
 		/**
 		 * Filter the instalment price with interest.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $installment_price | Calculated instalment price
 		 * @param float $value | Base amount
 		 * @param float $fee | Interest rate
@@ -74,7 +74,7 @@ class Calculate_Values {
 	/**
 	 * Value of a single instalment, with no interest.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $value | Base amount
 	 * @param int $installments | Number of instalments
 	 * @return float
@@ -89,7 +89,7 @@ class Calculate_Values {
 		/**
 		 * Filter the instalment price without interest.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $installment_price | Calculated instalment price
 		 * @param float $value | Base amount
 		 * @param int $installments | Number of instalments
@@ -102,7 +102,7 @@ class Calculate_Values {
 	/**
 	 * Total paid across every instalment.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $value | Value of one instalment
 	 * @param int $installments_total | Number of instalments
 	 * @return float
@@ -111,7 +111,7 @@ class Calculate_Values {
 		/**
 		 * Filter the total paid in instalments.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $final_price | Total paid
 		 * @param float $value | Value of one instalment
 		 * @param int $installments_total | Number of instalments
@@ -129,7 +129,7 @@ class Calculate_Values {
 	/**
 	 * Take a percentage off an amount.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $value | Original amount
 	 * @param float $discount | Discount, as a percentage
 	 * @param object|bool $product | Product object, when there is one
@@ -143,7 +143,7 @@ class Calculate_Values {
 		/**
 		 * Filter the discounted price.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $price | Discounted price
 		 * @param float $value | Original amount
 		 * @param float $discount | Discount value
@@ -157,7 +157,7 @@ class Calculate_Values {
 	/**
 	 * Apply a discount of either kind to an amount.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param float $price | Original amount
 	 * @param string $discount_method | Either `percentage` or `fixed`
 	 * @param float $discount_value | Discount value
@@ -177,7 +177,7 @@ class Calculate_Values {
 	/**
 	 * The discounted price of a product, for display.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @param string $discount_type | Either `main` or `ticket`
 	 * @return float
@@ -231,7 +231,7 @@ class Calculate_Values {
 	/**
 	 * What the customer saves by paying upfront.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return float
 	 */
@@ -254,7 +254,7 @@ class Calculate_Values {
 		/**
 		 * Filter the savings amount.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $economy | Amount saved
 		 * @param object $product | Product object
 		 * @return float
@@ -266,7 +266,7 @@ class Calculate_Values {
 	/**
 	 * The discounted line total of one cart item.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @param float $quantity | Quantity in the cart
 	 * @return float
@@ -308,7 +308,7 @@ class Calculate_Values {
 	 * the global one, which is the 5.x behaviour and the one store owners have
 	 * priced around.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $cart | Cart object
 	 * @param bool $include_shipping | Whether shipping is part of the base
 	 * @return float
@@ -372,7 +372,7 @@ class Calculate_Values {
 		/**
 		 * Filter the total discount applied to the cart.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $total_discount | Total discount
 		 * @param object $cart | Cart object
 		 * @param bool $include_shipping | Whether shipping was included
@@ -390,7 +390,7 @@ class Calculate_Values {
 	/**
 	 * Read the per-product discount, falling back to the parent.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $product_id | Product ID
 	 * @param int $parent_product_id | Parent product ID
 	 * @return array{0:string,1:string,2:string}

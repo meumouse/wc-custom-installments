@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
 /**
  * Hydrate the settings screen.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -22,7 +22,7 @@ class Settings_Bootstrap extends Abstract_Route {
 	/**
 	 * Route path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '/admin/settings';
@@ -30,7 +30,7 @@ class Settings_Bootstrap extends Abstract_Route {
 	/**
 	 * Allowed HTTP methods.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'GET';
@@ -39,7 +39,7 @@ class Settings_Bootstrap extends Abstract_Route {
 	/**
 	 * Handle the request.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
 	 */
@@ -47,7 +47,7 @@ class Settings_Bootstrap extends Abstract_Route {
 		/**
 		 * Filter the settings bootstrap payload.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $payload | Bootstrap payload
 		 * @return array<string,mixed>
 		 */

@@ -5,7 +5,7 @@
  * deliberate: the server decides what exists, this only updates the numbers, so
  * a display rule can never be contradicted by the browser.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { all, one, setAmount } from './dom';
 import { formatPrice } from './currency';
@@ -18,7 +18,7 @@ import { debug, params } from './params';
  * A variable product with the range replaced renders into its own container,
  * and which of the two is live depends on whether a variation is selected.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Element|null} The group to update.
  */
 export function priceGroup() {
@@ -34,7 +34,7 @@ export function priceGroup() {
 /**
  * Take a percentage off an amount.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} percentage - The percentage.
  * @param {number} price - The amount.
  * @return {number} What remains.
@@ -46,7 +46,7 @@ function afterPercentage(percentage, price) {
 /**
  * Repaint every price in the group.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {{regular: number, current: number}} price - The unit prices.
  * @param {number} quantity - How many are being bought.
  * @return {void}
@@ -106,7 +106,7 @@ export function updateAmounts(price, quantity = 1) {
 /**
  * Repaint the product price itself.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Element} group - The price group.
  * @param {{regular: number, current: number}} price - The prices.
  * @return {void}
@@ -134,7 +134,7 @@ function updateMainPrice(group, price) {
 /**
  * Rebuild the instalment table and the highlighted instalment.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {number} price - The price to build the plan from.
  * @return {void}
  */
@@ -196,7 +196,7 @@ function updateTable(price) {
  * The token names are Portuguese because they are in the wild: store owners
  * have them written into their settings, and the server uses the same ones.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} template - The copy template.
  * @param {object} row - One instalment.
  * @param {object} i18n - The interest suffixes.

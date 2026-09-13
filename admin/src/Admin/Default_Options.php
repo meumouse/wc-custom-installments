@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * and a Brazilian store gets the pt_BR catalogue. A store that already had its
  * own wording keeps it — the migrator copies the stored value over the default.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Default_Options {
 	/**
 	 * Get every default, keyed by setting name.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_defaults() {
@@ -45,7 +45,7 @@ class Default_Options {
 		 *
 		 * An add-on registering new settings appends its defaults here.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,mixed> $defaults | Default settings
 		 * @return array<string,mixed>
 		 */
@@ -56,7 +56,7 @@ class Default_Options {
 	/**
 	 * Installment plan and display defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function installments() {
@@ -86,7 +86,7 @@ class Default_Options {
 	/**
 	 * Discount defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function discounts() {
@@ -131,7 +131,7 @@ class Default_Options {
 	/**
 	 * Interest defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function interests() {
@@ -148,7 +148,7 @@ class Default_Options {
 	/**
 	 * Payment method container and badge defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function payment_methods() {
@@ -172,7 +172,7 @@ class Default_Options {
 	/**
 	 * Storefront copy defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function texts() {
@@ -207,7 +207,7 @@ class Default_Options {
 	/**
 	 * Presentation defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function styles() {
@@ -235,7 +235,7 @@ class Default_Options {
 	/**
 	 * Integration and maintenance defaults.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,mixed>
 	 */
 	private static function advanced() {
@@ -257,14 +257,14 @@ class Default_Options {
 	 * The keys are the 5.x setting fragments, so `enable_visa_flag_credit` keeps
 	 * meaning what it always meant.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,string>
 	 */
 	public static function get_card_brands() {
 		/**
 		 * Filter the payment badges the plugin offers.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,string> $brands | Brand key => display label
 		 * @return array<string,string>
 		 */

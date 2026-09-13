@@ -14,8 +14,8 @@
  *
  * @see https://woocommerce.com/document/template-structure/
  * @package MeuMouse.com
- * @since 1.0.0
- * @version 1.0.0
+ * @since 6.0.0
+ * @version 6.0.0
  */
 
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
@@ -26,7 +26,7 @@ if ( ! isset( $product ) ) {
 	/**
 	 * Filter the product this price is rendered for.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return object
 	 */
@@ -42,7 +42,7 @@ if ( ! $product instanceof WC_Product ) {
 /**
  * Fires before the price.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param object $product | Product object
  */
 Hook_Aliases::do_action( 'WC_Custom_Installments/Product/Before_Price', $product );
@@ -50,7 +50,7 @@ Hook_Aliases::do_action( 'WC_Custom_Installments/Product/Before_Price', $product
 /**
  * Filter the classes of the price group wrapper.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param string $classes | Space-separated classes
  * @param object $product | Product object
  * @return string
@@ -67,7 +67,7 @@ $group_classes = Hook_Aliases::apply_filters( 'WC_Custom_Installments/Price/Grou
 /**
  * Fires after the price.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param object $product | Product object
  */
 Hook_Aliases::do_action( 'WC_Custom_Installments/Product/After_Price', $product );

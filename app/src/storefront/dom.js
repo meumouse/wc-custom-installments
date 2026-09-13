@@ -1,13 +1,13 @@
 /**
  * dom.js - the handful of DOM helpers the runtime needs.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 
 /**
  * Find every match of a selector.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} selector - CSS selector.
  * @param {ParentNode} [scope] - Where to look.
  * @return {Element[]} The matches.
@@ -19,7 +19,7 @@ export function all(selector, scope = document) {
 /**
  * Find the first match of a selector.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} selector - CSS selector.
  * @param {ParentNode} [scope] - Where to look.
  * @return {Element|null} The match, or null.
@@ -35,7 +35,7 @@ export function one(selector, scope = document) {
  * WooCommerce on every variation change, and a listener bound to the old node
  * would be listening to something no longer on the page.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {string} selector - CSS selector to match against.
  * @param {string} type - Event type.
  * @param {Function} handler - Called with (event, matchedElement).
@@ -59,7 +59,7 @@ export function delegate(selector, type, handler, root = document) {
 /**
  * Write markup into every `.amount` inside each match.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Element[]} elements - Where to write.
  * @param {string} markup - The formatted price.
  * @return {void}

@@ -1,7 +1,7 @@
 /**
  * onboarding.js — setup wizard entry.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import '../styles/main.css';
 import OnboardingPage from '../pages/onboarding/OnboardingPage.vue';

@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Persist the settings payload.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Rest
  * @author MeuMouse.com
  */
@@ -19,7 +19,7 @@ class Settings_Save extends Abstract_Route {
 	/**
 	 * Route path.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $route = '/admin/settings';
@@ -27,7 +27,7 @@ class Settings_Save extends Abstract_Route {
 	/**
 	 * Allowed HTTP methods.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	protected $methods = 'POST';
@@ -40,7 +40,7 @@ class Settings_Save extends Abstract_Route {
 	 * stored rather than echoing the submitted payload — a locked field the
 	 * client tried to change must come back with its real value.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
 	 */

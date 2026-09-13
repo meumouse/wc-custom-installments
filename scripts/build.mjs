@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * WC Custom Installments build pipeline.
+ * Custom Installments for WooCommerce build pipeline.
  *
  * Orchestrates a production-ready plugin package:
  *   1. Build the Vue frontend (app/ -> app/dist/ via Vite).

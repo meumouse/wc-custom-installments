@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 /**
  * Shared helpers used across the plugin.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Core
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Helpers {
 	/**
 	 * Whether the current request is one of the plugin's admin screens.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $page | Optional exact page slug to match
 	 * @return bool
 	 */
@@ -46,7 +46,7 @@ class Helpers {
 	 * No nonce check applies: this only reports which screen WordPress already
 	 * decided to render, and nothing is acted upon.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public static function current_admin_page() {
@@ -67,14 +67,14 @@ class Helpers {
 	/**
 	 * The capability required to manage the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public static function capability() {
 		/**
 		 * Filter the capability required to read and change plugin settings.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param string $capability | Capability name
 		 * @return string
 		 */
@@ -87,7 +87,7 @@ class Helpers {
 	 *
 	 * Says nothing about the licence — ask Features for that.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_pro_active() {
@@ -98,7 +98,7 @@ class Helpers {
 	/**
 	 * Whether the 5.x plugin is active alongside this one.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_legacy_plugin_active() {
@@ -112,7 +112,7 @@ class Helpers {
 	 * Toggles persist as the strings `yes` and `no`, which the 5.x option also
 	 * used, so migrated data needs no conversion.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Stored value
 	 * @return bool
 	 */
@@ -128,7 +128,7 @@ class Helpers {
 	/**
 	 * Convert a boolean into the stored toggle representation.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param mixed $value | Value to normalise
 	 * @return string
 	 */
@@ -140,7 +140,7 @@ class Helpers {
 	/**
 	 * Whether a product is one the plugin should price.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return bool
 	 */
@@ -160,7 +160,7 @@ class Helpers {
 		/**
 		 * Filter whether a product is available for pricing.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param bool $is_available | Whether the product is available
 		 * @param object $product | Product object
 		 * @return bool
@@ -175,7 +175,7 @@ class Helpers {
 	 * A variable product whose variations all cost the same has no range to
 	 * show, and should render like a simple product.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @return bool
 	 */
@@ -213,7 +213,7 @@ class Helpers {
 	/**
 	 * Resolve the product the current request is about.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object|bool $product | A product to use instead of resolving one
 	 * @return \WC_Product|false
 	 */
@@ -238,7 +238,7 @@ class Helpers {
 		 * Page builders render outside the loop, where WooCommerce cannot
 		 * resolve a product on its own; this is where they supply one.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param \WC_Product|false $resolved | The resolved product
 		 * @return \WC_Product|false
 		 */
@@ -249,7 +249,7 @@ class Helpers {
 	/**
 	 * The interest rate applying to one instalment count.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object|bool $product | Product object, when there is one
 	 * @param int $installments | Number of instalments
 	 * @return float
@@ -265,7 +265,7 @@ class Helpers {
 		/**
 		 * Filter the interest rate of an instalment count.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param float $fee | Interest rate
 		 * @param object|bool $product | Product object
 		 * @param int $installments | Number of instalments
@@ -282,7 +282,7 @@ class Helpers {
 	 * have `{{ parcelas }}` written into their settings, and translating the
 	 * tokens would silently blank every customised string.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $values | One instalment
 	 * @return array<string,string>
 	 */
@@ -290,7 +290,7 @@ class Helpers {
 		/**
 		 * Filter the token replacements.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,string> $replacements | Token => replacement
 		 * @return array<string,string>
 		 */
@@ -306,7 +306,7 @@ class Helpers {
 	/**
 	 * Render the icon of one price-group element.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $element | Element key in the registry
 	 * @param string $class | CSS class identifying the icon
 	 * @return string
@@ -331,7 +331,7 @@ class Helpers {
 	/**
 	 * Whether a named theme is the active one.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $theme_name | Theme name to match
 	 * @return bool
 	 */
@@ -346,7 +346,7 @@ class Helpers {
 	 * A block-based cart renders nothing the shortcode hooks reach, so this is
 	 * what tells the cart integration which world it is in.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function has_shortcode_cart() {
@@ -366,7 +366,7 @@ class Helpers {
 	 * An editor has no product in the loop, and a widget with nothing to price
 	 * shows the designer an empty box they will read as a broken plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return \WC_Product|false
 	 */
 	public static function get_first_product() {
@@ -395,7 +395,7 @@ class Helpers {
 	 * group has to render regardless of the display rules — otherwise the
 	 * designer sees an empty box and assumes the plugin is broken.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return bool
 	 */
 	public static function is_builder_preview() {
@@ -410,7 +410,7 @@ class Helpers {
 		/**
 		 * Filter whether the current request is a page-builder preview.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param bool $is_preview | Whether a builder is previewing
 		 * @return bool
 		 */

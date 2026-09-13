@@ -1,7 +1,7 @@
 /**
  * Create a REST client backed by the page bootstrap payload.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @param {Object} bootstrap - Bootstrap payload returned by the REST API.
  * @return {{request: Function, get: Function, post: Function}} Client helpers.
  */
@@ -17,7 +17,7 @@ export function createApiClient(bootstrap) {
    * test double is most likely to supply. Concatenating leaves both cases
    * working and costs nothing.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {string} path - Endpoint path, relative to the plugin namespace.
    * @return {string} The URL to request.
    */
@@ -28,7 +28,7 @@ export function createApiClient(bootstrap) {
   /**
    * Send a JSON request to the WordPress REST API.
    *
-   * @since 1.0.0
+   * @since 6.0.0
    * @param {string} path - Endpoint path, relative to the plugin namespace.
    * @param {Object} [options] - Request options.
    * @return {Promise<Object>} Parsed JSON response.

@@ -82,7 +82,7 @@ const creditBrands = computed(() =>
 /**
  * Save and move on, reporting anything that went wrong.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onNext() {
@@ -98,7 +98,7 @@ async function onNext() {
 /**
  * Finish and go to the settings screen.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onFinish() {
@@ -110,7 +110,7 @@ async function onFinish() {
 /**
  * Leave the wizard without finishing.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function onSkip() {

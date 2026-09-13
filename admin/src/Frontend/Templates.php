@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * override at `yourtheme/woocommerce/single-product/price.php` keeps winning
  * exactly as it does without the plugin.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -21,7 +21,7 @@ class Templates {
 	/**
 	 * Register the template filter.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -32,7 +32,7 @@ class Templates {
 	/**
 	 * Point WooCommerce at the plugin's copy of a template.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $template | Path WooCommerce resolved
 	 * @param string $template_name | Template being looked up
 	 * @param string $template_path | Theme template directory

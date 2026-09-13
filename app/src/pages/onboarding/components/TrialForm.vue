@@ -6,7 +6,7 @@
  * describes a request in prose is a promise; showing the payload is the thing
  * itself, and it costs one disclosure element.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { computed, reactive, ref } from 'vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
@@ -34,7 +34,7 @@ const payload = computed(() => JSON.stringify({ productId: '…', ...form }, nul
 /**
  * Ask for the trial.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {Promise<void>}
  */
 async function submit() {

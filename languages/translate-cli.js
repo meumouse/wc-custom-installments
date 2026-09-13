@@ -304,7 +304,7 @@ async function main() {
   const retranslateIdentical = getRetranslateIdentical();
   const engineLabel = engine === "openai" ? "OpenAI (AI)" : "Google Cloud Translation";
 
-  console.log(`WC Custom Installments Translation Script (${engineLabel})`);
+  console.log(`Custom Installments for WooCommerce Translation Script (${engineLabel})`);
   if (retranslateIdentical) {
     console.log("Mode: re-translating entries whose translation equals the source string");
   }

@@ -1,7 +1,7 @@
 /**
  * settings.js — settings screen entry.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import '../styles/main.css';
 import SettingsPage from '../pages/settings/SettingsPage.vue';

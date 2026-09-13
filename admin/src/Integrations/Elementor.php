@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * uses one, so a rename deletes the widget from those pages. The 5.x names are
  * kept exactly, and the Pro add-on registers the rest of them under theirs.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations
  * @author MeuMouse.com
  */
@@ -24,7 +24,7 @@ class Elementor {
 	/**
 	 * The widget category the plugin's widgets appear under.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const CATEGORY = 'wc-custom-installments';
@@ -33,7 +33,7 @@ class Elementor {
 	/**
 	 * Register the Elementor hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -50,7 +50,7 @@ class Elementor {
 	/**
 	 * Add the plugin's own category to the widget panel.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $manager | Elementor elements manager
 	 * @return void
 	 */
@@ -65,7 +65,7 @@ class Elementor {
 	/**
 	 * Register every widget the site is entitled to.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param object $manager | Elementor widgets manager
 	 * @return void
 	 */
@@ -76,7 +76,7 @@ class Elementor {
 		 * The Pro add-on appends its own here. Each entry is a fully qualified
 		 * class name extending Elementor's widget base.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<int,string> $widgets | Widget class names
 		 * @return array<int,string>
 		 */
@@ -98,7 +98,7 @@ class Elementor {
 	/**
 	 * Give the editor a product to render against.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param int $product_id | Product ID resolved so far
 	 * @return int
 	 */
@@ -119,14 +119,14 @@ class Elementor {
 	 * Themes and page builders register their own product widgets, and each one
 	 * names the controls section its price styling belongs in.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,string>
 	 */
 	public static function get_injected_controllers() {
 		/**
 		 * Filter the third-party widgets the plugin adds controls to.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,string> $widgets | Widget name => style section id
 		 * @return array<string,string>
 		 */

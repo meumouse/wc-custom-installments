@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * elements are data and the CSS is a loop over them, so a new element brings its
  * styles with it.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Frontend
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ class Styles {
 	/**
 	 * Where the mobile rules stop applying.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const MOBILE_MAX = '992px';
@@ -33,7 +33,7 @@ class Styles {
 	/**
 	 * Where the desktop rules start applying.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @var string
 	 */
 	const DESKTOP_MIN = '993px';
@@ -42,7 +42,7 @@ class Styles {
 	/**
 	 * Register the hook that prints the stylesheet.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -53,7 +53,7 @@ class Styles {
 	/**
 	 * Print the stylesheet.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_styles() {
@@ -74,7 +74,7 @@ class Styles {
 	/**
 	 * Assemble the whole stylesheet.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	public function build_css() {
@@ -85,7 +85,7 @@ class Styles {
 		 * be able to, and a plugin that shouts over every rule is a plugin the
 		 * store owner ends up fighting.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param bool $force | Whether to force the declarations
 		 * @return bool
 		 */
@@ -107,7 +107,7 @@ class Styles {
 	/**
 	 * The order each element takes inside the price group.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $stored | Stored element design
 	 * @return string
 	 */
@@ -135,7 +135,7 @@ class Styles {
 	/**
 	 * The typography and spacing rules of one breakpoint.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,mixed> $stored | Stored element design
 	 * @param string $breakpoint | Either `mobile` or `desktop`
 	 * @param string $important | The `!important` suffix, or an empty string
@@ -212,7 +212,7 @@ class Styles {
 	/**
 	 * The instalment popup trigger.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	private function popup_rules() {
@@ -257,7 +257,7 @@ class Styles {
 	/**
 	 * Alignment and range-price rules.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return string
 	 */
 	private function layout_rules() {
@@ -284,7 +284,7 @@ class Styles {
 	/**
 	 * Format a four-sided box property.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param array<string,string> $box | Top, right, bottom, left and the unit
 	 * @return string
 	 */

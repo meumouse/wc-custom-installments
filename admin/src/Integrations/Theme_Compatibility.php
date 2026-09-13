@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * onto a theme it was not written for would be a bug reported as "the plugin
  * broke my layout".
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Integrations
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Theme_Compatibility {
 	/**
 	 * Register the hook that prints the corrections.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -39,7 +39,7 @@ class Theme_Compatibility {
 	/**
 	 * The themes with a known correction.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return array<string,array<string,mixed>>
 	 */
 	public static function get_rules() {
@@ -73,7 +73,7 @@ class Theme_Compatibility {
 		/**
 		 * Filter the theme corrections.
 		 *
-		 * @since 1.0.0
+		 * @since 6.0.0
 		 * @param array<string,array<string,mixed>> $rules | Theme key => detection and CSS
 		 * @return array<string,array<string,mixed>>
 		 */
@@ -84,7 +84,7 @@ class Theme_Compatibility {
 	/**
 	 * Print the corrections that apply to this site.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function render_styles() {
@@ -118,7 +118,7 @@ class Theme_Compatibility {
 	 * Shoptimizer rewrites the sale price HTML on the same hooks the price
 	 * group renders on, so both run and the customer sees two prices.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @return void
 	 */
 	public function remove_theme_actions() {
@@ -136,7 +136,7 @@ class Theme_Compatibility {
 	 *
 	 * Kept as a helper for the rules a filter may add.
 	 *
-	 * @since 1.0.0
+	 * @since 6.0.0
 	 * @param string $name | Theme name
 	 * @return bool
 	 */

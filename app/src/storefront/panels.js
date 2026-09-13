@@ -1,7 +1,7 @@
 /**
  * panels.js - the instalment details panel and dialog.
  *
- * @since 1.0.0
+ * @since 6.0.0
  */
 import { all, delegate, one } from './dom';
 
@@ -11,7 +11,7 @@ import { all, delegate, one } from './dom';
  * The height is measured rather than animated to `auto`, because `auto` is not
  * a value CSS can transition between.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 export function initAccordion() {
@@ -44,7 +44,7 @@ export function initAccordion() {
 /**
  * Open and close the dialog.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 export function initModal() {
@@ -82,7 +82,7 @@ export function initModal() {
 /**
  * Close every open dialog.
  *
- * @since 1.0.0
+ * @since 6.0.0
  * @return {void}
  */
 function close() {
