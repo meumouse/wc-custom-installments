@@ -36,6 +36,7 @@ import { fileURLToPath } from 'node:url';
 import archiver from 'archiver';
 
 import { loadEnv } from './env.mjs';
+import { lintUi } from './lint-ui.mjs';
 import { resolveVersion } from './version.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -339,6 +340,12 @@ async function main() {
 
 	if (!opts.potOnly) {
 		log('Translations: shipping the compiled locales alongside wc-custom-installments.pot.');
+	}
+
+	// The UI rule of AGENTS.md §7 is checked before anything is built, so a
+	// package can never carry a screen that breaks it.
+	if (!lintUi(root)) {
+		throw new Error('The admin UI renders native controls outside components/base (see npm run lint:ui).');
 	}
 
 	buildFrontend();

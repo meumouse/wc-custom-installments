@@ -5,6 +5,7 @@
 	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"lint:php": "node scripts/lint-php.mjs",
+		"lint:ui": "node scripts/lint-ui.mjs",
 		"build": "node scripts/build.mjs",
 		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",
 		"build:app": "npm run build --prefix app",
