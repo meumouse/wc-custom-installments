@@ -110,6 +110,63 @@ Read a setting with `Repository::get( 'my_setting' )`. For a toggle, prefer
 `Repository::is_active( 'my_setting' )` — it answers false when the gating feature is unavailable,
 so a value stored while licensed cannot keep taking effect after the licence lapses.
 
+## Adding a settings tab your own script renders
+
+When a tab holds something other than settings — the Pro add-on's licence is one — declare a section
+with a `component` and no cards. The settings screen draws the tab and an empty mount point, and
+your script fills it.
+
+```php
+add_filter( 'WC_Custom_Installments/Admin/Settings_Schema', function( $schema ) {
+    $schema[] = array(
+        'id'          => 'my-tab',               // also opens it: admin.php?page=wc-custom-installments&section=my-tab
+        'icon'        => 'key',
+        'title'       => __( 'My tab', 'my-plugin' ),
+        'description' => __( 'What this tab is for.', 'my-plugin' ),
+        'component'   => 'my-tab',               // the name your script registers
+        'cards'       => array(),
+    );
+
+    return $schema;
+} );
+```
+
+Enqueue your script on the settings screen, and register a renderer under that name. `mount()`
+receives the element and `{ rest: { root, nonce } }`, and returns a function the screen calls when the
+reader leaves the tab.
+
+```js
+const definition = {
+    mount( element, context ) {
+        const app = createApp( MyTab, { context } );
+
+        app.mount( element );
+
+        return () => app.unmount();
+    },
+};
+
+const sections = window.WCCustomInstallmentsSections;
+
+if ( sections && sections.register ) {
+    sections.register( 'my-tab', definition );
+} else {
+    // The settings bundle has not run yet; it adopts this when it starts.
+    window.WCCustomInstallmentsSections = sections || {};
+    window.WCCustomInstallmentsSections.pending = { ...( window.WCCustomInstallmentsSections.pending || {} ), 'my-tab': definition };
+}
+```
+
+Mount an app of your own rather than handing over a component. Your bundle carries its own copy of
+Vue, and a component compiled against another runtime renders inside the settings app with its
+reactivity silently cut off. Inside the mount point, `.wc-custom-installments-app` is in scope, so
+utilities built with this plugin's Tailwind preset look the same as the rest of the screen.
+
+Do not `wp_localize_script()` the `wcCustomInstallmentsBootstrap` global from your script: the
+settings screen reads its own configuration from it. The save bar stays out of your tab unless other
+tabs have unsaved changes. If nothing registers the name by the time the page has loaded, the tab
+says that an add-on did not load.
+
 ## Adding a per-product field
 
 ```php

@@ -25,6 +25,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Settings screen in the design system MeuMouse shares with Joinotify: a header carrying the plugin logo, one segmented tab per section with its icon, a single panel with the label beside each control, and a save bar that stays inside the panel instead of covering the WordPress menu. Dependency-driven visibility, the Pro lock treatment and its upsell, toasts, and import/export/reset with a confirmation dialog.
 - Component library: button and icon button, input and input group, searchable select, textarea, switch, checkbox, colour input, file input, label, badge, notice, modal and confirmation dialog, tabs, progress bar, stepper, code and form. Every other screen is assembled from these; `npm run lint:ui` fails the build if one renders a native control of its own.
 - Admin styles scoped to the plugin's screens: Tailwind's reset no longer reaches the WordPress menu, the admin bar or other plugins' notices.
+- Settings tabs an add-on renders: a section with a `component` gets a mount point that the add-on fills with its own app, registered through `window.WCCustomInstallmentsSections`. The Pro add-on's licence lives in one. `?section=<id>` opens a tab directly, and the tabs tighten when there are more than six.
 - Field components for measurements, tokenised text, per-gateway rates and the interest table, resolved through a registry an add-on can extend.
 - `preview.html` and `tests/dump-bootstrap.php`, which render the real admin bundle against a generated fixture with no WordPress and no database.
 - Instalment and discount engine ported from the 5.x plugin, with its rounding and both interest formulas intact.
@@ -45,7 +46,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - An upgrading store skips straight to the summary rather than being walked through choices it already made.
 - Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.
 
-- Translation pipeline: 408 strings extracted from PHP and Vue into `wc-custom-installments.pot`, the plugin header included.
+- Translation pipeline: 410 strings extracted from PHP and Vue into `wc-custom-installments.pot`, the plugin header included.
 - Brazilian Portuguese translation, shipped with the plugin until WordPress.org delivers a language pack. A Brazilian store sees the plugin under the name it already knows, "Parcelas Customizadas para WooCommerce".
 - The plugin is published as "Custom Installments for WooCommerce", with the slug and text domain `wc-custom-installments`. WordPress.org no longer accepts new slugs beginning with "woo".
 - Admin notices rendered through `wp_admin_notice()`.

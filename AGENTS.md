@@ -270,9 +270,18 @@ bundle. Never build its URL from a hard-coded `/wp-content/plugins/…` path.
 | `components/layout/` | `PageHeader`, `SettingsPanel` |
 | `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |
 | `components/toasts/` | `ToastStack` |
+| `components/sections/` | `ExternalSection`, `sectionRegistry` |
 
 Icons come from `@boxicons/vue` through `BaseIcon`, which maps a name to a component. A settings
 section names its icon in `Settings\Registry` (`'icon' => 'credit-card'`) — a name, never markup.
+
+### Tabs an add-on renders
+
+A section with a `component` and no cards is drawn as a tab holding a mount point
+(`ExternalSection`); the add-on registered under that name in `window.WCCustomInstallmentsSections`
+mounts **its own Vue app** there. Never let an add-on hand this app a component instead: it is built
+with its own copy of Vue, and a component from another runtime renders with its reactivity silently
+cut off. The Pro add-on's licence tab works this way. `?section=<id>` opens a tab directly.
 
 ---
 
