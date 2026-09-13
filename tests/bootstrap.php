@@ -418,6 +418,17 @@ if ( ! function_exists('get_woocommerce_currency_symbol') ) {
 	}
 }
 
+if ( ! function_exists('get_woocommerce_price_format') ) {
+	/**
+	 * The store's price format: %1$s is the symbol, %2$s the amount.
+	 *
+	 * @return string
+	 */
+	function get_woocommerce_price_format() {
+		return '%1$s&nbsp;%2$s';
+	}
+}
+
 if ( ! function_exists('wc_get_price_to_display') ) {
 	/**
 	 * The price a customer is shown.

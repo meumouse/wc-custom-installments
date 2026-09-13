@@ -59,6 +59,7 @@ $payload = array(
 	),
 	'environment' => array(
 		'currency_symbol' => 'R$',
+		'price_format' => '%s %v',
 		'decimal_separator' => ',',
 		'thousand_separator' => '.',
 	),
