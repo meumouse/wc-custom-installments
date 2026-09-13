@@ -1,8 +1,8 @@
 # AGENTS.md
 
-Guide for anyone — person or agent — working on **Custom Installments for WooCommerce** (shown in
-Brazilian Portuguese as *Parcelas Customizadas para WooCommerce*), the free WooCommerce plugin
-distributed on WordPress.org, and its commercial companion
+Guide for anyone — person or agent — working on **Parcelas Customizadas para WooCommerce**
+(*Custom Installments for WooCommerce* in English), the free WooCommerce plugin distributed on
+WordPress.org, and its commercial companion
 [`wc-custom-installments-pro`](../wc-custom-installments-pro).
 
 Read this before editing anything. The plugin's hardest constraints are not visible from a single
@@ -12,11 +12,13 @@ file.
 
 ## 0. Rules that override preference
 
-1. **Everything is written in English.** Identifiers, comments, docblocks, commit messages,
-   documentation. User-facing strings are authored in English too and translated through the i18n
-   pipeline — there is no Portuguese exception. The one deliberate exception is the copy **tokens**
-   (`{{ parcelas }}`, `{{ valor }}`, `{{ juros }}`), which are Portuguese because they are already
-   written into thousands of stores' settings.
+1. **Code is written in English; what the store owner reads is written in Brazilian
+   Portuguese.** Identifiers, comments, docblocks, `translators:` notes, commit messages and
+   documentation are English. Every user-facing string — PHP and Vue alike, the plugin header and
+   `readme.txt` included — is authored in pt-BR inside `__()` / `wp.i18n.__`, and every other
+   language is a translation of it. English ships as a bundled en_US catalogue (see §8), because
+   translate.wordpress.org has no English (United States) locale to deliver it. A new string needs
+   its en_US entry in the same change.
 2. **Some names cannot change.** See §5. A rename there silently destroys customer data or content.
 3. **The gate is one function.** Never add a second place that decides whether a paid feature runs.
 4. **Nothing contacts an external server without a person asking.** See §6.
@@ -47,9 +49,9 @@ on new code is the version about to ship.
 
 ### Name and slug
 
-The display name is **Custom Installments for WooCommerce**. It is authored in English like every
-other string and translated — the bundled pt_BR catalogue turns it into *Parcelas Customizadas para
-WooCommerce*, so a Brazilian store sees the name it already knows.
+The display name is **Parcelas Customizadas para WooCommerce**, the name the 5.x installed base
+already knows. Like every other string it is authored in pt-BR and translated: the bundled en_US
+catalogue turns it into *Custom Installments for WooCommerce*.
 
 The slug and text domain are `wc-custom-installments`, and they are not negotiable:
 
@@ -58,10 +60,11 @@ The slug and text domain are `wc-custom-installments`, and they are not negotiab
 - 5.x was never on WordPress.org, so there is no existing `woo-custom-installments` listing to
   inherit. It updated from MeuMouse's own server.
 - A display name must not start with a trademark, which rules out "WooCommerce …" and "WC …".
-  "… for WooCommerce" at the end is the accepted form.
+  "… para WooCommerce" at the end is the accepted form.
 
-WordPress.org derives the slug from the display name on submission. Ask the reviewers for
-`wc-custom-installments` when submitting.
+WordPress.org derives the slug from the display name on submission
+(`parcelas-customizadas-para-woocommerce`). Ask the reviewers for `wc-custom-installments` when
+submitting.
 
 | | Free | Pro |
 |---|---|---|
@@ -317,6 +320,23 @@ php tests/onboarding-test.php
 Write the expected values **by hand**. The engine harness exists because a rounding change throws no
 error anywhere — it quietly charges a different amount on every product in the shop.
 
+### Translations
+
+The source language is **pt-BR** (§0.1). `languages/` holds the `.pot` generated from the source and
+one `.po` per bundled locale; the build compiles each into `.mo`, `.l10n.php` and the per-script
+`.json` files, which Git ignores.
+
+- **en_US ships in every package** (`BUNDLED_LOCALES` in `scripts/build.mjs`).
+  translate.wordpress.org has no English (United States) locale, so no language pack would ever
+  bring English; without the bundled catalogue an English-language store reads Portuguese.
+- Every other locale comes from translate.wordpress.org. `--ship-locales` packs all the `.po` files
+  there are, for installs outside the directory.
+- Adding a string: write it in pt-BR, run `npm run pot` in `languages/`, and add its English to
+  `wc-custom-installments-en_US.po` (by hand or `translate-cli.js --lang=en_US`). The build does
+  not fail on a missing entry, it quietly shows Portuguese to English stores — check the `.po`.
+- The copy tokens `{{ parcelas }}`, `{{ valor }}` and `{{ juros }}` stay exactly as written in every
+  language: they live in stores' saved settings.
+
 ### Previews
 
 `preview.html`, `preview-onboarding.html` and `preview-storefront.html` render the real built
@@ -330,7 +350,8 @@ flag, a stuck CSS transition and a URL builder that threw on a relative base.
 - [ ] `npm run build` produces a package.
 - [ ] `npm run lint:ui` is clean: the UI is made of components (§7).
 - [ ] `npm run docs:check` is clean if you touched hooks or features.
-- [ ] New strings go through `__()` / `wp.i18n.__` and the `.pot` was regenerated.
+- [ ] New strings are pt-BR, go through `__()` / `wp.i18n.__`, the `.pot` was regenerated and the
+      en_US `.po` has their English.
 - [ ] `@since` on new code is the version about to ship; `@version` updated where it exists.
 - [ ] `CHANGELOG.md` records what a store owner would notice.
 - [ ] Nothing in §5 was renamed.

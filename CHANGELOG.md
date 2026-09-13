@@ -47,8 +47,8 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Optional trial step that requests a seven-day Pro key, showing the exact request body before anything is sent.
 
 - Translation pipeline: 410 strings extracted from PHP and Vue into `wc-custom-installments.pot`, the plugin header included.
-- Brazilian Portuguese translation, shipped with the plugin until WordPress.org delivers a language pack. A Brazilian store sees the plugin under the name it already knows, "Parcelas Customizadas para WooCommerce".
-- The plugin is published as "Custom Installments for WooCommerce", with the slug and text domain `wc-custom-installments`. WordPress.org no longer accepts new slugs beginning with "woo".
+- Every string the store owner reads is written in Brazilian Portuguese, as in 5.x, with the plugin under the name its stores already know. English ships with the plugin as an en_US catalogue, since WordPress.org has no English (United States) locale to deliver it; every other language comes from translate.wordpress.org.
+- The plugin is published as "Parcelas Customizadas para WooCommerce" ("Custom Installments for WooCommerce" in English), with the slug and text domain `wc-custom-installments`. WordPress.org no longer accepts new slugs beginning with "woo".
 - Admin notices rendered through `wp_admin_notice()`.
 - `AGENTS.md`, `DEVELOPERS.md` and `docs/free-vs-pro.md`, the last two generated from the source so they cannot drift.
 - The `wcci_*` extension helpers, and a runnable example plugin using every extension point.

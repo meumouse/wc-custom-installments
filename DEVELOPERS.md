@@ -1,4 +1,4 @@
-# Extending Custom Installments for WooCommerce
+# Extending Parcelas Customizadas para WooCommerce
 
 Everything below is a supported surface. If you need something that is not here, open an issue
 rather than editing the plugin — a patched copy stops receiving updates, and the thing you needed is

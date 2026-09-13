@@ -1,4 +1,4 @@
-# Custom Installments for WooCommerce — Rebuild Plan
+# Parcelas Customizadas para WooCommerce — Rebuild Plan
 
 Plan to rebuild `woo-custom-installments` as a **free WordPress.org plugin** (`wc-custom-installments`)
 plus a **commercial add-on** (`wc-custom-installments-pro`), with an API-first backend and a
@@ -566,11 +566,17 @@ and licensing are deleted, ~1,700 lines move into the Pro add-on.
 
 ---
 
-## 9. Internationalization — wp-i18n everywhere, English source
+## 9. Internationalization — wp-i18n everywhere
+
+> **Superseded on the source language.** The strings were first authored in English, as below, and
+> then moved back to **pt-BR** before 6.0.0: the installed base is Brazilian, and the product is
+> known by its Portuguese name. English now ships as a bundled en_US catalogue, since
+> translate.wordpress.org has no English (United States) locale. The wiring below — wp-i18n in every
+> layer, one `.json` per handle, the Node pipeline — is unchanged. See AGENTS.md §0.1 and §8.
 
 **Every user-facing string, in every layer, is authored in English (en_US) and passed through a
-wp-i18n function.** This is a break from the current plugin, whose source locale is pt_BR, and it is
-required for a WordPress.org listing.
+wp-i18n function.** This is a break from the current plugin, whose source locale is pt_BR. English
+source strings are not a WordPress.org requirement.
 
 | Layer | Function | Notes |
 |---|---|---|
