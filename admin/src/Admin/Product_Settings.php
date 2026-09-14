@@ -9,7 +9,7 @@ use MeuMouse\WC_Custom_Installments\Core\Helpers;
 defined('ABSPATH') || exit;
 
 /**
- * Per-product overrides, in the product data panel.
+ * Per-product overrides, in a "Parcelas Customizadas" tab of the product data panel.
  *
  * These stay native WooCommerce fields rather than a Vue app. The product edit
  * screen is WooCommerce's screen, not ours: its fields have to take part in the
@@ -17,10 +17,14 @@ defined('ABSPATH') || exit;
  * recognises. A panel of our own would have to reimplement all three to end up
  * somewhere worse.
  *
- * The fields are a registry, so the Pro add-on adds its own through a filter
- * instead of the core knowing about them. Besides the keys every field has, a
- * definition may carry:
+ * The fields are a registry an add-on extends through a filter. The Pro fields
+ * are declared here, gated, like the Pro fields of the settings schema: a store
+ * without the add-on sees them disabled and marked, on the screen where it would
+ * use them, and the add-on only has to open the gate. Besides the keys every
+ * field has, a definition may carry:
  *
+ * - `group` — the group it is listed under (see get_groups()); a field naming
+ *   none, or one that does not exist, goes to `other`.
  * - `depends_on` — `array( other_key => value )`: shown only while those
  *   fields hold those values (a checkbox holds `yes` or `no`).
  * - `visible` — false keeps the field out of sight. It is still printed, so
@@ -28,8 +32,8 @@ defined('ABSPATH') || exit;
  * - `discount` — a checkbox turning on a discount of this product's own, which
  *   the "hide the discount" option overrides; the panel says so beside it.
  *
- * The small script in `assets/admin/product-settings.js` applies the first
- * three as the store owner edits, and fills quick edit from the row.
+ * The small script in `assets/admin/product-settings.js` applies the rules as
+ * the store owner edits, and fills quick edit from the row.
  *
  * @since 6.0.0
  * @package MeuMouse\WC_Custom_Installments\Admin
@@ -45,6 +49,25 @@ class Product_Settings {
 	 */
 	const QUICK_EDIT_LOADED = 'wc_custom_installments_quick_edit';
 
+	/**
+	 * Key of the tab in the product data panel.
+	 *
+	 * WooCommerce derives the tab's classes from it (`<key>_options`), which is
+	 * what the stylesheet gives the tab its icon by.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const TAB = 'wc_custom_installments';
+
+	/**
+	 * ID of the panel the tab opens.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const PANEL = 'wc_custom_installments_product_data';
+
 
 	/**
 	 * Register the product screen hooks.
@@ -53,7 +76,8 @@ class Product_Settings {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'render_fields' ) );
+		add_filter( 'woocommerce_product_data_tabs', array( $this, 'register_tab' ) );
+		add_action( 'woocommerce_product_data_panels', array( $this, 'render_panel' ) );
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save_fields' ) );
 
 		add_action( 'woocommerce_product_quick_edit_end', array( $this, 'render_quick_edit_fields' ) );
@@ -67,10 +91,27 @@ class Product_Settings {
 	/**
 	 * Every per-product field the plugin offers.
 	 *
+	 * The meta keys are the 5.x ones. They live on thousands of products, and a
+	 * rename would quietly drop every override a store had configured.
+	 *
+	 * The discount details only show while their own toggle is on, as in 5.x.
+	 * The quantity rule only shows when the store sets that rule per product:
+	 * with a single store-wide rule there is nothing to fill in here. Hidden
+	 * fields are still printed, so saving the product keeps whatever they hold.
+	 *
 	 * @since 6.0.0
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_fields() {
+		$methods = array(
+			'percentage' => __( 'Porcentagem', 'wc-custom-installments' ),
+			'fixed' => __( 'Valor fixo', 'wc-custom-installments' ),
+		);
+
+		$per_unit = array( 'enable_discount_per_unit' => 'yes' );
+		$per_quantity = array( 'enable_discount_per_quantity' => 'yes' );
+		$quantity_shown = self::is_quantity_rule_shown();
+
 		$fields = array(
 			array(
 				'key' => '__disable_installments',
@@ -79,6 +120,7 @@ class Product_Settings {
 				'description' => __( 'Não exibir o parcelamento para este produto.', 'wc-custom-installments' ),
 				'feature' => '',
 				'quick_edit' => true,
+				'group' => 'installments',
 			),
 			array(
 				'key' => '__disable_discount_main_price',
@@ -87,14 +129,104 @@ class Product_Settings {
 				'description' => __( 'Não aplicar nem exibir o desconto à vista para este produto.', 'wc-custom-installments' ),
 				'feature' => '',
 				'quick_edit' => true,
+				'group' => 'discounts',
+			),
+			array(
+				'key' => 'enable_discount_per_unit',
+				'type' => 'checkbox',
+				'label' => __( 'Desconto personalizado para este produto', 'wc-custom-installments' ),
+				'description' => __( 'Usa um desconto próprio em vez do desconto geral da loja.', 'wc-custom-installments' ),
+				'feature' => 'product_overrides',
+				'quick_edit' => false,
+				'discount' => true,
+				'group' => 'discounts',
+			),
+			array(
+				'key' => 'discount_per_unit_method',
+				'type' => 'select',
+				'label' => __( 'Tipo de desconto', 'wc-custom-installments' ),
+				'description' => '',
+				'options' => $methods,
+				'feature' => 'product_overrides',
+				'quick_edit' => false,
+				'depends_on' => $per_unit,
+				'group' => 'discounts',
+			),
+			array(
+				'key' => 'unit_discount_amount',
+				'type' => 'number',
+				'label' => __( 'Valor do desconto', 'wc-custom-installments' ),
+				'description' => '',
+				'feature' => 'product_overrides',
+				'quick_edit' => false,
+				'depends_on' => $per_unit,
+				'group' => 'discounts',
+			),
+			array(
+				'key' => 'discount_gateway',
+				'type' => 'select',
+				'label' => __( 'Somente para esta forma de pagamento', 'wc-custom-installments' ),
+				'description' => __( 'Deixe vazio para aplicar o desconto em qualquer forma de pagamento.', 'wc-custom-installments' ),
+				'options' => self::get_gateway_options(),
+				'feature' => 'gateway_discounts',
+				'quick_edit' => false,
+				'depends_on' => $per_unit,
+				'group' => 'discounts',
+			),
+			array(
+				'key' => 'enable_discount_per_quantity',
+				'type' => 'checkbox',
+				'label' => __( 'Desconto por quantidade para este produto', 'wc-custom-installments' ),
+				'description' => __( 'Usa uma regra de quantidade própria em vez da regra geral da loja.', 'wc-custom-installments' ),
+				'feature' => 'quantity_discounts',
+				'quick_edit' => false,
+				'discount' => true,
+				'visible' => $quantity_shown,
+				'group' => 'quantity_discounts',
+			),
+			array(
+				'key' => 'minimum_quantity_discount',
+				'type' => 'number',
+				'label' => __( 'Quantidade mínima', 'wc-custom-installments' ),
+				'description' => '',
+				'min' => '1',
+				'step' => '1',
+				'feature' => 'quantity_discounts',
+				'quick_edit' => false,
+				'depends_on' => $per_quantity,
+				'visible' => $quantity_shown,
+				'group' => 'quantity_discounts',
+			),
+			array(
+				'key' => 'discount_per_quantity_method',
+				'type' => 'select',
+				'label' => __( 'Tipo de desconto por quantidade', 'wc-custom-installments' ),
+				'description' => '',
+				'options' => $methods,
+				'feature' => 'quantity_discounts',
+				'quick_edit' => false,
+				'depends_on' => $per_quantity,
+				'visible' => $quantity_shown,
+				'group' => 'quantity_discounts',
+			),
+			array(
+				'key' => 'quantity_discount_amount',
+				'type' => 'number',
+				'label' => __( 'Valor do desconto por quantidade', 'wc-custom-installments' ),
+				'description' => '',
+				'feature' => 'quantity_discounts',
+				'quick_edit' => false,
+				'depends_on' => $per_quantity,
+				'visible' => $quantity_shown,
+				'group' => 'quantity_discounts',
 			),
 		);
 
 		/**
 		 * Filter the per-product fields.
 		 *
-		 * This is how the Pro add-on adds the per-product discount overrides
-		 * without the free plugin knowing they exist.
+		 * This is how an add-on lists a field of its own in the plugin's tab of
+		 * the product data panel, saved and gated like the built-in ones.
 		 *
 		 * @since 6.0.0
 		 * @param array<int,array<string,mixed>> $fields | Registered fields
@@ -105,12 +237,82 @@ class Product_Settings {
 
 
 	/**
-	 * Print the fields inside the product data panel.
+	 * The groups the tab lists its fields under, in order.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,string> Group key => title
+	 */
+	public static function get_groups() {
+		return array(
+			'installments' => __( 'Parcelamento', 'wc-custom-installments' ),
+			'discounts' => __( 'Descontos', 'wc-custom-installments' ),
+			'quantity_discounts' => __( 'Desconto por quantidade', 'wc-custom-installments' ),
+			'other' => __( 'Outras opções', 'wc-custom-installments' ),
+		);
+	}
+
+
+	/**
+	 * Sort the fields into their groups.
+	 *
+	 * Groups come out in the order get_groups() lists them, fields in the order
+	 * they were registered, and groups with no fields are left out.
+	 *
+	 * @since 6.0.0
+	 * @param array<int,array<string,mixed>> $fields | Registered fields
+	 * @return array<string,array<int,array<string,mixed>>>
+	 */
+	public static function group_fields( $fields ) {
+		$groups = array_fill_keys( array_keys( self::get_groups() ), array() );
+
+		foreach ( $fields as $field ) {
+			if ( empty( $field['key'] ) ) {
+				continue;
+			}
+
+			$group = (string) ( $field['group'] ?? '' );
+
+			if ( ! isset( $groups[ $group ] ) ) {
+				$group = 'other';
+			}
+
+			$groups[ $group ][] = $field;
+		}
+
+		return array_filter( $groups );
+	}
+
+
+	/**
+	 * Add the plugin's tab to the product data panel.
+	 *
+	 * After "Advanced", and out of grouped products, which have no price of
+	 * their own for an installment plan or a discount to apply to. That is also
+	 * where the General tab, which held these fields before, is hidden.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,array<string,mixed>> $tabs | Product data tabs
+	 * @return array<string,array<string,mixed>>
+	 */
+	public function register_tab( $tabs ) {
+		$tabs[ self::TAB ] = array(
+			'label' => __( 'Parcelas Customizadas', 'wc-custom-installments' ),
+			'target' => self::PANEL,
+			'class' => array( 'hide_if_grouped' ),
+			'priority' => 75,
+		);
+
+		return $tabs;
+	}
+
+
+	/**
+	 * Print the panel the plugin's tab opens.
 	 *
 	 * @since 6.0.0
 	 * @return void
 	 */
-	public function render_fields() {
+	public function render_panel() {
 		global $post;
 
 		if ( ! $post ) {
@@ -118,35 +320,171 @@ class Product_Settings {
 		}
 
 		$fields = self::get_fields();
+		$titles = self::get_groups();
 
 		printf(
-			'<div class="options_group wc-custom-installments-options" data-wcci-fields="%s">',
+			'<div id="%1$s" class="panel woocommerce_options_panel hidden wc-custom-installments-options" data-wcci-fields="%2$s">',
+			esc_attr( self::PANEL ),
 			esc_attr( (string) wp_json_encode( $this->get_field_rules( $fields ) ) )
 		);
 
-		printf(
-			'<p class="form-field"><strong>%s</strong></p>',
-			esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' )
-		);
-
+		$this->render_pro_notice( $fields );
 		$this->render_discounts_off_notice();
 
 		$discount_disabled = 'yes' === get_post_meta( $post->ID, '__disable_discount_main_price', true );
 
-		foreach ( $fields as $field ) {
-			$shown = $this->is_field_shown( $field, $fields, $post->ID );
+		foreach ( self::group_fields( $fields ) as $group => $group_fields ) {
+			// A group whose every field is out of sight for good is hidden with
+			// them, so its title does not sit above nothing. Fields hidden by
+			// `depends_on` do not count: their toggle is still there.
+			$in_sight = array_filter( $group_fields, static function( $field ) {
+				return ! isset( $field['visible'] ) || $field['visible'];
+			} );
 
-			$this->render_field( $field, $post->ID, $shown );
+			printf(
+				'<div class="options_group wc-custom-installments-group%1$s" data-group="%2$s"><h4 class="wc-custom-installments-group-title">%3$s</h4>',
+				empty( $in_sight ) ? ' hidden' : '',
+				esc_attr( $group ),
+				esc_html( $titles[ $group ] )
+			);
 
-			if ( ! empty( $field['discount'] ) && 'checkbox' === ( $field['type'] ?? '' ) ) {
-				$this->render_discount_overridden_notice(
-					$field['key'],
-					$shown && $discount_disabled && 'yes' === get_post_meta( $post->ID, $field['key'], true )
-				);
+			foreach ( $group_fields as $field ) {
+				$shown = $this->is_field_shown( $field, $fields, $post->ID );
+
+				$this->render_field( $field, $post->ID, $shown );
+
+				if ( ! empty( $field['discount'] ) && 'checkbox' === ( $field['type'] ?? '' ) ) {
+					$this->render_discount_overridden_notice(
+						$field['key'],
+						$shown && $discount_disabled && 'yes' === get_post_meta( $post->ID, $field['key'], true )
+					);
+				}
 			}
+
+			echo '</div>';
 		}
 
 		echo '</div>';
+	}
+
+
+	/**
+	 * Whether a field is gated and the gate is closed.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $field | Field definition
+	 * @return bool
+	 */
+	private static function is_locked( $field ) {
+		return ! empty( $field['feature'] ) && ! Features::is_available( $field['feature'] );
+	}
+
+
+	/**
+	 * Say what the fields marked Pro need, above them.
+	 *
+	 * Without the add-on, what it is and where to get it; with the add-on but no
+	 * valid licence, where to activate it. Printed only when a field in sight is
+	 * locked, so a licensed store never sees it.
+	 *
+	 * @since 6.0.0
+	 * @param array<int,array<string,mixed>> $fields | Registered fields
+	 * @return void
+	 */
+	private function render_pro_notice( $fields ) {
+		$locked = array_filter( $fields, static function( $field ) {
+			return self::is_locked( $field ) && ( ! isset( $field['visible'] ) || $field['visible'] );
+		} );
+
+		if ( empty( $locked ) ) {
+			return;
+		}
+
+		if ( Helpers::is_pro_active() ) {
+			$message = esc_html__( 'Os campos marcados como Pro precisam de uma licença ativa do Parcelas Customizadas Pro.', 'wc-custom-installments' );
+
+			// The licence tab is the add-on's (`?section=license`); the
+			// settings screen opens its first tab if the name ever changes.
+			if ( current_user_can( Helpers::capability() ) ) {
+				$message .= sprintf(
+					' <a href="%s">%s</a>',
+					esc_url( admin_url( 'admin.php?page=' . Menu::SETTINGS_PAGE . '&section=license' ) ),
+					esc_html__( 'Ativar licença', 'wc-custom-installments' )
+				);
+			}
+		} else {
+			$message = esc_html__( 'Os campos marcados como Pro fazem parte do Parcelas Customizadas Pro e ficam disponíveis assim que ele é instalado e ativado.', 'wc-custom-installments' );
+
+			// A new tab: the product being edited may have unsaved changes.
+			$message .= sprintf(
+				' <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+				esc_url( WC_CUSTOM_INSTALLMENTS_STORE_URL ),
+				esc_html__( 'Conhecer o Pro', 'wc-custom-installments' )
+			);
+		}
+
+		wp_admin_notice( $message, array(
+			'type' => 'info',
+			'additional_classes' => array( 'inline', 'wc-custom-installments-pro-notice' ),
+		) );
+	}
+
+
+	/**
+	 * Whether the quantity rule fields show.
+	 *
+	 * Only when the store sets that rule per product, read raw rather than
+	 * through the gate: this decides what the panel shows, and a locked field
+	 * still shows, disabled. The 6.0 development spelling of the value is
+	 * accepted beside the 5.x one the schema stores.
+	 *
+	 * While the feature is locked the store cannot choose that mode, so the
+	 * fields show regardless, disabled: they are there to say what the add-on
+	 * would give the product, not to be filled in.
+	 *
+	 * @since 6.0.0
+	 * @return bool
+	 */
+	private static function is_quantity_rule_shown() {
+		if ( ! Features::is_available('quantity_discounts') ) {
+			return true;
+		}
+
+		return in_array( (string) Repository::get('enable_discount_per_quantity_method'), array( 'product', 'per_product' ), true );
+	}
+
+
+	/**
+	 * The payment methods a per-product discount can be tied to.
+	 *
+	 * Every gateway WooCommerce knows, enabled or not, as 5.x listed them. The
+	 * available ones depend on the cart and the customer, and on the product
+	 * screen there is neither: a gateway that happened to be unavailable here
+	 * would drop out of the list, and saving the product would then quietly
+	 * clear the choice.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,string>
+	 */
+	private static function get_gateway_options() {
+		$options = array( '' => __( 'Qualquer forma de pagamento', 'wc-custom-installments' ) );
+
+		if ( ! function_exists('WC') || ! WC()->payment_gateways ) {
+			return $options;
+		}
+
+		foreach ( WC()->payment_gateways->payment_gateways() as $gateway_id => $gateway ) {
+			$id = ! empty( $gateway->id ) ? (string) $gateway->id : (string) $gateway_id;
+			$title = wp_strip_all_tags( (string) $gateway->get_title() );
+
+			if ( '' === $title && ! empty( $gateway->method_title ) ) {
+				$title = wp_strip_all_tags( (string) $gateway->method_title );
+			}
+
+			$options[ $id ] = '' !== $title ? $title : $id;
+		}
+
+		return $options;
 	}
 
 
@@ -295,7 +633,7 @@ class Product_Settings {
 	/**
 	 * Print one field.
 	 *
-	 * A gated field renders disabled and labelled, rather than not at all: a
+	 * A gated field renders disabled and marked Pro, rather than not at all: a
 	 * store owner should be able to see what the add-on would give them from
 	 * the screen where they would use it.
 	 *
@@ -306,11 +644,25 @@ class Product_Settings {
 	 * @return void
 	 */
 	private function render_field( $field, $post_id, $shown = true ) {
-		$locked = ! empty( $field['feature'] ) && ! Features::is_available( $field['feature'] );
-		$label = $locked
-			/* translators: %s: field label */
-			? sprintf( __( '%s (Pro)', 'wc-custom-installments' ), $field['label'] )
-			: $field['label'];
+		$locked = self::is_locked( $field );
+		$label = $field['label'];
+		$wrapper_classes = array();
+
+		// WooCommerce passes the label through wp_kses_post(), so the badge
+		// survives and the label itself is escaped here.
+		if ( $locked ) {
+			$label = sprintf(
+				'%1$s <span class="wc-custom-installments-pro-badge">%2$s</span>',
+				esc_html( $label ),
+				esc_html__( 'Pro', 'wc-custom-installments' )
+			);
+
+			$wrapper_classes[] = 'wc-custom-installments-locked';
+		}
+
+		if ( ! $shown ) {
+			$wrapper_classes[] = 'hidden';
+		}
 
 		$args = array(
 			'id' => $field['key'],
@@ -318,7 +670,7 @@ class Product_Settings {
 			'description' => $field['description'] ?? '',
 			'desc_tip' => true,
 			'value' => get_post_meta( $post_id, $field['key'], true ),
-			'wrapper_class' => $shown ? '' : 'hidden',
+			'wrapper_class' => implode( ' ', $wrapper_classes ),
 		);
 
 		if ( $locked ) {
@@ -380,7 +732,7 @@ class Product_Settings {
 			// A gated field is never written, the same rule the settings
 			// repository follows. The disabled input submits nothing anyway;
 			// this is what makes that true rather than merely likely.
-			if ( ! empty( $field['feature'] ) && ! Features::is_available( $field['feature'] ) ) {
+			if ( self::is_locked( $field ) ) {
 				continue;
 			}
 
@@ -454,7 +806,7 @@ class Product_Settings {
 		}
 
 		foreach ( $fields as $field ) {
-			if ( ! empty( $field['feature'] ) && ! Features::is_available( $field['feature'] ) ) {
+			if ( self::is_locked( $field ) ) {
 				continue;
 			}
 
@@ -591,7 +943,7 @@ class Product_Settings {
 				continue;
 			}
 
-			if ( ! empty( $field['feature'] ) && ! Features::is_available( $field['feature'] ) ) {
+			if ( self::is_locked( $field ) ) {
 				continue;
 			}
 

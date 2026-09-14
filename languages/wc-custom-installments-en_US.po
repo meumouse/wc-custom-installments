@@ -7,7 +7,7 @@ msgstr ""
 "x-domain: wc-custom-installments\n"
 "Language: en_US\n"
 
-#: admin/src/Admin/Product_Settings.php:466
+#: admin/src/Admin/Product_Settings.php:818
 msgid "— Sem alteração —"
 msgstr "— No change —"
 
@@ -18,11 +18,6 @@ msgstr "{{ parcelas }}x {{ valor }} {{ juros }}"
 #: app/src/components/fields/InstallmentFeesField.vue:75
 msgid "%dx"
 msgstr "%dx"
-
-#: admin/src/Admin/Product_Settings.php:312
-#. translators: %s: field label
-msgid "%s (Pro)"
-msgstr "%s (Pro)"
 
 #: app/src/pages/onboarding/components/PricePreview.vue:85
 msgid "%s à vista"
@@ -54,7 +49,7 @@ msgstr "The largest interest-free installment"
 msgid "A maior parcela, com juros"
 msgstr "The largest installment, interest included"
 
-#: admin/src/Admin/Product_Settings.php:285
+#: admin/src/Admin/Product_Settings.php:623
 msgid ""
 "A opção \"Ocultar o desconto\" está ativada, então este desconto não é "
 "aplicado."
@@ -277,7 +272,7 @@ msgstr "Turn the discount features on for the whole store."
 msgid "Ativa os recursos de juros para toda a loja."
 msgstr "Turn the interest features on for the whole store."
 
-#: admin/src/Admin/Product_Settings.php:255
+#: admin/src/Admin/Product_Settings.php:593
 #: admin/src/Admin/Settings/Registry.php:355
 msgid "Ativar descontos"
 msgstr "Enable discounts"
@@ -293,6 +288,10 @@ msgstr "Enable price stacking"
 #: admin/src/Admin/Settings/Registry.php:654
 msgid "Ativar juros"
 msgstr "Enable interest"
+
+#: admin/src/Admin/Product_Settings.php:412
+msgid "Ativar licença"
+msgstr "Activate licence"
 
 #: admin/src/Admin/Settings/Registry.php:520
 msgid "Ativar o desconto no boleto"
@@ -549,6 +548,10 @@ msgstr "Confirmation"
 msgid "Confirmar"
 msgstr "Confirm"
 
+#: admin/src/Admin/Product_Settings.php:422
+msgid "Conhecer o Pro"
+msgstr "Discover Pro"
+
 #: admin/src/Admin/Settings/Registry.php:966
 msgid "Construtores de páginas e plugins de SEO."
 msgstr "Page builders and SEO plugins."
@@ -606,6 +609,10 @@ msgstr ""
 "values remain available in the Store API, under the "
 "extensions.wc-custom-installments key of every product and of the cart."
 
+#: admin/src/Admin/Product_Settings.php:169
+msgid "Deixe vazio para aplicar o desconto em qualquer forma de pagamento."
+msgstr "Leave empty to apply the discount whatever the customer pays with."
+
 #: admin/src/Admin/Settings/Registry.php:281
 msgid "Depois do formulário de adicionar ao carrinho"
 msgstr "After the add-to-cart form"
@@ -648,10 +655,23 @@ msgstr "Pix discount"
 msgid "Desconto no preço do produto"
 msgstr "Discount on the product price"
 
+#: admin/src/Admin/Product_Settings.php:137
+msgid "Desconto personalizado para este produto"
+msgstr "Custom discount for this product"
+
 #: admin/src/Admin/Settings/Registry.php:415
 msgid "Desconto por forma de pagamento"
 msgstr "Discount per gateway"
 
+#: admin/src/Admin/Product_Settings.php:249
+msgid "Desconto por quantidade"
+msgstr "Quantity discount"
+
+#: admin/src/Admin/Product_Settings.php:179
+msgid "Desconto por quantidade para este produto"
+msgstr "Quantity discount for this product"
+
+#: admin/src/Admin/Product_Settings.php:248
 #: admin/src/Admin/Settings/Registry.php:345
 msgid "Descontos"
 msgstr "Discounts"
@@ -1310,12 +1330,12 @@ msgstr "In the installment table"
 msgid "Nada corresponde à sua busca."
 msgstr "Nothing matches your search."
 
-#: admin/src/Admin/Product_Settings.php:468
+#: admin/src/Admin/Product_Settings.php:820
 #: admin/src/Rest/Settings_Bootstrap.php:96
 msgid "Não"
 msgstr "No"
 
-#: admin/src/Admin/Product_Settings.php:87
+#: admin/src/Admin/Product_Settings.php:129
 msgid "Não aplicar nem exibir o desconto à vista para este produto."
 msgstr "Do not apply or show the upfront-payment discount for this product."
 
@@ -1323,7 +1343,7 @@ msgstr "Do not apply or show the upfront-payment discount for this product."
 msgid "Não conseguimos acessar o serviço de licenças. Tente novamente em instantes."
 msgstr "We could not reach the licensing service. Please try again in a moment."
 
-#: admin/src/Admin/Product_Settings.php:79
+#: admin/src/Admin/Product_Settings.php:120
 msgid "Não exibir o parcelamento para este produto."
 msgstr "Do not show the installment plan for this product."
 
@@ -1547,7 +1567,7 @@ msgstr "Hide discount badge"
 msgid "Ocultar melhores parcelas"
 msgstr "Hide best installments"
 
-#: admin/src/Admin/Product_Settings.php:86
+#: admin/src/Admin/Product_Settings.php:128
 msgid "Ocultar o desconto"
 msgstr "Hide the discount"
 
@@ -1555,7 +1575,7 @@ msgstr "Hide the discount"
 msgid "Ocultar o que é enviado"
 msgstr "Hide what is sent"
 
-#: admin/src/Admin/Product_Settings.php:78
+#: admin/src/Admin/Product_Settings.php:119
 msgid "Ocultar parcelas"
 msgstr "Hide installments"
 
@@ -1597,7 +1617,21 @@ msgstr "Where installments appear"
 msgid "Opcional. Sete dias dos recursos pagos, sem cartão."
 msgstr "Optional. Seven days of the paid features, with no card."
 
-#: admin/src/Admin/Product_Settings.php:249
+#: admin/src/Admin/Product_Settings.php:416
+msgid ""
+"Os campos marcados como Pro fazem parte do Parcelas Customizadas Pro e "
+"ficam disponíveis assim que ele é instalado e ativado."
+msgstr ""
+"The fields marked Pro are part of Custom Installments Pro, and become "
+"available as soon as it is installed and activated."
+
+#: admin/src/Admin/Product_Settings.php:404
+msgid ""
+"Os campos marcados como Pro precisam de uma licença ativa do Parcelas "
+"Customizadas Pro."
+msgstr "The fields marked Pro need an active Custom Installments Pro licence."
+
+#: admin/src/Admin/Product_Settings.php:587
 msgid ""
 "Os descontos estão desativados nas configurações do plugin, então nenhum "
 "desconto é aplicado a este produto."
@@ -1625,6 +1659,10 @@ msgstr "The badges shown in the debit card row."
 msgid "Os testes não estão disponíveis a partir deste site no momento."
 msgstr "Trials are not available from this site right now."
 
+#: admin/src/Admin/Product_Settings.php:250
+msgid "Outras opções"
+msgstr "Other options"
+
 #: admin/src/Admin/Settings/Registry.php:995
 msgid ""
 "Para lojas com um frontend próprio, que leem os preços pela Store API do "
@@ -1641,6 +1679,7 @@ msgstr "Where to go from here."
 msgid "Parcela em destaque"
 msgstr "Highlighted installment"
 
+#: admin/src/Admin/Product_Settings.php:247
 #: admin/src/Admin/Settings/Registry.php:178
 msgid "Parcelamento"
 msgstr "Installment plan"
@@ -1652,7 +1691,7 @@ msgstr "Installments"
 
 #: admin/src/Admin/Menu.php:54
 #: admin/src/Admin/Menu.php:55
-#: admin/src/Admin/Product_Settings.php:129
+#: admin/src/Admin/Product_Settings.php:299
 #: admin/src/Integrations/Elementor.php:74
 #: app/src/components/layout/PageHeader.vue:24
 msgid "Parcelas Customizadas"
@@ -1707,6 +1746,7 @@ msgstr "For example: \"Cash price\"."
 msgid "Por exemplo: \"no Pix\"."
 msgstr "For example: \"with Pix\"."
 
+#: admin/src/Admin/Product_Settings.php:107
 #: admin/src/Admin/Settings/Registry.php:1093
 msgid "Porcentagem"
 msgstr "Percentage"
@@ -1784,6 +1824,7 @@ msgstr "Prefix and suffix"
 msgid "Privacidade"
 msgstr "Privacy"
 
+#: admin/src/Admin/Product_Settings.php:657
 #: app/src/components/fields/FieldGroup.vue:25
 #: app/src/components/fields/FieldRow.vue:35
 #: app/src/components/pro/ProUpsellModal.vue:30
@@ -1818,6 +1859,10 @@ msgstr "Which methods to show"
 msgid "Qual parcela aparece em destaque abaixo do preço."
 msgstr "Which installment is shown under the price as the headline."
 
+#: admin/src/Admin/Product_Settings.php:470
+msgid "Qualquer forma de pagamento"
+msgstr "Any payment method"
+
 #: admin/src/Admin/Settings/Registry.php:195
 msgid "Quantas delas são oferecidas sem juros."
 msgstr "How many of them are offered with no interest added."
@@ -1840,6 +1885,7 @@ msgstr ""
 "How many units the customer must buy for the discount to apply. In "
 "per-product mode, it applies to products that set no rule of their own."
 
+#: admin/src/Admin/Product_Settings.php:190
 #: admin/src/Admin/Settings/Registry.php:453
 msgid "Quantidade mínima"
 msgstr "Minimum quantity"
@@ -2040,7 +2086,7 @@ msgstr "Shortcode"
 msgid "Shortcode:"
 msgstr "Shortcode:"
 
-#: admin/src/Admin/Product_Settings.php:467
+#: admin/src/Admin/Product_Settings.php:819
 #: admin/src/Rest/Settings_Bootstrap.php:95
 msgid "Sim"
 msgstr "Yes"
@@ -2068,6 +2114,10 @@ msgstr "The product page only"
 #: admin/src/Admin/Settings/Registry.php:503
 msgid "Somente onde eu colocar o widget"
 msgstr "Only where I place the widget"
+
+#: admin/src/Admin/Product_Settings.php:168
+msgid "Somente para esta forma de pagamento"
+msgstr "Only for this payment method"
 
 #: admin/src/Admin/Settings/Registry.php:1018
 msgid "Status do sistema"
@@ -2196,11 +2246,16 @@ msgstr ""
 "Copy for the savings badge, the bank slip price and the quantity discount "
 "message."
 
+#: admin/src/Admin/Product_Settings.php:147
 #: admin/src/Admin/Settings/Registry.php:360
 #: admin/src/Admin/Settings/Registry.php:463
 #: admin/src/Admin/Settings/Registry.php:529
 msgid "Tipo de desconto"
 msgstr "Discount type"
+
+#: admin/src/Admin/Product_Settings.php:203
+msgid "Tipo de desconto por quantidade"
+msgstr "Quantity discount type"
 
 #: app/src/components/fields/GatewayRatesField.vue:107
 msgid "Tipo para %s"
@@ -2339,6 +2394,14 @@ msgstr "Unit"
 msgid "Unidade do tamanho do texto"
 msgstr "Font size unit"
 
+#: admin/src/Admin/Product_Settings.php:138
+msgid "Usa um desconto próprio em vez do desconto geral da loja."
+msgstr "Use a discount of its own instead of the store-wide one."
+
+#: admin/src/Admin/Product_Settings.php:180
+msgid "Usa uma regra de quantidade própria em vez da regra geral da loja."
+msgstr "Use a quantity rule of its own instead of the store-wide one."
+
 #: app/src/components/fields/ElementDesignField.vue:341
 msgid "Usar este ícone"
 msgstr "Use this icon"
@@ -2355,12 +2418,18 @@ msgstr "Use %s where the saved amount should appear."
 msgid "Útil para temas cujos cards de produto são centralizados."
 msgstr "Useful for themes whose product cards are centre-aligned."
 
+#: admin/src/Admin/Product_Settings.php:158
 #: admin/src/Admin/Settings/Registry.php:367
 #: admin/src/Admin/Settings/Registry.php:473
 #: admin/src/Admin/Settings/Registry.php:539
 msgid "Valor do desconto"
 msgstr "Discount amount"
 
+#: admin/src/Admin/Product_Settings.php:215
+msgid "Valor do desconto por quantidade"
+msgstr "Quantity discount amount"
+
+#: admin/src/Admin/Product_Settings.php:108
 #: admin/src/Admin/Settings/Registry.php:1094
 msgid "Valor fixo"
 msgstr "Fixed amount"

@@ -76,6 +76,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Headless mode, in Advanced: for a store with its own frontend. Nothing renders on the storefront (the price group, the payment methods, the shortcodes, the widgets, the CSS and the runtime), while the admin, the REST routes and the pricing logic behind the cart keep working. `WC_Custom_Installments/Headless/Is_Enabled` forces it from code. It stands down the same classes `Conflict_Guard` does, and the Elementor controls the 5.x plugin injected into other widgets join that list.
 - The instalment plan and the discounts in the WooCommerce Store API, under `extensions.wc-custom-installments` of every product and of the cart: the instalment table, the highlighted instalments, the upfront and bank-slip prices, and the store's copy, as minor-unit amounts with the currency.
 - A variable product whose range is replaced by "starting from" strikes out its cheapest variation's regular price while that variation is on sale, as a simple product on sale does.
+- A "Parcelas Customizadas" tab in the product data panel, carrying the brand icon, with the per-product options grouped under Parcelamento, Descontos and Desconto por quantidade instead of sitting at the end of the General tab. The Pro options show there without the add-on too, disabled and marked Pro, with a notice saying what they need: the add-on, or a licence when it is installed but not activated. Product fields can name their group with a `group` key.
 
 ### Fixed
 

@@ -185,13 +185,16 @@ add_filter( 'WC_Custom_Installments/Admin/Product_Fields', function( $fields ) {
         'description' => __( 'What it does.', 'my-plugin' ),
         'feature'     => '',
         'quick_edit'  => false,           // checkboxes only
+        'group'       => 'other',         // installments | discounts | quantity_discounts | other
     );
 
     return $fields;
 } );
 ```
 
-Saving is handled for you, gate included. `quick_edit` puts a checkbox in the products list; bulk
+The fields live in the plugin's "Parcelas Customizadas" tab of the product data panel, listed under
+their `group`; a field naming none, or one that does not exist, goes to `other`. Saving is handled
+for you, gate included. `quick_edit` puts a checkbox in the products list; bulk
 edit uses a three-state dropdown there, because an unchecked box and an untouched one look the same
 and bulk-clearing every product by accident is not a mistake anyone recovers from quickly.
 

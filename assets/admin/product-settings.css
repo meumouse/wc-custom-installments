@@ -1,15 +1,44 @@
 /**
- * The plugin's notices inside WooCommerce's product data panel.
+ * The plugin's tab inside WooCommerce's product data panel.
  *
  * WooCommerce pads every paragraph in the panel for a label column, and a
  * notice's own paragraph would inherit that. These keep the notices shaped like
- * notices, lined up with the fields they sit beside.
+ * notices, lined up with the fields they sit beside, and give the tab its icon,
+ * its group titles and the Pro badge on a locked field.
  *
  * @since 6.0.0
  */
 
+/*
+ * The tab's icon: the plugin's logo, drawn in the tab's own text colour so it
+ * reads like WooCommerce's glyphs beside it, active and hover states included.
+ */
+#woocommerce-product-data ul.wc-tabs li.wc_custom_installments_options a::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1.1em;
+	vertical-align: -0.2em;
+	background-color: currentColor;
+	-webkit-mask: url("../brand/logo.svg") no-repeat center / contain;
+	mask: url("../brand/logo.svg") no-repeat center / contain;
+}
+
+.wc-custom-installments-options .wc-custom-installments-group-title {
+	margin: 0;
+	padding: 12px 12px 4px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+	color: #1d2327;
+}
+
 .wc-custom-installments-options .notice.inline {
 	margin: 5px 20px 9px 12px;
+}
+
+.wc-custom-installments-options .notice.inline.wc-custom-installments-pro-notice {
+	margin-top: 12px;
 }
 
 .wc-custom-installments-options .notice.inline.wc-custom-installments-discount-warning {
@@ -21,6 +50,24 @@
 	padding: 2px;
 	font-size: 13px;
 	line-height: 1.5;
+}
+
+.wc-custom-installments-options .wc-custom-installments-pro-badge {
+	display: inline-block;
+	margin-left: 4px;
+	padding: 0 6px;
+	border-radius: 999px;
+	background-color: #d3e6f6;
+	color: #0267bf;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 18px;
+	vertical-align: 1px;
+	white-space: nowrap;
+}
+
+.wc-custom-installments-options .wc-custom-installments-locked label {
+	color: #646970;
 }
 
 @media only screen and (max-width: 500px) {
