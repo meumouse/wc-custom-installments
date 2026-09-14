@@ -1045,6 +1045,17 @@ if ( ! function_exists('wc_get_price_decimal_separator') ) {
 	}
 }
 
+if ( ! function_exists('wc_get_price_decimals') ) {
+	/**
+	 * How many decimals the store's prices carry.
+	 *
+	 * @return int
+	 */
+	function wc_get_price_decimals() {
+		return 2;
+	}
+}
+
 if ( ! function_exists('wc_get_price_thousand_separator') ) {
 	/**
 	 * The store's thousand separator.

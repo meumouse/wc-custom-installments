@@ -155,6 +155,52 @@ echo PHP_EOL, 'The total paid', PHP_EOL;
 check_money( 'the instalment is rounded before multiplying', 99.99, Calculate_Values::calculate_final_price( 33.333333, 3 ) );
 check_money( 'a whole instalment multiplies cleanly', 900.00, Calculate_Values::calculate_final_price( 300, 3 ) );
 
+echo PHP_EOL, 'Rounding the same on every PHP version', PHP_EOL;
+
+// PHP 8.4 stopped pre-rounding in round(), so an amount that is a half cent in
+// decimal but a hair below it in binary rounds down on newer hosts and up on
+// older ones and in the storefront. These compare exactly rather than through
+// check_money(), whose own round() has the same problem.
+//
+// R$ 2,99 + 3% on 97 in 4x: 97 + 2.91 + 2.99 = 102.90, over 4 = 25.725, which a
+// double holds as 25.724999999999998. Half a cent rounds up, to 25.73, and the
+// customer pays 4 x 25.73 = 102.92.
+$installment = Calculate_Values::calculate_installment_with_fee( 97, 3, 4, true, 2.99 );
+
+check( 'R$ 2,99 + 3% on 97 in 4x sits a hair below 25.725 in binary', true, $installment < 25.725 );
+check( 'and still rounds up to 25.73', 25.73, Calculate_Values::round_money( $installment ) );
+check( 'so the total is 4 x 25.73 = 102.92', 102.92, Calculate_Values::calculate_final_price( $installment, 4 ) );
+
+$replacements = Helpers::strings_to_replace( Calculate_Installments::get_installments_with_interest( 97, 3, 4, true, 2.99 ) );
+
+check( 'the instalment shown is the one multiplied', 'R$25,73', $replacements['{{ valor }}'] );
+check( 'and the total beside it adds up', 'R$102,92', $replacements['{{ total }}'] );
+
+// 558.75 at 2% a month in 1x: 558.75 x 0.02 x 1.02 / 0.02 = 558.75 x 1.02 =
+// 569.925. The formula divides by 1.02 - 1, which binary makes
+// 0.020000000000000018, so it lands at 569.9249999999995, several steps of
+// the double under the half cent. PHP 8.3 still rounded it up and 5.x billed
+// 569.93; PHP 8.4 bills 569.92, and so would rounding the double read as a
+// 15-digit decimal.
+$installment_558 = Calculate_Values::calculate_installment_with_fee( 558.75, 2, 1, false );
+
+check( '558.75 at 2% in 1x lands under 569.925 in binary', true, $installment_558 < 569.925 );
+check( 'and is billed 569.93, as 5.x billed it', 569.93, Calculate_Values::calculate_final_price( $installment_558, 1 ) );
+
+// Amounts that were never in doubt come out as they always have.
+check( '100 / 3 is 33.33', 33.33, Calculate_Values::round_money( 100 / 3 ) );
+check( '26.4975 is 26.50', 26.5, Calculate_Values::round_money( 26.4975 ) );
+check( '94.5596 is 94.56', 94.56, Calculate_Values::round_money( 94.5596 ) );
+check( 'a whole amount stays whole', 300.0, Calculate_Values::round_money( 300 ) );
+check( 'a half cent as written rounds up: 1.005 is 1.01', 1.01, Calculate_Values::round_money( 1.005 ) );
+check( 'so does 2.675, held as 2.67499999...', 2.68, Calculate_Values::round_money( 2.675 ) );
+check( 'and one of six figures: 123456.785 is 123456.79', 123456.79, Calculate_Values::round_money( 123456.785 ) );
+check( 'less than half a cent is nothing', 0.0, Calculate_Values::round_money( 0.004 ) );
+check( 'half a cent is one', 0.01, Calculate_Values::round_money( 0.005 ) );
+check( 'a negative amount rounds away from zero', -25.73, Calculate_Values::round_money( -$installment ) );
+check( 'a currency without cents rounds to units: 25.725 is 26', 26.0, Calculate_Values::round_money( $installment, 0 ) );
+check( 'and one with three decimals keeps 25.725', 25.725, Calculate_Values::round_money( $installment, 3 ) );
+
 echo PHP_EOL, 'Discounts', PHP_EOL;
 
 check_money( '10% off 97', 87.30, Calculate_Values::calculate_discounted_price( 97, 10 ) );
@@ -428,6 +474,21 @@ check( 'and its fourth instalment pays interest', 2.0, Helpers::get_fee( wc_test
 
 $GLOBALS['wp_test_filters'] = array();
 Features::flush();
+
+echo PHP_EOL, 'The cart discount on a half cent', PHP_EOL;
+
+Repository::save_settings( array(
+	'discount_main_price' => '15',
+	'product_price_discount_method' => 'percentage',
+) );
+
+// 15% off a R$ 33,30 cart is 4.995, held as 4.994999999999999: 5.00, not 4.99.
+$cart_class = get_class( $cart );
+$half_cent_cart = new $cart_class( array(
+	array( 'data' => wc_test_product( 33.30, array( 'id' => 50 ) ), 'quantity' => 1 ),
+) );
+
+check( '15% off 33.30 is 5.00 on every PHP version', 5.0, Calculate_Values::calculate_total_discount( $half_cent_cart ) );
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 

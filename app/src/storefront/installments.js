@@ -9,6 +9,7 @@
  * @since 6.0.0
  */
 import { params } from './params';
+import { roundMoney } from './rounding';
 
 /**
  * The interest rate applying to one instalment count.
@@ -114,5 +115,5 @@ export function buildPlan(price) {
  * @return {number} The rounded amount.
  */
 function round(value) {
-  return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+  return roundMoney(value, 2);
 }

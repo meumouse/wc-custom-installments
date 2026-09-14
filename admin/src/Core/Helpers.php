@@ -5,6 +5,7 @@ namespace MeuMouse\WC_Custom_Installments\Core;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
+use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
 use MeuMouse\WC_Custom_Installments\Engine\Product_Config;
 use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
 
@@ -345,6 +346,11 @@ class Helpers {
 	 * @return array<string,string>
 	 */
 	public static function strings_to_replace( $values ) {
+		// The instalment is rounded here rather than by wc_price(), whose
+		// number_format() rounds a half cent differently from PHP 8.4 on: the
+		// amount beside the total has to be the one the total was multiplied from.
+		$installment = Calculate_Values::round_money( $values['installment_price'], wc_get_price_decimals() );
+
 		/**
 		 * Filter the token replacements.
 		 *
@@ -354,7 +360,7 @@ class Helpers {
 		 */
 		return (array) Hook_Aliases::apply_filters( 'WC_Custom_Installments/Price/Strings_To_Replace', array(
 			'{{ parcelas }}' => $values['installments_total'],
-			'{{ valor }}' => wc_price( $values['installment_price'] ),
+			'{{ valor }}' => wc_price( $installment ),
 			'{{ total }}' => wc_price( $values['final_price'] ),
 			'{{ juros }}' => Calculate_Installments::get_fee_info( $values ),
 		) );

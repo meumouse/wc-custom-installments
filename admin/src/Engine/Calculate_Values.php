@@ -130,10 +130,116 @@ class Calculate_Values {
 		 */
 		return Hook_Aliases::apply_filters(
 			'WC_Custom_Installments/Installments/Final_Price',
-			round( $value, 2 ) * $installments_total,
+			self::round_money( $value ) * $installments_total,
 			$value,
 			$installments_total
 		);
+	}
+
+
+	/**
+	 * Round an amount the same way on every PHP version.
+	 *
+	 * PHP 8.4 rewrote `round()` without the pre-rounding it had since 5.3. An
+	 * amount that is a half cent in decimal but lands a hair below it in binary
+	 * now rounds down where it used to round up: 97 + 3% + R$ 2,99 over 4 is
+	 * 25.724999999999998, which is 25.73 on PHP 8.3 and 25.72 on 8.4, a cent per
+	 * instalment depending on the host.
+	 *
+	 * This is PHP 8.1–8.3's `round()` in half-up mode, step for step: the amount
+	 * is first rounded to 15 significant digits, all a double holds without
+	 * noise, and only then to the decimals asked for. Multiplication, division
+	 * and `floor()` are exact to the bit under IEEE 754, so the answer is the one
+	 * 5.x gave on those versions, on every PHP version, and the storefront runtime
+	 * runs the same steps (`roundMoney()` in app/src/storefront/rounding.js, and
+	 * its copy for the admin screens in app/src/utils/money.js).
+	 *
+	 * @since 6.0.0
+	 * @param float $value | Amount
+	 * @param int $decimals | Decimal places to keep
+	 * @return float
+	 */
+	public static function round_money( $value, $decimals = 2 ) {
+		$value = (float) $value;
+		$decimals = max( 0, (int) $decimals );
+
+		if ( 0.0 === $value || ! is_finite( $value ) ) {
+			return is_finite( $value ) ? 0.0 : $value;
+		}
+
+		$precision = 14 - self::decimal_exponent( $value );
+
+		if ( $precision > $decimals && $precision - 15 < $decimals ) {
+			// Fifteen significant digits, then the decimal point moved back.
+			$scaled = $precision >= 0 ? $value * self::power_of_ten( $precision ) : $value / self::power_of_ten( -$precision );
+			$scaled = self::round_half_up( $scaled ) / self::power_of_ten( $precision - $decimals );
+		} else {
+			$scaled = $value * self::power_of_ten( $decimals );
+
+			// Past what a double can tell apart there is nothing to round.
+			if ( abs( $scaled ) >= 1e15 ) {
+				return $value;
+			}
+		}
+
+		$rounded = self::round_half_up( $scaled ) / self::power_of_ten( $decimals );
+
+		// A negative amount that rounds to nothing is nothing, not "-0".
+		return 0.0 === $rounded ? 0.0 : $rounded;
+	}
+
+
+	/**
+	 * The power of ten at or below an amount, floor( log10( |amount| ) ).
+	 *
+	 * Read off exact powers of ten, as PHP 8.1–8.3 did, rather than from log10(),
+	 * whose last bit is the maths library's to decide.
+	 *
+	 * @since 6.0.0
+	 * @param float $value | A finite, non-zero amount
+	 * @return int
+	 */
+	private static function decimal_exponent( $value ) {
+		$value = abs( $value );
+
+		if ( $value < 1e-8 || $value > 1e22 ) {
+			return (int) floor( log10( $value ) );
+		}
+
+		$exponent = -8;
+
+		while ( $exponent < 22 && $value >= self::power_of_ten( $exponent + 1 ) ) {
+			$exponent++;
+		}
+
+		return $exponent;
+	}
+
+
+	/**
+	 * Ten to a power, as the nearest double.
+	 *
+	 * Parsed from a literal, which is correctly rounded, so every power up to
+	 * 1e22 is exact.
+	 *
+	 * @since 6.0.0
+	 * @param int $power | The power
+	 * @return float
+	 */
+	private static function power_of_ten( $power ) {
+		return (float) ( '1e' . (int) $power );
+	}
+
+
+	/**
+	 * Round to a whole number, a half away from zero.
+	 *
+	 * @since 6.0.0
+	 * @param float $value | Amount
+	 * @return float
+	 */
+	private static function round_half_up( $value ) {
+		return $value >= 0.0 ? floor( $value + 0.5 ) : ceil( $value - 0.5 );
 	}
 
 
@@ -466,7 +572,7 @@ class Calculate_Values {
 		 */
 		return Hook_Aliases::apply_filters(
 			'WC_Custom_Installments/Price/Calculate_Total_Discount',
-			round( $total_discount, 2 ),
+			self::round_money( $total_discount ),
 			$cart,
 			$include_shipping
 		);

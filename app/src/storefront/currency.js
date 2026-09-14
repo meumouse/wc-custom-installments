@@ -10,6 +10,7 @@
  * @since 6.0.0
  */
 import { params } from './params';
+import { roundMoney } from './rounding';
 
 /**
  * Format an amount as the store's currency.
@@ -38,7 +39,9 @@ export function formatAmount(amount) {
   const value = Number(amount);
   const safe = Number.isFinite(value) ? value : 0;
 
-  const fixed = Math.abs(safe).toFixed(decimals);
+  // toFixed() alone rounds the binary value, so 25.724999999999998 would read
+  // 25,72 beside a total the server multiplied from 25,73.
+  const fixed = Math.abs(roundMoney(safe, decimals)).toFixed(decimals);
   const [whole, fraction] = fixed.split('.');
 
   const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, currency.thousand_separator ?? '.');
