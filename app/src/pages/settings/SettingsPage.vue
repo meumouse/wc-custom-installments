@@ -12,7 +12,6 @@
  * @since 6.0.0
  */
 import { computed, ref, watch } from 'vue';
-import SettingsActionBar from './components/SettingsActionBar.vue';
 import SystemStatusCard from './components/cards/SystemStatusCard.vue';
 import TransferCard from './components/cards/TransferCard.vue';
 import BaseBadge from '../../components/base/BaseBadge.vue';
@@ -21,6 +20,7 @@ import BaseTabs from '../../components/base/BaseTabs.vue';
 import FieldGroup from '../../components/fields/FieldGroup.vue';
 import FieldRenderer from '../../components/fields/FieldRenderer.vue';
 import PageHeader from '../../components/layout/PageHeader.vue';
+import SettingsActionBar from '../../components/layout/SettingsActionBar.vue';
 import SettingsPanel from '../../components/layout/SettingsPanel.vue';
 import ProUpsellModal from '../../components/pro/ProUpsellModal.vue';
 import ExternalSection from '../../components/sections/ExternalSection.vue';

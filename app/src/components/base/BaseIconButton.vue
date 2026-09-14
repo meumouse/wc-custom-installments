@@ -19,6 +19,7 @@ defineProps({
 
 const TONES = {
   muted: 'text-slate-400 hover:bg-slate-100 hover:text-slate-700',
+  danger: 'text-slate-400 hover:bg-rose-50 hover:text-rose-600',
   inverse: 'text-white/80 hover:bg-white/10 hover:text-white',
 };
 </script>

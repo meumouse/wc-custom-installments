@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Custom Installments for WooCommerce — campaigns preview</title>
+    <link rel="stylesheet" href="./app/dist/styles/bootstrap.css" />
+    <style>
+      /* Stand in for the WordPress admin frame the screen normally sits inside. */
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      .preview-frame {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 6rem;
+      }
+
+      .preview-note {
+        margin-bottom: 1.5rem;
+        border-radius: 0.75rem;
+        background: #102033;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-frame">
+      <p class="preview-note">
+        Static harness. The bootstrap payload is dumped from PHP (<code>php tests/dump-bootstrap.php</code>, with
+        <code>WCCI_PREVIEW_PRO=1</code> for a licensed store); saving, switching, searching and the reach count are
+        answered in memory. Append <code>?campaign=31</code> or <code>?campaign=new</code> to open the editor.
+      </p>
+
+      <div id="wc-custom-installments-campaigns-app" class="wc-custom-installments-app">
+        <div class="wcci-skeleton" style="height: 96px"></div>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Stand in for WordPress: the localized bootstrap config, the i18n runtime,
+       * and a fetch that answers the campaign endpoints from memory.
+       */
+      window.wcCustomInstallmentsBootstrap = {
+        restUrl: '/preview-api',
+        nonce: 'preview',
+        page: 'campaigns',
+        endpoint: 'admin/campaigns',
+      };
+
+      window.wp = {
+        i18n: {
+          __: (text) => text,
+          _n: (single, plural, number) => (number === 1 ? single : plural),
+          sprintf: (message, ...args) => {
+            let index = 0;
+
+            return String(message).replace(/%%|%(?:(\d+)\$)?[ds]/g, (match, position) => {
+              if (match === '%%') {
+                return '%';
+              }
+
+              return position ? args[Number(position) - 1] : args[index++];
+            });
+          },
+        },
+      };
+
+      const catalogue = {
+        product: [
+          { id: 501, label: 'Tênis Runner (TR-01)' },
+          { id: 502, label: 'Bota Couro (BC-02)' },
+          { id: 503, label: 'Sandália Verão' },
+          { id: 504, label: 'Fone Bluetooth' },
+        ],
+        product_cat: [
+          { id: 12, label: 'Calçados' },
+          { id: 14, label: 'Calçados › Botas' },
+          { id: 15, label: 'Roupas' },
+          { id: 16, label: 'Roupas › Camisetas' },
+        ],
+        product_tag: [
+          { id: 40, label: 'eletrônicos' },
+          { id: 41, label: 'lançamento' },
+        ],
+        product_brand: [
+          { id: 60, label: 'Acme' },
+          { id: 61, label: 'Globex' },
+        ],
+      };
+
+      const json = (body, status = 200) =>
+        new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
+
+      const realFetch = window.fetch.bind(window);
+      let store = null;
+      let nextId = 100;
+
+      /**
+       * Where a campaign stands, judged the way Campaigns\Rules::phase() does.
+       *
+       * @param {object} campaign - The campaign.
+       * @return {string}
+       */
+      function stateOf(campaign) {
+        if (campaign.status === 'trash') {
+          return 'trash';
+        }
+
+        if (campaign.status !== 'publish') {
+          return 'inactive';
+        }
+
+        const now = '2026-09-14T10:00';
+
+        if (campaign.rules.starts_at && now < campaign.rules.starts_at) {
+          return 'scheduled';
+        }
+
+        if (campaign.rules.ends_at && now > campaign.rules.ends_at) {
+          return 'ended';
+        }
+
+        return 'running';
+      }
+
+      async function load() {
+        if (!store) {
+          store = await (await realFetch('./preview-campaigns.json')).json();
+        }
+
+        return store;
+      }
+
+      window.fetch = async (input, init) => {
+        const url = String(input);
+        const method = (init && init.method) || 'GET';
+        const body = init && init.body ? JSON.parse(init.body) : {};
+
+        if (!url.includes('/preview-api/')) {
+          return realFetch(input, init);
+        }
+
+        const data = await load();
+
+        if (url.endsWith('/preview-api/admin/campaigns') && method === 'GET') {
+          return json(data);
+        }
+
+        if (url.endsWith('/preview-api/admin/campaigns') && method === 'POST') {
+          const campaign = body.campaign;
+
+          if (!campaign.title) {
+            return json({ status: 'error', message: 'Revise os campos destacados antes de salvar.', errors: { title: 'Dê um nome à campanha.' } });
+          }
+
+          const saved = { ...campaign, id: campaign.id || nextId++, labels: { products: {}, terms: {} }, modified: '2026-09-14T10:05' };
+
+          saved.state = stateOf(saved);
+          data.campaigns = [saved, ...data.campaigns.filter((item) => item.id !== saved.id)];
+
+          return json({ status: 'success', message: 'Campanha salva.', campaign: saved });
+        }
+
+        if (url.endsWith('/preview-api/admin/campaigns/action')) {
+          const statuses = { activate: 'publish', deactivate: 'draft', trash: 'trash', restore: 'draft' };
+
+          data.campaigns = data.campaigns
+            .filter((item) => !(body.action === 'delete' && body.ids.includes(item.id)))
+            .map((item) => {
+              if (!body.ids.includes(item.id) || !statuses[body.action]) {
+                return item;
+              }
+
+              const changed = { ...item, status: statuses[body.action] };
+
+              return { ...changed, state: stateOf(changed) };
+            });
+
+          return json({ status: 'success', message: `Campanhas alteradas: ${body.ids.length}.`, campaigns: data.campaigns });
+        }
+
+        if (url.endsWith('/preview-api/admin/campaigns/duplicate')) {
+          const source = data.campaigns.find((item) => item.id === body.id);
+          const copy = { ...JSON.parse(JSON.stringify(source)), id: nextId++, title: `${source.title} (cópia)`, status: 'draft', state: 'inactive' };
+
+          data.campaigns = [copy, ...data.campaigns];
+
+          return json({ status: 'success', message: 'Campanha duplicada. A cópia está inativa.', campaign: copy, campaigns: data.campaigns });
+        }
+
+        if (url.includes('/preview-api/admin/campaigns/search')) {
+          const params = new URL(url, window.location.href).searchParams;
+          const term = (params.get('search') || '').toLowerCase();
+          const results = (catalogue[params.get('type')] || []).filter((item) => item.label.toLowerCase().includes(term));
+
+          return json({ status: 'success', results });
+        }
+
+        if (url.endsWith('/preview-api/admin/campaigns/preview')) {
+          const target = body.campaign.rules.target;
+          const products = target.scope === 'all' ? 128 : target.ids.length * 7;
+          const conflicts = body.campaign.id === 32 || target.scope === 'all' ? [] : [{ id: 32, title: 'Semana do Pix', priority: 10 }];
+
+          return json({ status: 'success', products, conflicts: body.campaign.rules.discount.enabled ? conflicts : [] });
+        }
+
+        return json({ status: 'error', message: 'Not stubbed.' }, 404);
+      };
+    </script>
+
+    <script>
+      // Load the bundle fresh on every visit: a cached module makes a rebuilt
+      // bundle look like it changed nothing.
+      const moduleTag = document.createElement('script');
+
+      moduleTag.type = 'module';
+      moduleTag.src = `./app/dist/campaigns/app.js?t=${Date.now()}`;
+      document.body.appendChild(moduleTag);
+    </script>
+  </body>
+</html>

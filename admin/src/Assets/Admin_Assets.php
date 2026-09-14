@@ -30,8 +30,9 @@ class Admin_Assets extends Abstract_Assets {
 	 * @var array<string,string>
 	 */
 	private $entries = array(
-		Menu::SETTINGS_PAGE => 'src/entries/settings.js',
-		Onboarding::PAGE    => 'src/entries/onboarding.js',
+		Menu::SETTINGS_PAGE  => 'src/entries/settings.js',
+		Menu::CAMPAIGNS_PAGE => 'src/entries/campaigns.js',
+		Onboarding::PAGE     => 'src/entries/onboarding.js',
 	);
 
 	/**
@@ -41,8 +42,9 @@ class Admin_Assets extends Abstract_Assets {
 	 * @var array<string,string>
 	 */
 	private $handles = array(
-		Menu::SETTINGS_PAGE => 'wc-custom-installments-settings-app',
-		Onboarding::PAGE    => 'wc-custom-installments-onboarding-app',
+		Menu::SETTINGS_PAGE  => 'wc-custom-installments-settings-app',
+		Menu::CAMPAIGNS_PAGE => 'wc-custom-installments-campaigns-app',
+		Onboarding::PAGE     => 'wc-custom-installments-onboarding-app',
 	);
 
 	/**
@@ -52,8 +54,9 @@ class Admin_Assets extends Abstract_Assets {
 	 * @var array<string,array<string,string>>
 	 */
 	private $bootstrap = array(
-		Menu::SETTINGS_PAGE => array( 'page' => 'settings', 'endpoint' => 'admin/settings' ),
-		Onboarding::PAGE    => array( 'page' => 'onboarding', 'endpoint' => 'admin/onboarding' ),
+		Menu::SETTINGS_PAGE  => array( 'page' => 'settings', 'endpoint' => 'admin/settings' ),
+		Menu::CAMPAIGNS_PAGE => array( 'page' => 'campaigns', 'endpoint' => 'admin/campaigns' ),
+		Onboarding::PAGE     => array( 'page' => 'onboarding', 'endpoint' => 'admin/onboarding' ),
 	);
 
 	/**

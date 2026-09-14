@@ -99,7 +99,7 @@ admin/src/
   Rest/                      Abstract_Route + one class per endpoint
   Views/                     The page shells the Vue apps mount into
 app/src/
-  entries/                   One per screen: settings, onboarding, addon-page, storefront
+  entries/                   One per screen: settings, campaigns, onboarding, addon-page, storefront
   components/ composables/ pages/ utils/ styles/
   storefront/                The shop-side runtime: no framework, no jQuery of ours
 languages/                   Node i18n pipeline
@@ -292,13 +292,19 @@ Every internal page follows the same structure:
 The logo is `assets/brand/logo.svg`, imported through the `@brand` Vite alias so it ships inside the
 bundle. Never build its URL from a hard-coded `/wp-content/plugins/…` path.
 
+A screen of records rather than settings — the campaigns screen, `pages/campaigns/` — follows
+Joinotify's list and editor: the list is a panel with state tabs (pill `BaseTabs`), a search and
+one row per record, with a switch, icon actions and bulk actions; the editor is the same page with
+`?campaign=<id>` (or `new`) in the address, its form built from `FieldGroup`/`FieldRow` and a
+summary card beside it. Everything is in memory; each action answers with the fresh list.
+
 ### Component catalogue
 
 | Folder | Components |
 |---|---|
-| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput`, `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
+| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput` (dates too: `type="datetime-local"`), `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseMultiSelect` (chips over a search the caller supplies), `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
 | `components/brand/` | `BrandMark` |
-| `components/layout/` | `PageHeader`, `SettingsPanel` (also the panel of every other page) |
+| `components/layout/` | `PageHeader`, `SettingsPanel` (also the panel of every other page), `SettingsActionBar` |
 | `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |
 | `components/toasts/` | `ToastStack` |
 | `components/sections/` | `ExternalSection`, `sectionRegistry` |
@@ -386,8 +392,9 @@ one `.po` per bundled locale; the build compiles each into `.mo`, `.l10n.php` an
 
 ### Previews
 
-`preview.html`, `preview-onboarding.html` and `preview-storefront.html` render the real built
-bundles against generated fixtures, with no WordPress. Regenerate the fixtures with
+`preview.html`, `preview-campaigns.html`, `preview-onboarding.html` and `preview-storefront.html`
+render the real built bundles against generated fixtures, with no WordPress. The Pro add-on's
+`preview-license.html` renders its licence inside this plugin's add-on page. Regenerate the fixtures with
 `php tests/dump-bootstrap.php`, then serve the directory. They have already caught a stale dirty
 flag, a stuck CSS transition and a URL builder that threw on a relative base.
 

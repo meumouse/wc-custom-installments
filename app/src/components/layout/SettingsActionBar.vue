@@ -1,21 +1,23 @@
 <script setup>
 /**
- * SettingsActionBar.vue - the save bar at the foot of the settings panel.
+ * SettingsActionBar.vue - the save bar at the foot of a panel.
  *
  * It lives inside the panel and sticks to the bottom of the viewport while the
  * panel runs past it, so it never covers the WordPress menu the way a bar fixed
  * across the whole window would. Save stays visible and simply disabled until
  * there is something to save; Discard only appears when there is something to
- * throw away.
+ * throw away. The settings screen and the campaign editor both use it.
  *
  * @since 6.0.0
  */
-import BaseButton from '../../../components/base/BaseButton.vue';
-import { __ } from '../../../utils/i18n';
+import BaseButton from '../base/BaseButton.vue';
+import { __ } from '../../utils/i18n';
 
 defineProps({
   dirty: { type: Boolean, default: false },
   saving: { type: Boolean, default: false },
+  // What the save button says when it is not saving.
+  saveLabel: { type: String, default: '' },
 });
 
 const emit = defineEmits(['save', 'discard']);
@@ -35,7 +37,7 @@ const emit = defineEmits(['save', 'discard']);
       </BaseButton>
 
       <BaseButton size="lg" icon="save" :loading="saving" :disabled="!dirty" @click="emit('save')">
-        {{ saving ? __('Salvando...') : __('Salvar alterações') }}
+        {{ saving ? __('Salvando...') : saveLabel || __('Salvar alterações') }}
       </BaseButton>
     </div>
   </div>

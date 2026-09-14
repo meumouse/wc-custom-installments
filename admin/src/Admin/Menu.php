@@ -11,8 +11,8 @@ defined('ABSPATH') || exit;
  * Register the plugin's admin screens.
  *
  * The plugin has a menu of its own: the settings screen is its first entry,
- * and the screens an add-on registers through `WC_Custom_Installments/Admin/Pages`
- * follow it. The setup wizard is reachable by URL only: it is a one-off flow,
+ * the campaigns screen its second, and the screens an add-on registers through
+ * `WC_Custom_Installments/Admin/Pages` follow them. The setup wizard is reachable by URL only: it is a one-off flow,
  * not a destination that belongs in a menu.
  *
  * @since 6.0.0
@@ -28,6 +28,14 @@ class Menu {
 	 * @var string
 	 */
 	const SETTINGS_PAGE = 'wc-custom-installments';
+
+	/**
+	 * Admin page slug of the campaigns screen.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const CAMPAIGNS_PAGE = 'wc-custom-installments-campaigns';
 
 	/**
 	 * Admin page slug the 5.x settings screen lived at, under WooCommerce.
@@ -77,6 +85,17 @@ class Menu {
 			Helpers::capability(),
 			self::SETTINGS_PAGE,
 			array( $this, 'render_settings_page' )
+		);
+
+		// Listed without the licence too: a store sees what campaigns are, and
+		// can still switch off or remove the ones it stored while licensed.
+		add_submenu_page(
+			self::SETTINGS_PAGE,
+			esc_html__( 'Campanhas', 'wc-custom-installments' ),
+			esc_html__( 'Campanhas', 'wc-custom-installments' ),
+			Helpers::capability(),
+			self::CAMPAIGNS_PAGE,
+			array( $this, 'render_campaigns_page' )
 		);
 
 		foreach ( self::get_pages() as $slug => $page ) {
@@ -140,7 +159,7 @@ class Menu {
 		foreach ( $pages as $slug => $page ) {
 			$slug = sanitize_key( (string) $slug );
 
-			if ( '' === $slug || self::SETTINGS_PAGE === $slug || Onboarding::PAGE === $slug || ! is_array( $page ) ) {
+			if ( '' === $slug || in_array( $slug, array( self::SETTINGS_PAGE, self::CAMPAIGNS_PAGE, Onboarding::PAGE ), true ) || ! is_array( $page ) ) {
 				continue;
 			}
 
@@ -334,6 +353,17 @@ class Menu {
 	 */
 	public function render_settings_page() {
 		require WC_CUSTOM_INSTALLMENTS_SRC . 'Views/settings.php';
+	}
+
+
+	/**
+	 * Render the campaigns screen shell.
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	public function render_campaigns_page() {
+		require WC_CUSTOM_INSTALLMENTS_SRC . 'Views/campaigns.php';
 	}
 
 

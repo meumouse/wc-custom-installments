@@ -98,6 +98,81 @@ file_put_contents(
 	json_encode( $onboarding, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES )
 );
 
+// The campaigns screen: three sample campaigns in different states, their rules
+// cleaned by the real Campaigns\Rules, so the fixture has the shape the
+// endpoint returns.
+$campaign = static function( $id, $title, $status, $state, $rules, $labels ) {
+	return array(
+		'id' => $id,
+		'title' => $title,
+		'status' => $status,
+		'state' => $state,
+		'modified' => '2026-09-14T10:00',
+		'rules' => \MeuMouse\WC_Custom_Installments\Campaigns\Rules::sanitize( $rules )['rules'],
+		'labels' => $labels,
+	);
+};
+
+$campaigns_payload = array(
+	'version' => WC_CUSTOM_INSTALLMENTS_VERSION,
+	'page' => 'campaigns',
+	'locked' => ! Features::is_available('campaigns'),
+	'campaigns' => array(
+		$campaign( 31, 'Black Friday de calçados', 'publish', 'scheduled', array(
+			'priority' => 20,
+			'starts_at' => '2026-11-27T00:00',
+			'ends_at' => '2026-11-30T23:59',
+			'target' => array( 'scope' => 'categories', 'ids' => array( 12, 14 ), 'exclude_products' => array( 501 ) ),
+			'discount' => array( 'enabled' => true, 'method' => 'percentage', 'amount' => '20', 'gateway' => 'pix' ),
+			'installments' => array( 'enabled' => true, 'without_fee' => '10' ),
+		), array( 'products' => array( 501 => 'Tênis Runner (TR-01)' ), 'terms' => array( 12 => 'Calçados', 14 => 'Calçados › Botas' ) ) ),
+		$campaign( 32, 'Semana do Pix', 'publish', 'running', array(
+			'target' => array( 'scope' => 'all' ),
+			'discount' => array( 'enabled' => true, 'method' => 'fixed', 'amount' => '15' ),
+		), array( 'products' => array(), 'terms' => array() ) ),
+		$campaign( 33, 'Parcelamento de eletrônicos', 'draft', 'inactive', array(
+			'target' => array( 'scope' => 'tags', 'ids' => array( 40 ) ),
+			'installments' => array(
+				'enabled' => true,
+				'max' => '18',
+				'interest' => 'table',
+				'fees' => array( 13 => array( 'amount' => '3', 'fixed' => '2.99' ) ),
+			),
+		), array( 'products' => array(), 'terms' => array( 40 => 'eletrônicos' ) ) ),
+	),
+	'defaults' => \MeuMouse\WC_Custom_Installments\Campaigns\Rules::defaults(),
+	'now' => '2026-09-14T10:00',
+	'timezone' => 'America/Sao_Paulo',
+	'store' => array(
+		'discount_amount' => '10',
+		'discount_method' => 'percentage',
+		'max' => 12,
+		'without_fee' => 3,
+		'min_value' => 20.0,
+		'fee' => 2.0,
+		'fee_per_installment' => false,
+	),
+	'features' => array(
+		'fee_per_installment' => Features::is_available('fee_per_installment'),
+		'gateway_discounts' => Features::is_available('gateway_discounts'),
+	),
+	'taxonomies' => array( 'categories' => true, 'tags' => true, 'brands' => true ),
+	'gateways' => array(
+		array( 'value' => '', 'label' => 'Qualquer forma de pagamento' ),
+		array( 'value' => 'pix', 'label' => 'Pix' ),
+		array( 'value' => 'bacs', 'label' => 'Transferência bancária' ),
+	),
+	'pro' => $payload['pro'],
+	'links' => array( 'settings' => '#settings', 'license' => '#license' ),
+	'environment' => $payload['environment'],
+	'rest' => $payload['rest'],
+);
+
+file_put_contents(
+	dirname( __DIR__ ) . '/preview-campaigns.json',
+	json_encode( $campaigns_payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES )
+);
+
 printf(
 	'Wrote %s (%d fields, %d locked).%s',
 	basename( $target ),
