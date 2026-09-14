@@ -97,6 +97,7 @@ class Features {
 			'advanced_design' => __( 'Controles avançados de design', 'wc-custom-installments' ),
 			'product_overrides' => __( 'Descontos personalizados por produto', 'wc-custom-installments' ),
 			'elementor_widgets_pro' => __( 'Widgets adicionais do Elementor', 'wc-custom-installments' ),
+			'campaigns' => __( 'Campanhas de desconto e parcelamento', 'wc-custom-installments' ),
 		);
 
 		foreach ( $definitions as $id => $label ) {

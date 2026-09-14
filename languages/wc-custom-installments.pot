@@ -18,6 +18,11 @@ msgstr ""
 msgid "%dx"
 msgstr ""
 
+#: admin/src/Campaigns/Repository.php:226
+#. translators: %s: campaign name
+msgid "%s (cópia)"
+msgstr ""
+
 #: app/src/pages/onboarding/components/PricePreview.vue:78
 msgid "%s à vista"
 msgstr ""
@@ -26,6 +31,10 @@ msgstr ""
 #: app/src/components/fields/ElementPreview.vue:162
 #. translators: %s: discount percentage, e.g. "20%"
 msgid "%s OFF"
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:172
+msgid "A campanha termina antes de começar."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:875
@@ -223,12 +232,22 @@ msgstr ""
 msgid "Arredondamento do botão"
 msgstr ""
 
+#: admin/src/Rest/Abstract_Campaign_Route.php:44
+msgid ""
+"As campanhas fazem parte do Parcelas Customizadas Pro. Ative sua licença "
+"para criar, editar e ativar campanhas."
+msgstr ""
+
 #: app/src/components/fields/ElementDesignField.vue:557
 msgid "As classes do ícone no Font Awesome, por exemplo:"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:773
 msgid "As palavras em volta do preço com desconto e da linha de parcelamento."
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:203
+msgid "As parcelas sem juros não podem passar do máximo de parcelas."
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:162
@@ -282,6 +301,10 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:520
 msgid "Ativar o desconto no boleto"
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:183
+msgid "Ative o desconto, o parcelamento ou os dois."
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:441
@@ -367,6 +390,51 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:705
 msgid "Cada uma vira uma linha no bloco de formas de pagamento."
+msgstr ""
+
+#: admin/src/Campaigns/Post_Type.php:77
+msgid "Campanha"
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Duplicate.php:56
+msgid "Campanha duplicada. A cópia está inativa."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Save.php:63
+msgid "Campanha salva."
+msgstr ""
+
+#: admin/src/Campaigns/Post_Type.php:76
+msgid "Campanhas"
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:83
+#. translators: %d: number of campaigns
+msgid "Campanhas ativadas: %d."
+msgstr ""
+
+#: admin/src/Core/Features.php:100
+msgid "Campanhas de desconto e parcelamento"
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:85
+#. translators: %d: number of campaigns
+msgid "Campanhas desativadas: %d."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:91
+#. translators: %d: number of campaigns
+msgid "Campanhas excluídas permanentemente: %d."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:87
+#. translators: %d: number of campaigns
+msgid "Campanhas movidas para a lixeira: %d."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:89
+#. translators: %d: number of campaigns
+msgid "Campanhas restauradas como inativas: %d."
 msgstr ""
 
 #: app/src/components/base/BaseConfirmDialog.vue:41
@@ -565,6 +633,14 @@ msgstr ""
 #: app/src/components/fields/ElementDesignField.vue:481
 #: app/src/components/fields/ElementDesignField.vue:488
 msgid "Cor do texto"
+msgstr ""
+
+#: admin/src/Campaigns/Repository.php:107
+msgid "Dê um nome à campanha."
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:201
+msgid "Defina ao menos uma regra de parcelamento."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:416
@@ -803,6 +879,14 @@ msgstr ""
 msgid "Erro"
 msgstr ""
 
+#: admin/src/Campaigns/Rules.php:176
+msgid "Escolha ao menos um produto, categoria, tag ou marca."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:54
+msgid "Escolha uma ação e ao menos uma campanha."
+msgstr ""
+
 #: app/src/components/fields/ElementDesignField.vue:340
 msgid "Escolher ícone"
 msgstr ""
@@ -831,6 +915,10 @@ msgstr ""
 
 #: admin/src/Admin/Onboarding/Trial.php:121
 msgid "Esse endereço de e-mail não parece correto."
+msgstr ""
+
+#: admin/src/Campaigns/Repository.php:111
+msgid "Esta campanha não existe mais."
 msgstr ""
 
 #: admin/src/Rest/Addon_Page_Bootstrap.php:56
@@ -1115,6 +1203,14 @@ msgstr ""
 msgid "Informação"
 msgstr ""
 
+#: admin/src/Campaigns/Rules.php:205
+msgid "Informe a taxa de juros mensal."
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:188
+msgid "Informe o valor do desconto."
+msgstr ""
+
 #: app/src/components/fields/PlaceholderTextField.vue:60
 msgid "Inserir %s"
 msgstr ""
@@ -1326,6 +1422,10 @@ msgstr ""
 msgid "Não foi possível carregar esta página. Recarregue e tente novamente."
 msgstr ""
 
+#: admin/src/Rest/Campaigns_Duplicate.php:52
+msgid "Não foi possível duplicar a campanha."
+msgstr ""
+
 #: app/src/components/sections/ExternalSection.vue:120
 msgid "Não foi possível exibir esta seção. Recarregue a página e tente novamente."
 msgstr ""
@@ -1355,6 +1455,10 @@ msgstr ""
 msgid "Não foi possível restaurar as configurações."
 msgstr ""
 
+#: admin/src/Campaigns/Repository.php:139
+msgid "Não foi possível salvar a campanha. Tente novamente."
+msgstr ""
+
 #: app/src/composables/useSettings.js:75
 msgid "Não foi possível salvar as configurações."
 msgstr ""
@@ -1378,6 +1482,10 @@ msgstr ""
 msgid ""
 "Não há produto para exibir o preço aqui. Use este shortcode em um modelo de "
 "produto ou informe um: [wc_custom_installments_group product=\"123\"]."
+msgstr ""
+
+#: admin/src/Rest/Campaigns_Action.php:64
+msgid "Nenhuma campanha foi alterada. Recarregue a página e tente novamente."
 msgstr ""
 
 #: app/src/components/fields/GatewayRatesField.vue:78
@@ -1931,6 +2039,10 @@ msgstr ""
 msgid "Restaurar os padrões?"
 msgstr ""
 
+#: admin/src/Rest/Campaigns_Save.php:57
+msgid "Revise os campos destacados antes de salvar."
+msgstr ""
+
 #: app/src/pages/settings/components/SettingsActionBar.vue:38
 msgid "Salvando..."
 msgstr ""
@@ -2279,6 +2391,10 @@ msgstr ""
 msgid ""
 "Um desconto diferente para cada forma de pagamento, aplicado aos totais da "
 "finalização da compra."
+msgstr ""
+
+#: admin/src/Campaigns/Rules.php:190
+msgid "Um desconto percentual não pode passar de 100%."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:515

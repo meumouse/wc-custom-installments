@@ -660,7 +660,7 @@ class Product_Settings {
 
 
 	/**
-	 * The payment methods a per-product discount can be tied to.
+	 * The payment methods a per-product or campaign discount can be tied to.
 	 *
 	 * Every gateway WooCommerce knows, enabled or not, as 5.x listed them. The
 	 * available ones depend on the cart and the customer, and on the product
@@ -671,7 +671,7 @@ class Product_Settings {
 	 * @since 6.0.0
 	 * @return array<string,string>
 	 */
-	private static function get_gateway_options() {
+	public static function get_gateway_options() {
 		$options = array( '' => __( 'Qualquer forma de pagamento', 'wc-custom-installments' ) );
 
 		if ( ! function_exists('WC') || ! WC()->payment_gateways ) {

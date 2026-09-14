@@ -368,12 +368,13 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_78 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_82 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
 | `WC_Custom_Installments/Admin/Addon_Page_Data` | filter | — | `admin/src/Rest/Addon_Page_Bootstrap.php` |
 | `WC_Custom_Installments/Admin/Bootstrap_Data` | filter | — | `admin/src/Rest/Settings_Bootstrap.php` |
+| `WC_Custom_Installments/Admin/Campaigns_Data` | filter | — | `admin/src/Rest/Campaigns_Bootstrap.php` |
 | `WC_Custom_Installments/Admin/Capability` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Admin/Default_Options` | filter | `Woo_Custom_Installments/Admin/Set_Default_Options` | `admin/src/Admin/Default_Options.php` |
 | `WC_Custom_Installments/Admin/License_Url` | filter | — | `admin/src/Admin/Menu.php` |
@@ -387,6 +388,9 @@ _78 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Assets/Load_Font_Awesome` | filter | — | `admin/src/Assets/Storefront_Assets.php` |
 | `WC_Custom_Installments/Assets/Load_Storefront` | filter | — | `admin/src/Assets/Storefront_Assets.php` |
 | `WC_Custom_Installments/Assets/Set_Product_Id` | filter | `Woo_Custom_Installments/Assets/Set_Product_Id` | `admin/src/Assets/Storefront_Assets.php` |
+| `WC_Custom_Installments/Campaigns/Changed` | action | — | `admin/src/Campaigns/Repository.php` |
+| `WC_Custom_Installments/Campaigns/Index_Rebuilt` | action | — | `admin/src/Campaigns/Repository.php` |
+| `WC_Custom_Installments/Campaigns/Now` | filter | — | `admin/src/Campaigns/Resolver.php` |
 | `WC_Custom_Installments/Cart/Total_Title` | filter | `Woo_Custom_Installments/Cart/Total_Title` | `admin/src/Frontend/Render_Elements.php` |
 | `WC_Custom_Installments/Core/Before_Init` | action | — | `admin/src/Core/Init.php` |
 | `WC_Custom_Installments/Core/Init` | action | — | `admin/src/Core/Init.php` |
@@ -465,5 +469,6 @@ Some names are stored in places nothing can migrate, so they are fixed for good:
 | Storefront CSS classes (`wci-*`, `woo-custom-installments-*`) | Customer stylesheets | Breaks their styling |
 | `window.Woo_Custom_Installments`, `woo_custom_installments_ready` | Customer snippets | Breaks their scripts |
 | The single settings option and its keys | The database | Loses the store's configuration |
+| The `wcci_campaign` post type, its `_wcci_campaign_rules` meta and the `wc_custom_installments_campaigns_index` option | The database | Loses every campaign, or leaves them stored but never applied |
 
 New names are added alongside the old ones. The old ones stay.

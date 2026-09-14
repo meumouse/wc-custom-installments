@@ -90,9 +90,10 @@ wc-custom-installments.php   Bootstrap: autoloader, Core\Init
 admin/src/
   Admin/                     Menu, Default_Options, Product_Settings, Settings\*, Onboarding\*
   Api/ Assets/               Extension surface; Vite manifest resolution and enqueueing
+  Campaigns/                 Post_Type, Rules, Repository (and its index), Resolver, Scheduler
   Compatibility/             Hook_Aliases and the 5.x bridges
   Core/                      Init, Features, Functions, Scripts, Helpers, Logger, Migrator, Onboarding
-  Engine/                    Calculate_Installments, Calculate_Values
+  Engine/                    Calculate_Installments, Calculate_Values, Product_Config
   Frontend/                  Render_Elements, Components, Styles, Shortcodes, Element_Registry, Templates
   Integrations/              Themes, Elementor, pricing plugins
   Rest/                      Abstract_Route + one class per endpoint
@@ -158,6 +159,32 @@ table. `Core\Migrator` imports the 5.x option plus the three sidecar options tha
 rates and the interest table. It never deletes anything it read: a store must be able to roll back
 to 5.x and find its data.
 
+### What a product answers to
+
+`Engine\Product_Config` is the one place deciding which discount and which instalment plan a
+product gets. Everything that prices a product asks it — the rendered price, the cart total, the
+Store API, the storefront runtime's parameters, the Pro add-on's checkout fees — so **never read a
+product's discount meta or the plan settings anywhere else**. A rule from outside the product joins
+through its two filters, `Product/Discount_Rule` and `Product/Installments_Config`.
+
+Precedence, highest first: the product's opt-outs; the product's own discount (`product_overrides`);
+a running campaign; the store's settings.
+
+### Campaigns
+
+A campaign (Pro, `campaigns`) targets products, categories (with their subcategories), tags or
+brands, with exclusions and an optional period, and carries a discount, an instalment plan or both.
+They are `wcci_campaign` posts — published is active, a draft inactive — with their rules in one meta
+key (`Campaigns\Rules` cleans, validates and compiles them).
+
+The storefront never queries them. `Campaigns\Repository` compiles every active campaign that has
+not ended into one autoloaded option, the index, on every write; `Campaigns\Resolver` matches against
+it through Product_Config's filters and decides whether a campaign is running **from the clock, when
+the price is built**. `Campaigns\Scheduler` only exists for copies of a price made earlier: at each
+start and end it rebuilds the index and fires `Campaigns/Changed`, which the Pro feed price listens
+to. Per effect, the first match in the index's order wins (priority, then the latest start); two
+discounts never add up.
+
 ---
 
 ## 5. Names that cannot change
@@ -172,6 +199,7 @@ These live where nothing can migrate them. Renaming one destroys customer data o
 | Storefront CSS classes (`wci-*`, `woo-custom-installments-*`) | Customer stylesheets | Breaks their styling |
 | `window.Woo_Custom_Installments`, `woo_custom_installments_ready` | Customer snippets | Breaks their scripts |
 | The settings option and its keys | The database | Loses the store's configuration |
+| The `wcci_campaign` post type, `_wcci_campaign_rules` and the `wc_custom_installments_campaigns_index` option | The database | Loses every campaign, or leaves them stored but never applied |
 | The 54 `Woo_Custom_Installments/…` hooks | Customer `functions.php` | Their snippet stops firing |
 
 Hooks go through `Compatibility\Hook_Aliases`, which fires the current name and the 5.x name on the
@@ -333,6 +361,7 @@ php tests/engine-test.php
 php tests/extensions-test.php
 php tests/onboarding-test.php
 php tests/headless-test.php
+php tests/campaigns-test.php
 ```
 
 Write the expected values **by hand**. The engine harness exists because a rounding change throws no

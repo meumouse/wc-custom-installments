@@ -477,13 +477,64 @@ if ( ! function_exists('wc_get_price_excluding_tax') ) {
 
 if ( ! function_exists('wc_get_product') ) {
 	/**
-	 * Resolve a product; the harness has no store, so there is never one.
+	 * Resolve a product; the harness has no store, so there is none unless a
+	 * test put one in `$GLOBALS['wp_test_products']`.
 	 *
 	 * @param int|bool $id | Product ID
-	 * @return false
+	 * @return object|false
 	 */
 	function wc_get_product( $id = false ) {
-		return false;
+		return $GLOBALS['wp_test_products'][ (int) $id ] ?? false;
+	}
+}
+
+if ( ! function_exists('wc_get_product_term_ids') ) {
+	/**
+	 * The terms a product is filed under, from `$GLOBALS['wp_test_product_terms']`.
+	 *
+	 * @param int $product_id | Product ID
+	 * @param string $taxonomy | Taxonomy
+	 * @return array<int,int>
+	 */
+	function wc_get_product_term_ids( $product_id, $taxonomy ) {
+		return $GLOBALS['wp_test_product_terms'][ (int) $product_id ][ $taxonomy ] ?? array();
+	}
+}
+
+if ( ! function_exists('get_term_children') ) {
+	/**
+	 * Every term beneath one, from `$GLOBALS['wp_test_term_children']`.
+	 *
+	 * @param int $term_id | Term ID
+	 * @param string $taxonomy | Taxonomy
+	 * @return array<int,int>
+	 */
+	function get_term_children( $term_id, $taxonomy ) {
+		return $GLOBALS['wp_test_term_children'][ (int) $term_id ] ?? array();
+	}
+}
+
+if ( ! function_exists('taxonomy_exists') ) {
+	/**
+	 * Whether a taxonomy is registered: WooCommerce's two, plus brands when a
+	 * test lists it in `$GLOBALS['wp_test_taxonomies']`.
+	 *
+	 * @param string $taxonomy | Taxonomy
+	 * @return bool
+	 */
+	function taxonomy_exists( $taxonomy ) {
+		return in_array( $taxonomy, $GLOBALS['wp_test_taxonomies'] ?? array( 'product_cat', 'product_tag' ), true );
+	}
+}
+
+if ( ! function_exists('wp_timezone') ) {
+	/**
+	 * The site's timezone: São Paulo, where most of these stores are.
+	 *
+	 * @return DateTimeZone
+	 */
+	function wp_timezone() {
+		return new DateTimeZone('America/Sao_Paulo');
 	}
 }
 
@@ -1061,6 +1112,9 @@ require_once __DIR__ . '/../admin/src/Core/Helpers.php';
 require_once __DIR__ . '/../admin/src/Compatibility/Hook_Aliases.php';
 require_once __DIR__ . '/../admin/src/Frontend/Element_Registry.php';
 require_once __DIR__ . '/../admin/src/Engine/Product_Config.php';
+require_once __DIR__ . '/../admin/src/Campaigns/Rules.php';
+require_once __DIR__ . '/../admin/src/Campaigns/Repository.php';
+require_once __DIR__ . '/../admin/src/Campaigns/Resolver.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Values.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Installments.php';
 require_once __DIR__ . '/../admin/src/Admin/Default_Options.php';
