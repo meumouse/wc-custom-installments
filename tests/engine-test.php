@@ -24,6 +24,7 @@ use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
+use MeuMouse\WC_Custom_Installments\Engine\Product_Config;
 use MeuMouse\WC_Custom_Installments\Frontend\Styles;
 
 $passed = 0;
@@ -340,6 +341,48 @@ Features::flush();
 check_money( 'without the add-on the cheapest price takes the store\'s', 90.00, Calculate_Values::get_discounted_price( $variable ) );
 
 $GLOBALS['wp_test_meta'] = array();
+
+echo PHP_EOL, 'Rules from outside the product', PHP_EOL;
+
+// A campaign joins through these two filters. Whatever answers them has to
+// reach every price the engine produces, or the storefront shows one number
+// and the cart charges another.
+check( 'with nothing of its own a product follows the store', null, Product_Config::discount_rule( 30 ) );
+
+add_filter( 'WC_Custom_Installments/Product/Discount_Rule', static function( $rule, $product_id ) {
+	return null === $rule && 30 === $product_id
+		? array( 'method' => 'percentage', 'amount' => '25', 'source' => 'test' )
+		: $rule;
+}, 10, 2 );
+
+check_money( 'a rule from outside discounts the product: 25% off 80', 60.00, Calculate_Values::get_discounted_price( wc_test_product( 80, array( 'id' => 30 ) ) ) );
+check_money( 'and the rest keep the store\'s 10%', 72.00, Calculate_Values::get_discounted_price( wc_test_product( 80, array( 'id' => 31 ) ) ) );
+
+Repository::save_settings( array(
+	'max_qtd_installments' => '12',
+	'max_qtd_installments_without_fee' => '3',
+	'fee_installments_global' => '2.0',
+	'min_value_installments' => '20',
+) );
+
+add_filter( 'WC_Custom_Installments/Product/Installments_Config', static function( $config, $product ) {
+	if ( $product && 40 === $product->get_id() ) {
+		$config['max'] = 6;
+		$config['without_fee'] = 6;
+	}
+
+	return $config;
+}, 10, 2 );
+
+$plan = Calculate_Installments::installments_list( array(), 600.00, wc_test_product( 600.00, array( 'id' => 40 ) ) );
+
+check( 'a plan from outside sets the count', 6, count( $plan ) );
+check( 'and every instalment is interest-free', array( 'no-fee' ), array_values( array_unique( array_column( $plan, 'class' ) ) ) );
+check( 'another product keeps the store\'s plan', 12, count( Calculate_Installments::installments_list( array(), 600.00, wc_test_product( 600.00, array( 'id' => 41 ) ) ) ) );
+check( 'and its fourth instalment pays interest', 2.0, Helpers::get_fee( wc_test_product( 600.00, array( 'id' => 41 ) ), 4 ) );
+
+$GLOBALS['wp_test_filters'] = array();
+Features::flush();
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 

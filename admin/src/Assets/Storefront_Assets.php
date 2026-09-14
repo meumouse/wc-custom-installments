@@ -7,7 +7,7 @@ use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Core\Scripts;
-use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
+use MeuMouse\WC_Custom_Installments\Engine\Product_Config;
 
 defined('ABSPATH') || exit;
 
@@ -66,19 +66,39 @@ class Storefront_Assets extends Abstract_Assets {
 	 * @return array<string,mixed>
 	 */
 	public function add_variation_discount( $data, $product, $variation ) {
-		if ( ! is_array( $data ) || ! $variation instanceof \WC_Product || ! Features::is_available('product_overrides') ) {
+		if ( ! is_array( $data ) || ! $variation instanceof \WC_Product ) {
 			return $data;
 		}
 
-		list( $enabled, $method, $amount ) = Calculate_Values::get_product_discount( $variation->get_id(), $variation->get_parent_id() );
+		$rule = Product_Config::discount_rule( $variation->get_id(), $variation->get_parent_id() );
 
-		$data['wcci_discount'] = array(
-			'enable_discount_per_unit' => 'yes' === $enabled ? 'yes' : 'no',
-			'discount_per_unit_method' => (string) $method,
-			'unit_discount_amount' => (string) $amount,
-		);
+		// Without per-product discounts, a variation with no rule of its own
+		// answers to what the page already carries.
+		if ( null === $rule && ! Features::is_available('product_overrides') ) {
+			return $data;
+		}
+
+		$data['wcci_discount'] = self::discount_rule_params( $rule );
 
 		return $data;
+	}
+
+
+	/**
+	 * A discount rule, in the shape the runtime reads it.
+	 *
+	 * The 5.x key names, because the runtime and customer snippets read them.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed>|null $rule | Rule from Product_Config::discount_rule()
+	 * @return array{enable_discount_per_unit:string,discount_per_unit_method:string,unit_discount_amount:string}
+	 */
+	private static function discount_rule_params( $rule ) {
+		return array(
+			'enable_discount_per_unit' => null !== $rule ? 'yes' : 'no',
+			'discount_per_unit_method' => null !== $rule ? (string) $rule['method'] : '',
+			'unit_discount_amount' => null !== $rule ? (string) $rule['amount'] : '',
+		);
 	}
 
 
@@ -194,7 +214,8 @@ class Storefront_Assets extends Abstract_Assets {
 			$product = wc_get_product( $product_id );
 		}
 
-		$max_installments = (int) Repository::get('max_qtd_installments');
+		$plan = Product_Config::installments( $product instanceof \WC_Product ? $product : null );
+		$max_installments = $plan['max'];
 		$fees = array();
 
 		for ( $i = 1; $i <= $max_installments; $i++ ) {
@@ -219,7 +240,7 @@ class Storefront_Assets extends Abstract_Assets {
 			'element_triggers' => Repository::get('update_range_price_triggers'),
 			'active_price_range' => Helpers::to_toggle( Repository::is_active('remove_price_range') ),
 			'update_price_with_quantity' => Helpers::to_toggle( Repository::is_active('update_price_with_quantity') ),
-			'fee_per_installment' => Repository::is_active('set_fee_per_installment'),
+			'fee_per_installment' => $plan['fee_per_installment'],
 			'product_variation_with_range' => $product instanceof \WC_Product && ! Helpers::variations_has_same_price( $product ),
 			'tiered_pricing_active' => $tiered_pricing_active,
 			'check_tiered_plugin' => $tiered_pricing_active,
@@ -240,11 +261,11 @@ class Storefront_Assets extends Abstract_Assets {
 				'format_decimal_sep' => $decimal_separator,
 				'format_thousand_sep' => $thousand_separator,
 			),
-			'discounts' => $this->discount_params( $product_id ),
+			'discounts' => $this->discount_params( $product_id ? $product : false ),
 			'installments' => array(
 				'max_installments' => $max_installments,
-				'max_installments_no_fee' => (int) Repository::get('max_qtd_installments_without_fee'),
-				'min_installment' => (float) Repository::get('min_value_installments'),
+				'max_installments_no_fee' => $plan['without_fee'],
+				'min_installment' => $plan['min_value'],
 				'fee' => Helpers::get_fee( $product ),
 				'fees' => $fees,
 			),
@@ -269,27 +290,22 @@ class Storefront_Assets extends Abstract_Assets {
 	 * have the runtime recalculate a badge the server never rendered.
 	 *
 	 * @since 6.0.0
-	 * @param int $product_id | Product ID, or 0
+	 * @param object|false $product | Product the page is configured for
 	 * @return array<string,mixed>
 	 */
-	private function discount_params( $product_id ) {
+	private function discount_params( $product ) {
 		$discounts = array(
 			'pix_discount' => Repository::is_active('enable_all_discount_options') ? (float) Repository::get('discount_main_price') : 0,
 			'pix_discount_method' => Repository::get('product_price_discount_method'),
 			'slip_bank_discount' => Repository::is_active('enable_ticket_discount_main_price') ? (float) Repository::get('discount_ticket') : 0,
 			'slip_bank_method' => Repository::get('discount_method_ticket'),
-			'enable_discount_per_unit' => 'no',
-			'discount_per_unit_method' => '',
-			'unit_discount_amount' => '',
 		);
 
-		if ( $product_id && Features::is_available('product_overrides') ) {
-			$discounts['enable_discount_per_unit'] = get_post_meta( $product_id, 'enable_discount_per_unit', true );
-			$discounts['discount_per_unit_method'] = get_post_meta( $product_id, 'discount_per_unit_method', true );
-			$discounts['unit_discount_amount'] = get_post_meta( $product_id, 'unit_discount_amount', true );
-		}
+		$rule = $product instanceof \WC_Product
+			? Product_Config::discount_rule( $product->get_id(), $product->get_parent_id() ?: $product->get_id() )
+			: null;
 
-		return $discounts;
+		return array_merge( $discounts, self::discount_rule_params( $rule ) );
 	}
 
 

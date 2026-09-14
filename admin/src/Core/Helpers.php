@@ -5,6 +5,7 @@ namespace MeuMouse\WC_Custom_Installments\Core;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
+use MeuMouse\WC_Custom_Installments\Engine\Product_Config;
 use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
 
 defined('ABSPATH') || exit;
@@ -290,12 +291,7 @@ class Helpers {
 	 * @return float
 	 */
 	public static function get_fee( $product = false, $installments = 1 ) {
-		if ( Repository::is_active('set_fee_per_installment') ) {
-			$custom_fee = (array) Repository::get( 'custom_fee_installments', array() );
-			$fee = isset( $custom_fee[ $installments ]['amount'] ) ? floatval( $custom_fee[ $installments ]['amount'] ) : 0;
-		} else {
-			$fee = floatval( Repository::get('fee_installments_global') );
-		}
+		$fee = Product_Config::fee_rate( Product_Config::installments( $product ?: null ), (int) $installments );
 
 		/**
 		 * Filter the interest rate of an instalment count.

@@ -90,26 +90,21 @@ class Calculate_Installments {
 		 */
 		$price = Hook_Aliases::apply_filters( 'WC_Custom_Installments/Price/Set_Values_Price', $price, $product );
 
-		$limit = (int) Repository::get('max_qtd_installments');
-		$without_fee_limit = (int) Repository::get('max_qtd_installments_without_fee');
-		$global_fee = (float) Repository::get('fee_installments_global');
-		$fee_per_installment = Repository::is_active('set_fee_per_installment');
-		$min_value = (float) Repository::get('min_value_installments');
-		$custom_fees = $fee_per_installment ? (array) Repository::get( 'custom_fee_installments', array() ) : array();
+		$config = Product_Config::installments( $product );
 		$installments = array();
 
-		for ( $i = 1; $i <= $limit; $i++ ) {
-			$fee_rate = $fee_per_installment ? floatval( $custom_fees[ $i ]['amount'] ?? 0 ) : $global_fee;
+		for ( $i = 1; $i <= $config['max']; $i++ ) {
+			$fee_rate = Product_Config::fee_rate( $config, $i );
 
-			if ( $i <= $without_fee_limit || 0.0 === (float) $fee_rate ) {
+			if ( $i <= $config['without_fee'] || 0.0 === (float) $fee_rate ) {
 				$info = self::get_installments_without_interest( $price, $i );
 			} else {
-				$info = self::get_installments_with_interest( $price, $fee_rate, $i );
+				$info = self::get_installments_with_interest( $price, $fee_rate, $i, $config['fee_per_installment'] );
 			}
 
 			// The single payment is always offered: it is the price itself, and
 			// a minimum instalment value has nothing to say about it.
-			if ( 1 === $i || $info['installment_price'] >= $min_value ) {
+			if ( 1 === $i || $info['installment_price'] >= $config['min_value'] ) {
 				$installments[] = $info;
 			}
 		}
@@ -182,7 +177,7 @@ class Calculate_Installments {
 			return '';
 		}
 
-		$best = self::pick_best_with_interest( $installments );
+		$best = self::pick_best_with_interest( $installments, $product );
 
 		if ( null === $best ) {
 			return '';
@@ -197,9 +192,10 @@ class Calculate_Installments {
 	 *
 	 * @since 6.0.0
 	 * @param array $installments | Every instalment
+	 * @param object|null $product | Product the plan was built for, whose minimum instalment applies
 	 * @return array<string,mixed>|null Null when none is worth showing.
 	 */
-	public static function pick_best_with_interest( $installments ) {
+	public static function pick_best_with_interest( $installments, $product = null ) {
 		$installments = (array) $installments;
 
 		// When both are shown, this one must not repeat the interest-free row.
@@ -212,7 +208,7 @@ class Calculate_Installments {
 		$installments = array_values( $installments );
 		$best = end( $installments );
 
-		if ( false === $best || $best['installment_price'] < (float) Repository::get('min_value_installments') ) {
+		if ( false === $best || $best['installment_price'] < Product_Config::installments( $product )['min_value'] ) {
 			return null;
 		}
 
@@ -377,10 +373,11 @@ class Calculate_Installments {
 	 * @param float $total | Base amount
 	 * @param float $fee | Interest rate
 	 * @param int $i | Number of instalments
+	 * @param bool|null $fee_per_installment | Whether the rate comes from a per-instalment table; the store's setting when null
 	 * @return array<string,mixed>
 	 */
-	public static function get_installments_with_interest( $total, $fee, $i ) {
-		$price = Calculate_Values::calculate_installment_with_fee( $total, $fee, $i );
+	public static function get_installments_with_interest( $total, $fee, $i, $fee_per_installment = null ) {
+		$price = Calculate_Values::calculate_installment_with_fee( $total, $fee, $i, $fee_per_installment );
 		$final_price = Calculate_Values::calculate_final_price( $price, $i );
 
 		return self::set_installment_info( $price, $final_price, true, 'fee-included', $i );

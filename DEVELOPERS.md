@@ -368,7 +368,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_75 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_77 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -434,6 +434,8 @@ _75 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Price/Strings_To_Replace` | filter | `Woo_Custom_Installments/Price/Strings_To_Replace` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Product/After_Price` | action | `Woo_Custom_Installments/Product/After_Price` | `templates/single-product/price.php` |
 | `WC_Custom_Installments/Product/Before_Price` | action | `Woo_Custom_Installments/Product/Before_Price` | `templates/single-product/price.php` |
+| `WC_Custom_Installments/Product/Discount_Rule` | filter | — | `admin/src/Engine/Product_Config.php` |
+| `WC_Custom_Installments/Product/Installments_Config` | filter | — | `admin/src/Engine/Product_Config.php` |
 | `WC_Custom_Installments/Product/Is_Available` | filter | `Woo_Custom_Installments/Product/Is_Available` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Product/Set_Product` | filter | `Woo_Custom_Installments/Product/Set_Product` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Settings/Reset` | action | — | `admin/src/Admin/Settings/Repository.php` |

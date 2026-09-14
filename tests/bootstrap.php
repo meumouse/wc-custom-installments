@@ -1060,6 +1060,7 @@ require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
 require_once __DIR__ . '/../admin/src/Compatibility/Hook_Aliases.php';
 require_once __DIR__ . '/../admin/src/Frontend/Element_Registry.php';
+require_once __DIR__ . '/../admin/src/Engine/Product_Config.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Values.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Installments.php';
 require_once __DIR__ . '/../admin/src/Admin/Default_Options.php';

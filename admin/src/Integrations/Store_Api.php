@@ -159,7 +159,7 @@ class Store_Api {
 			}
 
 			if ( in_array( $type, array( 'best_installment_with_fee', 'both' ), true ) ) {
-				$data['best_installments']['with_interest'] = self::format_installment( Calculate_Installments::pick_best_with_interest( $highlight ), $money );
+				$data['best_installments']['with_interest'] = self::format_installment( Calculate_Installments::pick_best_with_interest( $highlight, $product ), $money );
 			}
 		}
 

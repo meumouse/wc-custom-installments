@@ -34,18 +34,23 @@ class Calculate_Values {
 	 * @param float $value | Base amount
 	 * @param float $fee | Interest rate, as a percentage
 	 * @param int $installments | Number of instalments
+	 * @param bool|null $fee_per_installment | Whether the rate comes from a per-instalment table; the store's setting when null
 	 * @return float
 	 */
-	public static function calculate_installment_with_fee( $value, $fee, $installments ) {
+	public static function calculate_installment_with_fee( $value, $fee, $installments, $fee_per_installment = null ) {
 		$percentage = floatval( wc_format_decimal( $fee ) ) / 100.00;
 
 		if ( $installments <= 0 ) {
 			return 0;
 		}
 
+		if ( null === $fee_per_installment ) {
+			$fee_per_installment = Repository::is_active('set_fee_per_installment');
+		}
+
 		if ( $percentage <= 0 ) {
 			$installment_price = $value / $installments;
-		} elseif ( Repository::is_active('set_fee_per_installment') ) {
+		} elseif ( $fee_per_installment ) {
 			$installment_price = ( $value * $percentage + $value ) / $installments;
 		} else {
 			$denominator = ( ( 1 + $percentage ) ** $installments ) - 1;
@@ -289,16 +294,14 @@ class Calculate_Values {
 				return $price;
 			}
 
-			// A per-product discount overrides the global one, and is a Pro
-			// capability: without it the store falls back to the single global
-			// discount rather than to no discount at all.
-			if ( Features::is_available('product_overrides') ) {
-				list( $per_product, $per_product_method, $per_product_value ) = self::get_product_discount( $product_id, $parent_product_id );
+			// A discount of the product's own overrides the global one. Without
+			// one the store falls back to the single global discount rather than
+			// to no discount at all.
+			$rule = Product_Config::discount_rule( $product_id, $parent_product_id );
 
-				if ( 'yes' === $per_product ) {
-					$discount_method = $per_product_method;
-					$discount_value = $per_product_value;
-				}
+			if ( null !== $rule ) {
+				$discount_method = $rule['method'];
+				$discount_value = $rule['amount'];
 			}
 		}
 
@@ -364,13 +367,10 @@ class Calculate_Values {
 		}
 
 		$cart_item_total = $product->get_price() * $quantity;
+		$rule = Product_Config::discount_rule( $product_id, $parent_id );
 
-		if ( Features::is_available('product_overrides') ) {
-			list( $per_product, $per_product_method, $per_product_value ) = self::get_product_discount( $product_id, $parent_id );
-
-			if ( 'yes' === $per_product ) {
-				return self::calculate_price_with_discount( $cart_item_total, $per_product_method, $per_product_value );
-			}
+		if ( null !== $rule ) {
+			return self::calculate_price_with_discount( $cart_item_total, $rule['method'], $rule['amount'] );
 		}
 
 		return self::calculate_price_with_discount(
@@ -398,7 +398,6 @@ class Calculate_Values {
 		$total_discount = 0;
 		$total_cart_value = 0;
 		$has_individual_discount = false;
-		$per_product_available = Features::is_available('product_overrides');
 
 		foreach ( $cart->get_cart() as $cart_item ) {
 			$product = $cart_item['data'];
@@ -411,13 +410,11 @@ class Calculate_Values {
 
 			$product_price = wc_get_price_excluding_tax( $product );
 			$product_discount = 0;
-			$enabled = '';
+			$rule = Product_Config::discount_rule( $product->get_id(), $parent_id );
 
-			if ( $per_product_available ) {
-				list( $enabled, $discount_method, $discount_value ) = self::get_product_discount( $product->get_id(), $parent_id );
-			}
-
-			if ( 'yes' === $enabled ) {
+			if ( null !== $rule ) {
+				$discount_method = $rule['method'];
+				$discount_value = $rule['amount'];
 				if ( ! empty( $discount_value ) && (float) $discount_value > 0 ) {
 					$has_individual_discount = true;
 
@@ -472,6 +469,10 @@ class Calculate_Values {
 
 	/**
 	 * Read the per-product discount, falling back to the parent.
+	 *
+	 * The product's meta as stored, whatever the licence says. What the engine
+	 * applies is Product_Config::discount_rule(), which gates it and lets other
+	 * rules join in.
 	 *
 	 * @since 6.0.0
 	 * @param int $product_id | Product ID
