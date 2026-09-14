@@ -67,6 +67,7 @@ class Admin_Assets extends Abstract_Assets {
 		parent::__construct();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_product_assets' ), 100 );
 		add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 2 );
 		add_filter( 'load_script_translation_file', array( __CLASS__, 'resolve_script_translation_file' ), 10, 3 );
 		add_filter( 'admin_body_class', array( $this, 'add_body_class' ) );
@@ -109,6 +110,12 @@ class Admin_Assets extends Abstract_Assets {
 
 		$handle = $this->handles[ $page ];
 
+		// The element design panel picks icon images from the media library,
+		// as the 5.x settings page did.
+		if ( 'settings' === $this->bootstrap[ $page ]['page'] && current_user_can('upload_files') ) {
+			wp_enqueue_media();
+		}
+
 		wp_enqueue_script( $handle, $assets['script'], array( 'wp-i18n' ), $asset_version, true );
 
 		wp_set_script_translations( $handle, 'wc-custom-installments', WC_CUSTOM_INSTALLMENTS_LANGUAGES );
@@ -119,6 +126,43 @@ class Admin_Assets extends Abstract_Assets {
 			'page'     => $this->bootstrap[ $page ]['page'],
 			'endpoint' => $this->bootstrap[ $page ]['endpoint'],
 		) );
+	}
+
+
+	/**
+	 * Enqueue the small script behind the plugin's fields on the product screens.
+	 *
+	 * The product data panel and the products list are WooCommerce's screens,
+	 * so this is a plain jQuery file shipped as written, not a Vite entry: it
+	 * shows and hides dependent fields, and fills quick edit from the row
+	 * (Admin\Product_Settings).
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	public function enqueue_product_assets() {
+		$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+
+		if ( ! $screen || ! in_array( $screen->id, array( 'product', 'edit-product' ), true ) ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'wc-custom-installments-product-settings',
+			$this->assets_url . 'admin/product-settings.js',
+			array( 'jquery' ),
+			$this->version,
+			true
+		);
+
+		if ( 'product' === $screen->id ) {
+			wp_enqueue_style(
+				'wc-custom-installments-product-settings',
+				$this->assets_url . 'admin/product-settings.css',
+				array(),
+				$this->version
+			);
+		}
 	}
 
 

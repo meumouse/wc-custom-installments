@@ -18,14 +18,17 @@ const props = defineProps({
   field: { type: Object, required: true },
   disabled: { type: Boolean, default: false },
   maxInstallments: { type: [String, Number], default: 12 },
+  // The interest-free installments charge nothing, so the table starts after them.
+  firstInstallment: { type: [String, Number], default: 1 },
 });
 
 const emit = defineEmits(['update:modelValue']);
 
 const rows = computed(() => {
   const max = Math.max(1, Math.min(48, Number(props.maxInstallments) || 12));
+  const first = Math.max(1, Math.min(max, Number(props.firstInstallment) || 1));
 
-  return Array.from({ length: max }, (_, index) => index + 1);
+  return Array.from({ length: max - first + 1 }, (_, index) => first + index);
 });
 
 /**

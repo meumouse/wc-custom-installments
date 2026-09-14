@@ -134,6 +134,92 @@ Repository::save_settings( array( 'enable_sale_badge' => 'yes' ) );
 check( 'the field is now written', 'yes', Repository::get('enable_sale_badge') );
 check( 'the toggle is now active', true, Repository::is_active('enable_sale_badge') );
 
+echo PHP_EOL, 'The 5.x options and spellings', PHP_EOL;
+
+// Each of these was a choice in 5.x. An option missing from the schema is not
+// just absent from the screen: the first save rewrites the store's value to
+// the default, silently.
+foreach ( array(
+	'get_type_best_installments' => array( 'hide', 'best_installment_without_fee', 'best_installment_with_fee', 'both' ),
+	'display_installment_type' => array( 'popup', 'accordion', 'hide' ),
+	'hook_payment_form_single_product' => array( 'before_cart', 'after_cart', 'custom_hook', 'shortcode', 'widget' ),
+	'enable_discount_per_quantity_method' => array( 'global', 'product' ),
+	'button_popup_size' => array( 'small', 'normal', 'large', 'link' ),
+	'icon_format_elements' => array( 'class', 'upload' ),
+) as $key => $values ) {
+	$offered = array_column( (array) ( $definitions[ $key ]['options'] ?? array() ), 'value' );
+
+	check( sprintf( '%s offers every 5.x value', $key ), array(), array_values( array_diff( $values, $offered ) ) );
+}
+
+Repository::save_settings( array(
+	'display_installment_type' => 'none',
+	'hook_payment_form_single_product' => 'custom',
+	'enable_discount_per_quantity_method' => 'per_product',
+	'display_discount_price_hook' => 'only_loop_products',
+	'icon_format_elements' => 'svg',
+) );
+
+check( 'a renamed value is stored under its current name', 'hide', Repository::get('display_installment_type') );
+check( 'the custom hook keeps its 5.x value', 'custom_hook', Repository::get('hook_payment_form_single_product') );
+check( 'per-product mode keeps its 5.x value', 'product', Repository::get('enable_discount_per_quantity_method') );
+check( 'a 5.x placement is translated on save', 'only_loop', Repository::get('display_discount_price_hook') );
+check( 'the icon format lands on upload', 'upload', Repository::get('icon_format_elements') );
+
+check(
+	'the settings screen sees the current spelling of a stored alias',
+	'custom_hook',
+	Repository::normalize_settings( array( 'hook_payment_form_single_product' => 'custom' ) )['hook_payment_form_single_product']
+);
+
+echo PHP_EOL, 'Colours and copy the 5.x screen could store', PHP_EOL;
+
+check( 'an rgb() colour survives', 'rgb(0, 138, 255)', Repository::sanitize_color( 'rgb(0, 138, 255)' ) );
+check( 'an rgba() colour survives', 'rgba(34, 197, 94, 0.15)', Repository::sanitize_color( 'rgba(34, 197, 94, 0.15)' ) );
+check( 'a hex colour survives', '#008aff', Repository::sanitize_color( '#008aff' ) );
+check( 'anything else is not a colour', '', Repository::sanitize_color( 'red; background:url(x)' ) );
+
+Repository::save_settings( array( 'button_popup_color' => 'rgb(0, 138, 255)' ) );
+check( 'the popup colour keeps its rgb() value', 'rgb(0, 138, 255)', Repository::get('button_popup_color') );
+
+Repository::save_settings( array( 'text_before_price' => '<strong>À vista</strong><script>alert(1)</script>' ) );
+check( 'copy keeps simple markup and loses scripts', '<strong>À vista</strong>', Repository::get('text_before_price') );
+
+echo PHP_EOL, 'Element design', PHP_EOL;
+
+Repository::save_settings( array(
+	'elements_design' => array(
+		'price' => array(
+			'order' => '3',
+			'icon' => array( 'class' => 'fa-solid fa-tag"><script>', 'image' => 'javascript:alert(1)' ),
+			'styles' => array(
+				'desktop' => array(
+					'font_size' => '1,5',
+					'font_unit' => 'vh',
+					'font_weight' => '700',
+					'font_color' => 'rgba(38, 171, 91, 1)',
+					'margin' => array( 'top' => '2', 'unit' => 'px' ),
+				),
+			),
+		),
+		'unknown_element' => array( 'order' => 1 ),
+	),
+) );
+
+$design = Repository::get('elements_design');
+
+check( 'an unknown element is dropped', false, isset( $design['unknown_element'] ) );
+check( 'the order is kept', 3, $design['price']['order'] );
+check( 'an icon class keeps only class characters', 'fa-solid fa-tagscript', $design['price']['icon']['class'] );
+check( 'a script URL is not an icon', '', $design['price']['icon']['image'] );
+check( 'a decimal comma is read', '1.5', $design['price']['styles']['desktop']['font_size'] );
+check( 'an unknown unit falls back', 'rem', $design['price']['styles']['desktop']['font_unit'] );
+check( 'the weight is kept', '700', $design['price']['styles']['desktop']['font_weight'] );
+check( 'an rgba colour is kept', 'rgba(38, 171, 91, 1)', $design['price']['styles']['desktop']['font_color'] );
+check( 'a partial box keeps its unit', 'px', $design['price']['styles']['desktop']['margin']['unit'] );
+check( 'and the sides it did not send', '0', $design['price']['styles']['desktop']['margin']['left'] );
+check( 'every other element is filled in', true, isset( $design['discount_pix']['styles']['mobile']['padding']['top'] ) );
+
 echo PHP_EOL, 'Hook aliases', PHP_EOL;
 
 check(

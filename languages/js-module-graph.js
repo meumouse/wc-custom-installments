@@ -40,6 +40,9 @@ const DYNAMIC_IMPORT_PATTERN = /\bimport\s*\(\s*["']([^"']+)["']\s*\)/g;
 // runtime mounts no app; its handle lives in PHP (Assets\Storefront_Assets).
 const HANDLE_OVERRIDES = {
   "src/entries/storefront.js": "wc-custom-installments-storefront",
+  // Stylesheet-only entry: it imports no module with strings, so its catalogue
+  // is always empty. It still needs a handle for the graph to resolve.
+  "src/entries/font-awesome.js": "wc-custom-installments-font-awesome",
 };
 
 const MOUNT_PAGE_PATTERN = /mountPage\(\s*["']([^"']+)["']/;

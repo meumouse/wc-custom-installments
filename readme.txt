@@ -20,8 +20,9 @@ Ele exibe o parcelamento abaixo do preço do produto, na listagem da loja e na p
 
 * Máximo de parcelas, parcelas sem juros e valor mínimo da parcela
 * Uma taxa de juros mensal aplicada além das parcelas sem juros
-* A melhor parcela exibida abaixo do preço, com a tabela completa em um popup ou na página
-* Parcelas exibidas no carrinho
+* A melhor parcela exibida abaixo do preço, com ou sem juros, ou as duas
+* A tabela completa de parcelas em um popup, em uma sanfona ou na página
+* Preço com desconto exibido nos totais do carrinho
 
 = Descontos =
 
@@ -38,14 +39,19 @@ Ele exibe o parcelamento abaixo do preço do produto, na listagem da loja e na p
 
 * Quinze shortcodes, um por elemento, que funcionam em qualquer construtor de páginas
 * Widgets do Elementor para o grupo de preços e a tabela de parcelas
-* Compatibilidade com Astra, Woodmart, Shoptimizer, Machic e Ricky
-* Funciona junto com Tiered Pricing Table e Dynamic Pricing & Discounts
+* Controles de estilo nos widgets de produto do Elementor Pro, do Woodmart e do XStore
+* Compatibilidade com Astra, Woodmart, XStore, Shoptimizer, Machic e Ricky
+* Funciona junto com Tiered Pricing Table, Dynamic Pricing & Discounts e Rank Math
 * Um assistente de configuração que deixa uma loja nova exibindo parcelas em cerca de um minuto
 * Ajustes por produto, no painel do produto e na edição rápida
 
 = Idiomas =
 
 O plugin é escrito em português do Brasil e acompanha a tradução para o inglês. Os demais idiomas chegam pelo translate.wordpress.org.
+
+= Créditos =
+
+Os ícones da loja usam o Font Awesome Free 6.7.2, da Fonticons, Inc. (https://fontawesome.com), incluído no plugin e carregado do seu próprio site, sem nenhuma requisição externa. Ícones sob CC BY 4.0, fontes sob SIL OFL 1.1 e código sob MIT — https://fontawesome.com/license/free
 
 == External services ==
 
@@ -81,6 +87,7 @@ Sim. Em um site configurado em inglês, o plugin aparece como "Custom Installmen
 * Reconstruído do zero como plugin gratuito. Continua a numeração do Parcelas Customizadas para WooCommerce 5.x.
 * Tela de configurações redesenhada, com o logo do plugin no cabeçalho.
 * Textos em português do Brasil, com a tradução para o inglês incluída.
+* Todas as opções da versão 5.5.9 de volta às configurações, incluindo a sanfona, as duas melhores parcelas, o shortcode e o widget das formas de pagamento, o estilo do botão de parcelas e o painel de design dos elementos.
 
 == Upgrade Notice ==
 

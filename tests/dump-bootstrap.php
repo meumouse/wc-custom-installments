@@ -46,12 +46,27 @@ add_filter( 'WC_Custom_Installments/Admin/Settings_Schema', function( $schema ) 
 	return $schema;
 } );
 
+// `WCCI_PREVIEW_PRO=1 php tests/dump-bootstrap.php` renders the screen as a
+// licensed store sees it, so the Pro controls can be exercised too.
+if ( getenv('WCCI_PREVIEW_PRO') ) {
+	add_filter( 'WC_Custom_Installments/Features/Is_Available', '__return_true' );
+	Features::flush();
+}
+
 $payload = array(
 	'version' => WC_CUSTOM_INSTALLMENTS_VERSION,
 	'page' => 'settings',
 	'schema' => Registry::get_schema(),
-	'settings' => Repository::get_settings(),
+	'settings' => Repository::normalize_settings( Repository::get_settings() ),
 	'features' => Features::all(),
+	// Settings_Bootstrap::system_status() reads the live server; a fixed
+	// sample keeps the fixture the same on every machine.
+	'system_status' => array(
+		array( 'group' => 'WordPress', 'label' => 'Versão do WordPress', 'value' => '6.9', 'ok' => true ),
+		array( 'group' => 'WooCommerce', 'label' => 'Versão do WooCommerce', 'value' => '10.2.0', 'ok' => true ),
+		array( 'group' => 'Servidor', 'label' => 'Versão do PHP', 'value' => '8.2.29', 'ok' => true ),
+		array( 'group' => 'Servidor', 'label' => 'Limite de memória do PHP', 'value' => '64M', 'ok' => false, 'hint' => 'O valor mínimo recomendado é 128M.' ),
+	),
 	'pro' => array(
 		'active' => false,
 		'store_url' => 'https://meumouse.com/plugins/wc-custom-installments/',

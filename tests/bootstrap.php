@@ -217,6 +217,23 @@ if ( ! function_exists('sanitize_textarea_field') ) {
 	}
 }
 
+if ( ! function_exists('wp_kses_post') ) {
+	/**
+	 * Keep the markup a post may carry and drop the rest.
+	 *
+	 * Enough of WordPress's allow-list for the copy the harnesses write: inline
+	 * formatting survives, scripts and their contents do not.
+	 *
+	 * @param string $value | Raw value
+	 * @return string
+	 */
+	function wp_kses_post( $value ) {
+		$value = preg_replace( '#<(script|style)[^>]*>.*?</\1>#is', '', (string) $value );
+
+		return strip_tags( $value, '<a><b><br><em><i><p><small><span><strong><sub><sup><u>' );
+	}
+}
+
 if ( ! function_exists('sanitize_hex_color') ) {
 	/**
 	 * Return the value when it is a hex colour, null otherwise.

@@ -24,13 +24,31 @@ const picker = ref(null);
 
 const isHex = computed(() => /^#([A-Fa-f0-9]{3}){1,2}$/.test(props.modelValue || ''));
 
+// The 5.x colour picker stored rgb() and rgba() as often as hex, and those
+// values are still in stores' settings.
+const rgb = computed(() => {
+  const match = String(props.modelValue || '').match(/^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/i);
+
+  return match ? match.slice(1, 4).map((part) => Math.min(255, Number(part))) : null;
+});
+
+const isColor = computed(() => isHex.value || Boolean(rgb.value) || props.modelValue === 'transparent');
+
 const model = computed({
   get: () => props.modelValue || '',
   set: (value) => emit('update:modelValue', value),
 });
 
+// The browser's picker only speaks #rrggbb, so an rgb() value is shown in it as
+// its hex equivalent. Picking a colour writes hex, dropping any transparency.
 const swatch = computed({
-  get: () => (isHex.value ? props.modelValue : '#000000'),
+  get: () => {
+    if (isHex.value) {
+      return props.modelValue;
+    }
+
+    return rgb.value ? `#${rgb.value.map((part) => part.toString(16).padStart(2, '0')).join('')}` : '#000000';
+  },
   set: (value) => emit('update:modelValue', value),
 });
 </script>
@@ -42,7 +60,7 @@ const swatch = computed({
       :disabled="disabled"
       :aria-label="ariaLabel ? `${ariaLabel} — ${__('Escolher uma cor')}` : __('Escolher uma cor')"
       class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-slate-200 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-100 disabled:cursor-not-allowed disabled:opacity-60"
-      :style="{ backgroundColor: isHex ? modelValue : 'transparent' }"
+      :style="{ backgroundColor: isColor ? modelValue : 'transparent' }"
       @click="picker?.click()"
     />
 
@@ -62,7 +80,7 @@ const swatch = computed({
       spellcheck="false"
       :disabled="disabled"
       :aria-label="ariaLabel || undefined"
-      class="w-40 rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+      class="w-56 max-w-full rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
     />
   </div>
 </template>

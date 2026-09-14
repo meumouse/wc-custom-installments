@@ -228,8 +228,10 @@ class Init {
 			$hook = $this->get_class_hook( $class );
 
 			// `init` is already running when this method fires, so a class bound
-			// to it would never be instantiated by add_action().
-			if ( 'init' === $hook ) {
+			// to it would never be instantiated by add_action(). The same goes
+			// for any hook that has already fired: Elementor fires
+			// `elementor/init` during `init` at priority 0, before this pass.
+			if ( 'init' === $hook || did_action( $hook ) ) {
 				$this->safe_instance_class( $class );
 
 				continue;

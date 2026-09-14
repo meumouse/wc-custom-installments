@@ -47,6 +47,34 @@ class Styles {
 	 */
 	public function __construct() {
 		add_action( 'wp_head', array( $this, 'render_styles' ), 20 );
+		add_action( 'admin_head', array( $this, 'product_list_styles' ) );
+	}
+
+
+	/**
+	 * Keep the products list readable.
+	 *
+	 * WooCommerce prints each product's price HTML in the Price column, which
+	 * runs through the same filter as the storefront. The badges belong to the
+	 * shop, not to a table the store owner scans; the price itself stays.
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	public function product_list_styles() {
+		$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+
+		if ( ! $screen || 'edit-product' !== $screen->id ) {
+			return;
+		}
+
+		$css = '.column-price .woo-custom-installments-offer,.column-price .woo-custom-installments-economy-pix-badge,.column-price .woo-custom-installments-ticket-discount,.column-price .wci-sale-badge,.column-price .woo-custom-installments-card-container{display:none;}';
+		$css .= '.column-price .woo-custom-installments-starting-from{margin-right:0.25rem;}';
+		$css .= 'table.wp-list-table .column-price{width:10rem;}';
+		$css .= '.column-price .woo-custom-installments-price{display:block;}';
+		$css .= '.column-price .woo-custom-installments-price.has-discount{text-decoration:line-through;}';
+
+		printf( "<style id=\"wc-custom-installments-product-list\">%s</style>\n", $css ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static CSS.
 	}
 
 
@@ -203,6 +231,17 @@ class Styles {
 				$styles['font_weight'],
 				$styles['font_color']
 			);
+
+			// The struck-out regular price reads as secondary next to the
+			// current one, as it did in 5.x.
+			if ( 'price' === $key && 'desktop' === $breakpoint ) {
+				$rules .= sprintf(
+					'%1$s .woo-custom-installments-price.original-price.has-discount .amount,%1$s del .amount{font-size:calc(%2$s - 0.3rem)%3$s;}',
+					$selector,
+					$font,
+					$important
+				);
+			}
 		}
 
 		return '' === $rules ? '' : $query . '{' . $rules . '}';
@@ -216,17 +255,49 @@ class Styles {
 	 * @return string
 	 */
 	private function popup_rules() {
-		if ( 'popup' !== Repository::get('display_installment_type') ) {
+		$type = Repository::get('display_installment_type');
+
+		if ( ! in_array( $type, array( 'popup', 'accordion' ), true ) ) {
 			return '';
 		}
 
-		$color = Repository::get('button_popup_color');
-		$sizes = array( 'small' => '0.8rem', 'normal' => '0.9rem', 'large' => '1.05rem' );
-		$size = $sizes[ Repository::get('button_popup_size') ] ?? $sizes['normal'];
+		$color = Repository::sanitize_color( Repository::get('button_popup_color') );
+		$color = '' !== $color ? $color : '#008aff';
 
+		// The trigger and the accordion sit in the same spot, so the spacing
+		// the store set applies to whichever of the two is shown.
 		$css = sprintf(
-			'button.wci-open-popup{position:relative;display:inline-block;padding:0;border:0;background:transparent;cursor:pointer;font-size:%s;color:%s;}',
-			$size,
+			'button.wci-open-popup,#wci-accordion-installments{margin-top:%s;margin-bottom:%s;}',
+			Repository::get('margin_top_popup_installments') . Repository::get('unit_margin_top_popup_installments'),
+			Repository::get('margin_bottom_popup_installments') . Repository::get('unit_margin_bottom_popup_installments')
+		);
+
+		if ( 'popup' !== $type ) {
+			return $css;
+		}
+
+		$css .= sprintf(
+			'button.wci-open-popup{color:%1$s;border-color:%1$s;border-radius:%2$s;}button.wci-open-popup:hover{background-color:%1$s;}',
+			$color,
+			Repository::get('border_radius_popup_installments') . Repository::get('unit_border_radius_popup_installments')
+		);
+
+		// The three button sizes of 5.x: an outlined button that fills on hover.
+		$sizes = array(
+			'small' => 'padding:0.475rem 1.25rem;font-size:0.75rem;',
+			'normal' => 'padding:0.625rem 1.75rem;font-size:0.875rem;',
+			'large' => 'padding:0.785rem 2rem;font-size:1rem;',
+		);
+
+		$size = (string) Repository::get('button_popup_size');
+
+		if ( isset( $sizes[ $size ] ) ) {
+			return $css . 'button.wci-open-popup{' . $sizes[ $size ] . '}';
+		}
+
+		// The link style: no box, an underline that redraws itself on hover.
+		$css .= sprintf(
+			'button.wci-open-popup{display:inline-block;position:relative;font-weight:500;text-decoration:none;border:0;padding:0;color:%s;}',
 			$color
 		);
 
@@ -236,19 +307,12 @@ class Styles {
 		);
 
 		$css .= sprintf(
-			'button.wci-open-popup:hover{text-decoration:none;background-color:transparent;color:%s;}',
+			'button.wci-open-popup:hover{text-decoration:none;color:%s;background-color:transparent;}',
 			$color
 		);
 
 		$css .= 'button.wci-open-popup:hover::after{animation:wciLinkUnderline .6s ease-in-out;}';
 		$css .= '@keyframes wciLinkUnderline{0%{width:100%;}50%{width:0;}100%{left:0;width:100%;}}';
-
-		$css .= sprintf(
-			'.wci-popup-container{margin-top:%s;margin-bottom:%s;border-radius:%s;}',
-			Repository::get('margin_top_popup_installments') . Repository::get('unit_margin_top_popup_installments'),
-			Repository::get('margin_bottom_popup_installments') . Repository::get('unit_margin_bottom_popup_installments'),
-			Repository::get('border_radius_popup_installments') . Repository::get('unit_border_radius_popup_installments')
-		);
 
 		return $css;
 	}

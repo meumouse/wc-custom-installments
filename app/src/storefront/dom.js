@@ -29,6 +29,26 @@ export function one(selector, scope = document) {
 }
 
 /**
+ * Whether a string is a selector the browser can parse.
+ *
+ * Selectors typed into a settings field reach the runtime unchecked, and one
+ * typo must not stop every listener registered after it.
+ *
+ * @since 6.0.0
+ * @param {string} selector - CSS selector.
+ * @return {boolean} Whether it parses.
+ */
+export function isSelector(selector) {
+  try {
+    document.createDocumentFragment().querySelector(selector);
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
  * Listen for an event on everything matching a selector, now and later.
  *
  * Delegation rather than direct binding: the price group is re-rendered by

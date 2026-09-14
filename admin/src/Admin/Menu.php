@@ -38,6 +38,7 @@ class Menu {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ), 20 );
 		add_filter( 'plugin_action_links_' . WC_CUSTOM_INSTALLMENTS_BASENAME, array( $this, 'add_action_links' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 2 );
 	}
 
 
@@ -92,6 +93,32 @@ class Menu {
 		array_unshift( $links, $settings );
 
 		return $links;
+	}
+
+
+	/**
+	 * Add a Documentation link beside the version and author in the plugins list.
+	 *
+	 * Where 5.x put it, so a store owner looking for help finds it in the same
+	 * place.
+	 *
+	 * @since 6.0.0
+	 * @param array<int|string,string> $meta | Existing row meta
+	 * @param string $plugin_file | Plugin path relative to the plugins directory
+	 * @return array<int|string,string>
+	 */
+	public function add_row_meta_links( $meta, $plugin_file ) {
+		if ( WC_CUSTOM_INSTALLMENTS_BASENAME !== $plugin_file ) {
+			return $meta;
+		}
+
+		$meta['docs'] = sprintf(
+			'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+			esc_url( WC_CUSTOM_INSTALLMENTS_DOCS_URL ),
+			esc_html__( 'Documentação', 'wc-custom-installments' )
+		);
+
+		return $meta;
 	}
 
 

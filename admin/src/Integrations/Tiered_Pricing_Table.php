@@ -31,6 +31,10 @@ class Tiered_Pricing_Table {
 
 		add_filter( 'WC_Custom_Installments/Price/Set_Values_Price', array( $this, 'set_tier_price' ), 10, 2 );
 		add_filter( 'WC_Custom_Installments/Assets/Frontend_Params', array( $this, 'announce_plugin' ) );
+
+		// Late enough for the plugin to have registered its own price filters.
+		add_action( 'init', array( $this, 'remove_price_markup' ), 20 );
+		add_action( 'wp', array( $this, 'remove_price_markup' ) );
 	}
 
 
@@ -48,6 +52,10 @@ class Tiered_Pricing_Table {
 	/**
 	 * Build the plan from the tier price when one applies.
 	 *
+	 * The price is the tier's at the rule's minimum quantity, as in 5.x: a
+	 * product that cannot be bought below that quantity has no single-unit
+	 * price for the plan to start from.
+	 *
 	 * @since 6.0.0
 	 * @param float $price | Price resolved so far
 	 * @param object $product | Product object
@@ -64,9 +72,16 @@ class Tiered_Pricing_Table {
 			return $price;
 		}
 
-		$tier_price = $rule->getPrice( 1 );
+		$tier_price = null;
 
-		return $tier_price ? (float) $tier_price : $price;
+		if ( method_exists( $rule, 'getMinimum' ) && method_exists( $rule, 'getTierPrice' ) ) {
+			$minimum = (int) $rule->getMinimum();
+			$tier_price = $rule->getTierPrice( max( 1, $minimum ) );
+		} elseif ( method_exists( $rule, 'getPrice' ) ) {
+			$tier_price = $rule->getPrice( 1 );
+		}
+
+		return ( is_numeric( $tier_price ) && $tier_price > 0 ) ? (float) $tier_price : $price;
 	}
 
 
@@ -74,15 +89,67 @@ class Tiered_Pricing_Table {
 	 * Tell the storefront runtime the other plugin is in charge.
 	 *
 	 * Without this the runtime would recalculate the price from the quantity
-	 * itself and overwrite what the tier plugin just wrote.
+	 * itself and overwrite what the tier plugin just wrote. The product's rules
+	 * go along under their 5.x name, `tiered_get_rules`, with `check_tiered_plugin`
+	 * beside the 6.0 flag.
 	 *
 	 * @since 6.0.0
 	 * @param array<string,mixed> $params | Runtime parameters
 	 * @return array<string,mixed>
 	 */
 	public function announce_plugin( $params ) {
+		$params = (array) $params;
 		$params['tiered_pricing_active'] = true;
+		$params['check_tiered_plugin'] = true;
+		$params['tiered_get_rules'] = array();
+
+		$product_id = isset( $params['product']['id'] ) ? (int) $params['product']['id'] : 0;
+
+		if ( ! $product_id ) {
+			return $params;
+		}
+
+		$rule = \TierPricingTable\PriceManager::getPricingRule( $product_id );
+
+		if ( $rule && method_exists( $rule, 'getRules' ) ) {
+			$params['tiered_get_rules'] = (array) $rule->getRules();
+		}
 
 		return $params;
+	}
+
+
+	/**
+	 * Remove the plugin's own price wrapper and tooltip.
+	 *
+	 * Both are printed around `woocommerce_get_price_html`, where the price
+	 * group also lives, and wrapping the group in the plugin's markup breaks
+	 * its layout. 5.x removed them for the same reason.
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	public function remove_price_markup() {
+		if ( ! class_exists('TierPricingTable\\Core\\ServiceContainer') || ! class_exists('TierPricingTable\\Services\\ProductPageService') ) {
+			return;
+		}
+
+		try {
+			$container = \TierPricingTable\Core\ServiceContainer::getInstance();
+			$service = ( $container && method_exists( $container, 'get' ) )
+				? $container->get( \TierPricingTable\Services\ProductPageService::class )
+				: null;
+		} catch ( \Throwable $e ) {
+			// The service is the other plugin's internals; a version that
+			// reorganised them leaves its markup in place rather than breaking.
+			return;
+		}
+
+		if ( ! $service ) {
+			return;
+		}
+
+		remove_filter( 'woocommerce_get_price_html', array( $service, 'wrapPrice' ), 101 );
+		remove_filter( 'woocommerce_get_price_html', array( $service, 'renderTooltip' ), 999 );
 	}
 }

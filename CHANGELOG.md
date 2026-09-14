@@ -53,7 +53,38 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - `AGENTS.md`, `DEVELOPERS.md` and `docs/free-vs-pro.md`, the last two generated from the source so they cannot drift.
 - The `wcci_*` extension helpers, and a runnable example plugin using every extension point.
 - `Compatibility\Conflict_Guard`: while the 5.x plugin is still active, this one renders nothing on the storefront, explains why, and offers to switch the old one off.
+- Every option the 5.x settings offered is back:
+  - Highlighted installment: "Hide" and "with and without interest".
+  - Payment methods: the accordion, plus the "Shortcode" and "Elementor widget" placements, with the shortcode shown beside the setting and beside each payment method.
+  - Installment button: the small, normal and large button styles next to the link style.
+  - Icons: uploaded image icons.
+  - Discounts: quantity discount "per product" mode.
+  - Text templates: the `{{ total }}` variable.
+  - Master switches: the discount and interest switches hide the options they govern, as they did.
+- The element design panel: reorder the price group's elements and set each one's font size, weight, colours, margin, padding, border radius and icon, separately for desktop and mobile, with a live preview and icons picked from the media library.
+- A read-only "System status" card in Advanced, listing the WordPress, WooCommerce and server details the 5.x "About" tab showed.
+- Font Awesome Free 6, bundled and loaded from the store itself when icons are set to Font Awesome classes (the default), so the price group's icons render on every theme. `WC_Custom_Installments/Assets/Load_Font_Awesome` turns it off for a theme that already ships it.
+- Style controls on all nine Elementor widgets again (114 controls, under their 5.x ids, so styles saved in existing pages apply), the price type and texts of the Price Info Box widget, and the same controls injected into the product widgets of Elementor Pro, Woodmart and XStore.
+- Rank Math: the discounted price reaches its JSON-LD, as in 5.x.
+- Every `woo_custom_installments_*` hook name older than 5.4 answers again, alongside the `Woo_Custom_Installments/…` names, with no deprecation notice.
+- Product screen: dependent fields show and hide with their toggle, the quantity fields appear only in per-product mode, and a warning shows when discounts are off store-wide. A "Documentação" link on the Plugins screen.
+- Store copy may carry simple HTML again, such as `<strong>`: it is kept through `wp_kses_post()` rather than stripped.
+- Colours stored as `rgb()` or `rgba()` by the 5.x colour picker are accepted and shown.
 
 ### Fixed
 
 - Seven settings had a default but no field in the settings schema, so they could never be written and sat at that default forever. Four of them are the "rewrite the displayed price" group, which now has a card of its own; two govern quantity discounts; one was dead and has been removed.
+- A store migrated from 5.x no longer loses a value on its first save because the new screen did not offer it. Before this, the save reset the value to the default: the accordion, "both" best installments, the custom-hook, shortcode and widget placements, and per-product quantity discount mode. Selects now accept the earlier spelling of a value and store the current one.
+- The Elementor widgets never registered, because the Elementor classes were built after `elementor/init` had already fired.
+- Quick edit no longer resets "Disable installments" and "Hide the discount" to off on every product it saves.
+- The Single Product Price widget renders the full price template again, so the price changes with the chosen variation inside Elementor product templates.
+- The plugin's `single-product/price.php` wins over a theme's WooCommerce copy again, as in 5.x. Without it, the price stopped changing when a variation was picked on themes that ship that template. A theme can still override it in `yourtheme/wc-custom-installments/`, or let its own copy win through `WC_Custom_Installments/Templates/Theme_Override_Wins`.
+- The installment button's margins apply to the button and the accordion again, not to the dialog.
+- The badges no longer show up in the Price column of the Products list.
+- Variation prices: a change to `variation_id` updates the price again; custom triggers respond to touch; the min–max range is no longer repainted when it is kept; and Tiered Pricing Table updates are picked up whenever that plugin is active.
+- `window.Woo_Custom_Installments` offers the 5.x methods and parameters again, and `updateAmounts` accepts both argument shapes.
+- Woodmart, Tiered Pricing Table and Dynamic Pricing & Discounts behave as in 5.x again:
+  - Woodmart: the price group is hidden in the sticky bar, grouped lists, product nav and quick shop.
+  - Tiered Pricing Table: the tier price at the rule's minimum quantity, without that plugin's own price wrapper.
+  - Dynamic Pricing & Discounts: the lowest variation price for variable products.
+- The installment table's default row reads "3x de R$ 10,00 sem juros" again. The interest-per-installment table starts after the interest-free installments.

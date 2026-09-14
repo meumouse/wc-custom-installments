@@ -1,0 +1,30 @@
+/**
+ * The plugin's notices inside WooCommerce's product data panel.
+ *
+ * WooCommerce pads every paragraph in the panel for a label column, and a
+ * notice's own paragraph would inherit that. These keep the notices shaped like
+ * notices, lined up with the fields they sit beside.
+ *
+ * @since 6.0.0
+ */
+
+.wc-custom-installments-options .notice.inline {
+	margin: 5px 20px 9px 12px;
+}
+
+.wc-custom-installments-options .notice.inline.wc-custom-installments-discount-warning {
+	margin-left: 162px;
+}
+
+.wc-custom-installments-options .notice.inline p {
+	margin: 0.5em 0;
+	padding: 2px;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+@media only screen and (max-width: 500px) {
+	.wc-custom-installments-options .notice.inline.wc-custom-installments-discount-warning {
+		margin-left: 20px;
+	}
+}

@@ -30,6 +30,14 @@ class Storefront_Assets extends Abstract_Assets {
 	 */
 	const HANDLE = 'wc-custom-installments-storefront';
 
+	/**
+	 * Style handle of the bundled Font Awesome Free.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const FONT_AWESOME_HANDLE = 'wc-custom-installments-font-awesome';
+
 
 	/**
 	 * Register the storefront hooks.
@@ -41,6 +49,7 @@ class Storefront_Assets extends Abstract_Assets {
 		parent::__construct();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 20 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_font_awesome' ), 20 );
 		add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 2 );
 	}
 
@@ -95,6 +104,56 @@ class Storefront_Assets extends Abstract_Assets {
 
 
 	/**
+	 * Enqueue the bundled Font Awesome Free when icons are printed as its classes.
+	 *
+	 * Font Awesome classes are the default icon format. 5.x loaded them through
+	 * a Font Awesome Kit, which fetched them from a CDN; the icons now ship with
+	 * the plugin and are served from the site itself, so the storefront makes no
+	 * request to an external server.
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	public function enqueue_font_awesome() {
+		if ( is_admin() || ! Repository::is_active('enable_installments_all_products') ) {
+			return;
+		}
+
+		if ( 'class' !== Repository::get('icon_format_elements') ) {
+			return;
+		}
+
+		/**
+		 * Filter whether the plugin loads its bundled Font Awesome Free.
+		 *
+		 * A theme or plugin that already loads Font Awesome 6 can turn this off
+		 * so the icon font is not downloaded twice.
+		 *
+		 * @since 6.0.0
+		 * @param bool $should_load | Whether to enqueue Font Awesome
+		 * @return bool
+		 */
+		if ( ! apply_filters( 'WC_Custom_Installments/Assets/Load_Font_Awesome', true ) ) {
+			return;
+		}
+
+		$assets = Scripts::get_entry_assets('src/entries/font-awesome.js');
+
+		if ( empty( $assets['styles'] ) ) {
+			return;
+		}
+
+		$version = ! empty( $assets['version'] ) ? $assets['version'] : $this->version;
+
+		foreach ( array_values( (array) $assets['styles'] ) as $index => $style_url ) {
+			$handle = 0 === $index ? self::FONT_AWESOME_HANDLE : self::FONT_AWESOME_HANDLE . '-' . $index;
+
+			wp_enqueue_style( $handle, $style_url, array(), $version );
+		}
+	}
+
+
+	/**
 	 * Build what the runtime needs to recalculate prices in the browser.
 	 *
 	 * @since 6.0.0
@@ -126,26 +185,44 @@ class Storefront_Assets extends Abstract_Assets {
 			$fees[ $i ] = Helpers::get_fee( $product, $i );
 		}
 
+		$tiered_pricing_active = class_exists('TierPricingTable\\Plugin') || class_exists('TierPricingTable\\PriceManager');
+		$best_installments = Repository::get('text_display_installments_single_product');
+		$decimals = wc_get_price_decimals();
+		$decimal_separator = wc_get_price_decimal_separator();
+		$thousand_separator = wc_get_price_thousand_separator();
+
+		// Keys under their 5.x names sit beside the 6.0 ones - `ajax_url`,
+		// `license_valid`, `check_tiered_plugin`, `tiered_get_rules`,
+		// `i18n.best_installments_sp` and `currency.format_*` - because customer
+		// snippets read `wci_front_params` by those names.
 		$params = array(
+			'ajax_url' => admin_url('admin-ajax.php'),
 			'debug_mode' => $this->debug_mode,
 			'dev_mode' => $this->dev_mode,
+			'license_valid' => Features::is_available('variable_price_range'),
 			'element_triggers' => Repository::get('update_range_price_triggers'),
 			'active_price_range' => Helpers::to_toggle( Repository::is_active('remove_price_range') ),
 			'update_price_with_quantity' => Helpers::to_toggle( Repository::is_active('update_price_with_quantity') ),
 			'fee_per_installment' => Repository::is_active('set_fee_per_installment'),
 			'product_variation_with_range' => $product instanceof \WC_Product && ! Helpers::variations_has_same_price( $product ),
-			'tiered_pricing_active' => class_exists('TierPricingTable\\Plugin'),
+			'tiered_pricing_active' => $tiered_pricing_active,
+			'check_tiered_plugin' => $tiered_pricing_active,
+			'tiered_get_rules' => array(),
 			'i18n' => array(
 				'without_fee_label' => Repository::get('text_without_fee_installments'),
 				'with_fee_label' => Repository::get('text_with_fee_installments'),
-				'best_installments' => Repository::get('text_display_installments_single_product'),
+				'best_installments' => $best_installments,
+				'best_installments_sp' => $best_installments,
 			),
 			'currency' => array(
 				'symbol' => get_woocommerce_currency_symbol(),
-				'decimals' => wc_get_price_decimals(),
-				'decimal_separator' => wc_get_price_decimal_separator(),
-				'thousand_separator' => wc_get_price_thousand_separator(),
+				'decimals' => $decimals,
+				'decimal_separator' => $decimal_separator,
+				'thousand_separator' => $thousand_separator,
 				'format' => str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format() ),
+				'format_num_decimals' => $decimals,
+				'format_decimal_sep' => $decimal_separator,
+				'format_thousand_sep' => $thousand_separator,
 			),
 			'discounts' => $this->discount_params( $product_id ),
 			'installments' => array(

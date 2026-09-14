@@ -261,17 +261,19 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_60 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_66 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
 | `WC_Custom_Installments/Admin/Bootstrap_Data` | filter | — | `admin/src/Rest/Settings_Bootstrap.php` |
 | `WC_Custom_Installments/Admin/Capability` | filter | — | `admin/src/Core/Helpers.php` |
-| `WC_Custom_Installments/Admin/Default_Options` | filter | — | `admin/src/Admin/Default_Options.php` |
+| `WC_Custom_Installments/Admin/Default_Options` | filter | `Woo_Custom_Installments/Admin/Set_Default_Options` | `admin/src/Admin/Default_Options.php` |
 | `WC_Custom_Installments/Admin/Onboarding_Bootstrap_Data` | filter | — | `admin/src/Admin/Onboarding/Registry.php` |
 | `WC_Custom_Installments/Admin/Product_Fields` | filter | — | `admin/src/Admin/Product_Settings.php` |
 | `WC_Custom_Installments/Admin/Settings_Schema` | filter | — | `admin/src/Admin/Settings/Registry.php` |
+| `WC_Custom_Installments/Admin/System_Status` | filter | — | `admin/src/Rest/Settings_Bootstrap.php` |
 | `WC_Custom_Installments/Assets/Frontend_Params` | filter | `Woo_Custom_Installments/Assets/Frontend_Params` | `admin/src/Assets/Storefront_Assets.php` |
+| `WC_Custom_Installments/Assets/Load_Font_Awesome` | filter | — | `admin/src/Assets/Storefront_Assets.php` |
 | `WC_Custom_Installments/Assets/Load_Storefront` | filter | — | `admin/src/Assets/Storefront_Assets.php` |
 | `WC_Custom_Installments/Assets/Set_Product_Id` | filter | `Woo_Custom_Installments/Assets/Set_Product_Id` | `admin/src/Assets/Storefront_Assets.php` |
 | `WC_Custom_Installments/Cart/Total_Title` | filter | `Woo_Custom_Installments/Cart/Total_Title` | `admin/src/Frontend/Render_Elements.php` |
@@ -325,6 +327,10 @@ _60 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Settings/Reset` | action | — | `admin/src/Admin/Settings/Repository.php` |
 | `WC_Custom_Installments/Settings/Saved` | action | — | `admin/src/Admin/Settings/Repository.php` |
 | `WC_Custom_Installments/Styles/Force_Important` | filter | `Woo_Custom_Installments/Styles/Force_Important` | `admin/src/Frontend/Styles.php` |
+| `WC_Custom_Installments/Templates/Theme_Override_Wins` | filter | `Woo_Custom_Installments/Templates/Theme_Override_Wins` | `admin/src/Frontend/Templates.php` |
+| `WC_Custom_Installments/Widgets/Align_Price_Group` | filter | `Woo_Custom_Installments/Widgets/Align_Price_Group` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
+| `WC_Custom_Installments/Widgets/Enable_Grid_Price` | filter | `Woo_Custom_Installments/Widgets/Enable_Grid_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
+| `WC_Custom_Installments/Widgets/Hidden_Old_Price` | filter | `Woo_Custom_Installments/Widgets/Hidden_Old_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 
 <!-- hooks:end -->
 

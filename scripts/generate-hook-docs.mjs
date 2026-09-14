@@ -34,6 +34,7 @@ const LEGACY_PREFIX = 'Woo_Custom_Installments/';
 const OVERRIDES = {
   'WC_Custom_Installments/Core/Before_Init': 'Woo_Custom_Installments/Before_Init',
   'WC_Custom_Installments/Core/Init': 'Woo_Custom_Installments/Init',
+  'WC_Custom_Installments/Admin/Default_Options': 'Woo_Custom_Installments/Admin/Set_Default_Options',
 };
 
 /**

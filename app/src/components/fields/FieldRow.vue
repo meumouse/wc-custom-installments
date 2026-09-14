@@ -9,12 +9,15 @@
  * @since 6.0.0
  */
 import BaseBadge from '../base/BaseBadge.vue';
+import BaseCode from '../base/BaseCode.vue';
 import BaseLabel from '../base/BaseLabel.vue';
 import { __ } from '../../utils/i18n';
 
 defineProps({
   label: { type: String, default: '' },
   description: { type: String, default: '' },
+  // A shortcode or snippet that places the same element by hand.
+  code: { type: String, default: '' },
   controlId: { type: String, default: '' },
   wide: { type: Boolean, default: false },
   locked: { type: Boolean, default: false },
@@ -34,6 +37,11 @@ defineProps({
 
       <p v-if="description" class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
         {{ description }}
+      </p>
+
+      <p v-if="code" class="mt-2 flex flex-wrap items-center gap-2 text-[13px] text-slate-500">
+        <span>{{ __('Shortcode:') }}</span>
+        <BaseCode>{{ code }}</BaseCode>
       </p>
     </div>
 

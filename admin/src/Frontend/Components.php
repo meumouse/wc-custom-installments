@@ -334,7 +334,7 @@ class Components {
 		$economy_value = Calculate_Values::get_pix_economy( $product );
 
 		$html = '<div class="woo-custom-installments-pix-section">';
-		$html .= '<h4 class="pix-method-title">' . esc_html( Repository::get('text_pix_container') ) . '</h4>';
+		$html .= '<h4 class="pix-method-title">' . wp_kses_post( Repository::get('text_pix_container') ) . '</h4>';
 		$html .= '<div class="pix-method-container">';
 		$html .= '<span class="pix-method-name">' . sprintf(
 			/* translators: %s: discounted price */
@@ -386,9 +386,9 @@ class Components {
 
 		$html = '<div class="woo-custom-installments-ticket-section">';
 		$html .= '<h4 class="ticket-method-title">' . esc_html__( 'Cobranças:', 'wc-custom-installments' ) . '</h4>';
-		$html .= '<span class="ticket-method-name">' . esc_html( Repository::get('text_ticket_container') ) . ' ' . wc_price( $price ) . '</span>';
+		$html .= '<span class="ticket-method-name">' . wp_kses_post( Repository::get('text_ticket_container') ) . ' ' . wc_price( $price ) . '</span>';
 		$html .= '<div class="ticket-method-container">';
-		$html .= '<span class="ticket-instructions">' . esc_html( Repository::get('text_instructions_ticket_container') ) . '</span>';
+		$html .= '<span class="ticket-instructions">' . wp_kses_post( Repository::get('text_instructions_ticket_container') ) . '</span>';
 		$html .= '</div>';
 		$html .= '<div class="container-badge-icon ticket-flag">';
 		$html .= '<img class="size-badge-icon" src="' . esc_url( WC_CUSTOM_INSTALLMENTS_ASSETS . 'storefront/img/boleto-badge.svg' ) . '"/>';
@@ -477,7 +477,7 @@ class Components {
 		$title = Repository::get( 'text_' . $type . '_card_container' );
 
 		$html = '<div class="woo-custom-installments-' . esc_attr( $type ) . '-card-section">';
-		$html .= '<h4 class="' . esc_attr( $type ) . '-card-method-title">' . esc_html( $title ) . '</h4>';
+		$html .= '<h4 class="' . esc_attr( $type ) . '-card-method-title">' . wp_kses_post( $title ) . '</h4>';
 
 		if ( Repository::is_active('enable_instant_approval_badge') ) {
 			$html .= '<div class="' . esc_attr( $type ) . '-card-method-container">';
@@ -524,7 +524,7 @@ class Components {
 			$text = $defaults['text_display_installments_payment_forms'];
 		}
 
-		$html = '<h4 class="installments-title">' . esc_html( Repository::get('text_table_installments') ) . '</h4>';
+		$html = '<h4 class="installments-title">' . wp_kses_post( Repository::get('text_table_installments') ) . '</h4>';
 		$html .= '<div id="table-installments">';
 		$html .= '<table class="table table-hover woo-custom-installments-table">';
 		$html .= '<tbody data-default-text="' . esc_attr( $text ) . '">';
@@ -561,7 +561,7 @@ class Components {
 		<div id="wci-accordion-installments" class="accordion">
 			<div class="wci-accordion-item">
 				<button type="button" class="wci-accordion-header">
-					<?php echo esc_html( Repository::get('text_button_installments') ); ?>
+					<?php echo wp_kses_post( Repository::get('text_button_installments') ); ?>
 					<svg class="wci-accordion-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M18 14L12 20L6 14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
 				</button>
 
@@ -610,13 +610,13 @@ class Components {
 
 		?>
 		<button type="button" class="wci-open-popup">
-			<span class="open-popup-text"><?php echo esc_html( Repository::get('text_button_installments') ); ?></span>
+			<span class="open-popup-text"><?php echo wp_kses_post( Repository::get('text_button_installments') ); ?></span>
 		</button>
 
 		<div class="wci-popup-container">
 			<div class="wci-popup-content">
 				<div class="wci-popup-header">
-					<h5 class="wci-popup-title"><?php echo esc_html( Repository::get('text_container_payment_forms') ); ?></h5>
+					<h5 class="wci-popup-title"><?php echo wp_kses_post( Repository::get('text_container_payment_forms') ); ?></h5>
 					<button type="button" class="btn-close wci-close-popup" aria-label="<?php esc_attr_e( 'Fechar', 'wc-custom-installments' ); ?>"></button>
 				</div>
 
@@ -749,13 +749,13 @@ class Components {
 		$html .= Helpers::render_icon( $element, $icon_class );
 
 		if ( '' !== trim( (string) $before ) ) {
-			$html .= '<span class="' . esc_attr( $before_class ) . '">' . esc_html( $before ) . '</span>';
+			$html .= '<span class="' . esc_attr( $before_class ) . '">' . wp_kses_post( $before ) . '</span>';
 		}
 
 		$html .= '<span class="discounted-price">' . $price . '</span>';
 
 		if ( '' !== trim( (string) $after ) ) {
-			$html .= '<span class="' . esc_attr( $after_class ) . '">' . esc_html( $after ) . '</span>';
+			$html .= '<span class="' . esc_attr( $after_class ) . '">' . wp_kses_post( $after ) . '</span>';
 		}
 
 		$html .= '</span>';

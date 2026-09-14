@@ -31,6 +31,7 @@ abstract class Abstract_Widget extends Widget_Base {
 		return array( Elementor::CATEGORY, 'woocommerce-elements-single' );
 	}
 
+
 	/**
 	 * Keywords that find this widget in the panel.
 	 *
@@ -40,6 +41,7 @@ abstract class Abstract_Widget extends Widget_Base {
 	public function get_keywords() {
 		return array( 'installments', 'price', 'discount', 'pix', 'woocommerce', 'parcelas' );
 	}
+
 
 	/**
 	 * Resolve the product this widget renders for.
@@ -55,8 +57,37 @@ abstract class Abstract_Widget extends Widget_Base {
 		}
 
 		// In the editor there is no product in the loop, and an empty box reads
-		// as a broken plugin rather than as an empty context.
-		return Helpers::is_builder_preview() ? Helpers::get_first_product() : false;
+		// as a broken plugin rather than as an empty context. The template's
+		// own preview product comes first, so the widgets and the storefront
+		// runtime price the same product.
+		if ( ! Elementor::is_preview() ) {
+			return false;
+		}
+
+		$preview_id = Elementor::get_preview_product_id();
+		$preview = $preview_id ? wc_get_product( $preview_id ) : false;
+
+		return $preview instanceof \WC_Product ? $preview : Helpers::get_first_product();
+	}
+
+
+	/**
+	 * Explain, in the editor only, why the storefront will not show a widget.
+	 *
+	 * Some widgets render only when a setting hands them the element. The
+	 * editor still draws them, so this is what keeps a designer from placing
+	 * one and wondering why the product page stays empty.
+	 *
+	 * @since 6.0.0
+	 * @param string $message | What the designer should know
+	 * @return void
+	 */
+	protected function render_editor_notice( $message ) {
+		if ( ! Elementor::is_preview() ) {
+			return;
+		}
+
+		printf( '<div class="wci-widget-placeholder">%s</div>', esc_html( $message ) );
 	}
 
 	/**

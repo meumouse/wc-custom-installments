@@ -2,6 +2,7 @@
 
 namespace MeuMouse\WC_Custom_Installments\Admin;
 
+use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
 
 defined('ABSPATH') || exit;
@@ -43,13 +44,14 @@ class Default_Options {
 		/**
 		 * Filter the plugin's default settings.
 		 *
-		 * An add-on registering new settings appends its defaults here.
+		 * An add-on registering new settings appends its defaults here. Also
+		 * fired under its 5.x name, `Woo_Custom_Installments/Admin/Set_Default_Options`.
 		 *
 		 * @since 6.0.0
 		 * @param array<string,mixed> $defaults | Default settings
 		 * @return array<string,mixed>
 		 */
-		return (array) apply_filters( 'WC_Custom_Installments/Admin/Default_Options', $defaults );
+		return (array) Hook_Aliases::apply_filters( 'WC_Custom_Installments/Admin/Default_Options', $defaults );
 	}
 
 
@@ -193,7 +195,7 @@ class Default_Options {
 			'custom_text_after_price_front' => __( 'no Pix', 'wc-custom-installments' ),
 
 			// Pro.
-			'text_display_installments_payment_forms' => '{{ parcelas }}x {{ valor }} {{ juros }}',
+			'text_display_installments_payment_forms' => __( '{{ parcelas }}x de {{ valor }} {{ juros }}', 'wc-custom-installments' ),
 			'text_display_installments_loop' => __( 'Em até {{ parcelas }}x de {{ valor }} {{ juros }}', 'wc-custom-installments' ),
 			'text_display_installments_single_product' => __( 'Em até {{ parcelas }}x de {{ valor }} {{ juros }}', 'wc-custom-installments' ),
 			'text_economy_pix_badge' => __( 'Economize %s no Pix', 'wc-custom-installments' ),

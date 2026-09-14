@@ -19,6 +19,20 @@ import { params } from './params';
  * @return {string} The formatted price, markup included.
  */
 export function formatPrice(amount) {
+  return `<span class="woocommerce-Price-amount amount">${formatAmount(amount)}</span>`;
+}
+
+/**
+ * Format an amount as the store's currency, as plain text.
+ *
+ * What 5.x's `getFormattedPrice()` returned - accounting.js output with no
+ * wrapper - which snippets write into an existing `.amount` element.
+ *
+ * @since 6.0.0
+ * @param {number} amount - The amount.
+ * @return {string} The formatted price.
+ */
+export function formatAmount(amount) {
   const currency = params.currency || {};
   const decimals = Number.isFinite(Number(currency.decimals)) ? Number(currency.decimals) : 2;
   const value = Number(amount);
@@ -36,5 +50,5 @@ export function formatPrice(amount) {
   const format = currency.format || '%s%v';
   const body = format.replace('%s', currency.symbol ?? '').replace('%v', number);
 
-  return `<span class="woocommerce-Price-amount amount">${sign}${body}</span>`;
+  return `${sign}${body}`;
 }

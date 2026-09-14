@@ -45,6 +45,11 @@ class Dynamic_Pricing_Discounts {
 	/**
 	 * Use the plugin's adjusted price.
 	 *
+	 * A variable product is priced from its cheapest variation, as in 5.x: the
+	 * plan under a "from" price has to start from the lowest price the customer
+	 * can actually pay. The variation the customer then picks carries its own
+	 * price, and the runtime follows that.
+	 *
 	 * @since 6.0.0
 	 * @param float $price | Price resolved so far
 	 * @param object $product | Product object
@@ -55,18 +60,60 @@ class Dynamic_Pricing_Discounts {
 			return $price;
 		}
 
-		// A variable product has no single price to adjust; the variation the
-		// customer picks carries its own, and the runtime follows that.
 		if ( $product->is_type('variable') ) {
-			return $price;
+			return $this->lowest_variation_price( $product, $price );
 		}
 
+		$adjusted = self::adjusted_price( $product );
+
+		return null !== $adjusted ? $adjusted : $price;
+	}
+
+
+	/**
+	 * The lowest price among a variable product's visible variations.
+	 *
+	 * @since 6.0.0
+	 * @param object $product | Variable product
+	 * @param float $price | Returned when no variation has a price
+	 * @return float
+	 */
+	private function lowest_variation_price( $product, $price ) {
+		$prices = array();
+
+		foreach ( $product->get_visible_children() as $variation_id ) {
+			$variation = wc_get_product( $variation_id );
+
+			if ( ! $variation instanceof \WC_Product ) {
+				continue;
+			}
+
+			$adjusted = self::adjusted_price( $variation );
+			$variation_price = null !== $adjusted ? $adjusted : $variation->get_price();
+
+			if ( is_numeric( $variation_price ) ) {
+				$prices[] = (float) $variation_price;
+			}
+		}
+
+		return $prices ? min( $prices ) : $price;
+	}
+
+
+	/**
+	 * The price the plugin adjusted a product to, for a single unit.
+	 *
+	 * @since 6.0.0
+	 * @param object $product | Product object
+	 * @return float|null Null when the plugin offers no adjusted price.
+	 */
+	private static function adjusted_price( $product ) {
 		if ( ! method_exists( 'RP_WCDPD_Product_Pricing', 'get_product_price' ) ) {
-			return $price;
+			return null;
 		}
 
 		$adjusted = \RP_WCDPD_Product_Pricing::get_product_price( $product, 1 );
 
-		return ( is_numeric( $adjusted ) && $adjusted > 0 ) ? (float) $adjusted : $price;
+		return ( is_numeric( $adjusted ) && $adjusted > 0 ) ? (float) $adjusted : null;
 	}
 }

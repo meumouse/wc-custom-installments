@@ -13,6 +13,7 @@
  */
 import { computed, ref, watch } from 'vue';
 import SettingsActionBar from './components/SettingsActionBar.vue';
+import SystemStatusCard from './components/cards/SystemStatusCard.vue';
 import TransferCard from './components/cards/TransferCard.vue';
 import BaseBadge from '../../components/base/BaseBadge.vue';
 import BaseButton from '../../components/base/BaseButton.vue';
@@ -124,7 +125,11 @@ const sectionContext = computed(() => ({ rest: props.bootstrap.rest || {} }));
 
 // The interest table renders one row per installment the store offers, so it
 // has to follow that setting as the reader changes it.
-const fieldContext = computed(() => ({ maxInstallments: settings.max_qtd_installments }));
+const fieldContext = computed(() => ({
+  maxInstallments: settings.max_qtd_installments,
+  firstInstallment: (Number(settings.max_qtd_installments_without_fee) || 0) + 1,
+  iconFormat: settings.icon_format_elements,
+}));
 
 /**
  * Report the outcome of an action.
@@ -256,8 +261,13 @@ async function onImport(document_) {
           :description="card.description"
           :locked="Boolean(card.locked)"
         >
+          <SystemStatusCard
+            v-if="card.component === 'system-status'"
+            :rows="bootstrap.system_status || []"
+          />
+
           <TransferCard
-            v-if="card.component === 'settings-transfer'"
+            v-else-if="card.component === 'settings-transfer'"
             :resetting="isResetting"
             @export="onExport"
             @import="onImport"

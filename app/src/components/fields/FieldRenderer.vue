@@ -79,7 +79,15 @@ const controlProps = computed(() => {
       return { ...shared, field };
 
     case 'installment-fees':
-      return { ...shared, field, maxInstallments: props.context.maxInstallments ?? 12 };
+      return {
+        ...shared,
+        field,
+        maxInstallments: props.context.maxInstallments ?? 12,
+        firstInstallment: props.context.firstInstallment ?? 1,
+      };
+
+    case 'element-design':
+      return { ...shared, field, iconFormat: props.context.iconFormat || 'class' };
 
     case 'toggle':
     case 'color':
@@ -136,6 +144,7 @@ function onLockedClick() {
   <FieldRow
     :label="field.label"
     :description="field.description"
+    :code="field.code || ''"
     :control-id="controlId"
     :wide="isWide"
     :locked="isLocked && showLockBadge"

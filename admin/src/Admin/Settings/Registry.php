@@ -196,7 +196,7 @@ class Registry {
 							'installment-fees',
 							'custom_fee_installments',
 							__( 'Tabela de juros', 'wc-custom-installments' ),
-							__( 'Uma taxa por quantidade de parcelas. Deixe uma linha vazia para usar a taxa global.', 'wc-custom-installments' ),
+							__( 'Uma taxa por quantidade de parcelas com juros. Deixe uma linha vazia para usar a taxa global.', 'wc-custom-installments' ),
 							array(
 								'feature' => 'fee_per_installment',
 								'depends_on' => array( 'set_fee_per_installment' => 'yes' ),
@@ -214,40 +214,50 @@ class Registry {
 							__( 'Parcela em destaque', 'wc-custom-installments' ),
 							__( 'Qual parcela aparece em destaque abaixo do preço.', 'wc-custom-installments' ),
 							array(
+								array( 'value' => 'hide', 'label' => __( 'Ocultar', 'wc-custom-installments' ) ),
 								array( 'value' => 'best_installment_without_fee', 'label' => __( 'A maior parcela sem juros', 'wc-custom-installments' ) ),
 								array( 'value' => 'best_installment_with_fee', 'label' => __( 'A maior parcela, com juros', 'wc-custom-installments' ) ),
-								array( 'value' => 'min_value_installment', 'label' => __( 'A menor parcela permitida', 'wc-custom-installments' ) ),
+								array( 'value' => 'both', 'label' => __( 'A maior parcela com e sem juros', 'wc-custom-installments' ) ),
+							),
+							array(
+								// Offered while 6.0 was in development, never implemented by the
+								// engine: it rendered nothing. The closest real behaviour wins.
+								'aliases' => array( 'min_value_installment' => 'best_installment_without_fee' ),
 							)
 						),
 						self::select(
 							'hook_display_best_installments',
 							__( 'Exibir a parcela em destaque em', 'wc-custom-installments' ),
 							__( 'Em quais páginas da loja ela aparece.', 'wc-custom-installments' ),
-							self::display_hook_options()
+							self::display_hook_options(),
+							array( 'aliases' => self::display_hook_aliases() )
 						),
 						self::select(
 							'display_installment_type',
 							__( 'Detalhes das parcelas', 'wc-custom-installments' ),
-							__( 'Como a tabela completa de parcelas é apresentada ao cliente.', 'wc-custom-installments' ),
+							__( 'Como as formas de pagamento e a tabela completa de parcelas são apresentadas na página do produto.', 'wc-custom-installments' ),
 							array(
 								array( 'value' => 'popup', 'label' => __( 'Em um popup', 'wc-custom-installments' ) ),
+								array( 'value' => 'accordion', 'label' => __( 'Em uma sanfona', 'wc-custom-installments' ) ),
 								array( 'value' => 'table', 'label' => __( 'Como tabela na página', 'wc-custom-installments' ) ),
-								array( 'value' => 'none', 'label' => __( 'Não exibir os detalhes', 'wc-custom-installments' ) ),
-							)
-						),
-						self::toggle(
-							'display_installments_cart',
-							__( 'Exibir parcelas no carrinho', 'wc-custom-installments' ),
-							__( 'Exibe o parcelamento do total do carrinho.', 'wc-custom-installments' )
+								array( 'value' => 'hide', 'label' => __( 'Ocultar', 'wc-custom-installments' ) ),
+							),
+							array( 'aliases' => array( 'none' => 'hide' ) )
 						),
 						self::select(
 							'hook_payment_form_single_product',
 							__( 'Posição do bloco de formas de pagamento', 'wc-custom-installments' ),
-							__( 'Onde as formas de pagamento aceitas aparecem na página do produto.', 'wc-custom-installments' ),
+							__( 'Onde as formas de pagamento aceitas aparecem na página do produto. Com "Shortcode" ou "Widget do Elementor", o bloco aparece somente onde você o colocar.', 'wc-custom-installments' ),
 							array(
 								array( 'value' => 'before_cart', 'label' => __( 'Antes do formulário de adicionar ao carrinho', 'wc-custom-installments' ) ),
 								array( 'value' => 'after_cart', 'label' => __( 'Depois do formulário de adicionar ao carrinho', 'wc-custom-installments' ) ),
-								array( 'value' => 'custom', 'label' => __( 'Em um gancho personalizado', 'wc-custom-installments' ) ),
+								array( 'value' => 'custom_hook', 'label' => __( 'Em um gancho personalizado', 'wc-custom-installments' ) ),
+								array( 'value' => 'shortcode', 'label' => __( 'Shortcode', 'wc-custom-installments' ) ),
+								array( 'value' => 'widget', 'label' => __( 'Widget do Elementor', 'wc-custom-installments' ) ),
+							),
+							array(
+								'aliases' => array( 'custom' => 'custom_hook' ),
+								'code' => '[woo_custom_installments_modal]',
 							)
 						),
 						self::text(
@@ -256,7 +266,7 @@ class Registry {
 							__( 'O gancho de ação ao qual o bloco de formas de pagamento é anexado.', 'wc-custom-installments' ),
 							array(
 								'placeholder' => 'woocommerce_single_product_summary',
-								'depends_on' => array( 'hook_payment_form_single_product' => 'custom' ),
+								'depends_on' => array( 'hook_payment_form_single_product' => 'custom_hook' ),
 							)
 						),
 					),
@@ -321,36 +331,55 @@ class Registry {
 							'product_price_discount_method',
 							__( 'Tipo de desconto', 'wc-custom-installments' ),
 							__( 'Se o desconto é uma porcentagem do preço ou um valor fixo.', 'wc-custom-installments' ),
-							self::discount_method_options()
+							self::discount_method_options(),
+							array( 'depends_on' => array( 'enable_all_discount_options' => 'yes' ) )
 						),
 						self::number(
 							'discount_main_price',
 							__( 'Valor do desconto', 'wc-custom-installments' ),
 							__( 'A porcentagem ou o valor descontado do preço.', 'wc-custom-installments' ),
-							array( 'step' => '0.01', 'min' => 0, 'placeholder' => '10' )
+							array(
+								'step' => '0.01',
+								'min' => 0,
+								'placeholder' => '10',
+								'depends_on' => array( 'enable_all_discount_options' => 'yes' ),
+							)
 						),
 						self::select(
 							'display_discount_price_hook',
 							__( 'Exibir o preço com desconto em', 'wc-custom-installments' ),
 							__( 'Em quais páginas da loja ela aparece.', 'wc-custom-installments' ),
-							self::display_hook_options()
+							self::display_hook_options(),
+							array(
+								'aliases' => self::display_hook_aliases(),
+								'depends_on' => array( 'enable_all_discount_options' => 'yes' ),
+							)
+						),
+						self::toggle(
+							'display_installments_cart',
+							__( 'Exibir o preço com desconto no carrinho', 'wc-custom-installments' ),
+							__( 'Adiciona aos totais do carrinho uma linha com o valor do pedido pago à vista.', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'enable_all_discount_options' => 'yes' ) )
 						),
 						self::toggle(
 							'include_shipping_value_in_discounts',
 							__( 'Incluir o frete no desconto', 'wc-custom-installments' ),
-							__( 'Aplica o desconto também ao frete, além dos produtos.', 'wc-custom-installments' )
+							__( 'Aplica o desconto também ao frete, além dos produtos.', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'enable_all_discount_options' => 'yes' ) )
 						),
 						self::toggle(
 							'display_tag_discount_price_checkout',
-							__( 'Exibir o desconto na finalização da compra', 'wc-custom-installments' ),
-							__( 'Exibe uma linha nos totais do pedido informando quanto foi descontado.', 'wc-custom-installments' )
+							__( 'Exibir o desconto na forma de pagamento', 'wc-custom-installments' ),
+							__( 'Na finalização da compra, exibe ao lado do nome de cada forma de pagamento um selo com o desconto que ela oferece.', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'enable_all_discount_options' => 'yes' ) )
 						),
 					),
 				),
 				array(
 					'id' => 'discounts-gateways',
 					'title' => __( 'Descontos por forma de pagamento', 'wc-custom-installments' ),
-					'description' => __( 'Um desconto diferente para cada forma de pagamento, aplicado aos totais do carrinho e da finalização da compra.', 'wc-custom-installments' ),
+					'description' => __( 'Um desconto diferente para cada forma de pagamento, aplicado aos totais da finalização da compra.', 'wc-custom-installments' ),
+					'depends_on' => array( 'enable_all_discount_options' => 'yes' ),
 					'fields' => array(
 						self::field(
 							'gateway-rates',
@@ -369,6 +398,7 @@ class Registry {
 					'id' => 'discounts-quantity',
 					'title' => __( 'Descontos por quantidade', 'wc-custom-installments' ),
 					'description' => __( 'Recompense os clientes que compram mais unidades do mesmo produto.', 'wc-custom-installments' ),
+					'depends_on' => array( 'enable_all_discount_options' => 'yes' ),
 					'fields' => array(
 						self::toggle(
 							'enable_functions_discount_per_quantity',
@@ -382,21 +412,22 @@ class Registry {
 							__( 'Se a regra é definida uma vez para a loja ou por produto.', 'wc-custom-installments' ),
 							array(
 								array( 'value' => 'global', 'label' => __( 'Todos os produtos', 'wc-custom-installments' ) ),
-								array( 'value' => 'per_product', 'label' => __( 'Cada produto individualmente', 'wc-custom-installments' ) ),
+								array( 'value' => 'product', 'label' => __( 'Cada produto individualmente', 'wc-custom-installments' ) ),
 							),
 							array(
 								'feature' => 'quantity_discounts',
+								'aliases' => array( 'per_product' => 'product' ),
 								'depends_on' => array( 'enable_functions_discount_per_quantity' => 'yes' ),
 							)
 						),
 						self::number(
 							'set_quantity_enable_discount',
 							__( 'Quantidade mínima', 'wc-custom-installments' ),
-							__( 'Quantas unidades o cliente precisa comprar para o desconto valer.', 'wc-custom-installments' ),
+							__( 'Quantas unidades o cliente precisa comprar para o desconto valer. No modo por produto, vale para os produtos que não definem a sua própria regra.', 'wc-custom-installments' ),
 							array(
 								'min' => 1,
 								'feature' => 'quantity_discounts',
-								'depends_on' => array( 'enable_discount_per_quantity_method' => 'global' ),
+								'depends_on' => array( 'enable_functions_discount_per_quantity' => 'yes' ),
 							)
 						),
 						self::select(
@@ -406,7 +437,7 @@ class Registry {
 							self::discount_method_options(),
 							array(
 								'feature' => 'quantity_discounts',
-								'depends_on' => array( 'enable_discount_per_quantity_method' => 'global' ),
+								'depends_on' => array( 'enable_functions_discount_per_quantity' => 'yes' ),
 							)
 						),
 						self::number(
@@ -417,7 +448,7 @@ class Registry {
 								'step' => '0.01',
 								'min' => 0,
 								'feature' => 'quantity_discounts',
-								'depends_on' => array( 'enable_discount_per_quantity_method' => 'global' ),
+								'depends_on' => array( 'enable_functions_discount_per_quantity' => 'yes' ),
 							)
 						),
 						self::toggle(
@@ -454,12 +485,16 @@ class Registry {
 					'id' => 'discounts-ticket',
 					'title' => __( 'Desconto no boleto', 'wc-custom-installments' ),
 					'description' => __( 'Um desconto separado para clientes que pagam com boleto bancário.', 'wc-custom-installments' ),
+					'depends_on' => array( 'enable_all_discount_options' => 'yes' ),
 					'fields' => array(
 						self::toggle(
 							'enable_ticket_discount_main_price',
 							__( 'Ativar o desconto no boleto', 'wc-custom-installments' ),
-							__( 'Exibe um segundo preço com desconto para pagamentos no boleto.', 'wc-custom-installments' ),
-							array( 'feature' => 'ticket_discount' )
+							__( 'Exibe um segundo preço com desconto para pagamentos no boleto, abaixo do desconto principal.', 'wc-custom-installments' ),
+							array(
+								'feature' => 'ticket_discount',
+								'code' => '[woo_custom_installments_ticket_discount_badge]',
+							)
 						),
 						self::select(
 							'discount_method_ticket',
@@ -489,6 +524,7 @@ class Registry {
 							self::display_hook_options(),
 							array(
 								'feature' => 'ticket_discount',
+								'aliases' => self::display_hook_aliases(),
 								'depends_on' => array( 'enable_ticket_discount_main_price' => 'yes' ),
 							)
 						),
@@ -508,7 +544,10 @@ class Registry {
 							'custom_text_after_price_front',
 							__( 'Observação após o preço', 'wc-custom-installments' ),
 							__( 'Por exemplo: "no Pix".', 'wc-custom-installments' ),
-							array( 'depends_on' => array( 'custom_text_after_price' => 'yes' ) )
+							array(
+								'html' => true,
+								'depends_on' => array( 'custom_text_after_price' => 'yes' ),
+							)
 						),
 						self::toggle(
 							'add_discount_custom_product_price',
@@ -547,6 +586,7 @@ class Registry {
 							self::display_hook_options(),
 							array(
 								'feature' => 'pix_economy_badge',
+								'aliases' => self::display_hook_aliases(),
 								'depends_on' => array( 'enable_economy_pix_badge' => 'yes' ),
 							)
 						),
@@ -579,7 +619,7 @@ class Registry {
 				array(
 					'id' => 'interests-general',
 					'title' => __( 'Juros no total do pedido', 'wc-custom-installments' ),
-					'description' => __( 'Adiciona uma taxa aos totais do carrinho e da finalização da compra conforme a forma de pagamento escolhida.', 'wc-custom-installments' ),
+					'description' => __( 'Adiciona uma taxa aos totais da finalização da compra conforme a forma de pagamento escolhida.', 'wc-custom-installments' ),
 					'fields' => array(
 						self::toggle(
 							'enable_all_interest_options',
@@ -588,15 +628,17 @@ class Registry {
 						),
 						self::toggle(
 							'display_tag_interest_checkout',
-							__( 'Exibir os juros na finalização da compra', 'wc-custom-installments' ),
-							__( 'Exibe uma linha nos totais do pedido informando quanto foi acrescentado.', 'wc-custom-installments' )
+							__( 'Exibir os juros na forma de pagamento', 'wc-custom-installments' ),
+							__( 'Na finalização da compra, exibe ao lado do nome de cada forma de pagamento um selo com a taxa de juros que ela cobra.', 'wc-custom-installments' ),
+							array( 'depends_on' => array( 'enable_all_interest_options' => 'yes' ) )
 						),
 					),
 				),
 				array(
 					'id' => 'interests-gateways',
 					'title' => __( 'Juros por forma de pagamento', 'wc-custom-installments' ),
-					'description' => __( 'Uma taxa diferente para cada forma de pagamento, aplicada aos totais do carrinho e da finalização da compra.', 'wc-custom-installments' ),
+					'description' => __( 'Uma taxa diferente para cada forma de pagamento, aplicada aos totais da finalização da compra.', 'wc-custom-installments' ),
+					'depends_on' => array( 'enable_all_interest_options' => 'yes' ),
 					'fields' => array(
 						self::field(
 							'gateway-rates',
@@ -637,28 +679,31 @@ class Registry {
 						self::toggle(
 							'enable_pix_method_payment_form',
 							__( 'Pix', 'wc-custom-installments' ),
-							__( 'Exibe a linha do Pix, com o selo e as instruções.', 'wc-custom-installments' )
+							__( 'Exibe a linha do Pix, com o selo e as instruções.', 'wc-custom-installments' ),
+							array( 'code' => '[woo_custom_installments_pix_container]' )
 						),
 						self::toggle(
 							'enable_instant_approval_badge',
 							__( 'Selo de aprovação imediata', 'wc-custom-installments' ),
-							__( 'Adiciona um aviso de "aprovação imediata" ao lado do selo do Pix.', 'wc-custom-installments' ),
-							array( 'depends_on' => array( 'enable_pix_method_payment_form' => 'yes' ) )
+							__( 'Adiciona um aviso de "aprovação imediata" ao Pix e aos cartões de crédito e de débito.', 'wc-custom-installments' )
 						),
 						self::toggle(
 							'enable_ticket_method_payment_form',
 							__( 'Boleto bancário', 'wc-custom-installments' ),
-							__( 'Exibe a linha do boleto, com o selo e as instruções.', 'wc-custom-installments' )
+							__( 'Exibe a linha do boleto, com o selo e as instruções.', 'wc-custom-installments' ),
+							array( 'code' => '[woo_custom_installments_ticket_container]' )
 						),
 						self::toggle(
 							'enable_credit_card_method_payment_form',
 							__( 'Cartão de crédito', 'wc-custom-installments' ),
-							__( 'Exibe a linha do cartão de crédito e as bandeiras que você aceita.', 'wc-custom-installments' )
+							__( 'Exibe a linha do cartão de crédito e as bandeiras que você aceita.', 'wc-custom-installments' ),
+							array( 'code' => '[woo_custom_installments_credit_card_container]' )
 						),
 						self::toggle(
 							'enable_debit_card_method_payment_form',
 							__( 'Cartão de débito', 'wc-custom-installments' ),
-							__( 'Exibe a linha do cartão de débito e as bandeiras que você aceita.', 'wc-custom-installments' )
+							__( 'Exibe a linha do cartão de débito e as bandeiras que você aceita.', 'wc-custom-installments' ),
+							array( 'code' => '[woo_custom_installments_debit_card_container]' )
 						),
 					),
 				),
@@ -692,8 +737,8 @@ class Registry {
 			'id' => 'texts',
 			'icon' => 'paragraph',
 			'title' => __( 'Textos', 'wc-custom-installments' ),
-			'description' => __( 'Todos os textos que o plugin exibe na loja.', 'wc-custom-installments' ),
-			'cards' => array(
+			'description' => __( 'Todos os textos que o plugin exibe na loja. Deixe um texto em branco para não exibi-lo. É possível usar HTML simples, como <strong>.', 'wc-custom-installments' ),
+			'cards' => self::allow_html( array(
 				array(
 					'id' => 'texts-price',
 					'title' => __( 'Em volta do preço', 'wc-custom-installments' ),
@@ -709,7 +754,7 @@ class Registry {
 				array(
 					'id' => 'texts-templates',
 					'title' => __( 'Modelos de parcela', 'wc-custom-installments' ),
-					'description' => __( 'Reescreva a linha de parcelamento por completo. Variáveis disponíveis: {{ parcelas }}, {{ valor }}, {{ juros }}.', 'wc-custom-installments' ),
+					'description' => __( 'Reescreva a linha de parcelamento por completo. Variáveis disponíveis: {{ parcelas }} (número de parcelas), {{ valor }} (valor da parcela), {{ juros }} (com ou sem juros) e {{ total }} (soma das parcelas).', 'wc-custom-installments' ),
 					'fields' => array(
 						self::placeholder_text( 'text_display_installments_loop', __( 'Na listagem de produtos', 'wc-custom-installments' ), '', array( 'feature' => 'custom_placeholders' ) ),
 						self::placeholder_text( 'text_display_installments_single_product', __( 'Na página do produto', 'wc-custom-installments' ), '', array( 'feature' => 'custom_placeholders' ) ),
@@ -752,8 +797,32 @@ class Registry {
 						),
 					),
 				),
-			),
+			) ),
 		);
+	}
+
+
+	/**
+	 * Let every copy field of a set of cards carry simple HTML.
+	 *
+	 * The 5.x plugin stored and printed these as written, and stores used that
+	 * for a bold word or a line break. The repository runs them through
+	 * `wp_kses_post()` instead of stripping the tags.
+	 *
+	 * @since 6.0.0
+	 * @param array<int,array<string,mixed>> $cards | Cards of a section
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function allow_html( $cards ) {
+		foreach ( $cards as $card_index => $card ) {
+			foreach ( (array) ( $card['fields'] ?? array() ) as $field_index => $field ) {
+				if ( in_array( $field['type'], array( 'text', 'textarea', 'placeholder-text' ), true ) ) {
+					$cards[ $card_index ]['fields'][ $field_index ]['html'] = true;
+				}
+			}
+		}
+
+		return $cards;
 	}
 
 
@@ -772,23 +841,24 @@ class Registry {
 			'cards' => array(
 				array(
 					'id' => 'styles-popup',
-					'title' => __( 'Popup de parcelas', 'wc-custom-installments' ),
-					'description' => __( 'O link que abre a tabela de parcelas e o espaçamento em volta dele.', 'wc-custom-installments' ),
+					'title' => __( 'Botão de parcelas', 'wc-custom-installments' ),
+					'description' => __( 'O botão que abre o popup ou a sanfona de parcelas e o espaçamento em volta dele.', 'wc-custom-installments' ),
 					'fields' => array(
-						self::color( 'button_popup_color', __( 'Cor do link', 'wc-custom-installments' ), __( 'Cor do link de detalhes das parcelas.', 'wc-custom-installments' ) ),
+						self::color( 'button_popup_color', __( 'Cor do botão', 'wc-custom-installments' ), __( 'A cor do texto e da borda do botão é obtida a partir desta cor.', 'wc-custom-installments' ) ),
 						self::select(
 							'button_popup_size',
-							__( 'Tamanho do link', 'wc-custom-installments' ),
+							__( 'Estilo do botão', 'wc-custom-installments' ),
 							'',
 							array(
 								array( 'value' => 'small', 'label' => __( 'Pequeno', 'wc-custom-installments' ) ),
 								array( 'value' => 'normal', 'label' => __( 'Normal', 'wc-custom-installments' ) ),
 								array( 'value' => 'large', 'label' => __( 'Grande', 'wc-custom-installments' ) ),
+								array( 'value' => 'link', 'label' => __( 'Link', 'wc-custom-installments' ) ),
 							)
 						),
-						self::unit( 'margin_top_popup_installments', 'unit_margin_top_popup_installments', __( 'Espaço acima', 'wc-custom-installments' ), '' ),
-						self::unit( 'margin_bottom_popup_installments', 'unit_margin_bottom_popup_installments', __( 'Espaço abaixo', 'wc-custom-installments' ), '' ),
-						self::unit( 'border_radius_popup_installments', 'unit_border_radius_popup_installments', __( 'Arredondamento dos cantos', 'wc-custom-installments' ), '' ),
+						self::unit( 'margin_top_popup_installments', 'unit_margin_top_popup_installments', __( 'Margem superior do popup ou da sanfona', 'wc-custom-installments' ), '' ),
+						self::unit( 'margin_bottom_popup_installments', 'unit_margin_bottom_popup_installments', __( 'Margem inferior do popup ou da sanfona', 'wc-custom-installments' ), '' ),
+						self::unit( 'border_radius_popup_installments', 'unit_border_radius_popup_installments', __( 'Arredondamento do botão', 'wc-custom-installments' ), '' ),
 					),
 				),
 				array(
@@ -817,25 +887,30 @@ class Registry {
 						self::select(
 							'icon_format_elements',
 							__( 'Formato dos ícones', 'wc-custom-installments' ),
-							__( 'O SVG embutido funciona em qualquer lugar; as fontes de ícones precisam que o tema carregue o Font Awesome.', 'wc-custom-installments' ),
+							__( 'Com classes do Font Awesome, o plugin carrega a biblioteca de ícones na loja. Com imagens, cada elemento usa o ícone enviado em "Design dos elementos".', 'wc-custom-installments' ),
 							array(
-								array( 'value' => 'svg', 'label' => __( 'SVG embutido', 'wc-custom-installments' ) ),
-								array( 'value' => 'class', 'label' => __( 'Classe do Font Awesome', 'wc-custom-installments' ) ),
-							)
+								array( 'value' => 'class', 'label' => __( 'Classe de ícone (Font Awesome)', 'wc-custom-installments' ) ),
+								array( 'value' => 'upload', 'label' => __( 'Enviar ícones (imagem)', 'wc-custom-installments' ) ),
+							),
+							array( 'aliases' => array( 'svg' => 'upload' ) )
 						),
 					),
 				),
 				array(
 					'id' => 'styles-elements',
 					'title' => __( 'Design dos elementos', 'wc-custom-installments' ),
-					'description' => __( 'Tipografia, espaçamento e cores para cada elemento do grupo de preços, por breakpoint.', 'wc-custom-installments' ),
+					'description' => __( 'Tipografia, espaçamento, cores e ícone de cada elemento do grupo de preços, para computador e celular.', 'wc-custom-installments' ),
 					'fields' => array(
 						self::field(
 							'element-design',
 							'elements_design',
-							__( 'Controles de design', 'wc-custom-installments' ),
-							__( 'Ordene os elementos e estilize cada um para celular e desktop.', 'wc-custom-installments' ),
-							array( 'feature' => 'advanced_design' )
+							__( 'Estilos dos elementos', 'wc-custom-installments' ),
+							__( 'Reordene os elementos com as setas e clique em "Editar" para estilizar cada um.', 'wc-custom-installments' ),
+							array(
+								'feature' => 'advanced_design',
+								'units' => array( 'px', 'em', 'rem', '%' ),
+								'weights' => array( '100', '200', '300', '400', '500', '600', '700', '800', '900' ),
+							)
 						),
 					),
 				),
@@ -899,6 +974,12 @@ class Registry {
 					),
 				),
 				array(
+					'id' => 'advanced-system-status',
+					'title' => __( 'Status do sistema', 'wc-custom-installments' ),
+					'description' => __( 'As versões e os limites do servidor que costumam explicar um problema. Informe-os ao pedir suporte.', 'wc-custom-installments' ),
+					'component' => 'system-status',
+				),
+				array(
 					'id' => 'advanced-transfer',
 					'title' => __( 'Importar e exportar', 'wc-custom-installments' ),
 					'description' => __( 'Transfira esta configuração para outra loja ou restaure os padrões.', 'wc-custom-installments' ),
@@ -939,6 +1020,24 @@ class Registry {
 			array( 'value' => 'only_single_product', 'label' => __( 'Somente a página do produto', 'wc-custom-installments' ) ),
 			array( 'value' => 'only_loop', 'label' => __( 'Somente a listagem de produtos', 'wc-custom-installments' ) ),
 			array( 'value' => 'none', 'label' => __( 'Em nenhum lugar', 'wc-custom-installments' ) ),
+		);
+	}
+
+
+	/**
+	 * The placement spellings the 5.x settings tabs used, and their names now.
+	 *
+	 * The migrator translates them once; the repository accepts them too, so a
+	 * 5.x export imported later lands on the same values.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,string>
+	 */
+	private static function display_hook_aliases() {
+		return array(
+			'global' => 'display_loop_and_single_product',
+			'only_loop_products' => 'only_loop',
+			'hide' => 'none',
 		);
 	}
 
@@ -1127,7 +1226,7 @@ class Registry {
 	 */
 	private static function placeholder_text( $key, $label, $description, $extra = array() ) {
 		return self::field( 'placeholder-text', $key, $label, $description, array_merge( array(
-			'tokens' => array( '{{ parcelas }}', '{{ valor }}', '{{ juros }}' ),
+			'tokens' => array( '{{ parcelas }}', '{{ valor }}', '{{ juros }}', '{{ total }}' ),
 		), $extra ) );
 	}
 

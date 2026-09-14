@@ -213,7 +213,7 @@ class Render_Elements {
 					$prefix = Repository::get('text_initial_variables');
 
 					if ( '' !== trim( (string) $prefix ) ) {
-						$html .= '<span class="woo-custom-installments-starting-from">' . esc_html( $prefix ) . '</span>';
+						$html .= '<span class="woo-custom-installments-starting-from">' . wp_kses_post( $prefix ) . '</span>';
 					}
 
 					$html .= '<span class="woo-custom-installments-price sale-price">' . wc_price( $min_current );
@@ -434,7 +434,7 @@ class Render_Elements {
 
 		$after = Repository::get('custom_text_after_price_front');
 		$suffix = '' !== trim( (string) $after )
-			? ' <span class="woo-custom-installments-text-after-price">' . esc_html( $after ) . '</span>'
+			? ' <span class="woo-custom-installments-text-after-price">' . wp_kses_post( $after ) . '</span>'
 			: '';
 
 		return wc_price( $base ) . $suffix;
