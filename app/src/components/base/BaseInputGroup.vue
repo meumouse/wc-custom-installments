@@ -15,7 +15,7 @@ defineProps({
 
 <template>
   <div
-    class="flex w-full items-stretch overflow-hidden rounded-lg border border-slate-200 bg-white transition-colors focus-within:border-primary-700 focus-within:ring-4 focus-within:ring-primary-100"
+    class="flex w-full items-stretch overflow-hidden rounded-lg border border-slate-200 bg-white transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary"
     :class="disabled ? 'bg-slate-50' : ''"
   >
     <div

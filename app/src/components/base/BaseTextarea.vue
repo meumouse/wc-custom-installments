@@ -32,7 +32,7 @@ const model = computed({
     :placeholder="placeholder || undefined"
     :rows="rows"
     :aria-label="ariaLabel || undefined"
-    class="block w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 leading-6 text-slate-700 transition-colors focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+    class="block w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 leading-6 text-slate-700 transition-colors focus:border-primary focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
     :class="monospace ? 'font-mono text-[13px]' : 'text-[14px]'"
   />
 </template>

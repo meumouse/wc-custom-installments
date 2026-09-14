@@ -86,7 +86,7 @@ const swatch = computed({
       :disabled="disabled"
       :aria-label="ariaLabel || undefined"
       :placeholder="placeholder || undefined"
-      class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+      class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:bg-slate-50"
       :class="fluid ? 'min-w-0 flex-1' : 'w-56 max-w-full'"
     />
 

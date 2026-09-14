@@ -280,8 +280,8 @@ onBeforeUnmount(() => {
           ? 'border-0 focus:outline-none'
           : [
               'rounded-[8px] border',
-              isOpen ? 'border-primary-700 ring-4 ring-primary-100' : 'border-slate-200',
-              'focus:border-primary-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-100',
+              isOpen ? 'border-primary ring-1 ring-primary' : 'border-slate-200',
+              'focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary',
             ]
       "
       @click="isOpen ? close(false) : open()"
@@ -332,7 +332,7 @@ onBeforeUnmount(() => {
               :aria-activedescendant="activeIndex >= 0 ? `${uid}-option-${activeIndex}` : undefined"
               :aria-label="__('Buscar')"
               :placeholder="__('Buscar…')"
-              class="w-full rounded-md border border-slate-200 bg-white py-2 pl-9 pr-3 text-[13px] text-slate-700 focus:border-primary-700 focus:ring-4 focus:ring-primary-100"
+              class="w-full rounded-md border border-slate-200 bg-white py-2 pl-9 pr-3 text-[13px] text-slate-700 focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
         </div>

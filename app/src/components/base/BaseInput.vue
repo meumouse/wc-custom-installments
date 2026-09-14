@@ -52,7 +52,7 @@ const model = computed({
     :class="[
       bare
         ? 'border-0'
-        : 'rounded-lg border border-slate-200 focus:border-primary-700 focus:ring-4 focus:ring-primary-100',
+        : 'rounded-lg border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary',
       monospace ? 'font-mono' : '',
     ]"
   />
