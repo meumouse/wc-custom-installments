@@ -8,7 +8,7 @@ badge, all fifteen shortcodes, the theme integrations and the setup wizard.
 
 ## What the Pro add-on adds
 
-14 capabilities. Each one is a gate: the setting is visible in the free plugin, marked
+15 capabilities. Each one is a gate: the setting is visible in the free plugin, marked
 Pro, and cannot be saved or take effect until a licence answers for it.
 
 | Capability | Gate |
@@ -27,6 +27,7 @@ Pro, and cannot be saved or take effect until a licence answers for it.
 | Descontos personalizados por produto | `product_overrides` |
 | Widgets adicionais do Elementor | `elementor_widgets_pro` |
 | Campanhas de desconto e parcelamento | `campaigns` |
+| Cadastro de bandeiras de cartão | `custom_card_brands` |
 
 ## How the split works
 

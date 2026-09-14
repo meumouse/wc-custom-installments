@@ -3342,3 +3342,63 @@ msgstr "Minutes"
 #: app/src/components/base/BaseDatePicker.vue:608
 msgid "Próximo mês"
 msgstr "Next month"
+
+#: admin/src/Core/Features.php:101
+msgid "Cadastro de bandeiras de cartão"
+msgstr "Card brand registration"
+
+#: admin/src/Admin/Settings/Registry.php:740
+msgid "Cadastrar bandeiras"
+msgstr "Register card brands"
+
+#: admin/src/Admin/Settings/Registry.php:741
+msgid "Adicione as bandeiras que você aceita e que não estão na lista, cada uma com o nome e a imagem do selo."
+msgstr "Add the card brands you accept that are not on the list, each with its name and badge image."
+
+#: admin/src/Admin/Settings/Registry.php:746
+msgid "Suas bandeiras"
+msgstr "Your card brands"
+
+#: admin/src/Admin/Settings/Registry.php:747
+msgid "Depois de salvar, cada bandeira aparece nas listas de bandeiras de crédito e de débito, onde você escolhe em qual das duas ela é exibida."
+msgstr "Once saved, each brand appears on the credit and debit card brand lists, where you choose which of the two shows it."
+
+#: app/src/components/fields/CardBrandsField.vue:51
+msgid "sem nome"
+msgstr "unnamed"
+
+#: app/src/components/fields/CardBrandsField.vue:118
+msgid "Escolher a imagem da bandeira"
+msgstr "Choose the brand image"
+
+#: app/src/components/fields/CardBrandsField.vue:118
+msgid "Usar esta imagem"
+msgstr "Use this image"
+
+#: app/src/components/fields/CardBrandsField.vue:127
+msgid "Nenhuma bandeira cadastrada ainda."
+msgstr "No card brands registered yet."
+
+#: app/src/components/fields/CardBrandsField.vue:147
+msgid "Nome da bandeira"
+msgstr "Brand name"
+
+#: app/src/components/fields/CardBrandsField.vue:159
+msgid "Imagem da bandeira %s"
+msgstr "Image of the %s brand"
+
+#: app/src/components/fields/CardBrandsField.vue:165
+msgid "Não salva"
+msgstr "Not saved"
+
+#: app/src/components/fields/CardBrandsField.vue:174
+msgid "Remover a bandeira %s"
+msgstr "Remove the %s brand"
+
+#: app/src/components/fields/CardBrandsField.vue:182
+msgid "Adicionar bandeira"
+msgstr "Add card brand"
+
+#: app/src/components/fields/CardBrandsField.vue:186
+msgid "Uma imagem pequena, de preferência SVG ou PNG com fundo transparente."
+msgstr "A small image, preferably SVG or a PNG with a transparent background."

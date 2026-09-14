@@ -21,6 +21,7 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
+use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
@@ -108,6 +109,25 @@ check( 'a free field is written', '18', Repository::get('max_qtd_installments') 
 check( 'a locked field is refused', 'no', Repository::get('enable_sale_badge') );
 check( 'a locked toggle is never active', false, Repository::is_active('enable_sale_badge') );
 
+echo PHP_EOL, 'Card brands registered while licensed, after the licence lapsed', PHP_EOL;
+
+update_option( Repository::OPTION, array_merge( (array) get_option( Repository::OPTION, array() ), array(
+	'custom_card_brands' => array( array( 'id' => 'custom_cabal', 'label' => 'Cabal', 'image' => 'https://example.com/cabal.png' ) ),
+	'enable_custom_cabal_flag_credit' => 'yes',
+) ) );
+
+Registry::flush();
+
+check( 'the brand is still listed', 'Cabal', Default_Options::get_card_brands()['custom_cabal'] ?? null );
+check( 'its switch is locked', true, ! empty( Registry::get_field_definitions()['enable_custom_cabal_flag_credit']['locked'] ) );
+check( 'so its badge leaves the storefront', false, Repository::is_active('enable_custom_cabal_flag_credit') );
+check( 'while a brand the plugin ships is not gated', '', Registry::get_field_definitions()['enable_visa_flag_credit']['feature'] );
+
+Repository::save_settings( array( 'custom_card_brands' => array() ) );
+
+check( 'the brands cannot be changed', array( 'custom_cabal' ), array_column( Repository::get('custom_card_brands'), 'id' ) );
+check( 'and a save leaves the switch as it was', 'yes', Repository::get('enable_custom_cabal_flag_credit') );
+
 echo PHP_EOL, 'Sanitization', PHP_EOL;
 
 Repository::save_settings( array(
@@ -128,11 +148,86 @@ add_filter( 'WC_Custom_Installments/Features/Is_Available', function() {
 Features::flush();
 
 check( 'the gate opens', true, Features::is_available('sale_badge') );
+check( 'a registered brand is back on the storefront, still switched on', true, Repository::is_active('enable_custom_cabal_flag_credit') );
 
 Repository::save_settings( array( 'enable_sale_badge' => 'yes' ) );
 
 check( 'the field is now written', 'yes', Repository::get('enable_sale_badge') );
 check( 'the toggle is now active', true, Repository::is_active('enable_sale_badge') );
+
+echo PHP_EOL, 'Registering card brands', PHP_EOL;
+
+Repository::save_settings( array(
+	'custom_card_brands' => array(
+		array( 'id' => 'custom_cabal', 'label' => 'Cabal', 'image' => 'https://example.com/cabal.png' ),
+		array( 'label' => 'Cartão Sorocred', 'image' => 'https://example.com/sorocred.svg' ),
+		array( 'label' => 'Cartão Sorocred', 'image' => 'javascript:alert(1)' ),
+		array( 'label' => '   ', 'image' => 'https://example.com/nameless.svg' ),
+		array( 'id' => 'visa', 'label' => 'Não é a Visa' ),
+		array( 'id' => 'custom_cabal', 'label' => 'Cabal de novo' ),
+		'not a row',
+	),
+	'enable_custom_cabal_flag_credit' => 'yes',
+) );
+
+$brands = Repository::get('custom_card_brands');
+
+check( 'a row with no name is dropped', array( 'Cabal', 'Cartão Sorocred', 'Cartão Sorocred', 'Não é a Visa', 'Cabal de novo' ), array_column( $brands, 'label' ) );
+check( 'a brand keeps its key', 'custom_cabal', $brands[0]['id'] );
+check( 'a new brand gets its key from its name', 'custom_cartao_sorocred', $brands[1]['id'] );
+check( 'a second brand of that name gets another', 'custom_cartao_sorocred_2', $brands[2]['id'] );
+check( 'a script URL is not an image', '', $brands[2]['image'] );
+check( 'a key the browser made up is replaced', 'custom_nao_e_a_visa', $brands[3]['id'] );
+check( 'and so is one another row already has', 'custom_cabal_de_novo', $brands[4]['id'] );
+check( 'a registered brand joins the list after the ones the plugin ships', array( 'cielo', 'custom_cabal' ), array_slice( array_keys( Default_Options::get_card_brands() ), 12, 2 ) );
+
+$definitions = Registry::get_field_definitions();
+
+check( 'it gets a switch on the credit card list', 'custom_card_brands', $definitions['enable_custom_cartao_sorocred_flag_credit']['feature'] ?? null );
+check( 'and on the debit card list', 'custom_card_brands', $definitions['enable_custom_cartao_sorocred_flag_debit']['feature'] ?? null );
+check( 'which starts off', 'no', Repository::get('enable_custom_cartao_sorocred_flag_credit') );
+
+Repository::save_settings( array(
+	'custom_card_brands' => array(
+		array( 'label' => 'Cartão Sorocred' ),
+		array( 'id' => 'custom_cartao_sorocred', 'label' => 'Sorocred', 'image' => 'https://example.com/sorocred.svg' ),
+		array( 'id' => 'custom_cabal', 'label' => 'Cabal', 'image' => 'https://example.com/cabal.png' ),
+	),
+	'enable_custom_cartao_sorocred_flag_credit' => 'yes',
+	'enable_custom_cabal_flag_credit' => 'yes',
+	'enable_custom_nao_e_a_visa_flag_debit' => 'yes',
+) );
+
+$brands = Repository::get('custom_card_brands');
+
+check( 'a renamed brand keeps its key', 'custom_cartao_sorocred', $brands[1]['id'] );
+check( 'a new row under its old name, listed first, does not take it', 'custom_cartao_sorocred_2', $brands[0]['id'] );
+check( 'its switch is written', true, Repository::is_active('enable_custom_cartao_sorocred_flag_credit') );
+check( 'a removed brand leaves the list', false, isset( Default_Options::get_card_brands()['custom_nao_e_a_visa'] ) );
+check( 'and takes its switches with it', false, array_key_exists( 'enable_custom_nao_e_a_visa_flag_debit', get_option( Repository::OPTION ) ) );
+
+$flags = ( new MeuMouse\WC_Custom_Installments\Frontend\Components() )->get_card_flags( 'credit-card', 'credit' );
+
+check( 'the storefront shows it with its own image', true, false !== strpos( $flags, 'src="https://example.com/sorocred.svg" alt="Sorocred"' ) );
+check( 'and its own class', true, false !== strpos( $flags, 'custom_cartao_sorocred-flag' ) );
+
+Repository::save_settings( array(
+	'custom_card_brands' => array(
+		array( 'id' => 'custom_cartao_sorocred', 'label' => 'Sorocred', 'image' => '' ),
+		array( 'id' => 'custom_cabal', 'label' => 'Cabal', 'image' => 'https://example.com/cabal.png' ),
+	),
+	'enable_custom_cartao_sorocred_flag_credit' => 'yes',
+	'enable_custom_cabal_flag_credit' => 'yes',
+) );
+
+check( 'a brand with no image yet is left out', false, strpos( ( new MeuMouse\WC_Custom_Installments\Frontend\Components() )->get_card_flags( 'credit-card', 'credit' ), 'custom_cartao_sorocred-flag' ) );
+
+Repository::save_settings( array(
+	'custom_card_brands' => array( array( 'id' => 'custom_elo_debito', 'label' => 'Elo Débito', 'image' => 'https://example.com/elo.svg' ) ),
+	'enable_custom_elo_debito_flag_debit' => 'yes',
+) );
+
+check( 'a brand arriving with its switches, as an import brings it, keeps them', 'yes', Repository::get('enable_custom_elo_debito_flag_debit') );
 
 echo PHP_EOL, 'The 5.x options and spellings', PHP_EOL;
 

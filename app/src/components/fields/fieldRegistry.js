@@ -17,6 +17,7 @@ import PlaceholderTextField from './PlaceholderTextField.vue';
 import GatewayRatesField from './GatewayRatesField.vue';
 import InstallmentFeesField from './InstallmentFeesField.vue';
 import ElementDesignField from './ElementDesignField.vue';
+import CardBrandsField from './CardBrandsField.vue';
 
 const registry = new Map();
 
@@ -101,6 +102,7 @@ registerFieldComponent('placeholder-text', PlaceholderTextField);
 registerFieldComponent('gateway-rates', GatewayRatesField);
 registerFieldComponent('installment-fees', InstallmentFeesField);
 registerFieldComponent('element-design', ElementDesignField);
+registerFieldComponent('card-brands', CardBrandsField);
 
 /**
  * Publish the registry so a separately built bundle can add to it.

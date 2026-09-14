@@ -736,6 +736,20 @@ class Registry {
 					),
 				),
 				array(
+					'id' => 'payment-methods-custom-brands',
+					'title' => __( 'Cadastrar bandeiras', 'wc-custom-installments' ),
+					'description' => __( 'Adicione as bandeiras que você aceita e que não estão na lista, cada uma com o nome e a imagem do selo.', 'wc-custom-installments' ),
+					'fields' => array(
+						self::field(
+							'card-brands',
+							'custom_card_brands',
+							__( 'Suas bandeiras', 'wc-custom-installments' ),
+							__( 'Depois de salvar, cada bandeira aparece nas listas de bandeiras de crédito e de débito, onde você escolhe em qual das duas ela é exibida.', 'wc-custom-installments' ),
+							array( 'feature' => 'custom_card_brands' )
+						),
+					),
+				),
+				array(
 					'id' => 'payment-methods-credit-brands',
 					'title' => __( 'Bandeiras de cartão de crédito', 'wc-custom-installments' ),
 					'description' => __( 'Os selos exibidos na linha do cartão de crédito.', 'wc-custom-installments' ),
@@ -1033,6 +1047,10 @@ class Registry {
 	/**
 	 * Build the badge toggles of one card row.
 	 *
+	 * A brand the store registered is gated like its registration, so the badge
+	 * leaves the storefront when the licence lapses and comes back, still
+	 * switched on, when it is renewed.
+	 *
 	 * @since 6.0.0
 	 * @param string $type | Either `credit` or `debit`
 	 * @return array<int,array<string,mixed>>
@@ -1041,7 +1059,9 @@ class Registry {
 		$fields = array();
 
 		foreach ( Default_Options::get_card_brands() as $brand => $label ) {
-			$fields[] = self::toggle( 'enable_' . $brand . '_flag_' . $type, $label, '' );
+			$extra = Default_Options::is_custom_brand_key( $brand ) ? array( 'feature' => 'custom_card_brands' ) : array();
+
+			$fields[] = self::toggle( 'enable_' . $brand . '_flag_' . $type, $label, '', $extra );
 		}
 
 		return $fields;

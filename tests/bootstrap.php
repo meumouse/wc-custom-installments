@@ -193,6 +193,25 @@ if ( ! function_exists('sanitize_key') ) {
 	}
 }
 
+if ( ! function_exists('remove_accents') ) {
+	/**
+	 * Replace accented Latin letters with their plain form.
+	 *
+	 * Only the letters Portuguese uses, which is all a brand name here needs.
+	 *
+	 * @param string $text | Raw text
+	 * @return string
+	 */
+	function remove_accents( $text ) {
+		return strtr( (string) $text, array(
+			'á' => 'a', 'à' => 'a', 'â' => 'a', 'ã' => 'a', 'é' => 'e', 'ê' => 'e', 'í' => 'i',
+			'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ú' => 'u', 'ü' => 'u', 'ç' => 'c',
+			'Á' => 'A', 'À' => 'A', 'Â' => 'A', 'Ã' => 'A', 'É' => 'E', 'Ê' => 'E', 'Í' => 'I',
+			'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ú' => 'U', 'Ü' => 'U', 'Ç' => 'C',
+		) );
+	}
+}
+
 if ( ! function_exists('sanitize_text_field') ) {
 	/**
 	 * Strip tags and trim a scalar value.

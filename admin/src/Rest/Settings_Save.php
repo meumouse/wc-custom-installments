@@ -2,6 +2,7 @@
 
 namespace MeuMouse\WC_Custom_Installments\Rest;
 
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use WP_REST_Request;
 
@@ -40,6 +41,11 @@ class Settings_Save extends Abstract_Route {
 	 * stored rather than echoing the submitted payload — a locked field the
 	 * client tried to change must come back with its real value.
 	 *
+	 * The schema comes back too, because a save can change it: a card brand
+	 * the store registers gets a switch on the credit and debit card lists,
+	 * and one it removes loses them. The settings are read back with their
+	 * defaults for the same reason, so those new switches arrive with a value.
+	 *
 	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
 	 * @return \WP_REST_Response
@@ -48,11 +54,12 @@ class Settings_Save extends Abstract_Route {
 		$payload = $request->get_json_params();
 		$settings = ( isset( $payload['settings'] ) && is_array( $payload['settings'] ) ) ? $payload['settings'] : array();
 
-		$saved = Repository::save_settings( $settings );
+		Repository::save_settings( $settings );
 
 		return $this->success_response( array(
 			'message' => __( 'Configurações salvas.', 'wc-custom-installments' ),
-			'settings' => $saved,
+			'settings' => Repository::get_settings(),
+			'schema' => Registry::get_schema(),
 		) );
 	}
 }

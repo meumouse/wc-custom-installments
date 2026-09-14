@@ -2,6 +2,7 @@
 
 namespace MeuMouse\WC_Custom_Installments\Admin;
 
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
 
@@ -23,6 +24,15 @@ defined('ABSPATH') || exit;
  * @author MeuMouse.com
  */
 class Default_Options {
+
+	/**
+	 * Prefix of the key of every card brand the store registers.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const CUSTOM_BRAND_PREFIX = 'custom_';
+
 
 	/**
 	 * Get every default, keyed by setting name.
@@ -160,6 +170,9 @@ class Default_Options {
 			'enable_ticket_method_payment_form' => 'no',
 			'enable_credit_card_method_payment_form' => 'no',
 			'enable_debit_card_method_payment_form' => 'no',
+
+			// Pro — the brands the store registers itself.
+			'custom_card_brands' => array(),
 		);
 
 		foreach ( self::get_card_brands() as $brand => $label ) {
@@ -255,23 +268,17 @@ class Default_Options {
 
 
 	/**
-	 * The card brands and payment providers the plugin ships badges for.
+	 * The card brands and payment providers the plugin offers badges for.
 	 *
 	 * The keys are the 5.x setting fragments, so `enable_visa_flag_credit` keeps
-	 * meaning what it always meant.
+	 * meaning what it always meant. The brands the store registered itself
+	 * (Pro) follow the ones the plugin ships.
 	 *
 	 * @since 6.0.0
 	 * @return array<string,string>
 	 */
 	public static function get_card_brands() {
-		/**
-		 * Filter the payment badges the plugin offers.
-		 *
-		 * @since 6.0.0
-		 * @param array<string,string> $brands | Brand key => display label
-		 * @return array<string,string>
-		 */
-		return (array) apply_filters( 'WC_Custom_Installments/Payment_Methods/Brands', array(
+		$brands = array(
 			'mastercard' => 'Mastercard',
 			'visa' => 'Visa',
 			'elo' => 'Elo',
@@ -285,6 +292,76 @@ class Default_Options {
 			'pagseguro' => 'PagSeguro',
 			'pagarme' => 'Pagar.me',
 			'cielo' => 'Cielo',
-		) );
+		);
+
+		// Listed with or without a licence. What the gate locks is their
+		// switches, so a lapsed licence shows the store's brands locked rather
+		// than making them, and what was switched on, disappear.
+		foreach ( self::get_custom_card_brands() as $brand ) {
+			if ( ! isset( $brands[ $brand['id'] ] ) ) {
+				$brands[ $brand['id'] ] = $brand['label'];
+			}
+		}
+
+		/**
+		 * Filter the payment badges the plugin offers.
+		 *
+		 * @since 6.0.0
+		 * @param array<string,string> $brands | Brand key => display label
+		 * @return array<string,string>
+		 */
+		return (array) apply_filters( 'WC_Custom_Installments/Payment_Methods/Brands', $brands );
+	}
+
+
+	/**
+	 * The card brands the store registered itself (Pro).
+	 *
+	 * Read from the stored option, not through the repository: the defaults are
+	 * built from the brand list and the repository merges the defaults in, so
+	 * asking it here would go round in circles. The list was sanitized when it
+	 * was written; this only drops rows an edited option could hold that no
+	 * longer name a brand.
+	 *
+	 * @since 6.0.0
+	 * @return array<int,array{id:string,label:string,image:string}>
+	 */
+	public static function get_custom_card_brands() {
+		$stored = get_option( Repository::OPTION, array() );
+		$rows = ( is_array( $stored ) && isset( $stored['custom_card_brands'] ) && is_array( $stored['custom_card_brands'] ) ) ? $stored['custom_card_brands'] : array();
+		$brands = array();
+
+		foreach ( $rows as $row ) {
+			$id = is_array( $row ) ? ( $row['id'] ?? '' ) : '';
+
+			if ( ! self::is_custom_brand_key( $id ) || isset( $brands[ $id ] ) || '' === trim( (string) ( $row['label'] ?? '' ) ) ) {
+				continue;
+			}
+
+			$brands[ $id ] = array(
+				'id' => $id,
+				'label' => (string) $row['label'],
+				'image' => (string) ( $row['image'] ?? '' ),
+			);
+		}
+
+		return array_values( $brands );
+	}
+
+
+	/**
+	 * Whether a brand key is one of those the store registered.
+	 *
+	 * Those keys carry a prefix of their own, so none can collide with a brand
+	 * the plugin ships, today or in a later version: a brand's key names its
+	 * switches (`enable_{key}_flag_credit`), and two brands sharing one would
+	 * share those too.
+	 *
+	 * @since 6.0.0
+	 * @param mixed $key | Brand key
+	 * @return bool
+	 */
+	public static function is_custom_brand_key( $key ) {
+		return is_string( $key ) && 1 === preg_match( '/^' . self::CUSTOM_BRAND_PREFIX . '[a-z0-9_]+$/', $key );
 	}
 }

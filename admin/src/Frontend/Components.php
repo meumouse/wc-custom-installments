@@ -420,10 +420,15 @@ class Components {
 	 * @return string
 	 */
 	public function get_card_flags( $card_type, $type ) {
+		$brands = \MeuMouse\WC_Custom_Installments\Admin\Default_Options::get_card_brands();
+
+		// A brand the store registered brings its own image; the others ship
+		// one named after their key.
+		$images = array_column( \MeuMouse\WC_Custom_Installments\Admin\Default_Options::get_custom_card_brands(), 'image', 'id' );
 		$flags = array();
 
-		foreach ( \MeuMouse\WC_Custom_Installments\Admin\Default_Options::get_card_brands() as $brand => $label ) {
-			$flags[ $brand ] = WC_CUSTOM_INSTALLMENTS_ASSETS . 'storefront/img/' . str_replace( '_', '-', $brand ) . '-badge.svg';
+		foreach ( $brands as $brand => $label ) {
+			$flags[ $brand ] = $images[ $brand ] ?? WC_CUSTOM_INSTALLMENTS_ASSETS . 'storefront/img/' . str_replace( '_', '-', $brand ) . '-badge.svg';
 		}
 
 		/**
@@ -440,12 +445,13 @@ class Components {
 		$html = '';
 
 		foreach ( $flags as $brand => $url ) {
-			if ( ! Repository::is_active( 'enable_' . $brand . '_flag_' . $type ) ) {
+			// A registered brand still waiting for its image has nothing to show.
+			if ( '' === (string) $url || ! Repository::is_active( 'enable_' . $brand . '_flag_' . $type ) ) {
 				continue;
 			}
 
 			$html .= '<div class="container-badge-icon ' . esc_attr( $card_type ) . ' ' . esc_attr( $brand ) . '-flag">';
-			$html .= '<img class="size-badge-icon" src="' . esc_url( $url ) . '"/>';
+			$html .= '<img class="size-badge-icon" src="' . esc_url( $url ) . '" alt="' . esc_attr( $brands[ $brand ] ?? '' ) . '"/>';
 			$html .= '</div>';
 		}
 

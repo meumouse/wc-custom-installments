@@ -120,7 +120,13 @@ class Repository {
 			$sanitized[ $key ] = self::sanitize_value( $incoming[ $key ], $definition );
 		}
 
+		$sanitized = self::sync_brand_switches( $sanitized, $current, $incoming );
+
 		update_option( self::OPTION, $sanitized );
+
+		// The schema lists a switch per brand the store registered, and that
+		// list may have just changed.
+		Registry::flush();
 
 		/**
 		 * Fires after the settings are stored, with both sides of the change.
@@ -148,6 +154,8 @@ class Repository {
 		$defaults = Default_Options::get_defaults();
 
 		update_option( self::OPTION, $defaults );
+
+		Registry::flush();
 
 		do_action( 'WC_Custom_Installments/Settings/Reset', $defaults );
 
@@ -196,6 +204,9 @@ class Repository {
 
 			case 'element-design':
 				return self::sanitize_elements_design( $value, $definition );
+
+			case 'card-brands':
+				return self::sanitize_card_brands( $value );
 
 			default:
 				if ( is_array( $value ) ) {
@@ -496,6 +507,161 @@ class Repository {
 		}
 
 		return $clean;
+	}
+
+
+	/**
+	 * Sanitize the card brands the store registered.
+	 *
+	 * Shape: `array( array( 'id' => 'custom_sorocred', 'label' => 'Sorocred',
+	 * 'image' => 'https://…' ) )`, in the order the store listed them. A row
+	 * with no name is dropped.
+	 *
+	 * A brand keeps its key for good, whatever it is renamed to, because the
+	 * key names its switches. Keys are handed out here, never by the browser: a
+	 * new row arrives without one and gets it from its name, and a key that is
+	 * malformed or already taken is replaced. The rows that had a key keep
+	 * theirs before any is handed out, so a new row named like an existing
+	 * brand cannot take that brand's key, and its switches with it.
+	 *
+	 * @since 6.0.0
+	 * @param mixed $value | Incoming value
+	 * @return array<int,array{id:string,label:string,image:string}>
+	 */
+	private static function sanitize_card_brands( $value ) {
+		if ( ! is_array( $value ) ) {
+			return array();
+		}
+
+		$rows = array();
+		$taken = array();
+
+		foreach ( $value as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$label = sanitize_text_field( (string) ( $row['label'] ?? '' ) );
+
+			if ( '' === $label ) {
+				continue;
+			}
+
+			$id = $row['id'] ?? '';
+
+			if ( Default_Options::is_custom_brand_key( $id ) && ! isset( $taken[ $id ] ) ) {
+				$taken[ $id ] = true;
+			} else {
+				$id = '';
+			}
+
+			$rows[] = array(
+				'id' => $id,
+				'label' => $label,
+				'image' => self::sanitize_image_url( $row['image'] ?? '' ),
+			);
+		}
+
+		foreach ( $rows as $index => $row ) {
+			if ( '' !== $row['id'] ) {
+				continue;
+			}
+
+			$id = self::card_brand_key( $row['label'], $taken );
+			$taken[ $id ] = true;
+			$rows[ $index ]['id'] = $id;
+		}
+
+		return $rows;
+	}
+
+
+	/**
+	 * Derive a key for a new brand from its name.
+	 *
+	 * "Cartão Sorocred" becomes `custom_cartao_sorocred`, and a second brand of
+	 * that name `custom_cartao_sorocred_2`.
+	 *
+	 * @since 6.0.0
+	 * @param string $label | Brand name
+	 * @param array<string,bool> $taken | Keys already in use
+	 * @return string
+	 */
+	private static function card_brand_key( $label, $taken ) {
+		$slug = strtolower( remove_accents( $label ) );
+		$slug = trim( substr( trim( (string) preg_replace( '/[^a-z0-9]+/', '_', $slug ), '_' ), 0, 40 ), '_' );
+		$base = Default_Options::CUSTOM_BRAND_PREFIX . ( '' !== $slug ? $slug : 'brand' );
+		$key = $base;
+
+		for ( $suffix = 2; isset( $taken[ $key ] ); $suffix++ ) {
+			$key = $base . '_' . $suffix;
+		}
+
+		return $key;
+	}
+
+
+	/**
+	 * Keep the switches of the store's brands in step with the brands.
+	 *
+	 * The schema lists a brand's switches only once the brand is stored, so the
+	 * definitions a save is checked against lack those of a brand arriving in
+	 * the same save - an imported configuration, typically. Those are written
+	 * here, under the same gate. And a brand the store removed takes its
+	 * switches with it: left behind, they would switch a later brand of the same
+	 * name on by themselves.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $settings | Settings about to be stored
+	 * @param array<string,mixed> $previous | Settings as they were
+	 * @param array<string,mixed> $incoming | Payload submitted by the client
+	 * @return array<string,mixed>
+	 */
+	private static function sync_brand_switches( $settings, $previous, $incoming ) {
+		$brands = self::card_brand_ids( $settings['custom_card_brands'] ?? array() );
+		$before = self::card_brand_ids( $previous['custom_card_brands'] ?? array() );
+
+		foreach ( array_diff( $before, $brands ) as $id ) {
+			unset( $settings[ 'enable_' . $id . '_flag_credit' ], $settings[ 'enable_' . $id . '_flag_debit' ] );
+		}
+
+		if ( ! Features::is_available('custom_card_brands') ) {
+			return $settings;
+		}
+
+		foreach ( array_diff( $brands, $before ) as $id ) {
+			foreach ( array( 'credit', 'debit' ) as $type ) {
+				$key = 'enable_' . $id . '_flag_' . $type;
+
+				if ( array_key_exists( $key, $incoming ) ) {
+					$settings[ $key ] = Helpers::to_toggle( $incoming[ $key ] );
+				}
+			}
+		}
+
+		return $settings;
+	}
+
+
+	/**
+	 * The keys of a list of registered brands.
+	 *
+	 * @since 6.0.0
+	 * @param mixed $rows | Stored or sanitized brand rows
+	 * @return array<int,string>
+	 */
+	private static function card_brand_ids( $rows ) {
+		$ids = array();
+
+		foreach ( is_array( $rows ) ? $rows : array() as $row ) {
+			$id = is_array( $row ) ? ( $row['id'] ?? '' ) : '';
+
+			if ( Default_Options::is_custom_brand_key( $id ) ) {
+				$ids[] = $id;
+			}
+		}
+
+		return $ids;
 	}
 
 

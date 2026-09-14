@@ -98,6 +98,7 @@ class Features {
 			'product_overrides' => __( 'Descontos personalizados por produto', 'wc-custom-installments' ),
 			'elementor_widgets_pro' => __( 'Widgets adicionais do Elementor', 'wc-custom-installments' ),
 			'campaigns' => __( 'Campanhas de desconto e parcelamento', 'wc-custom-installments' ),
+			'custom_card_brands' => __( 'Cadastro de bandeiras de cartão', 'wc-custom-installments' ),
 		);
 
 		foreach ( $definitions as $id => $label ) {

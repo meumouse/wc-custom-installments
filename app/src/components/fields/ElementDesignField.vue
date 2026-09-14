@@ -33,6 +33,7 @@ import BaseSelect from '../base/BaseSelect.vue';
 import BaseTabs from '../base/BaseTabs.vue';
 import DesignBoxControl from './DesignBoxControl.vue';
 import ElementPreview from './ElementPreview.vue';
+import { useMediaLibrary } from '../../composables/useMediaLibrary';
 import { unitOptions as buildUnitOptions } from '../../utils/units';
 import { __, sprintf } from '../../utils/i18n';
 
@@ -74,7 +75,7 @@ const unitOptions = computed(() => buildUnitOptions(props.field.units));
 
 const weights = computed(() => (props.field.weights || ['400', '500', '600', '700']).map((weight) => String(weight)));
 
-const canBrowse = computed(() => typeof window !== 'undefined' && Boolean(window.wp?.media));
+const { canBrowse, pickImage } = useMediaLibrary();
 
 /**
  * Deep copy a plain value.
@@ -332,24 +333,11 @@ function resetColor(property) {
  * @return {void}
  */
 function browseImage() {
-  if (!canBrowse.value || props.disabled) {
+  if (props.disabled) {
     return;
   }
 
-  const frame = window.wp.media({
-    title: __('Escolher ícone'),
-    button: { text: __('Usar este ícone') },
-    library: { type: 'image' },
-    multiple: false,
-  });
-
-  frame.on('select', () => {
-    const attachment = frame.state().get('selection').first().toJSON();
-
-    update('icon.image', attachment.url || '');
-  });
-
-  frame.open();
+  pickImage({ title: __('Escolher ícone'), button: __('Usar este ícone') }, (url) => update('icon.image', url));
 }
 </script>
 
