@@ -6,9 +6,13 @@
  * inside it, and when it closes focus goes back to whatever opened it: a
  * keyboard user should end up where they were, not at the top of the page.
  *
+ * Only the content scrolls. The title, the way out and the actions stay in
+ * place, so a long form never hides the button that closes it.
+ *
  * @since 6.0.0
  */
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
 import BaseIconButton from './BaseIconButton.vue';
 import { ensurePortal } from '../../utils/portal';
 import { __ } from '../../utils/i18n';
@@ -27,10 +31,28 @@ const emit = defineEmits(['close']);
 const portal = ensurePortal();
 const uid = `wcci-modal-${Math.random().toString(36).slice(2, 9)}`;
 const panel = ref(null);
+const body = ref(null);
+const content = ref(null);
+const overflowing = ref(false);
 
 let returnFocus = null;
 
-const SIZES = { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' };
+const SIZES = { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl', '2xl': 'max-w-5xl' };
+
+/**
+ * Note whether the content is taller than the room it has.
+ *
+ * The actions get a divider only then: on a short dialog there is nothing
+ * underneath for it to separate them from.
+ *
+ * @since 6.0.0
+ * @return {void}
+ */
+function measure() {
+  overflowing.value = Boolean(body.value && body.value.scrollHeight > body.value.clientHeight + 1);
+}
+
+useResizeObserver([body, content], measure);
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -126,10 +148,13 @@ onBeforeUnmount(() => {
         :aria-labelledby="title ? `${uid}-title` : undefined"
         :aria-describedby="description ? `${uid}-description` : undefined"
         tabindex="-1"
-        class="wcci-pop-in relative flex max-h-[calc(100dvh-4rem)] w-full flex-col overflow-y-auto rounded-lg bg-white p-6 shadow-soft focus:outline-none"
+        class="wcci-pop-in relative flex max-h-[calc(100dvh-4rem)] w-full flex-col overflow-hidden rounded-lg bg-white shadow-soft focus:outline-none"
         :class="SIZES[size] || SIZES.md"
       >
-        <div class="flex items-start justify-between gap-4">
+        <div
+          class="flex shrink-0 items-start justify-between gap-4 px-6 pt-6"
+          :class="$slots.default || $slots.actions ? '' : 'pb-6'"
+        >
           <div class="min-w-0">
             <p
               v-if="eyebrow || $slots.eyebrow"
@@ -155,11 +180,22 @@ onBeforeUnmount(() => {
           />
         </div>
 
-        <div v-if="$slots.default" class="mt-4 text-[14px] leading-6 text-slate-600">
-          <slot />
+        <div
+          v-if="$slots.default"
+          ref="body"
+          class="min-h-0 flex-1 overflow-y-auto px-6 pt-4 text-[14px] leading-6 text-slate-600"
+          :class="!$slots.actions ? 'pb-6' : overflowing ? 'pb-4' : ''"
+        >
+          <div ref="content">
+            <slot />
+          </div>
         </div>
 
-        <div v-if="$slots.actions" class="mt-6 flex flex-wrap items-center justify-end gap-3">
+        <div
+          v-if="$slots.actions"
+          class="flex shrink-0 flex-wrap items-center justify-end gap-3 px-6 pb-6"
+          :class="overflowing ? 'border-t border-slate-100 pt-4' : 'pt-6'"
+        >
           <slot name="actions" />
         </div>
       </div>
