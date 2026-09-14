@@ -4,10 +4,11 @@
  * WooCommerce owns these screens, so this stays a small jQuery script beside
  * its own rather than a Vue app (AGENTS.md §7). It does two things:
  *
- * 1. In the product data panel, applies the display rules each field declares
- *    (`depends_on`, `visible`, `discount`; see Admin\Product_Settings), which
- *    the panel prints as JSON on its wrapper. PHP already rendered the starting
- *    state, so without this script the panel is correct, just not live.
+ * 1. In the plugin's tab and in each variation, applies the display rules each
+ *    field declares (`depends_on`, `visible`, `discount`; see
+ *    Admin\Product_Settings), which the panel prints as JSON on its wrapper.
+ *    PHP already rendered the starting state, so without this script the panel
+ *    is correct, just not live.
  * 2. In the products list, copies a row's stored values into the quick edit
  *    boxes when it opens, the way WooCommerce's quick-edit.js does for its own
  *    fields. WordPress builds that form once for the whole list; unfilled, its
@@ -33,26 +34,35 @@
 	var QUICK_EDIT_LOADED = 'wc_custom_installments_quick_edit';
 
 	/**
+	 * The product's own controls, which carry their key as their ID.
+	 */
+	var PRODUCT_IDS = { prefix: '', suffix: '' };
+
+	/**
 	 * Find a field's control by its key.
 	 *
 	 * getElementById rather than a selector: keys are meta keys, and nothing
-	 * guarantees one is free of characters a selector would read as syntax.
+	 * guarantees one is free of characters a selector would read as syntax. A
+	 * variation's controls wrap the key in the prefix and suffix its panel
+	 * declares, the suffix being the variation's position on the page.
 	 *
 	 * @param {string} key Field key.
+	 * @param {{prefix: string, suffix: string}} ids How the panel builds IDs.
 	 * @returns {jQuery} The control, possibly empty.
 	 */
-	function control( key ) {
-		return $( document.getElementById( key ) );
+	function control( key, ids ) {
+		return $( document.getElementById( ids.prefix + key + ids.suffix ) );
 	}
 
 	/**
 	 * A field's current value, with a checkbox read as `yes` or `no`.
 	 *
 	 * @param {string} key Field key.
+	 * @param {{prefix: string, suffix: string}} ids How the panel builds IDs.
 	 * @returns {string} The value.
 	 */
-	function valueOf( key ) {
-		var $control = control( key );
+	function valueOf( key, ids ) {
+		var $control = control( key, ids );
 
 		if ( ! $control.length ) {
 			return '';
@@ -72,10 +82,11 @@
 	 *
 	 * @param {string} key Field key.
 	 * @param {Object} rules Display rules by field key.
+	 * @param {{prefix: string, suffix: string}} ids How the panel builds IDs.
 	 * @param {number} depth Guard against rules that point at each other.
 	 * @returns {boolean} Whether it is shown.
 	 */
-	function isShown( key, rules, depth ) {
+	function isShown( key, rules, ids, depth ) {
 		var rule = rules[ key ];
 
 		if ( ! rule ) {
@@ -93,23 +104,27 @@
 		return Object.keys( rule.depends_on ).every( function ( other ) {
 			var expected = [].concat( rule.depends_on[ other ] ).map( String );
 
-			return -1 !== expected.indexOf( valueOf( other ) ) && isShown( other, rules, depth + 1 );
+			return -1 !== expected.indexOf( valueOf( other, ids ) ) && isShown( other, rules, ids, depth + 1 );
 		} );
 	}
 
 	/**
-	 * Apply every rule to the panel.
+	 * Apply every rule to a panel.
 	 *
-	 * @param {jQuery} $panel The plugin's options group.
+	 * "Hide the discount" is the product's, wherever the panel is: a variation
+	 * follows its product there.
+	 *
+	 * @param {jQuery} $panel The plugin's fields, in the tab or in a variation.
 	 * @param {Object} rules Display rules by field key.
+	 * @param {{prefix: string, suffix: string}} ids How the panel builds IDs.
 	 * @returns {void}
 	 */
-	function refresh( $panel, rules ) {
-		var discountHidden = 'yes' === valueOf( DISABLE_DISCOUNT );
+	function refresh( $panel, rules, ids ) {
+		var discountHidden = 'yes' === valueOf( DISABLE_DISCOUNT, PRODUCT_IDS );
 
 		Object.keys( rules ).forEach( function ( key ) {
-			var $control = control( key );
-			var shown = isShown( key, rules, 0 );
+			var $control = control( key, ids );
+			var shown = isShown( key, rules, ids, 0 );
 
 			if ( ! $control.length ) {
 				return;
@@ -126,19 +141,32 @@
 				.filter( function () {
 					return $( this ).attr( 'data-field' ) === key;
 				} )
-				.toggleClass( 'hidden', ! ( shown && discountHidden && 'yes' === valueOf( key ) ) );
+				.toggleClass( 'hidden', ! ( shown && discountHidden && 'yes' === valueOf( key, ids ) ) );
 		} );
 	}
 
 	/**
-	 * Wire the product data panel.
+	 * Wire every panel on the page not wired yet.
+	 *
+	 * The tab's panel is there on load; a variation's arrives with the page of
+	 * variations WooCommerce fetches, so this runs again each time one does.
 	 *
 	 * @returns {void}
 	 */
-	function initPanel() {
+	function initPanels() {
 		$( '.wc-custom-installments-options' ).each( function () {
 			var $panel = $( this );
 			var rules = {};
+			var ids = {
+				prefix: String( $panel.attr( 'data-wcci-prefix' ) || '' ),
+				suffix: String( $panel.attr( 'data-wcci-suffix' ) || '' ),
+			};
+
+			if ( $panel.data( 'wcciReady' ) ) {
+				return;
+			}
+
+			$panel.data( 'wcciReady', true );
 
 			try {
 				rules = JSON.parse( $panel.attr( 'data-wcci-fields' ) || '{}' ) || {};
@@ -150,11 +178,30 @@
 				return;
 			}
 
-			$panel.on( 'change', 'input, select', function () {
-				refresh( $panel, rules );
+			$panel.on( 'change wc-custom-installments-refresh', function () {
+				refresh( $panel, rules, ids );
 			} );
 
-			refresh( $panel, rules );
+			refresh( $panel, rules, ids );
+		} );
+	}
+
+	/**
+	 * Keep the panels live across the product screen.
+	 *
+	 * @returns {void}
+	 */
+	function initPanel() {
+		initPanels();
+
+		$( document ).on( 'woocommerce_variations_loaded woocommerce_variations_added', initPanels );
+
+		// The product's "hide the discount" decides the warnings in every
+		// variation too, which sit outside the tab it lives in.
+		$( document ).on( 'change', 'input', function () {
+			if ( this.id === DISABLE_DISCOUNT ) {
+				$( '.wc-custom-installments-options' ).trigger( 'wc-custom-installments-refresh' );
+			}
 		} );
 	}
 

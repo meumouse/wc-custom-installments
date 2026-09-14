@@ -38,6 +38,7 @@ import { debug, params } from './params';
 const state = {
   price: currentPrices(),
   quantity: 1,
+  discounts: null,
 };
 
 let booted = false;
@@ -50,7 +51,24 @@ let debounceTimer = null;
  * @return {void}
  */
 function refresh() {
-  updateAmounts(state.price, state.quantity);
+  updateAmounts(state.price, state.quantity, state.discounts);
+}
+
+/**
+ * The discounts that apply to the chosen variation.
+ *
+ * The server hands each variation its own per-unit discount, already resolved
+ * against its parent; the store-wide ones (upfront and bank slip) stay the
+ * page's. Null when the variation carries none, and the page's apply.
+ *
+ * @since 6.0.0
+ * @param {object} [variation] - WooCommerce's variation data.
+ * @return {object|null} The discounts, or null.
+ */
+function variationDiscounts(variation) {
+  const own = variation && variation.wcci_discount;
+
+  return own && 'object' === typeof own ? { ...(params.discounts || {}), ...own } : null;
 }
 
 /**
@@ -74,10 +92,12 @@ function quantityApplies() {
  *
  * @since 6.0.0
  * @param {{regular: number, current: number}} price - The variation's unit prices.
+ * @param {object} [variation] - WooCommerce's variation data.
  * @return {void}
  */
-function onVariation(price) {
+function onVariation(price, variation) {
   state.price = price;
+  state.discounts = variationDiscounts(variation);
 
   if (replacesRange() || (quantityApplies() && state.quantity > 1)) {
     refresh();
@@ -92,6 +112,7 @@ function onVariation(price) {
  */
 function onVariationReset() {
   state.price = currentPrices();
+  state.discounts = null;
 }
 
 /**
@@ -156,7 +177,7 @@ const runtime = {
    * @return {void}
    */
   updateAmounts(price, quantity = 1) {
-    updateAmounts(normalizePrice(price, state.price), quantity);
+    updateAmounts(normalizePrice(price, state.price), quantity, state.discounts);
   },
 
   /**

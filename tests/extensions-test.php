@@ -154,6 +154,37 @@ function render_product_panel( $settings ) {
 }
 
 /**
+ * Render the plugin's fields for one variation and return their markup.
+ *
+ * @param Product_Settings $settings | Product screen handler
+ * @param int $loop | Position of the variation on the page
+ * @param int $variation_id | Variation ID
+ * @param int $parent_id | Parent product ID
+ * @return string
+ */
+function render_variation_panel( $settings, $loop, $variation_id, $parent_id ) {
+	ob_start();
+	$settings->render_variation_fields( $loop, array(), (object) array( 'ID' => $variation_id, 'post_parent' => $parent_id ) );
+
+	return (string) ob_get_clean();
+}
+
+if ( ! function_exists('delete_post_meta') ) {
+	/**
+	 * Delete a meta value.
+	 *
+	 * @param int $id | Post ID
+	 * @param string $key | Meta key
+	 * @return bool
+	 */
+	function delete_post_meta( $id, $key ) {
+		unset( $GLOBALS['wp_test_meta'][ $id ][ $key ] );
+
+		return true;
+	}
+}
+
+/**
  * Whether a field's printed paragraph contains a string.
  *
  * @param string $html | Panel markup
@@ -289,6 +320,18 @@ check( 'a free field is neither', false, field_markup_has( $html, '__disable_ins
 // while locked they are there to show what the add-on would give the product.
 check( 'the quantity group shows while it is locked', true, str_contains( $html, 'wc-custom-installments-group" data-group="quantity_discounts"' ) );
 
+$variation_html = render_variation_panel( $settings, 2, 31, 30 );
+
+check( 'a variation\'s fields are marked Pro too', true, field_markup_has( $variation_html, 'wcci_variation_enable_discount_per_unit_2', 'wc-custom-installments-pro-badge' ) );
+check( 'and disabled', true, field_markup_has( $variation_html, 'wcci_variation_enable_discount_per_unit_2', 'disabled' ) );
+
+$GLOBALS['wp_test_meta'] = array();
+$_POST = array( Product_Settings::VARIATION_FIELDS => array( 2 => array( 'enable_discount_per_unit' => 'yes', 'unit_discount_amount' => '5' ) ) );
+
+$settings->save_variation_fields( 31, 2 );
+
+check( 'and a locked variation field is refused', '', get_post_meta( 31, 'enable_discount_per_unit', true ) );
+
 echo PHP_EOL, 'Saving the product', PHP_EOL;
 
 // Saving is what enforces the gate: the disabled input submits nothing, but
@@ -316,6 +359,68 @@ $html = render_product_panel( $settings );
 check( 'no Pro notice', false, str_contains( $html, 'wc-custom-installments-pro-notice' ) );
 check( 'no field marked Pro', false, str_contains( $html, 'wc-custom-installments-pro-badge' ) );
 check( 'and the store-wide quantity rule hides its group again', true, str_contains( $html, 'wc-custom-installments-group hidden" data-group="quantity_discounts"' ) );
+
+echo PHP_EOL, 'A variation\'s own discount', PHP_EOL;
+
+$keys = array_column( Product_Settings::get_variation_fields(), 'key' );
+
+// The engine reads these on the variation before its parent, so they have to
+// be the product's own 5.x keys.
+check(
+	'a variation stores the product\'s meta keys',
+	array( 'enable_discount_per_unit', 'discount_per_unit_method', 'unit_discount_amount', 'discount_gateway' ),
+	$keys
+);
+
+$GLOBALS['wp_test_meta'] = array();
+$variation_html = render_variation_panel( $settings, 3, 31, 30 );
+
+check( 'its fields carry the variation\'s position', true, str_contains( $variation_html, 'id="wcci_variation_unit_discount_amount_3"' ) );
+check( 'which the panel script reads', true, str_contains( $variation_html, 'data-wcci-suffix="_3"' ) );
+check( 'no field is marked Pro once the gate opens', false, str_contains( $variation_html, 'wc-custom-installments-pro-badge' ) );
+check( 'and the details wait for "its own discount"', true, field_markup_has( $variation_html, 'wcci_variation_unit_discount_amount_3', 'hidden' ) );
+
+$_POST = array(
+	Product_Settings::VARIATION_FIELDS => array(
+		3 => array(
+			'enable_discount_per_unit' => 'yes',
+			'discount_per_unit_method' => 'fixed',
+			'unit_discount_amount' => '15',
+			'discount_gateway' => '',
+		),
+	),
+);
+
+$settings->save_variation_fields( 31, 3 );
+
+check( 'its own discount is written to the variation', 'yes', get_post_meta( 31, 'enable_discount_per_unit', true ) );
+check( 'with its details', array( 'fixed', '15' ), array( get_post_meta( 31, 'discount_per_unit_method', true ), get_post_meta( 31, 'unit_discount_amount', true ) ) );
+
+// The product's own checkbox shares the key. Posted under a name of their own,
+// the variation's fields cannot tick it.
+$settings->save_fields( 30 );
+check( 'and never reaches the product\'s checkbox', 'no', get_post_meta( 30, 'enable_discount_per_unit', true ) );
+
+$_POST = array( Product_Settings::VARIATION_FIELDS => array( 3 => array( 'discount_per_unit_method' => 'something-else' ) ) );
+$settings->save_variation_fields( 31, 3 );
+check( 'a choice the list does not offer is not written', 'fixed', get_post_meta( 31, 'discount_per_unit_method', true ) );
+
+$_POST = array();
+$settings->save_variation_fields( 31, 3 );
+check( 'a variation missing from the request keeps what it has', 'yes', get_post_meta( 31, 'enable_discount_per_unit', true ) );
+
+// "Same as the product" stores nothing, which is what makes the variation
+// follow its product again; a stored `no` would mean the store's discount.
+$_POST = array( Product_Settings::VARIATION_FIELDS => array( 3 => array( 'enable_discount_per_unit' => '' ) ) );
+$settings->save_variation_fields( 31, 3 );
+check( '"same as the product" removes the setting', false, array_key_exists( 'enable_discount_per_unit', $GLOBALS['wp_test_meta'][31] ?? array() ) );
+
+$_POST = array( Product_Settings::VARIATION_FIELDS => array( 3 => array( 'enable_discount_per_unit' => 'no' ) ) );
+$settings->save_variation_fields( 31, 3 );
+check( 'and "the store\'s discount" stores no', 'no', get_post_meta( 31, 'enable_discount_per_unit', true ) );
+
+$_POST = array();
+$GLOBALS['wp_test_meta'] = array();
 
 echo PHP_EOL, 'The documented extension helpers', PHP_EOL;
 

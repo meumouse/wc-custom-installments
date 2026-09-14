@@ -68,6 +68,19 @@ class Product_Settings {
 	 */
 	const PANEL = 'wc_custom_installments_product_data';
 
+	/**
+	 * Request key holding the variation fields, by variation index.
+	 *
+	 * The variation fields share their meta keys with the product's, so they
+	 * post under one name of their own: a variation's
+	 * `enable_discount_per_unit` must never read as the product's checkbox
+	 * when both reach the same request.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const VARIATION_FIELDS = 'wc_custom_installments_variation';
+
 
 	/**
 	 * Register the product screen hooks.
@@ -79,6 +92,9 @@ class Product_Settings {
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'register_tab' ) );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'render_panel' ) );
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save_fields' ) );
+
+		add_action( 'woocommerce_product_after_variable_attributes', array( $this, 'render_variation_fields' ), 10, 3 );
+		add_action( 'woocommerce_save_product_variation', array( $this, 'save_variation_fields' ), 10, 2 );
 
 		add_action( 'woocommerce_product_quick_edit_end', array( $this, 'render_quick_edit_fields' ) );
 		add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'render_bulk_edit_fields' ) );
@@ -103,10 +119,7 @@ class Product_Settings {
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_fields() {
-		$methods = array(
-			'percentage' => __( 'Porcentagem', 'wc-custom-installments' ),
-			'fixed' => __( 'Valor fixo', 'wc-custom-installments' ),
-		);
+		$methods = self::get_discount_methods();
 
 		$per_unit = array( 'enable_discount_per_unit' => 'yes' );
 		$per_quantity = array( 'enable_discount_per_quantity' => 'yes' );
@@ -280,6 +293,197 @@ class Product_Settings {
 		}
 
 		return array_filter( $groups );
+	}
+
+
+	/**
+	 * The ways a per-product discount can be expressed.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,string>
+	 */
+	private static function get_discount_methods() {
+		return array(
+			'percentage' => __( 'Porcentagem', 'wc-custom-installments' ),
+			'fixed' => __( 'Valor fixo', 'wc-custom-installments' ),
+		);
+	}
+
+
+	/**
+	 * The fields each variation of a variable product offers.
+	 *
+	 * The product's own discount, set per variation, under the same meta keys
+	 * the product uses. The engine reads a variation's before its parent's
+	 * (Calculate_Values::get_discount_source_id()), so the toggle is a choice of
+	 * three rather than a checkbox: "same as the product" stores nothing and
+	 * follows the parent, which is how every existing variation behaves, while
+	 * a checkbox would write `no` on the first save and cut that link.
+	 *
+	 * Besides the keys a product field has, a variation field may carry `width`
+	 * (`first`, `last` or `full`, WooCommerce's variation columns) and `inherit`
+	 * (an empty value deletes the meta instead of storing it).
+	 *
+	 * @since 6.0.0
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function get_variation_fields() {
+		$own = array( 'enable_discount_per_unit' => 'yes' );
+
+		return array(
+			array(
+				'key' => 'enable_discount_per_unit',
+				'type' => 'select',
+				'label' => __( 'Desconto personalizado', 'wc-custom-installments' ),
+				'description' => __( 'Por padrão, a variação usa o desconto definido no produto.', 'wc-custom-installments' ),
+				'options' => array(
+					'' => __( 'Igual ao produto', 'wc-custom-installments' ),
+					'yes' => __( 'Desconto próprio desta variação', 'wc-custom-installments' ),
+					'no' => __( 'Desconto geral da loja', 'wc-custom-installments' ),
+				),
+				'feature' => 'product_overrides',
+				'discount' => true,
+				'inherit' => true,
+				'width' => 'full',
+			),
+			array(
+				'key' => 'discount_per_unit_method',
+				'type' => 'select',
+				'label' => __( 'Tipo de desconto', 'wc-custom-installments' ),
+				'description' => '',
+				'options' => self::get_discount_methods(),
+				'feature' => 'product_overrides',
+				'depends_on' => $own,
+				'width' => 'first',
+			),
+			array(
+				'key' => 'unit_discount_amount',
+				'type' => 'number',
+				'label' => __( 'Valor do desconto', 'wc-custom-installments' ),
+				'description' => '',
+				'feature' => 'product_overrides',
+				'depends_on' => $own,
+				'width' => 'last',
+			),
+			array(
+				'key' => 'discount_gateway',
+				'type' => 'select',
+				'label' => __( 'Somente para esta forma de pagamento', 'wc-custom-installments' ),
+				'description' => __( 'Deixe vazio para aplicar o desconto em qualquer forma de pagamento.', 'wc-custom-installments' ),
+				'options' => self::get_gateway_options(),
+				'feature' => 'gateway_discounts',
+				'depends_on' => $own,
+				'width' => 'full',
+			),
+		);
+	}
+
+
+	/**
+	 * Print the plugin's fields inside one variation.
+	 *
+	 * WooCommerce loads variations over AJAX, a page at a time, and names each
+	 * control by its position on the page, so the IDs and names carry that
+	 * index. The panel script reads it from the wrapper.
+	 *
+	 * @since 6.0.0
+	 * @param int $loop | Position of the variation on the page
+	 * @param array<string,mixed> $variation_data | Variation data
+	 * @param object $variation | Variation post
+	 * @return void
+	 */
+	public function render_variation_fields( $loop, $variation_data, $variation ) {
+		if ( ! is_object( $variation ) || empty( $variation->ID ) ) {
+			return;
+		}
+
+		$loop = (int) $loop;
+		$fields = self::get_variation_fields();
+		$prefix = 'wcci_variation_';
+		$suffix = '_' . $loop;
+
+		printf(
+			'<div class="wc-custom-installments-options wc-custom-installments-variation" data-wcci-fields="%1$s" data-wcci-prefix="%2$s" data-wcci-suffix="%3$s"><h4 class="wc-custom-installments-group-title">%4$s</h4>',
+			esc_attr( (string) wp_json_encode( $this->get_field_rules( $fields ) ) ),
+			esc_attr( $prefix ),
+			esc_attr( $suffix ),
+			esc_html__( 'Parcelas Customizadas', 'wc-custom-installments' )
+		);
+
+		$discount_disabled = 'yes' === get_post_meta( (int) $variation->post_parent, '__disable_discount_main_price', true );
+
+		foreach ( $fields as $field ) {
+			$shown = $this->is_field_shown( $field, $fields, $variation->ID );
+
+			$this->render_field( $field, $variation->ID, $shown, array(
+				'id' => $prefix . $field['key'] . $suffix,
+				'name' => sprintf( '%s[%d][%s]', self::VARIATION_FIELDS, $loop, $field['key'] ),
+				'wrapper_class' => 'form-row form-row-' . ( $field['width'] ?? 'full' ),
+			) );
+
+			if ( ! empty( $field['discount'] ) ) {
+				$this->render_discount_overridden_notice(
+					$field['key'],
+					$shown && $discount_disabled && 'yes' === get_post_meta( $variation->ID, $field['key'], true )
+				);
+			}
+		}
+
+		echo '</div>';
+	}
+
+
+	/**
+	 * Persist a variation's fields.
+	 *
+	 * Only what was posted for this variation is written: WooCommerce saves the
+	 * variations that changed, and a variation absent from the request keeps
+	 * what it has. A gated field is never written, as on the product.
+	 *
+	 * @since 6.0.0
+	 * @param int $variation_id | Variation ID
+	 * @param int $index | Position of the variation in the request
+	 * @return void
+	 */
+	public function save_variation_fields( $variation_id, $index ) {
+		if ( ! current_user_can( 'edit_post', $variation_id ) ) {
+			return;
+		}
+
+		// WooCommerce has verified its own nonce before saving variations.
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST[ self::VARIATION_FIELDS ][ $index ] ) || ! is_array( $_POST[ self::VARIATION_FIELDS ][ $index ] ) ) {
+			return;
+		}
+
+		$submitted = wp_unslash( $_POST[ self::VARIATION_FIELDS ][ $index ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each value is sanitized below.
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+
+		foreach ( self::get_variation_fields() as $field ) {
+			$key = $field['key'];
+
+			if ( self::is_locked( $field ) || ! array_key_exists( $key, $submitted ) || ! is_scalar( $submitted[ $key ] ) ) {
+				continue;
+			}
+
+			$value = sanitize_text_field( (string) $submitted[ $key ] );
+
+			// A choice the list does not offer is not written. That covers a
+			// value the variation already holds and the list no longer offers,
+			// such as a payment method since removed: the select shows it as a
+			// choice of its own, and skipping it here keeps it.
+			if ( 'select' === $field['type'] && ! array_key_exists( $value, $field['options'] ?? array() ) ) {
+				continue;
+			}
+
+			if ( '' === $value && ! empty( $field['inherit'] ) ) {
+				delete_post_meta( $variation_id, $key );
+
+				continue;
+			}
+
+			update_post_meta( $variation_id, $key, $value );
+		}
 	}
 
 
@@ -639,14 +843,15 @@ class Product_Settings {
 	 *
 	 * @since 6.0.0
 	 * @param array<string,mixed> $field | Field definition
-	 * @param int $post_id | Product ID
+	 * @param int $post_id | Product or variation ID
 	 * @param bool $shown | Whether it starts out visible
+	 * @param array<string,string> $overrides | `id`, `name` and `wrapper_class` for a control that is not the product's own
 	 * @return void
 	 */
-	private function render_field( $field, $post_id, $shown = true ) {
+	private function render_field( $field, $post_id, $shown = true, $overrides = array() ) {
 		$locked = self::is_locked( $field );
 		$label = $field['label'];
-		$wrapper_classes = array();
+		$wrapper_classes = array_filter( array( $overrides['wrapper_class'] ?? '' ) );
 
 		// WooCommerce passes the label through wp_kses_post(), so the badge
 		// survives and the label itself is escaped here.
@@ -665,13 +870,17 @@ class Product_Settings {
 		}
 
 		$args = array(
-			'id' => $field['key'],
+			'id' => $overrides['id'] ?? $field['key'],
 			'label' => $label,
 			'description' => $field['description'] ?? '',
 			'desc_tip' => true,
 			'value' => get_post_meta( $post_id, $field['key'], true ),
 			'wrapper_class' => implode( ' ', $wrapper_classes ),
 		);
+
+		if ( ! empty( $overrides['name'] ) ) {
+			$args['name'] = $overrides['name'];
+		}
 
 		if ( $locked ) {
 			$args['custom_attributes'] = array( 'disabled' => 'disabled' );

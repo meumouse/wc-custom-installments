@@ -6,7 +6,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: wc-custom-installments\n"
 
-#: admin/src/Admin/Product_Settings.php:818
+#: admin/src/Admin/Product_Settings.php:1027
 msgid "— Sem alteração —"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "A maior parcela, com juros"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:623
+#: admin/src/Admin/Product_Settings.php:827
 msgid ""
 "A opção \"Ocultar o desconto\" está ativada, então este desconto não é "
 "aplicado."
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Ativa os recursos de juros para toda a loja."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:593
+#: admin/src/Admin/Product_Settings.php:797
 #: admin/src/Admin/Settings/Registry.php:355
 msgid "Ativar descontos"
 msgstr ""
@@ -276,7 +276,7 @@ msgstr ""
 msgid "Ativar juros"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:412
+#: admin/src/Admin/Product_Settings.php:616
 msgid "Ativar licença"
 msgstr ""
 
@@ -525,7 +525,7 @@ msgstr ""
 msgid "Confirmar"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:422
+#: admin/src/Admin/Product_Settings.php:626
 msgid "Conhecer o Pro"
 msgstr ""
 
@@ -582,7 +582,8 @@ msgid ""
 "extensions.wc-custom-installments de cada produto e do carrinho."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:169
+#: admin/src/Admin/Product_Settings.php:182
+#: admin/src/Admin/Product_Settings.php:372
 msgid "Deixe vazio para aplicar o desconto em qualquer forma de pagamento."
 msgstr ""
 
@@ -614,6 +615,10 @@ msgstr ""
 msgid "Desconto à vista"
 msgstr ""
 
+#: admin/src/Admin/Product_Settings.php:342
+msgid "Desconto geral da loja"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:514
 #: admin/src/Core/Features.php:91
 #: admin/src/Frontend/Element_Registry.php:103
@@ -628,7 +633,11 @@ msgstr ""
 msgid "Desconto no preço do produto"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:137
+#: admin/src/Admin/Product_Settings.php:337
+msgid "Desconto personalizado"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:150
 msgid "Desconto personalizado para este produto"
 msgstr ""
 
@@ -636,15 +645,19 @@ msgstr ""
 msgid "Desconto por forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:249
+#: admin/src/Admin/Product_Settings.php:262
 msgid "Desconto por quantidade"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:179
+#: admin/src/Admin/Product_Settings.php:192
 msgid "Desconto por quantidade para este produto"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:248
+#: admin/src/Admin/Product_Settings.php:341
+msgid "Desconto próprio desta variação"
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:261
 #: admin/src/Admin/Settings/Registry.php:345
 msgid "Descontos"
 msgstr ""
@@ -1056,6 +1069,10 @@ msgstr ""
 msgid "Ícones"
 msgstr ""
 
+#: admin/src/Admin/Product_Settings.php:340
+msgid "Igual ao produto"
+msgstr ""
+
 #: app/src/components/fields/ElementDesignField.vue:607
 msgid "Imagem do ícone"
 msgstr ""
@@ -1278,12 +1295,12 @@ msgstr ""
 msgid "Nada corresponde à sua busca."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:820
+#: admin/src/Admin/Product_Settings.php:1029
 #: admin/src/Rest/Settings_Bootstrap.php:96
 msgid "Não"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:129
+#: admin/src/Admin/Product_Settings.php:142
 msgid "Não aplicar nem exibir o desconto à vista para este produto."
 msgstr ""
 
@@ -1291,7 +1308,7 @@ msgstr ""
 msgid "Não conseguimos acessar o serviço de licenças. Tente novamente em instantes."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:120
+#: admin/src/Admin/Product_Settings.php:133
 msgid "Não exibir o parcelamento para este produto."
 msgstr ""
 
@@ -1497,7 +1514,7 @@ msgstr ""
 msgid "Ocultar melhores parcelas"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:128
+#: admin/src/Admin/Product_Settings.php:141
 msgid "Ocultar o desconto"
 msgstr ""
 
@@ -1505,7 +1522,7 @@ msgstr ""
 msgid "Ocultar o que é enviado"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:119
+#: admin/src/Admin/Product_Settings.php:132
 msgid "Ocultar parcelas"
 msgstr ""
 
@@ -1544,19 +1561,19 @@ msgstr ""
 msgid "Opcional. Sete dias dos recursos pagos, sem cartão."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:416
+#: admin/src/Admin/Product_Settings.php:620
 msgid ""
 "Os campos marcados como Pro fazem parte do Parcelas Customizadas Pro e "
 "ficam disponíveis assim que ele é instalado e ativado."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:404
+#: admin/src/Admin/Product_Settings.php:608
 msgid ""
 "Os campos marcados como Pro precisam de uma licença ativa do Parcelas "
 "Customizadas Pro."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:587
+#: admin/src/Admin/Product_Settings.php:791
 msgid ""
 "Os descontos estão desativados nas configurações do plugin, então nenhum "
 "desconto é aplicado a este produto."
@@ -1580,7 +1597,7 @@ msgstr ""
 msgid "Os testes não estão disponíveis a partir deste site no momento."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:250
+#: admin/src/Admin/Product_Settings.php:263
 msgid "Outras opções"
 msgstr ""
 
@@ -1598,7 +1615,7 @@ msgstr ""
 msgid "Parcela em destaque"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:247
+#: admin/src/Admin/Product_Settings.php:260
 #: admin/src/Admin/Settings/Registry.php:178
 msgid "Parcelamento"
 msgstr ""
@@ -1610,7 +1627,8 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:54
 #: admin/src/Admin/Menu.php:55
-#: admin/src/Admin/Product_Settings.php:299
+#: admin/src/Admin/Product_Settings.php:410
+#: admin/src/Admin/Product_Settings.php:503
 #: admin/src/Integrations/Elementor.php:74
 #: app/src/components/layout/PageHeader.vue:24
 msgid "Parcelas Customizadas"
@@ -1665,7 +1683,11 @@ msgstr ""
 msgid "Por exemplo: \"no Pix\"."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:107
+#: admin/src/Admin/Product_Settings.php:338
+msgid "Por padrão, a variação usa o desconto definido no produto."
+msgstr ""
+
+#: admin/src/Admin/Product_Settings.php:307
 #: admin/src/Admin/Settings/Registry.php:1093
 msgid "Porcentagem"
 msgstr ""
@@ -1743,7 +1765,7 @@ msgstr ""
 msgid "Privacidade"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:657
+#: admin/src/Admin/Product_Settings.php:862
 #: app/src/components/fields/FieldGroup.vue:25
 #: app/src/components/fields/FieldRow.vue:35
 #: app/src/components/pro/ProUpsellModal.vue:30
@@ -1778,7 +1800,7 @@ msgstr ""
 msgid "Qual parcela aparece em destaque abaixo do preço."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:470
+#: admin/src/Admin/Product_Settings.php:674
 msgid "Qualquer forma de pagamento"
 msgstr ""
 
@@ -1800,7 +1822,7 @@ msgid ""
 "por produto, vale para os produtos que não definem a sua própria regra."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:190
+#: admin/src/Admin/Product_Settings.php:203
 #: admin/src/Admin/Settings/Registry.php:453
 msgid "Quantidade mínima"
 msgstr ""
@@ -1992,7 +2014,7 @@ msgstr ""
 msgid "Shortcode:"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:819
+#: admin/src/Admin/Product_Settings.php:1028
 #: admin/src/Rest/Settings_Bootstrap.php:95
 msgid "Sim"
 msgstr ""
@@ -2021,7 +2043,8 @@ msgstr ""
 msgid "Somente onde eu colocar o widget"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:168
+#: admin/src/Admin/Product_Settings.php:181
+#: admin/src/Admin/Product_Settings.php:371
 msgid "Somente para esta forma de pagamento"
 msgstr ""
 
@@ -2142,14 +2165,15 @@ msgid ""
 "por quantidade."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:147
+#: admin/src/Admin/Product_Settings.php:160
+#: admin/src/Admin/Product_Settings.php:352
 #: admin/src/Admin/Settings/Registry.php:360
 #: admin/src/Admin/Settings/Registry.php:463
 #: admin/src/Admin/Settings/Registry.php:529
 msgid "Tipo de desconto"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:203
+#: admin/src/Admin/Product_Settings.php:216
 msgid "Tipo de desconto por quantidade"
 msgstr ""
 
@@ -2276,11 +2300,11 @@ msgstr ""
 msgid "Unidade do tamanho do texto"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:138
+#: admin/src/Admin/Product_Settings.php:151
 msgid "Usa um desconto próprio em vez do desconto geral da loja."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:180
+#: admin/src/Admin/Product_Settings.php:193
 msgid "Usa uma regra de quantidade própria em vez da regra geral da loja."
 msgstr ""
 
@@ -2300,18 +2324,19 @@ msgstr ""
 msgid "Útil para temas cujos cards de produto são centralizados."
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:158
+#: admin/src/Admin/Product_Settings.php:171
+#: admin/src/Admin/Product_Settings.php:362
 #: admin/src/Admin/Settings/Registry.php:367
 #: admin/src/Admin/Settings/Registry.php:473
 #: admin/src/Admin/Settings/Registry.php:539
 msgid "Valor do desconto"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:215
+#: admin/src/Admin/Product_Settings.php:228
 msgid "Valor do desconto por quantidade"
 msgstr ""
 
-#: admin/src/Admin/Product_Settings.php:108
+#: admin/src/Admin/Product_Settings.php:308
 #: admin/src/Admin/Settings/Registry.php:1094
 msgid "Valor fixo"
 msgstr ""

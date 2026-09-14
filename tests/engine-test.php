@@ -231,6 +231,116 @@ $variable = wc_test_product( 0, array(
 check( 'strikes out the cheapest variation\'s own regular price', 120.0, Helpers::cheapest_variation_regular_price( $variable ) );
 check( 'and a simple product has none', 0.0, Helpers::cheapest_variation_regular_price( wc_test_product( 50 ) ) );
 
+echo PHP_EOL, 'A variation\'s own discount', PHP_EOL;
+
+add_filter( 'WC_Custom_Installments/Features/Is_Available', '__return_true' );
+Features::flush();
+
+Repository::save_settings( array(
+	'enable_all_discount_options' => 'yes',
+	'discount_main_price' => '10',
+	'product_price_discount_method' => 'percentage',
+) );
+
+// The store takes 10% off and product 20 takes 20%. Variation 21 has no
+// setting of its own, 22 takes 50.00 off itself, 23 chose the store's.
+$GLOBALS['wp_test_meta'] = array(
+	20 => array(
+		'enable_discount_per_unit' => 'yes',
+		'discount_per_unit_method' => 'percentage',
+		'unit_discount_amount' => '20',
+	),
+	22 => array(
+		'enable_discount_per_unit' => 'yes',
+		'discount_per_unit_method' => 'fixed',
+		'unit_discount_amount' => '50',
+	),
+	23 => array( 'enable_discount_per_unit' => 'no' ),
+);
+
+$follows = wc_test_product( 100, array( 'id' => 21, 'parent_id' => 20, 'type' => 'variation' ) );
+$own = wc_test_product( 120, array( 'id' => 22, 'parent_id' => 20, 'type' => 'variation' ) );
+$store = wc_test_product( 100, array( 'id' => 23, 'parent_id' => 20, 'type' => 'variation' ) );
+
+check( 'a variation with no setting reads its product', 20, Calculate_Values::get_discount_source_id( 21, 20 ) );
+check( 'one with a discount of its own reads itself', 22, Calculate_Values::get_discount_source_id( 22, 20 ) );
+check( 'so does one set to the store\'s', 23, Calculate_Values::get_discount_source_id( 23, 20 ) );
+check( 'and a simple product reads itself', 20, Calculate_Values::get_discount_source_id( 20, 0 ) );
+
+check_money( 'following the product: 20% off 100', 80.00, Calculate_Values::get_discounted_price( $follows ) );
+check_money( 'its own: 50 off 120', 70.00, Calculate_Values::get_discounted_price( $own ) );
+check_money( 'the store\'s: 10% off 100', 90.00, Calculate_Values::get_discounted_price( $store ) );
+
+$variable = wc_test_product( 0, array(
+	'id' => 20,
+	'type' => 'variable',
+	'variation_prices' => array(
+		'price' => array( 21 => '100', 22 => '120', 23 => '100' ),
+	),
+) );
+
+// The cheapest variations cost 100, but the pricier 22 gets to 70 upfront.
+check_money( 'the variable product shows its lowest upfront price', 70.00, Calculate_Values::get_discounted_price( $variable ) );
+check_money( 'and saves what that variation saves: 120 - 70', 50.00, Calculate_Values::get_pix_economy( $variable ) );
+
+$cart = new class( array(
+	array( 'data' => $follows, 'quantity' => 1 ),
+	array( 'data' => $own, 'quantity' => 2 ),
+) ) {
+
+	/**
+	 * Cart lines.
+	 *
+	 * @var array<int,array<string,mixed>>
+	 */
+	private $items;
+
+
+	/**
+	 * Build the cart.
+	 *
+	 * @param array<int,array<string,mixed>> $items | Cart lines
+	 */
+	public function __construct( $items ) {
+		$this->items = $items;
+	}
+
+
+	/**
+	 * The cart lines.
+	 *
+	 * @return array<int,array<string,mixed>>
+	 */
+	public function get_cart() {
+		return $this->items;
+	}
+
+
+	/**
+	 * The shipping total.
+	 *
+	 * @return float
+	 */
+	public function get_shipping_total() {
+		return 0.0;
+	}
+};
+
+// 20% of 100 for 21, and 50.00 off each of two for 22: 20 + 100.
+check_money( 'the cart takes each variation\'s discount', 120.00, Calculate_Values::calculate_total_discount( $cart ) );
+
+$GLOBALS['wp_test_meta'][20]['__disable_discount_main_price'] = 'yes';
+check_money( 'hiding the product\'s discount hides every variation\'s', 100.00, Calculate_Values::get_discounted_price( $variable ) );
+unset( $GLOBALS['wp_test_meta'][20]['__disable_discount_main_price'] );
+
+// Without per-product discounts every variation takes the store's 10%.
+$GLOBALS['wp_test_filters'] = array();
+Features::flush();
+
+check_money( 'without the add-on the cheapest price takes the store\'s', 90.00, Calculate_Values::get_discounted_price( $variable ) );
+
+$GLOBALS['wp_test_meta'] = array();
+
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 
 exit( $failed > 0 ? 1 : 0 );

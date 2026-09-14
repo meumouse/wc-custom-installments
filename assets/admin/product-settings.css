@@ -70,6 +70,42 @@
 	color: #646970;
 }
 
+/*
+ * Inside a variation the fields sit in WooCommerce's two-column rows, below
+ * its own, so the block starts on a line of its own with a rule above it.
+ */
+.wc-custom-installments-variation {
+	clear: both;
+	margin-top: 8px;
+	padding-top: 4px;
+	border-top: 1px solid #eee;
+}
+
+.wc-custom-installments-variation::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/*
+ * WooCommerce shows every notice among the variations as flex, by ID, which
+ * beats WordPress's `.hidden`; the panel script hides a warning with that
+ * class, so it has to win here.
+ */
+#woocommerce-product-data .wc-custom-installments-options .notice.hidden {
+	display: none;
+}
+
+.wc-custom-installments-options.wc-custom-installments-variation .wc-custom-installments-group-title {
+	padding: 8px 0 0;
+}
+
+.wc-custom-installments-options.wc-custom-installments-variation .notice.inline,
+.wc-custom-installments-options.wc-custom-installments-variation .notice.inline.wc-custom-installments-discount-warning {
+	clear: both;
+	margin: 5px 0 9px;
+}
+
 @media only screen and (max-width: 500px) {
 	.wc-custom-installments-options .notice.inline.wc-custom-installments-discount-warning {
 		margin-left: 20px;

@@ -7,6 +7,7 @@ use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Core\Scripts;
+use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
 
 defined('ABSPATH') || exit;
 
@@ -43,6 +44,41 @@ class Storefront_Assets extends Abstract_Assets {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_font_awesome' ), 20 );
 		add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 2 );
+		add_filter( 'woocommerce_available_variation', array( $this, 'add_variation_discount' ), 10, 3 );
+	}
+
+
+	/**
+	 * Hand each variation's own discount to the runtime.
+	 *
+	 * WooCommerce passes this data to the page when the customer picks a
+	 * variation. The runtime recalculates the upfront price as the quantity
+	 * changes and when it replaces the range, and a variation may carry a
+	 * discount of its own; without this it would apply the product's. The rule
+	 * is resolved here, the variation's or its parent's, so the script does no
+	 * inheritance of its own. A gated discount is left out, and the runtime keeps
+	 * the page's.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $data | Variation data
+	 * @param object $product | Variable product
+	 * @param object $variation | Variation
+	 * @return array<string,mixed>
+	 */
+	public function add_variation_discount( $data, $product, $variation ) {
+		if ( ! is_array( $data ) || ! $variation instanceof \WC_Product || ! Features::is_available('product_overrides') ) {
+			return $data;
+		}
+
+		list( $enabled, $method, $amount ) = Calculate_Values::get_product_discount( $variation->get_id(), $variation->get_parent_id() );
+
+		$data['wcci_discount'] = array(
+			'enable_discount_per_unit' => 'yes' === $enabled ? 'yes' : 'no',
+			'discount_per_unit_method' => (string) $method,
+			'unit_discount_amount' => (string) $amount,
+		);
+
+		return $data;
 	}
 
 

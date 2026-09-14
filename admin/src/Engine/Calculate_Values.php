@@ -177,6 +177,10 @@ class Calculate_Values {
 	/**
 	 * The discounted price of a product, for display.
 	 *
+	 * A variable product shows the lowest upfront price any of its variations
+	 * reaches, each with its own discount, since that is the one a customer
+	 * could actually pay. See get_lowest_variation_discount().
+	 *
 	 * @since 6.0.0
 	 * @param object $product | Product object
 	 * @param string $discount_type | Either `main` or `ticket`
@@ -187,17 +191,91 @@ class Calculate_Values {
 			return 0;
 		}
 
-		if ( $product->is_type('variation') ) {
-			$price = $product->get_price();
-		} elseif ( $product->is_type('variable') ) {
+		if ( $product->is_type('variable') ) {
+			$lowest = self::get_lowest_variation_discount( $product, $discount_type );
+
+			if ( null !== $lowest ) {
+				return $lowest['discounted'];
+			}
+
 			$price = $product->get_variation_price( 'min', true );
 		} else {
 			$price = $product->get_price();
 		}
 
 		$product_id = $product->get_id();
-		$parent_product_id = $product->get_parent_id() ?: $product_id;
 
+		return self::discount_price( $price, $product_id, $product->get_parent_id() ?: $product_id, $discount_type );
+	}
+
+
+	/**
+	 * The variation of a variable product with the lowest upfront price.
+	 *
+	 * Once a variation can carry a discount of its own, the cheapest variation
+	 * is not necessarily the one with the lowest upfront price: a pricier one
+	 * with a bigger discount can undercut it. Each variation's price is
+	 * discounted by the rule it answers to, and the lowest one wins.
+	 *
+	 * Null when the rules cannot differ between variations: without per-product
+	 * discounts every variation takes the store's discount, and with the parent's
+	 * discount hidden none takes any. The cheapest price then gives the same
+	 * answer, without reading every variation.
+	 *
+	 * @since 6.0.0
+	 * @param object $product | Variable product
+	 * @param string $discount_type | Either `main` or `ticket`
+	 * @return array{id:int,price:float,discounted:float}|null
+	 */
+	public static function get_lowest_variation_discount( $product, $discount_type = 'main' ) {
+		if ( ! Features::is_available('product_overrides') || ! method_exists( $product, 'get_variation_prices' ) ) {
+			return null;
+		}
+
+		if ( 'yes' === get_post_meta( $product->get_id(), '__disable_discount_main_price', true ) ) {
+			return null;
+		}
+
+		$prices = (array) ( $product->get_variation_prices( true )['price'] ?? array() );
+
+		if ( empty( $prices ) ) {
+			return null;
+		}
+
+		// One query for every variation's meta, rather than one each.
+		if ( function_exists('update_meta_cache') ) {
+			update_meta_cache( 'post', array_map( 'intval', array_keys( $prices ) ) );
+		}
+
+		$lowest = null;
+
+		foreach ( $prices as $variation_id => $price ) {
+			$discounted = self::discount_price( (float) $price, (int) $variation_id, $product->get_id(), $discount_type );
+
+			if ( null === $lowest || $discounted < $lowest['discounted'] ) {
+				$lowest = array(
+					'id' => (int) $variation_id,
+					'price' => (float) $price,
+					'discounted' => (float) $discounted,
+				);
+			}
+		}
+
+		return $lowest;
+	}
+
+
+	/**
+	 * Apply the discount a product answers to on a price.
+	 *
+	 * @since 6.0.0
+	 * @param float $price | Price to discount
+	 * @param int $product_id | Product or variation ID
+	 * @param int $parent_product_id | Parent product ID, or the product's own
+	 * @param string $discount_type | Either `main` or `ticket`
+	 * @return float
+	 */
+	private static function discount_price( $price, $product_id, $parent_product_id, $discount_type ) {
 		if ( 'ticket' === $discount_type ) {
 			$discount_value = (float) Repository::get('discount_ticket');
 			$discount_method = Repository::get('discount_method_ticket');
@@ -240,15 +318,18 @@ class Calculate_Values {
 			return 0;
 		}
 
-		if ( $product->is_type('variation') ) {
-			$price = $product->get_price();
-		} elseif ( $product->is_type('variable') ) {
-			$price = $product->get_variation_price( 'min', true );
+		// A variable product saves what its lowest upfront price saves, measured
+		// against that same variation's price rather than the cheapest one.
+		$lowest = $product->is_type('variable') ? self::get_lowest_variation_discount( $product, 'main' ) : null;
+
+		if ( null !== $lowest ) {
+			$price = $lowest['price'];
+			$custom_price = $lowest['discounted'];
 		} else {
-			$price = $product->get_price();
+			$price = $product->is_type('variable') ? $product->get_variation_price( 'min', true ) : $product->get_price();
+			$custom_price = self::get_discounted_price( $product, 'main' );
 		}
 
-		$custom_price = self::get_discounted_price( $product, 'main' );
 		$economy = max( 0, (float) $price - (float) $custom_price );
 
 		/**
@@ -330,11 +411,13 @@ class Calculate_Values {
 
 			$product_price = wc_get_price_excluding_tax( $product );
 			$product_discount = 0;
+			$enabled = '';
 
-			if ( $per_product_available && 'yes' === get_post_meta( $parent_id, 'enable_discount_per_unit', true ) ) {
-				$discount_value = get_post_meta( $parent_id, 'unit_discount_amount', true );
-				$discount_method = get_post_meta( $parent_id, 'discount_per_unit_method', true );
+			if ( $per_product_available ) {
+				list( $enabled, $discount_method, $discount_value ) = self::get_product_discount( $product->get_id(), $parent_id );
+			}
 
+			if ( 'yes' === $enabled ) {
 				if ( ! empty( $discount_value ) && (float) $discount_value > 0 ) {
 					$has_individual_discount = true;
 
@@ -396,16 +479,38 @@ class Calculate_Values {
 	 * @return array{0:string,1:string,2:string}
 	 */
 	public static function get_product_discount( $product_id, $parent_product_id ) {
-		$enabled = get_post_meta( $product_id, 'enable_discount_per_unit', true );
-		$method = get_post_meta( $product_id, 'discount_per_unit_method', true );
-		$amount = get_post_meta( $product_id, 'unit_discount_amount', true );
+		$source = self::get_discount_source_id( $product_id, $parent_product_id );
 
-		if ( empty( $enabled ) ) {
-			$enabled = get_post_meta( $parent_product_id, 'enable_discount_per_unit', true );
-			$method = get_post_meta( $parent_product_id, 'discount_per_unit_method', true );
-			$amount = get_post_meta( $parent_product_id, 'unit_discount_amount', true );
+		return array(
+			get_post_meta( $source, 'enable_discount_per_unit', true ),
+			get_post_meta( $source, 'discount_per_unit_method', true ),
+			get_post_meta( $source, 'unit_discount_amount', true ),
+		);
+	}
+
+
+	/**
+	 * The product whose meta holds the per-product discount that applies.
+	 *
+	 * A variation with a setting of its own decides for itself: `yes` for a
+	 * discount of its own, `no` for the store's. One with no setting follows its
+	 * parent, which is what every variation did before a variation could carry
+	 * a discount, so a 5.x store sees no change. The discount's details and the
+	 * payment method it is tied to are read from the same product, never mixed.
+	 *
+	 * @since 6.0.0
+	 * @param int $product_id | Product or variation ID
+	 * @param int $parent_product_id | Parent product ID, 0 or the product's own
+	 * @return int
+	 */
+	public static function get_discount_source_id( $product_id, $parent_product_id ) {
+		$product_id = (int) $product_id;
+		$parent_product_id = (int) $parent_product_id;
+
+		if ( $parent_product_id && $parent_product_id !== $product_id && '' === (string) get_post_meta( $product_id, 'enable_discount_per_unit', true ) ) {
+			return $parent_product_id;
 		}
 
-		return array( $enabled, $method, $amount );
+		return $product_id;
 	}
 }

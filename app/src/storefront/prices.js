@@ -99,9 +99,10 @@ export function afterPercentage(percentage, price) {
  * @since 6.0.0
  * @param {{regular: number, current: number}|{old_price: number, new_price: number}} price - The unit prices.
  * @param {number} quantity - How many are being bought.
+ * @param {object|null} [rules] - The discounts to apply; the page's when omitted.
  * @return {void}
  */
-export function updateAmounts(price, quantity = 1) {
+export function updateAmounts(price, quantity = 1, rules = null) {
   const group = priceGroup();
 
   if (!group) {
@@ -118,7 +119,7 @@ export function updateAmounts(price, quantity = 1) {
   updateMainPrice(group, { regular, current });
   updateTable(current);
 
-  const discounts = params.discounts || {};
+  const discounts = rules || params.discounts || {};
   let discounted = null;
 
   // A per-unit product discount overrides the store-wide one, the same
