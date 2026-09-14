@@ -120,37 +120,41 @@ export function updateAmounts(price, quantity = 1, rules = null) {
   updateTable(current);
 
   const discounts = rules || params.discounts || {};
-  let discounted = null;
 
-  // A per-unit product discount overrides the store-wide one, the same
-  // precedence the server applies.
-  if ('yes' === discounts.enable_discount_per_unit && discounts.unit_discount_amount) {
-    discounted =
-      'percentage' === discounts.discount_per_unit_method
-        ? afterPercentage(discounts.unit_discount_amount, unit.current)
-        : unit.current - Number(discounts.unit_discount_amount);
-  } else if (discounts.pix_discount) {
-    discounted =
-      'percentage' === discounts.pix_discount_method
-        ? afterPercentage(discounts.pix_discount, unit.current)
-        : unit.current - Number(discounts.pix_discount);
-  }
+  // A discount of the product's own overrides both store-wide ones, the
+  // upfront and the bank slip alike - the same precedence the server applies.
+  const own =
+    'yes' === discounts.enable_discount_per_unit && discounts.unit_discount_amount
+      ? { method: discounts.discount_per_unit_method, amount: discounts.unit_discount_amount }
+      : null;
 
-  if (null !== discounted) {
-    const total = discounted * count;
+  const upfront = own || (discounts.pix_discount ? { method: discounts.pix_discount_method, amount: discounts.pix_discount } : null);
+  const slip = own || (discounts.slip_bank_discount ? { method: discounts.slip_bank_method, amount: discounts.slip_bank_discount } : null);
+
+  if (upfront) {
+    const total = applyDiscount(upfront, unit.current) * count;
 
     updatePixDiscount(total, group);
     updateEconomy(current - total, group);
   }
 
-  if (discounts.slip_bank_discount) {
-    const slip =
-      'percentage' === discounts.slip_bank_method
-        ? afterPercentage(discounts.slip_bank_discount, unit.current) * count
-        : (unit.current - Number(discounts.slip_bank_discount)) * count;
-
-    updateSlipBank(slip, group);
+  // Only a badge the server printed is repainted, so a store without the bank
+  // slip discount is left untouched.
+  if (slip) {
+    updateSlipBank(applyDiscount(slip, unit.current) * count, group);
   }
+}
+
+/**
+ * Take a discount of either kind off a unit price.
+ *
+ * @since 6.0.0
+ * @param {{method: string, amount: number|string}} rule - The discount.
+ * @param {number} price - The unit price.
+ * @return {number} The discounted unit price.
+ */
+function applyDiscount(rule, price) {
+  return 'percentage' === rule.method ? afterPercentage(rule.amount, price) : price - Number(rule.amount);
 }
 
 /**
