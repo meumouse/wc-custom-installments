@@ -261,9 +261,6 @@ $elements['my_part'] = array(
 );
 ```
 
-## The browser side
-
-The settings screen resolves a field's control through a registry published on the window. A
 ## Headless stores and the Store API
 
 **Advanced > Headless > Modo headless** turns the storefront off: the price group, the payment
@@ -316,6 +313,9 @@ carries `discounts.main` with the upfront `total` and its `discount`.
 `WC_Custom_Installments/Store_Api/Product_Data` and `WC_Custom_Installments/Store_Api/Cart_Data`
 filter the data. `WC_Custom_Installments/Store_Api/Enabled` switches it off.
 
+## The browser side
+
+The settings screen resolves a field's control through a registry published on the window. A
 separately built bundle can add to it:
 
 ```js
@@ -372,10 +372,10 @@ _71 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Features/Register` | action | — | `admin/src/Core/Features.php` |
 | `WC_Custom_Installments/Frontend/Elements` | filter | — | `admin/src/Frontend/Element_Registry.php` |
 | `WC_Custom_Installments/Frontend/Is_Builder_Preview` | filter | — | `admin/src/Core/Helpers.php` |
+| `WC_Custom_Installments/Headless/Is_Enabled` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
 | `WC_Custom_Installments/Init/Class_Hook` | filter | — | `admin/src/Core/Init.php` |
 | `WC_Custom_Installments/Init/Instance_Classes` | filter | — | `admin/src/Core/Init.php` |
 | `WC_Custom_Installments/Installments/All_Installments` | filter | `Woo_Custom_Installments/Installments/All_Installments` | `admin/src/Engine/Calculate_Installments.php` |
-| `WC_Custom_Installments/Headless/Is_Enabled` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
 | `WC_Custom_Installments/Installments/Final_Price` | filter | `Woo_Custom_Installments/Installments/Final_Price` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Get_Fee` | filter | `Woo_Custom_Installments/Installments/Get_Fee` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Installments/With_Fees` | filter | `Woo_Custom_Installments/Installments/With_Fees` | `admin/src/Engine/Calculate_Values.php` |
@@ -406,13 +406,13 @@ _71 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Product/Set_Product` | filter | `Woo_Custom_Installments/Product/Set_Product` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Settings/Reset` | action | — | `admin/src/Admin/Settings/Repository.php` |
 | `WC_Custom_Installments/Settings/Saved` | action | — | `admin/src/Admin/Settings/Repository.php` |
-| `WC_Custom_Installments/Styles/Force_Important` | filter | `Woo_Custom_Installments/Styles/Force_Important` | `admin/src/Frontend/Styles.php` |
-| `WC_Custom_Installments/Templates/Theme_Override_Wins` | filter | `Woo_Custom_Installments/Templates/Theme_Override_Wins` | `admin/src/Frontend/Templates.php` |
-| `WC_Custom_Installments/Widgets/Align_Price_Group` | filter | `Woo_Custom_Installments/Widgets/Align_Price_Group` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 | `WC_Custom_Installments/Store_Api/Cart_Data` | filter | — | `admin/src/Integrations/Store_Api.php` |
 | `WC_Custom_Installments/Store_Api/Enabled` | filter | — | `admin/src/Integrations/Store_Api.php` |
 | `WC_Custom_Installments/Store_Api/Product_Data` | filter | — | `admin/src/Integrations/Store_Api.php` |
 | `WC_Custom_Installments/Storefront/Classes` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
+| `WC_Custom_Installments/Styles/Force_Important` | filter | `Woo_Custom_Installments/Styles/Force_Important` | `admin/src/Frontend/Styles.php` |
+| `WC_Custom_Installments/Templates/Theme_Override_Wins` | filter | `Woo_Custom_Installments/Templates/Theme_Override_Wins` | `admin/src/Frontend/Templates.php` |
+| `WC_Custom_Installments/Widgets/Align_Price_Group` | filter | `Woo_Custom_Installments/Widgets/Align_Price_Group` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 | `WC_Custom_Installments/Widgets/Enable_Grid_Price` | filter | `Woo_Custom_Installments/Widgets/Enable_Grid_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 | `WC_Custom_Installments/Widgets/Hidden_Old_Price` | filter | `Woo_Custom_Installments/Widgets/Hidden_Old_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 
