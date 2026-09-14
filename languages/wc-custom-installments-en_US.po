@@ -1249,7 +1249,8 @@ msgstr "Choose an action and at least one campaign."
 msgid "Escolher ícone"
 msgstr "Choose icon"
 
-#: app/src/components/base/BaseColorInput.vue:66
+#: app/src/components/base/BaseColorInput.vue:118
+#: app/src/components/base/BaseColorInput.vue:760
 msgid "Escolher uma cor"
 msgstr "Pick a colour"
 
@@ -3402,3 +3403,45 @@ msgstr "Add card brand"
 #: app/src/components/fields/CardBrandsField.vue:186
 msgid "Uma imagem pequena, de preferência SVG ou PNG com fundo transparente."
 msgstr "A small image, preferably SVG or a PNG with a transparent background."
+
+#: app/src/components/base/BaseColorInput.vue:491
+msgid "Transparente"
+msgstr "Transparent"
+
+#: app/src/components/base/BaseColorInput.vue:479
+#. translators: %s: a colour, as a hex code such as #22C55E, rgba() or "Transparente"
+msgid "Usar a cor %s"
+msgstr "Use the colour %s"
+
+#: app/src/components/base/BaseColorInput.vue:717
+#. translators: 1: saturation, as a percentage such as 40%; 2: brightness, likewise
+msgid "Saturação %1$s, brilho %2$s"
+msgstr "Saturation %1$s, brightness %2$s"
+
+#: app/src/components/base/BaseColorInput.vue:771
+msgid "Saturação e brilho"
+msgstr "Saturation and brightness"
+
+#: app/src/components/base/BaseColorInput.vue:804
+msgid "Matiz"
+msgstr "Hue"
+
+#: app/src/components/base/BaseColorInput.vue:826
+msgid "Opacidade"
+msgstr "Opacity"
+
+#: app/src/components/base/BaseColorInput.vue:854
+msgid "Código hexadecimal"
+msgstr "Hex code"
+
+#: app/src/components/base/BaseColorInput.vue:872
+msgid "Opacidade em porcentagem"
+msgstr "Opacity as a percentage"
+
+#: app/src/components/base/BaseColorInput.vue:885
+msgid "Cores sugeridas"
+msgstr "Suggested colours"
+
+#: app/src/components/base/BaseColorInput.vue:912
+msgid "Usadas recentemente"
+msgstr "Recently used"

@@ -42,11 +42,10 @@ const NATIVE_DIALOG_PATTERN = /(?:\bwindow\.|(?<![\w.$]))(alert|confirm|prompt)\
 // storefront has no framework by design.
 const EXEMPT = ['components/base/', 'storefront/'];
 
-// Native widgets still waiting for their component, with what is allowed.
-// Each entry is a debt, not a precedent: replace the widget, then remove it.
-const NATIVE_WIDGET_DEBT = {
-	'components/base/BaseColorInput.vue': ['color'],
-};
+// Native widgets still waiting for their component, with what is allowed:
+// `'components/base/BaseThing.vue': ['color']`. Each entry is a debt, not a
+// precedent: replace the widget, then remove it. Empty is the goal.
+const NATIVE_WIDGET_DEBT = {};
 
 /**
  * List the source files under a directory.

@@ -76,6 +76,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Product screen: dependent fields show and hide with their toggle, the quantity fields appear only in per-product mode, and a warning shows when discounts are off store-wide. A "Documentação" link on the Plugins screen.
 - Store copy may carry simple HTML again, such as `<strong>`: it is kept through `wp_kses_post()` rather than stripped.
 - Colours stored as `rgb()` or `rgba()` by the 5.x colour picker are accepted and shown.
+- A colour picker of the plugin's own beside every colour field, in place of the browser's: a saturation and brightness area, hue and opacity sliders, the hex code, suggested colours and the ones used lately, all usable from the keyboard. A colour below full opacity is saved as `rgba()`, as the element design defaults are.
 - A "Discounted price" element in the design panel, listed under the product price: its own typography, colours and spacing for the price shown beside the struck-out one. Everything left blank inherits from the product price, so a store that restyled the price sees no change. An add-on element can be a part of another one through a `parent` key.
 - The design panel previews each element with its icon, Font Awesome class or uploaded image, and draws the product price in its fullest shape: a variable product on sale, with "starting from", the struck-out price, the discounted price and the sale badge.
 - Every measurement selector offers the same units, REM, EM, Pixel and %, in the same order.

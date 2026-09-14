@@ -697,6 +697,10 @@ msgstr ""
 msgid "Cobrar na forma de pagamento"
 msgstr ""
 
+#: app/src/components/base/BaseColorInput.vue:854
+msgid "Código hexadecimal"
+msgstr ""
+
 #: app/src/pages/campaigns/components/CampaignEditor.vue:364
 msgid "Com as subcategorias."
 msgstr ""
@@ -884,6 +888,10 @@ msgstr ""
 #: app/src/components/fields/ElementDesignField.vue:469
 #: app/src/components/fields/ElementDesignField.vue:476
 msgid "Cor do texto"
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:885
+msgid "Cores sugeridas"
 msgstr ""
 
 #: app/src/pages/campaigns/components/CampaignList.vue:240
@@ -1247,7 +1255,8 @@ msgstr ""
 msgid "Escolher ícone"
 msgstr ""
 
-#: app/src/components/base/BaseColorInput.vue:66
+#: app/src/components/base/BaseColorInput.vue:118
+#: app/src/components/base/BaseColorInput.vue:760
 msgid "Escolher uma cor"
 msgstr ""
 
@@ -1261,11 +1270,11 @@ msgstr ""
 msgid "Esquerda"
 msgstr ""
 
-#: admin/src/Admin/Settings/Transfer.php:74
+#: admin/src/Admin/Settings/Transfer.php:79
 msgid "Esse arquivo não contém configurações."
 msgstr ""
 
-#: admin/src/Admin/Settings/Transfer.php:67
+#: admin/src/Admin/Settings/Transfer.php:72
 msgid "Esse arquivo não foi exportado por este plugin."
 msgstr ""
 
@@ -1743,6 +1752,10 @@ msgstr ""
 msgid "Margem superior do popup ou da sanfona"
 msgstr ""
 
+#: app/src/components/base/BaseColorInput.vue:804
+msgid "Matiz"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:188
 #: app/src/pages/campaigns/components/CampaignEditor.vue:501
 #: app/src/pages/campaigns/components/CampaignEditor.vue:502
@@ -1898,7 +1911,7 @@ msgstr ""
 msgid "Não foi possível iniciar esta tela. Recarregue a página."
 msgstr ""
 
-#: admin/src/Admin/Settings/Transfer.php:60
+#: admin/src/Admin/Settings/Transfer.php:65
 #: app/src/pages/settings/SettingsPage.vue:212
 msgid "Não foi possível ler esse arquivo como configurações."
 msgstr ""
@@ -2175,6 +2188,14 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:237
 msgid "Onde as parcelas aparecem"
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:826
+msgid "Opacidade"
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:872
+msgid "Opacidade em porcentagem"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:114
@@ -2651,6 +2672,15 @@ msgstr ""
 msgid "Salvar campanha"
 msgstr ""
 
+#: app/src/components/base/BaseColorInput.vue:717
+#. translators: 1: saturation, as a percentage such as 40%; 2: brightness, likewise
+msgid "Saturação %1$s, brilho %2$s"
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:771
+msgid "Saturação e brilho"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:440
 msgid "Se a regra é definida uma vez para a loja ou por produto."
 msgstr ""
@@ -3061,6 +3091,10 @@ msgstr ""
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr ""
 
+#: app/src/components/base/BaseColorInput.vue:491
+msgid "Transparente"
+msgstr ""
+
 #: app/src/components/layout/SettingsActionBar.vue:31
 msgid "Tudo está salvo."
 msgstr ""
@@ -3130,6 +3164,15 @@ msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:193
 msgid "Usa uma regra de quantidade própria em vez da regra geral da loja."
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:912
+msgid "Usadas recentemente"
+msgstr ""
+
+#: app/src/components/base/BaseColorInput.vue:479
+#. translators: %s: a colour, as a hex code such as #22C55E, rgba() or "Transparente"
+msgid "Usar a cor %s"
 msgstr ""
 
 #: app/src/components/fields/CardBrandsField.vue:118

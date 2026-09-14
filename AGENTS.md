@@ -253,7 +253,7 @@ Pages and feature components are assembled from components. Nothing else renders
   | `<input type="date">`, `datetime-local`, `time`, `month`, `week` | `BaseDatePicker` (`with-time` for date and time) |
   | `<select>`, `<datalist>` | `BaseSelect`, or `BaseMultiSelect` for several values |
   | `alert()`, `confirm()`, `prompt()` | `BaseConfirmDialog`, `BaseModal`, a toast |
-  | `<input type="color">` | a Vue colour picker (`BaseColorInput` still opens the native one: it is debt to repay, not a model) |
+  | `<input type="color">` | `BaseColorInput` (swatch and code, with a picker panel; `:alpha="false"` keeps a field to hex) |
 
   When the component a screen needs does not exist, build it in `components/base/` — on the design
   tokens, keyboard-accessible, teleported into the portal when it floats — rather than reaching for
@@ -264,7 +264,7 @@ Pages and feature components are assembled from components. Nothing else renders
   `BaseNotice`, a dialog is `BaseModal`.
 - `npm run lint:ui` enforces the list above and runs in the build. The native pickers and dialogs
   are refused everywhere, `components/base/` included; `NATIVE_WIDGET_DEBT` in
-  `scripts/lint-ui.mjs` lists the few still waiting for their component, and only shrinks.
+  `scripts/lint-ui.mjs` lists any still waiting for their component. It is empty, and stays so.
 
 PHP renders admin markup only where WordPress or WooCommerce owns it:
 
@@ -323,7 +323,7 @@ summary card beside it. Everything is in memory; each action answers with the fr
 
 | Folder | Components |
 |---|---|
-| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput` (text and numbers only), `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseMultiSelect` (chips over a search the caller supplies), `BaseDatePicker` (a calendar, with the hour and minute under `with-time`), `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
+| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput` (text and numbers only), `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseMultiSelect` (chips over a search the caller supplies), `BaseDatePicker` (a calendar, with the hour and minute under `with-time`), `BaseSwitch`, `BaseCheckbox`, `BaseColorInput` (a colour picker with opacity, recent and suggested swatches), `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
 | `components/brand/` | `BrandMark` |
 | `components/layout/` | `PageHeader`, `SettingsPanel` (also the panel of every other page), `SettingsActionBar` |
 | `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |

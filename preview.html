@@ -61,7 +61,8 @@
           sprintf: (message, ...args) => {
             let index = 0;
 
-            return String(message).replace(/%[ds]/g, () => args[index++]);
+            // Plain `%s` in order, or positional `%1$s` as WordPress's sprintf takes it.
+            return String(message).replace(/%(?:(\d+)\$)?[ds]/g, (match, position) => args[position ? position - 1 : index++]);
           },
         },
       };
