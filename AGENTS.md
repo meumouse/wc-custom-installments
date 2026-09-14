@@ -98,7 +98,7 @@ admin/src/
   Rest/                      Abstract_Route + one class per endpoint
   Views/                     The page shells the Vue apps mount into
 app/src/
-  entries/                   One per screen: settings, onboarding, storefront
+  entries/                   One per screen: settings, onboarding, addon-page, storefront
   components/ composables/ pages/ utils/ styles/
   storefront/                The shop-side runtime: no framework, no jQuery of ours
 languages/                   Node i18n pipeline
@@ -270,7 +270,7 @@ bundle. Never build its URL from a hard-coded `/wp-content/plugins/…` path.
 |---|---|
 | `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput`, `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
 | `components/brand/` | `BrandMark` |
-| `components/layout/` | `PageHeader`, `SettingsPanel` |
+| `components/layout/` | `PageHeader`, `SettingsPanel` (also the panel of every other page) |
 | `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |
 | `components/toasts/` | `ToastStack` |
 | `components/sections/` | `ExternalSection`, `sectionRegistry` |
@@ -278,13 +278,30 @@ bundle. Never build its URL from a hard-coded `/wp-content/plugins/…` path.
 Icons come from `@boxicons/vue` through `BaseIcon`, which maps a name to a component. A settings
 section names its icon in `Settings\Registry` (`'icon' => 'credit-card'`) — a name, never markup.
 
-### Tabs an add-on renders
+### The menu
+
+The plugin has a top-level menu of its own, **Parcelas Customizadas** (`Admin\Menu`). Its slug is the
+settings screen's, `wc-custom-installments`, so the first entry reads "Configurações" and the address
+5.x-era links and the wizard use keeps working. The icon is `assets/brand/menu-icon.svg`, a
+one-colour copy of the logo that WordPress repaints in the admin colour scheme. The 5.x slug,
+`woo-custom-installments`, is a hidden page redirecting to the settings screen.
+
+Every screen gates on `$_GET['page']` through `Helpers::current_admin_page()`, never on a hook
+suffix: a subpage's hook suffix is built from the *translated* menu title.
+
+### Tabs and screens an add-on renders
 
 A section with a `component` and no cards is drawn as a tab holding a mount point
 (`ExternalSection`); the add-on registered under that name in `window.WCCustomInstallmentsSections`
 mounts **its own Vue app** there. Never let an add-on hand this app a component instead: it is built
 with its own copy of Vue, and a component from another runtime renders with its reactivity silently
-cut off. The Pro add-on's licence tab works this way. `?section=<id>` opens a tab directly.
+cut off. `?section=<id>` opens a tab directly.
+
+A whole screen works the same way. An entry in `WC_Custom_Installments/Admin/Pages` becomes a
+submenu drawn by `pages/addon/AddonPage.vue` — the page header and a panel around the same mount
+point. The Pro add-on's licence screen is one. The add-on's bundle compiles host components in and
+looks their strings up in the host's domain, so the `addon-page` catalogue carries every string under
+`components/`, `composables/` and `utils/` (`EXTRA_MODULE_ROOTS` in `languages/js-module-graph.js`).
 
 ---
 

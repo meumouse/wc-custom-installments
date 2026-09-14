@@ -45,6 +45,15 @@ const HANDLE_OVERRIDES = {
   "src/entries/font-awesome.js": "wc-custom-installments-font-awesome",
 };
 
+// Entries whose catalogue must carry more than their own import graph. A screen
+// an add-on fills runs the add-on's bundle, which compiles the host's
+// components in (the Pro add-on imports them through `@host`) and looks their
+// strings up in the host's domain - where only this page's catalogue can answer.
+// Plugin-relative directories; every code file under them joins the graph.
+const EXTRA_MODULE_ROOTS = {
+  "src/entries/addon-page.js": ["app/src/components", "app/src/composables", "app/src/utils"],
+};
+
 const MOUNT_PAGE_PATTERN = /mountPage\(\s*["']([^"']+)["']/;
 
 /**
@@ -146,6 +155,31 @@ function collectModules(pluginRoot, entryPath) {
 }
 
 /**
+ * List every code file under a directory, depth first.
+ *
+ * @return {string[]} Absolute paths; empty when the directory does not exist.
+ */
+function listCodeFiles(directory) {
+  if (!fs.existsSync(directory)) {
+    return [];
+  }
+
+  const files = [];
+
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      files.push(...listCodeFiles(entryPath));
+    } else if (CODE_EXTENSIONS.has(path.extname(entry.name))) {
+      files.push(entryPath);
+    }
+  }
+
+  return files.sort();
+}
+
+/**
  * Read the script handle an entry mounts under.
  *
  * Admin pages declare it inline (`mountPage('wc-custom-installments-history-app', …)`), which
@@ -198,6 +232,15 @@ export function collectScriptBundles(pluginRoot) {
 
     const collected = collectModules(pluginRoot, entryPath);
     unresolved.push(...collected.unresolved);
+
+    for (const root of EXTRA_MODULE_ROOTS[entryKey] || []) {
+      for (const filePath of listCodeFiles(path.join(pluginRoot, root))) {
+        const extra = collectModules(pluginRoot, filePath);
+
+        extra.modules.forEach((module) => collected.modules.add(module));
+        unresolved.push(...extra.unresolved);
+      }
+    }
 
     bundles.push({ handle, entry: entryKey, modules: collected.modules });
   }

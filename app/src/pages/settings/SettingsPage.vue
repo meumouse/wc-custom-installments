@@ -77,7 +77,7 @@ function readStoredSection() {
  * The tab to open first.
  *
  * A `?section=` in the address wins, so a link can land on a given tab — the
- * add-on's licence notices and its old page redirect there. Otherwise the tab
+ * product screen's "turn discounts on" notice does. Otherwise the tab
  * remembered from the last visit, and failing that the first one.
  *
  * @since 6.0.0

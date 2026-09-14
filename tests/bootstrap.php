@@ -893,6 +893,29 @@ if ( ! function_exists('admin_url') ) {
 	}
 }
 
+if ( ! function_exists('add_query_arg') ) {
+	/**
+	 * Append query arguments to a URL.
+	 *
+	 * Takes both of core's forms: an array of pairs and a URL, or a key, a value
+	 * and a URL.
+	 *
+	 * @param mixed ...$args | Arguments, as core takes them
+	 * @return string
+	 */
+	function add_query_arg( ...$args ) {
+		if ( is_array( $args[0] ?? null ) ) {
+			$pairs = $args[0];
+			$url = (string) ( $args[1] ?? '' );
+		} else {
+			$pairs = array( (string) $args[0] => $args[1] ?? '' );
+			$url = (string) ( $args[2] ?? '' );
+		}
+
+		return $url . ( str_contains( $url, '?' ) ? '&' : '?' ) . http_build_query( $pairs );
+	}
+}
+
 if ( ! function_exists('home_url') ) {
 	/**
 	 * Build a site URL.

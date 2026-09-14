@@ -119,9 +119,8 @@ so a value stored while licensed cannot keep taking effect after the licence lap
 
 ## Adding a settings tab your own script renders
 
-When a tab holds something other than settings — the Pro add-on's licence is one — declare a section
-with a `component` and no cards. The settings screen draws the tab and an empty mount point, and
-your script fills it.
+When a tab holds something other than settings, declare a section with a `component` and no cards.
+The settings screen draws the tab and an empty mount point, and your script fills it.
 
 ```php
 add_filter( 'WC_Custom_Installments/Admin/Settings_Schema', function( $schema ) {
@@ -173,6 +172,35 @@ Do not `wp_localize_script()` the `wcCustomInstallmentsBootstrap` global from yo
 settings screen reads its own configuration from it. The save bar stays out of your tab unless other
 tabs have unsaved changes. If nothing registers the name by the time the page has loaded, the tab
 says that an add-on did not load.
+
+## Adding a screen to the plugin's menu
+
+The plugin has its own menu, Parcelas Customizadas. A screen of your own — the Pro add-on's licence
+is one — goes through `WC_Custom_Installments/Admin/Pages`. The plugin registers the submenu, draws
+the page header and the panel, and hands the panel to the renderer your script registers under
+`component`, exactly as it does for a settings tab.
+
+```php
+add_filter( 'WC_Custom_Installments/Admin/Pages', function( $pages ) {
+    $pages['wc-custom-installments-my-screen'] = array(   // the page slug
+        'title'       => __( 'My screen', 'my-plugin' ),
+        'menu_title'  => __( 'My screen', 'my-plugin' ), // optional, defaults to the title
+        'description' => __( 'What this screen is for.', 'my-plugin' ),
+        'component'   => 'my-screen',                    // the name your script registers
+        'position'    => 50,                             // among the add-on screens, lowest first
+    );
+
+    return $pages;
+} );
+```
+
+Enqueue your script when `Helpers::current_admin_page()` is your slug, and register the renderer
+the same way as for a tab. `mount()` receives `{ rest: { root, nonce }, page }`, where `page` is the
+slug. `Menu::page_url( $slug )` builds the screen's address.
+
+Two more filters shape the menu: `WC_Custom_Installments/Admin/Menu_Position` moves it (58.5 by
+default, below WooCommerce, Analytics and Marketing), and `WC_Custom_Installments/Admin/License_Url`
+tells the plugin where a licence screen is, so its "activate your licence" notices can link to it.
 
 ## Adding a per-product field
 
@@ -340,14 +368,18 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_71 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_75 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
+| `WC_Custom_Installments/Admin/Addon_Page_Data` | filter | — | `admin/src/Rest/Addon_Page_Bootstrap.php` |
 | `WC_Custom_Installments/Admin/Bootstrap_Data` | filter | — | `admin/src/Rest/Settings_Bootstrap.php` |
 | `WC_Custom_Installments/Admin/Capability` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Admin/Default_Options` | filter | `Woo_Custom_Installments/Admin/Set_Default_Options` | `admin/src/Admin/Default_Options.php` |
+| `WC_Custom_Installments/Admin/License_Url` | filter | — | `admin/src/Admin/Menu.php` |
+| `WC_Custom_Installments/Admin/Menu_Position` | filter | — | `admin/src/Admin/Menu.php` |
 | `WC_Custom_Installments/Admin/Onboarding_Bootstrap_Data` | filter | — | `admin/src/Admin/Onboarding/Registry.php` |
+| `WC_Custom_Installments/Admin/Pages` | filter | — | `admin/src/Admin/Menu.php` |
 | `WC_Custom_Installments/Admin/Product_Fields` | filter | — | `admin/src/Admin/Product_Settings.php` |
 | `WC_Custom_Installments/Admin/Settings_Schema` | filter | — | `admin/src/Admin/Settings/Registry.php` |
 | `WC_Custom_Installments/Admin/System_Status` | filter | — | `admin/src/Rest/Settings_Bootstrap.php` |

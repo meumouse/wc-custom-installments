@@ -7,7 +7,7 @@ msgstr ""
 "x-domain: wc-custom-installments\n"
 "Language: en_US\n"
 
-#: admin/src/Admin/Product_Settings.php:1027
+#: admin/src/Admin/Product_Settings.php:1028
 msgid "— Sem alteração —"
 msgstr "— No change —"
 
@@ -49,7 +49,7 @@ msgstr "The largest interest-free installment"
 msgid "A maior parcela, com juros"
 msgstr "The largest installment, interest included"
 
-#: admin/src/Admin/Product_Settings.php:827
+#: admin/src/Admin/Product_Settings.php:828
 msgid ""
 "A opção \"Ocultar o desconto\" está ativada, então este desconto não é "
 "aplicado."
@@ -272,7 +272,7 @@ msgstr "Turn the discount features on for the whole store."
 msgid "Ativa os recursos de juros para toda a loja."
 msgstr "Turn the interest features on for the whole store."
 
-#: admin/src/Admin/Product_Settings.php:797
+#: admin/src/Admin/Product_Settings.php:798
 #: admin/src/Admin/Settings/Registry.php:355
 msgid "Ativar descontos"
 msgstr "Enable discounts"
@@ -289,7 +289,7 @@ msgstr "Enable price stacking"
 msgid "Ativar juros"
 msgstr "Enable interest"
 
-#: admin/src/Admin/Product_Settings.php:616
+#: admin/src/Admin/Product_Settings.php:617
 msgid "Ativar licença"
 msgstr "Activate licence"
 
@@ -506,13 +506,15 @@ msgstr "Setup"
 msgid "Configuração concluída."
 msgstr "Setup complete."
 
-#: admin/src/Admin/Menu.php:63
-#: admin/src/Admin/Menu.php:64
-#: admin/src/Admin/Menu.php:74
+#: admin/src/Admin/Menu.php:95
+#: admin/src/Admin/Menu.php:96
+#: admin/src/Admin/Menu.php:106
 msgid "Configuração do Parcelas Customizadas"
 msgstr "Custom Installments setup"
 
-#: admin/src/Admin/Menu.php:90
+#: admin/src/Admin/Menu.php:75
+#: admin/src/Admin/Menu.php:76
+#: admin/src/Admin/Menu.php:294
 #: app/src/pages/settings/SettingsPage.vue:221
 msgid "Configurações"
 msgstr "Settings"
@@ -548,7 +550,7 @@ msgstr "Confirmation"
 msgid "Confirmar"
 msgstr "Confirm"
 
-#: admin/src/Admin/Product_Settings.php:626
+#: admin/src/Admin/Product_Settings.php:627
 msgid "Conhecer o Pro"
 msgstr "Discover Pro"
 
@@ -734,7 +736,7 @@ msgstr "Dismiss"
 msgid "Dispositivo"
 msgstr "Device"
 
-#: admin/src/Admin/Menu.php:118
+#: admin/src/Admin/Menu.php:322
 msgid "Documentação"
 msgstr "Documentation"
 
@@ -862,6 +864,10 @@ msgstr "That file was not exported by this plugin."
 #: admin/src/Admin/Onboarding/Trial.php:121
 msgid "Esse endereço de e-mail não parece correto."
 msgstr "That e-mail address does not look right."
+
+#: admin/src/Rest/Addon_Page_Bootstrap.php:56
+msgid "Esta página não existe ou o complemento que a cria não está ativo."
+msgstr "This page does not exist, or the add-on that creates it is not active."
 
 #: app/src/components/sections/ExternalSection.vue:116
 msgid ""
@@ -1347,7 +1353,7 @@ msgstr "In the installment table"
 msgid "Nada corresponde à sua busca."
 msgstr "Nothing matches your search."
 
-#: admin/src/Admin/Product_Settings.php:1029
+#: admin/src/Admin/Product_Settings.php:1030
 #: admin/src/Rest/Settings_Bootstrap.php:96
 msgid "Não"
 msgstr "No"
@@ -1479,7 +1485,7 @@ msgstr "The link that opens the full installment table."
 msgid "O maior número de parcelas que a loja aceita."
 msgstr "The highest number of installments the store accepts."
 
-#: admin/src/Assets/Admin_Assets.php:240
+#: admin/src/Assets/Admin_Assets.php:294
 msgid ""
 "O pacote de administração do Parcelas Customizadas para WooCommerce está "
 "ausente. Execute \"npm run build\" no diretório app."
@@ -1634,7 +1640,7 @@ msgstr "Where installments appear"
 msgid "Opcional. Sete dias dos recursos pagos, sem cartão."
 msgstr "Optional. Seven days of the paid features, with no card."
 
-#: admin/src/Admin/Product_Settings.php:620
+#: admin/src/Admin/Product_Settings.php:621
 msgid ""
 "Os campos marcados como Pro fazem parte do Parcelas Customizadas Pro e "
 "ficam disponíveis assim que ele é instalado e ativado."
@@ -1648,7 +1654,7 @@ msgid ""
 "Customizadas Pro."
 msgstr "The fields marked Pro need an active Custom Installments Pro licence."
 
-#: admin/src/Admin/Product_Settings.php:791
+#: admin/src/Admin/Product_Settings.php:792
 msgid ""
 "Os descontos estão desativados nas configurações do plugin, então nenhum "
 "desconto é aplicado a este produto."
@@ -1706,8 +1712,8 @@ msgstr "Installment plan"
 msgid "Parcelas"
 msgstr "Installments"
 
-#: admin/src/Admin/Menu.php:54
-#: admin/src/Admin/Menu.php:55
+#: admin/src/Admin/Menu.php:62
+#: admin/src/Admin/Menu.php:63
 #: admin/src/Admin/Product_Settings.php:410
 #: admin/src/Admin/Product_Settings.php:503
 #: admin/src/Integrations/Elementor.php:74
@@ -1846,7 +1852,7 @@ msgstr "Prefix and suffix"
 msgid "Privacidade"
 msgstr "Privacy"
 
-#: admin/src/Admin/Product_Settings.php:862
+#: admin/src/Admin/Product_Settings.php:863
 #: app/src/components/fields/FieldGroup.vue:25
 #: app/src/components/fields/FieldRow.vue:35
 #: app/src/components/pro/ProUpsellModal.vue:30
@@ -1881,7 +1887,7 @@ msgstr "Which methods to show"
 msgid "Qual parcela aparece em destaque abaixo do preço."
 msgstr "Which installment is shown under the price as the headline."
 
-#: admin/src/Admin/Product_Settings.php:674
+#: admin/src/Admin/Product_Settings.php:675
 msgid "Qualquer forma de pagamento"
 msgstr "Any payment method"
 
@@ -2108,7 +2114,7 @@ msgstr "Shortcode"
 msgid "Shortcode:"
 msgstr "Shortcode:"
 
-#: admin/src/Admin/Product_Settings.php:1028
+#: admin/src/Admin/Product_Settings.php:1029
 #: admin/src/Rest/Settings_Bootstrap.php:95
 msgid "Sim"
 msgstr "Yes"

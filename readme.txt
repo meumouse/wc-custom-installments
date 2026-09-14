@@ -64,7 +64,7 @@ Termos: https://meumouse.com/termos-condicionais/ — Privacidade: https://meumo
 
 1. Envie o plugin para `/wp-content/plugins/` ou instale-o em Plugins > Adicionar novo.
 2. Ative o plugin.
-3. O assistente de configuração abre automaticamente. Você pode abri-lo depois em WooCommerce > Parcelas Customizadas.
+3. O assistente de configuração abre automaticamente. Depois, as configurações ficam no menu Parcelas Customizadas > Configurações.
 
 == Frequently Asked Questions ==
 

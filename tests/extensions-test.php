@@ -22,6 +22,7 @@ require_once __DIR__ . '/../admin/src/Core/Init.php';
 require_once __DIR__ . '/../admin/src/Core/Functions.php';
 
 use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
+use MeuMouse\WC_Custom_Installments\Admin\Menu;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Product_Settings;
 use MeuMouse\WC_Custom_Installments\Core\Features;
@@ -472,6 +473,44 @@ check(
 	true,
 	in_array( 'example_product_note', array_column( Product_Settings::get_fields(), 'key' ), true )
 );
+
+echo PHP_EOL, 'Screens add-ons place in the menu', PHP_EOL;
+
+// The Pro add-on's licence screen goes through this filter; DEVELOPERS.md
+// offers it to third parties too. A malformed entry must be dropped rather
+// than registered as a page that renders nothing.
+check( 'no add-on, no screens', array(), Menu::get_pages() );
+check( 'and no licence address', '', Menu::license_url() );
+
+add_filter( 'WC_Custom_Installments/Admin/Pages', static function( $pages ) {
+	$pages['wc-custom-installments-last'] = array( 'title' => 'Last', 'component' => 'last', 'position' => 100 );
+	$pages['wc-custom-installments-first'] = array( 'title' => 'First', 'component' => 'first', 'position' => 5, 'menu_title' => 'Primeiro' );
+	$pages['wc-custom-installments-no-component'] = array( 'title' => 'Broken' );
+	$pages[ Menu::SETTINGS_PAGE ] = array( 'title' => 'Hijack', 'component' => 'hijack' );
+
+	return $pages;
+} );
+
+$pages = Menu::get_pages();
+
+check( 'they come out ordered by position', array( 'wc-custom-installments-first', 'wc-custom-installments-last' ), array_keys( $pages ) );
+check( 'a page with no renderer is dropped', false, isset( $pages['wc-custom-installments-no-component'] ) );
+check( 'the settings screen cannot be taken over', false, isset( $pages[ Menu::SETTINGS_PAGE ] ) );
+check( 'the menu title falls back to the title', 'Last', $pages['wc-custom-installments-last']['menu_title'] );
+check( 'and an explicit one is kept', 'Primeiro', $pages['wc-custom-installments-first']['menu_title'] );
+check(
+	'a screen\'s address',
+	'https://example.test/wp-admin/admin.php?page=wc-custom-installments-first',
+	Menu::page_url('wc-custom-installments-first')
+);
+check(
+	'the settings screen\'s, with a tab',
+	'https://example.test/wp-admin/admin.php?page=wc-custom-installments&section=discounts',
+	Menu::page_url( '', array( 'section' => 'discounts' ) )
+);
+
+$GLOBALS['wp_test_filters'] = array();
+Features::flush();
 
 echo PHP_EOL, 'Class discovery', PHP_EOL;
 

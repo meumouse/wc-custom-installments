@@ -607,12 +607,13 @@ class Product_Settings {
 		if ( Helpers::is_pro_active() ) {
 			$message = esc_html__( 'Os campos marcados como Pro precisam de uma licença ativa do Parcelas Customizadas Pro.', 'wc-custom-installments' );
 
-			// The licence tab is the add-on's (`?section=license`); the
-			// settings screen opens its first tab if the name ever changes.
-			if ( current_user_can( Helpers::capability() ) ) {
+			// The licence screen is the add-on's, so it says where it is.
+			$license_url = Menu::license_url();
+
+			if ( '' !== $license_url && current_user_can( Helpers::capability() ) ) {
 				$message .= sprintf(
 					' <a href="%s">%s</a>',
-					esc_url( admin_url( 'admin.php?page=' . Menu::SETTINGS_PAGE . '&section=license' ) ),
+					esc_url( $license_url ),
 					esc_html__( 'Ativar licença', 'wc-custom-installments' )
 				);
 			}
@@ -793,7 +794,7 @@ class Product_Settings {
 		if ( current_user_can( Helpers::capability() ) ) {
 			$message .= sprintf(
 				' <a href="%s">%s</a>',
-				esc_url( admin_url( 'admin.php?page=' . Menu::SETTINGS_PAGE . '&section=discounts' ) ),
+				esc_url( Menu::page_url( Menu::SETTINGS_PAGE, array( 'section' => 'discounts' ) ) ),
 				esc_html__( 'Ativar descontos', 'wc-custom-installments' )
 			);
 		}

@@ -56,6 +56,22 @@ class Admin_Assets extends Abstract_Assets {
 		Onboarding::PAGE    => array( 'page' => 'onboarding', 'endpoint' => 'admin/onboarding' ),
 	);
 
+	/**
+	 * Vite entry of the screens add-ons fill (Admin\Menu::get_pages()).
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const ADDON_ENTRY = 'src/entries/addon-page.js';
+
+	/**
+	 * Script handle of the screens add-ons fill.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const ADDON_HANDLE = 'wc-custom-installments-addon-page-app';
+
 
 	/**
 	 * Register the asset hooks.
@@ -82,12 +98,13 @@ class Admin_Assets extends Abstract_Assets {
 	 */
 	public function enqueue_assets() {
 		$page = Helpers::current_admin_page();
+		$screen = $this->get_screen( $page );
 
-		if ( '' === $page || ! isset( $this->entries[ $page ] ) ) {
+		if ( ! $screen ) {
 			return;
 		}
 
-		$assets = Scripts::get_entry_assets( $this->entries[ $page ] );
+		$assets = Scripts::get_entry_assets( $screen['entry'] );
 
 		if ( empty( $assets['script'] ) ) {
 			add_action( 'admin_notices', array( $this, 'missing_build_notice' ) );
@@ -108,9 +125,9 @@ class Admin_Assets extends Abstract_Assets {
 			}
 		}
 
-		$handle = $this->handles[ $page ];
+		$handle = $screen['handle'];
 
-		if ( 'settings' === $this->bootstrap[ $page ]['page'] ) {
+		if ( 'settings' === $screen['page'] ) {
 			// The element design panel previews each icon the way the store
 			// prints it, Font Awesome classes included.
 			$this->enqueue_font_awesome_styles();
@@ -129,9 +146,46 @@ class Admin_Assets extends Abstract_Assets {
 		wp_localize_script( $handle, 'wcCustomInstallmentsBootstrap', array(
 			'restUrl'  => esc_url_raw( rest_url( WC_CUSTOM_INSTALLMENTS_REST ) ),
 			'nonce'    => wp_create_nonce('wp_rest'),
-			'page'     => $this->bootstrap[ $page ]['page'],
-			'endpoint' => $this->bootstrap[ $page ]['endpoint'],
+			'page'     => $screen['page'],
+			'endpoint' => $screen['endpoint'],
 		) );
+	}
+
+
+	/**
+	 * What to load on an admin page, when it is one of ours.
+	 *
+	 * The plugin's own screens are listed on this class; the screens add-ons
+	 * place in the menu all share one entry, told apart by the endpoint.
+	 *
+	 * @since 6.0.0
+	 * @param string $page | Admin page slug
+	 * @return array{entry:string,handle:string,page:string,endpoint:string}|null
+	 */
+	private function get_screen( $page ) {
+		if ( '' === $page ) {
+			return null;
+		}
+
+		if ( isset( $this->entries[ $page ] ) ) {
+			return array(
+				'entry' => $this->entries[ $page ],
+				'handle' => $this->handles[ $page ],
+				'page' => $this->bootstrap[ $page ]['page'],
+				'endpoint' => $this->bootstrap[ $page ]['endpoint'],
+			);
+		}
+
+		if ( isset( Menu::get_pages()[ $page ] ) ) {
+			return array(
+				'entry' => self::ADDON_ENTRY,
+				'handle' => self::ADDON_HANDLE,
+				'page' => 'addon',
+				'endpoint' => 'admin/pages/' . $page,
+			);
+		}
+
+		return null;
 	}
 
 
@@ -189,7 +243,7 @@ class Admin_Assets extends Abstract_Assets {
 	public function add_module_type_attribute( $tag, $handle ) {
 		$tag = is_scalar( $tag ) ? (string) $tag : '';
 
-		if ( ! in_array( $handle, $this->handles, true ) ) {
+		if ( self::ADDON_HANDLE !== $handle && ! in_array( $handle, $this->handles, true ) ) {
 			return $tag;
 		}
 
@@ -255,7 +309,7 @@ class Admin_Assets extends Abstract_Assets {
 	 * @return string
 	 */
 	public function add_body_class( $classes ) {
-		if ( ! isset( $this->entries[ Helpers::current_admin_page() ] ) ) {
+		if ( ! $this->get_screen( Helpers::current_admin_page() ) ) {
 			return $classes;
 		}
 

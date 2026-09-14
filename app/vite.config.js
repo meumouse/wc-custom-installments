@@ -54,6 +54,7 @@ export default defineConfig({
       input: {
         settings: resolve(__dirname, 'src/entries/settings.js'),
         onboarding: resolve(__dirname, 'src/entries/onboarding.js'),
+        'addon-page': resolve(__dirname, 'src/entries/addon-page.js'),
         storefront: resolve(__dirname, 'src/entries/storefront.js'),
         // Stylesheet-only entry: the icon font the storefront uses by default.
         'font-awesome': resolve(__dirname, 'src/entries/font-awesome.js'),
