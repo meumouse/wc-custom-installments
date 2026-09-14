@@ -11,6 +11,7 @@ import { computed } from 'vue';
 import BaseInput from '../base/BaseInput.vue';
 import BaseInputGroup from '../base/BaseInputGroup.vue';
 import BaseSelect from '../base/BaseSelect.vue';
+import { unitOptions as buildUnitOptions } from '../../utils/units';
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
@@ -21,9 +22,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'update:unitValue']);
 
-const unitOptions = computed(() =>
-  (props.field.units || []).map((unit) => ({ value: unit, label: unit })),
-);
+const unitOptions = computed(() => buildUnitOptions(props.field.units));
 
 const amount = computed({
   get: () => props.modelValue,
@@ -49,7 +48,7 @@ const unit = computed({
     />
 
     <template #suffix>
-      <div class="w-24">
+      <div class="w-28">
         <BaseSelect v-model="unit" :options="unitOptions" :disabled="disabled" :aria-label="field.label" bare />
       </div>
     </template>

@@ -51,6 +51,14 @@ class Element_Registry {
 				array( 'class' => '', 'image' => '' ),
 				array( 'font_size' => '1.225', 'font_weight' => '600', 'font_color' => '#343A40' )
 			),
+			// Only the price that follows a struck-out one: a variable product
+			// prints its plain price with the same `sale-price` class.
+			'sale_price' => self::child(
+				'wci_sale_price',
+				'.woo-custom-installments-group-main-price .woo-custom-installments-price.has-discount ~ .woo-custom-installments-price.sale-price',
+				__( 'Preço com desconto', 'wc-custom-installments' ),
+				'price'
+			),
 			'installments' => self::element(
 				'wci_best_installments',
 				'.woo-custom-installments-card-container',
@@ -210,6 +218,50 @@ class Element_Registry {
 			'styles' => array(
 				'mobile' => $resolved,
 				'desktop' => $resolved,
+			),
+		);
+	}
+
+
+	/**
+	 * Build an element that styles a part of another one.
+	 *
+	 * A part is not placed in the price group on its own, so it has no order
+	 * and no icon. Every property starts empty, which means "whatever the
+	 * parent does": a store that restyled the price keeps seeing that style on
+	 * the discounted price until it sets one of its own.
+	 *
+	 * @since 6.0.0
+	 * @param string $id | DOM id used by the settings preview
+	 * @param string $selector | CSS selector the element's styles target
+	 * @param string $title | Human-readable name
+	 * @param string $parent | Key of the element this one is part of
+	 * @return array<string,mixed>
+	 */
+	private static function child( $id, $selector, $title, $parent ) {
+		$box = array( 'top' => '', 'right' => '', 'bottom' => '', 'left' => '', 'unit' => 'rem' );
+
+		$styles = array(
+			'font_size' => '',
+			'font_unit' => 'rem',
+			'font_weight' => '',
+			'font_color' => '',
+			'background_color' => '',
+			'margin' => $box,
+			'padding' => $box,
+			'border_radius' => $box,
+		);
+
+		return array(
+			'id' => $id,
+			'selector' => $selector,
+			'settings_title' => $title,
+			'parent' => $parent,
+			'order' => 0,
+			'icon' => array( 'class' => '', 'image' => '' ),
+			'styles' => array(
+				'mobile' => $styles,
+				'desktop' => $styles,
 			),
 		);
 	}

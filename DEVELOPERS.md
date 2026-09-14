@@ -240,6 +240,23 @@ add_filter( 'WC_Custom_Installments/Frontend/Elements', function( $elements ) {
 
 The stylesheet writer picks it up on its own; missing style keys fall back to the shipped defaults.
 
+An element can also style a part of another one, the way `sale_price` styles the discounted price
+inside `price`. Give it a `parent` with the other element's key: it is listed under its parent in the
+design panel instead of being ordered on its own, gets no order rule, and every style property left
+empty (`''`, box sides included) inherits from the parent, so the stylesheet writes only what was set.
+
+```php
+$elements['my_part'] = array(
+    'id'             => 'wci_my_part',
+    'selector'       => '.my-element .my-part',
+    'settings_title' => __( 'My part', 'my-plugin' ),
+    'parent'         => 'my_element',
+    'order'          => 0,
+    'icon'           => array( 'class' => '', 'image' => '' ),
+    'styles'         => array( 'mobile' => array( 'font_size' => '', 'font_color' => '' ), 'desktop' => array( 'font_size' => '', 'font_color' => '' ) ),
+);
+```
+
 ## The browser side
 
 The settings screen resolves a field's control through a registry published on the window. A

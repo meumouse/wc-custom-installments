@@ -30,14 +30,6 @@ class Storefront_Assets extends Abstract_Assets {
 	 */
 	const HANDLE = 'wc-custom-installments-storefront';
 
-	/**
-	 * Style handle of the bundled Font Awesome Free.
-	 *
-	 * @since 6.0.0
-	 * @var string
-	 */
-	const FONT_AWESOME_HANDLE = 'wc-custom-installments-font-awesome';
-
 
 	/**
 	 * Register the storefront hooks.
@@ -137,19 +129,7 @@ class Storefront_Assets extends Abstract_Assets {
 			return;
 		}
 
-		$assets = Scripts::get_entry_assets('src/entries/font-awesome.js');
-
-		if ( empty( $assets['styles'] ) ) {
-			return;
-		}
-
-		$version = ! empty( $assets['version'] ) ? $assets['version'] : $this->version;
-
-		foreach ( array_values( (array) $assets['styles'] ) as $index => $style_url ) {
-			$handle = 0 === $index ? self::FONT_AWESOME_HANDLE : self::FONT_AWESOME_HANDLE . '-' . $index;
-
-			wp_enqueue_style( $handle, $style_url, array(), $version );
-		}
+		$this->enqueue_font_awesome_styles();
 	}
 
 
@@ -296,10 +276,14 @@ class Storefront_Assets extends Abstract_Assets {
 		}
 
 		if ( $product->is_type('variable') ) {
+			// The same regular price the server struck out beside the lowest
+			// one, so a quantity change repaints the pair it printed.
+			$regular = Helpers::cheapest_variation_regular_price( $product );
+
 			return array(
 				'id' => $product->get_id(),
 				'type' => $product->get_type(),
-				'regular_price' => (float) $product->get_variation_regular_price( 'min', true ),
+				'regular_price' => $regular > 0 ? $regular : (float) $product->get_variation_regular_price( 'min', true ),
 				'sale_price' => (float) $product->get_variation_sale_price( 'min', true ),
 				'current_price' => (float) $product->get_variation_price( 'min', true ),
 			);

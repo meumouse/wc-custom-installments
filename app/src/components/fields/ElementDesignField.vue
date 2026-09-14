@@ -8,6 +8,10 @@
  * an element the store never touched still shows what it ships with, and each
  * colour can go back to it.
  *
+ * An element with a `parent` is a part of that one - the discounted price
+ * inside the product price. It is listed under its parent rather than ordered
+ * on its own, and every property left empty inherits from the parent.
+ *
  * Every change emits a complete structure rather than a patch. The server
  * sanitizes whole elements, and a partial one would lose the sides and units
  * nobody edited.
@@ -19,6 +23,7 @@ import BaseBadge from '../base/BaseBadge.vue';
 import BaseButton from '../base/BaseButton.vue';
 import BaseCode from '../base/BaseCode.vue';
 import BaseColorInput from '../base/BaseColorInput.vue';
+import BaseIcon from '../base/BaseIcon.vue';
 import BaseIconButton from '../base/BaseIconButton.vue';
 import BaseInput from '../base/BaseInput.vue';
 import BaseInputGroup from '../base/BaseInputGroup.vue';
@@ -27,6 +32,8 @@ import BaseModal from '../base/BaseModal.vue';
 import BaseSelect from '../base/BaseSelect.vue';
 import BaseTabs from '../base/BaseTabs.vue';
 import DesignBoxControl from './DesignBoxControl.vue';
+import ElementPreview from './ElementPreview.vue';
+import { unitOptions as buildUnitOptions } from '../../utils/units';
 import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
@@ -34,14 +41,17 @@ const props = defineProps({
   field: { type: Object, required: true },
   disabled: { type: Boolean, default: false },
   iconFormat: { type: String, default: 'class' },
+  // The copy a variable product's price starts with, e.g. "A partir de".
+  startingFrom: { type: String, default: '' },
+  // Whether the store prints the percentage-off badge beside a sale price.
+  saleBadge: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-// What each element reads like on a product, for the preview. An element an
-// add-on registers falls back to its title.
+// What each element reads like on a product, for the preview. The product
+// price draws itself; an element an add-on registers falls back to its title.
 const PREVIEWS = {
-  price: __('R$97,00'),
   installments: __('Em até 3x de R$32,33 sem juros'),
   discount_pix: __('À vista R$87,30 no Pix'),
   pix_economy: __('Economize R$9,70 no Pix'),
@@ -60,13 +70,11 @@ const defaults = computed(() =>
   props.field.default && typeof props.field.default === 'object' ? props.field.default : {},
 );
 
-const unitOptions = computed(() =>
-  (props.field.units || ['px', 'em', 'rem', '%']).map((unit) => ({ value: unit, label: unit })),
-);
+const unitOptions = computed(() => buildUnitOptions(props.field.units));
 
-const weightOptions = computed(() =>
-  (props.field.weights || ['400', '500', '600', '700']).map((weight) => ({ value: String(weight), label: String(weight) })),
-);
+const weights = computed(() => (props.field.weights || ['400', '500', '600', '700']).map((weight) => String(weight)));
+
+const canBrowse = computed(() => typeof window !== 'undefined' && Boolean(window.wp?.media));
 
 /**
  * Deep copy a plain value.
@@ -110,15 +118,84 @@ function resolve(key) {
   return merge(clone(defaults.value[key] || {}), clone(props.modelValue?.[key] || {}));
 }
 
-const elements = computed(() =>
+/**
+ * The element a part belongs to.
+ *
+ * @since 6.0.0
+ * @param {string} key - Element key.
+ * @return {string} The parent's key, or an empty string for a top-level element.
+ */
+function parentOf(key) {
+  return String(defaults.value[key]?.parent || '');
+}
+
+/**
+ * The name an element is listed under.
+ *
+ * @since 6.0.0
+ * @param {string} key - Element key.
+ * @return {string} Its title.
+ */
+function titleOf(key) {
+  return defaults.value[key]?.settings_title || key;
+}
+
+/**
+ * The first part of an element, resolved, for its preview.
+ *
+ * @since 6.0.0
+ * @param {string} key - Key of the parent element.
+ * @return {object|null} The part, or null when it has none.
+ */
+function partOf(key) {
+  const part = Object.keys(defaults.value).find((candidate) => parentOf(candidate) === key);
+
+  return part ? { key: part, ...resolve(part) } : null;
+}
+
+// The elements the store orders, in their order.
+const topLevel = computed(() =>
   Object.keys(defaults.value)
-    .map((key) => ({ key, ...resolve(key), title: defaults.value[key]?.settings_title || key }))
+    .filter((key) => !parentOf(key))
+    .map((key) => ({ key, ...resolve(key), title: titleOf(key) }))
     .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0)),
 );
 
-const editing = computed(() => (editingKey.value ? resolve(editingKey.value) : null));
+// Every row of the list: each element followed by its parts.
+const rows = computed(() =>
+  topLevel.value.flatMap((element, index) => [
+    { ...element, index, isPart: false },
+    ...Object.keys(defaults.value)
+      .filter((key) => parentOf(key) === element.key)
+      .map((key) => ({ key, ...resolve(key), title: titleOf(key), index, isPart: true })),
+  ]),
+);
 
-const editingTitle = computed(() => defaults.value[editingKey.value]?.settings_title || editingKey.value);
+const editing = computed(() => (editingKey.value ? { key: editingKey.value, ...resolve(editingKey.value) } : null));
+
+const editingTitle = computed(() => titleOf(editingKey.value));
+
+const editingParentKey = computed(() => parentOf(editingKey.value));
+
+const isEditingPart = computed(() => Boolean(editingParentKey.value));
+
+const editingParent = computed(() =>
+  editingParentKey.value ? { key: editingParentKey.value, ...resolve(editingParentKey.value) } : null,
+);
+
+const weightOptions = computed(() => {
+  const options = weights.value.map((weight) => ({ value: weight, label: weight }));
+
+  if (!isEditingPart.value) {
+    return options;
+  }
+
+  return [{ value: '', label: sprintf(__('Herdar (%s)'), String(inherited('font_weight') || '400')) }, ...options];
+});
+
+const resetLabel = computed(() =>
+  isEditingPart.value ? sprintf(__('Herdar de %s'), titleOf(editingParentKey.value)) : __('Redefinir para a cor padrão'),
+);
 
 /**
  * The whole structure, ready to store.
@@ -155,12 +232,12 @@ function commit(next) {
  * Swap an element with its neighbour and renumber them all.
  *
  * @since 6.0.0
- * @param {number} index - Position of the element in the sorted list.
+ * @param {number} index - Position of the element among the ordered ones.
  * @param {number} step - -1 to move up, 1 to move down.
  * @return {void}
  */
 function move(index, step) {
-  const keys = elements.value.map((element) => element.key);
+  const keys = topLevel.value.map((element) => element.key);
   const target = index + step;
 
   if (target < 0 || target >= keys.length) {
@@ -214,6 +291,17 @@ function style(property) {
 }
 
 /**
+ * Read what the element being edited inherits, for the chosen device.
+ *
+ * @since 6.0.0
+ * @param {string} property - Style property.
+ * @return {*} The parent's value, or undefined for a top-level element.
+ */
+function inherited(property) {
+  return editingParent.value?.styles?.[device.value]?.[property];
+}
+
+/**
  * Write a style of the element being edited, for the chosen device.
  *
  * @since 6.0.0
@@ -226,7 +314,8 @@ function setStyle(property, value) {
 }
 
 /**
- * Put a colour back to what the element ships with.
+ * Put a colour back to what the element ships with, which for a part is
+ * inheriting it again.
  *
  * @since 6.0.0
  * @param {string} property - `font_color` or `background_color`.
@@ -235,46 +324,6 @@ function setStyle(property, value) {
 function resetColor(property) {
   setStyle(property, defaults.value[editingKey.value]?.styles?.[device.value]?.[property] ?? '');
 }
-
-/**
- * Format a four-sided box as CSS.
- *
- * @since 6.0.0
- * @param {object} box - Top, right, bottom, left and the unit.
- * @return {string} CSS shorthand.
- */
-function boxCss(box) {
-  const unit = box?.unit || 'rem';
-
-  return ['top', 'right', 'bottom', 'left'].map((side) => `${box?.[side] ?? 0}${unit}`).join(' ');
-}
-
-/**
- * The inline style that previews an element on one device.
- *
- * @since 6.0.0
- * @param {object} element - A resolved element.
- * @param {string} deviceId - `desktop` or `mobile`.
- * @return {object} Style object.
- */
-function previewStyle(element, deviceId) {
-  const styles = element?.styles?.[deviceId] || {};
-
-  return {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '0.35rem',
-    fontSize: `${styles.font_size ?? 1}${styles.font_unit || 'rem'}`,
-    fontWeight: styles.font_weight,
-    color: styles.font_color,
-    backgroundColor: styles.background_color,
-    margin: boxCss(styles.margin),
-    padding: boxCss(styles.padding),
-    borderRadius: boxCss(styles.border_radius),
-  };
-}
-
-const canBrowse = computed(() => typeof window !== 'undefined' && Boolean(window.wp?.media));
 
 /**
  * Pick the icon image from the media library.
@@ -307,49 +356,59 @@ function browseImage() {
 <template>
   <div class="flex flex-col gap-2">
     <div
-      v-for="(element, index) in elements"
-      :key="element.key"
-      class="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3"
+      v-for="row in rows"
+      :key="row.key"
+      class="flex flex-wrap items-center gap-3 rounded-lg border px-3 py-3"
+      :class="row.isPart ? 'ml-6 border-dashed border-slate-200 bg-slate-50/60 sm:ml-10' : 'border-slate-200 bg-white'"
     >
-      <div class="flex flex-col">
+      <div v-if="!row.isPart" class="flex flex-col">
         <BaseIconButton
           icon="arrow-up"
           :size="18"
-          :label="sprintf(__('Mover %s para cima'), element.title)"
-          :disabled="disabled || index === 0"
-          @click="move(index, -1)"
+          :label="sprintf(__('Mover %s para cima'), row.title)"
+          :disabled="disabled || row.index === 0"
+          @click="move(row.index, -1)"
         />
         <BaseIconButton
           icon="arrow-down"
           :size="18"
-          :label="sprintf(__('Mover %s para baixo'), element.title)"
-          :disabled="disabled || index === elements.length - 1"
-          @click="move(index, 1)"
+          :label="sprintf(__('Mover %s para baixo'), row.title)"
+          :disabled="disabled || row.index === topLevel.length - 1"
+          @click="move(row.index, 1)"
         />
       </div>
 
       <div class="min-w-0 flex-1 overflow-hidden">
-        <span :style="previewStyle(element, 'desktop')">
-          <img
-            v-if="iconFormat !== 'class' && element.icon?.image"
-            :src="element.icon.image"
-            alt=""
-            class="h-4 w-4 object-contain"
-          />
-          {{ PREVIEWS[element.key] || element.title }}
-        </span>
+        <ElementPreview
+          v-if="row.isPart"
+          :element="{ key: parentOf(row.key), ...resolve(parentOf(row.key)) }"
+          :sale="row"
+          :icon-format="iconFormat"
+          :starting-from="startingFrom"
+          :sale-badge="saleBadge"
+          focus-sale
+        />
+        <ElementPreview
+          v-else
+          :element="row"
+          :sale="partOf(row.key)"
+          :icon-format="iconFormat"
+          :text="PREVIEWS[row.key] || row.title"
+          :starting-from="startingFrom"
+          :sale-badge="saleBadge"
+        />
       </div>
 
-      <BaseBadge tone="info">{{ element.title }}</BaseBadge>
+      <BaseBadge tone="info">{{ row.title }}</BaseBadge>
 
-      <BaseButton variant="secondary" size="sm" icon="edit" :disabled="disabled" @click="editingKey = element.key">
+      <BaseButton variant="secondary" size="sm" icon="edit" :disabled="disabled" @click="editingKey = row.key">
         {{ __('Editar') }}
       </BaseButton>
     </div>
 
     <BaseModal
       :open="Boolean(editing)"
-      size="xl"
+      size="2xl"
       :title="sprintf(__('Configurar estilos: %s'), editingTitle)"
       @close="editingKey = ''"
     >
@@ -362,10 +421,19 @@ function browseImage() {
           id-prefix="wcci-design-device"
         />
 
-        <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)]">
-          <div class="flex flex-col gap-6">
+        <p v-if="isEditingPart" class="mt-4 text-[13px] leading-5 text-slate-500">
+          {{
+            sprintf(
+              __('O preço exibido ao lado do preço riscado quando o produto está em promoção. O que ficar em branco segue o elemento "%s".'),
+              titleOf(editingParentKey),
+            )
+          }}
+        </p>
+
+        <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <div class="flex min-w-0 flex-col gap-6">
             <div class="grid gap-4 sm:grid-cols-2">
-              <div>
+              <div class="min-w-0">
                 <BaseLabel size="sm">{{ __('Tamanho do texto') }}</BaseLabel>
                 <BaseInputGroup class="mt-2" :disabled="disabled">
                   <BaseInput
@@ -374,13 +442,14 @@ function browseImage() {
                     inputmode="decimal"
                     step="0.05"
                     min="0"
+                    :placeholder="isEditingPart ? String(inherited('font_size') ?? '') : ''"
                     :disabled="disabled"
                     :aria-label="__('Tamanho do texto')"
                     bare
                     @update:model-value="setStyle('font_size', $event)"
                   />
                   <template #suffix>
-                    <div class="w-24">
+                    <div class="w-28">
                       <BaseSelect
                         :model-value="style('font_unit') || 'rem'"
                         :options="unitOptions"
@@ -394,11 +463,11 @@ function browseImage() {
                 </BaseInputGroup>
               </div>
 
-              <div>
+              <div class="min-w-0">
                 <BaseLabel size="sm">{{ __('Espessura do texto') }}</BaseLabel>
                 <BaseSelect
                   class="mt-2"
-                  :model-value="String(style('font_weight') || '400')"
+                  :model-value="isEditingPart ? String(style('font_weight') ?? '') : String(style('font_weight') || '400')"
                   :options="weightOptions"
                   :disabled="disabled"
                   :aria-label="__('Espessura do texto')"
@@ -408,40 +477,48 @@ function browseImage() {
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
-              <div>
+              <div class="min-w-0">
                 <BaseLabel size="sm">{{ __('Cor do texto') }}</BaseLabel>
-                <div class="mt-2 flex items-center gap-2">
-                  <BaseColorInput
-                    :model-value="style('font_color') || ''"
-                    :disabled="disabled"
-                    :aria-label="__('Cor do texto')"
-                    @update:model-value="setStyle('font_color', $event)"
-                  />
-                  <BaseIconButton
-                    icon="undo"
-                    :label="__('Redefinir para a cor padrão')"
-                    :disabled="disabled"
-                    @click="resetColor('font_color')"
-                  />
-                </div>
+                <BaseColorInput
+                  class="mt-2"
+                  fluid
+                  :model-value="style('font_color') || ''"
+                  :placeholder="isEditingPart ? String(inherited('font_color') || '') : ''"
+                  :disabled="disabled"
+                  :aria-label="__('Cor do texto')"
+                  @update:model-value="setStyle('font_color', $event)"
+                >
+                  <template #append>
+                    <BaseIconButton
+                      icon="undo"
+                      :label="resetLabel"
+                      :disabled="disabled"
+                      @click="resetColor('font_color')"
+                    />
+                  </template>
+                </BaseColorInput>
               </div>
 
-              <div>
+              <div class="min-w-0">
                 <BaseLabel size="sm">{{ __('Cor de fundo') }}</BaseLabel>
-                <div class="mt-2 flex items-center gap-2">
-                  <BaseColorInput
-                    :model-value="style('background_color') || ''"
-                    :disabled="disabled"
-                    :aria-label="__('Cor de fundo')"
-                    @update:model-value="setStyle('background_color', $event)"
-                  />
-                  <BaseIconButton
-                    icon="undo"
-                    :label="__('Redefinir para a cor padrão')"
-                    :disabled="disabled"
-                    @click="resetColor('background_color')"
-                  />
-                </div>
+                <BaseColorInput
+                  class="mt-2"
+                  fluid
+                  :model-value="style('background_color') || ''"
+                  :placeholder="isEditingPart ? 'transparent' : ''"
+                  :disabled="disabled"
+                  :aria-label="__('Cor de fundo')"
+                  @update:model-value="setStyle('background_color', $event)"
+                >
+                  <template #append>
+                    <BaseIconButton
+                      icon="undo"
+                      :label="resetLabel"
+                      :disabled="disabled"
+                      @click="resetColor('background_color')"
+                    />
+                  </template>
+                </BaseColorInput>
               </div>
             </div>
 
@@ -449,6 +526,7 @@ function browseImage() {
               :model-value="style('margin')"
               :label="__('Margem')"
               :units="field.units"
+              :placeholder="isEditingPart ? '0' : ''"
               :disabled="disabled"
               @update:model-value="setStyle('margin', $event)"
             />
@@ -457,6 +535,7 @@ function browseImage() {
               :model-value="style('padding')"
               :label="__('Preenchimento')"
               :units="field.units"
+              :placeholder="isEditingPart ? '0' : ''"
               :disabled="disabled"
               @update:model-value="setStyle('padding', $event)"
             />
@@ -465,11 +544,12 @@ function browseImage() {
               :model-value="style('border_radius')"
               :label="__('Raio da borda')"
               :units="field.units"
+              :placeholder="isEditingPart ? '0' : ''"
               :disabled="disabled"
               @update:model-value="setStyle('border_radius', $event)"
             />
 
-            <div>
+            <div v-if="!isEditingPart">
               <BaseLabel size="sm">{{ __('Ícone') }}</BaseLabel>
 
               <template v-if="iconFormat === 'class'">
@@ -477,14 +557,22 @@ function browseImage() {
                   {{ __('As classes do ícone no Font Awesome, por exemplo:') }}
                   <BaseCode>fa-solid fa-barcode</BaseCode>
                 </p>
-                <BaseInput
-                  class="mt-2"
-                  :model-value="editing.icon?.class || ''"
-                  :disabled="disabled"
-                  :aria-label="__('Classe do ícone')"
-                  placeholder="fa-regular fa-credit-card"
-                  @update:model-value="update('icon.class', $event)"
-                />
+                <BaseInputGroup class="mt-2" :disabled="disabled">
+                  <template #prefix>
+                    <span class="flex w-12 items-center justify-center self-stretch text-[18px] text-slate-600">
+                      <i v-if="editing.icon?.class" :class="editing.icon.class" aria-hidden="true" />
+                      <BaseIcon v-else name="image" :size="18" class="text-slate-300" />
+                    </span>
+                  </template>
+                  <BaseInput
+                    :model-value="editing.icon?.class || ''"
+                    :disabled="disabled"
+                    :aria-label="__('Classe do ícone')"
+                    placeholder="fa-regular fa-credit-card"
+                    bare
+                    @update:model-value="update('icon.class', $event)"
+                  />
+                </BaseInputGroup>
                 <BaseButton
                   class="mt-2"
                   variant="link"
@@ -500,6 +588,17 @@ function browseImage() {
                   {{ __('O endereço de uma imagem pequena, de preferência SVG ou PNG transparente.') }}
                 </p>
                 <div class="mt-2 flex flex-wrap items-center gap-2">
+                  <span
+                    class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 p-2"
+                  >
+                    <img
+                      v-if="editing.icon?.image"
+                      :src="editing.icon.image"
+                      alt=""
+                      class="max-h-full max-w-full object-contain"
+                    />
+                    <BaseIcon v-else name="image" :size="18" class="text-slate-300" />
+                  </span>
                   <div class="min-w-0 flex-1">
                     <BaseInput
                       :model-value="editing.icon?.image || ''"
@@ -519,23 +618,43 @@ function browseImage() {
                   >
                     {{ __('Procurar') }}
                   </BaseButton>
+                  <BaseIconButton
+                    v-if="editing.icon?.image"
+                    icon="x"
+                    :label="__('Remover ícone')"
+                    :disabled="disabled"
+                    @click="update('icon.image', '')"
+                  />
                 </div>
               </template>
             </div>
           </div>
 
-          <div>
+          <div class="order-first lg:sticky lg:top-0 lg:order-none lg:self-start">
             <BaseLabel size="sm">{{ __('Pré-visualizar') }}</BaseLabel>
-            <div class="mt-2 flex min-h-[8rem] items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4">
-              <span :style="previewStyle(editing, device)">
-                <img
-                  v-if="iconFormat !== 'class' && editing.icon?.image"
-                  :src="editing.icon.image"
-                  alt=""
-                  class="h-4 w-4 object-contain"
-                />
-                {{ PREVIEWS[editingKey] || editingTitle }}
-              </span>
+            <div
+              class="mt-2 flex min-h-[8rem] items-center justify-center overflow-hidden rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4"
+            >
+              <ElementPreview
+                v-if="isEditingPart"
+                :element="editingParent"
+                :sale="editing"
+                :device="device"
+                :icon-format="iconFormat"
+                :starting-from="startingFrom"
+                :sale-badge="saleBadge"
+                focus-sale
+              />
+              <ElementPreview
+                v-else
+                :element="editing"
+                :sale="partOf(editingKey)"
+                :device="device"
+                :icon-format="iconFormat"
+                :text="PREVIEWS[editingKey] || editingTitle"
+                :starting-from="startingFrom"
+                :sale-badge="saleBadge"
+              />
             </div>
           </div>
         </div>

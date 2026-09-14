@@ -70,8 +70,15 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Product screen: dependent fields show and hide with their toggle, the quantity fields appear only in per-product mode, and a warning shows when discounts are off store-wide. A "Documentação" link on the Plugins screen.
 - Store copy may carry simple HTML again, such as `<strong>`: it is kept through `wp_kses_post()` rather than stripped.
 - Colours stored as `rgb()` or `rgba()` by the 5.x colour picker are accepted and shown.
+- A "Discounted price" element in the design panel, listed under the product price: its own typography, colours and spacing for the price shown beside the struck-out one. Everything left blank inherits from the product price, so a store that restyled the price sees no change. An add-on element can be a part of another one through a `parent` key.
+- The design panel previews each element with its icon, Font Awesome class or uploaded image, and draws the product price in its fullest shape: a variable product on sale, with "starting from", the struck-out price, the discounted price and the sale badge.
+- Every measurement selector offers the same units, REM, EM, Pixel and %, in the same order.
+- A variable product whose range is replaced by "starting from" strikes out its cheapest variation's regular price while that variation is on sale, as a simple product on sale does.
 
 ### Fixed
+
+- A unit or weight selector inside the design dialog opened behind it and could not be used.
+- The design dialog no longer lets the colour fields spill into the next column, and only its content scrolls: the title, the close button and "Done" stay in view.
 
 - Seven settings had a default but no field in the settings schema, so they could never be written and sat at that default forever. Four of them are the "rewrite the displayed price" group, which now has a card of its own; two govern quantity discounts; one was dead and has been removed.
 - A store migrated from 5.x no longer loses a value on its first save because the new screen did not offer it. Before this, the save reset the value to the default: the accordion, "both" best installments, the custom-hook, shortcode and widget placements, and per-product quantity discount mode. Selects now accept the earlier spelling of a value and store the current one.

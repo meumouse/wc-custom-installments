@@ -28,27 +28,28 @@ msgid "%s à vista"
 msgstr ""
 
 #: admin/src/Frontend/Components.php:314
+#: app/src/components/fields/ElementPreview.vue:162
 #. translators: %s: discount percentage, e.g. "20%"
 msgid "%s OFF"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:847
+#: admin/src/Admin/Settings/Registry.php:875
 msgid "A cor do texto e da borda do botão é obtida a partir desta cor."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1019
+#: admin/src/Admin/Settings/Registry.php:1047
 msgid "A listagem de produtos e a página do produto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:220
+#: admin/src/Admin/Settings/Registry.php:248
 msgid "A maior parcela com e sem juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:218
+#: admin/src/Admin/Settings/Registry.php:246
 msgid "A maior parcela sem juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:219
+#: admin/src/Admin/Settings/Registry.php:247
 msgid "A maior parcela, com juros"
 msgstr ""
 
@@ -62,15 +63,15 @@ msgstr ""
 msgid "A partir de"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:340
+#: admin/src/Admin/Settings/Registry.php:368
 msgid "A porcentagem ou o valor descontado do preço."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:512
+#: admin/src/Admin/Settings/Registry.php:540
 msgid "A porcentagem ou o valor descontado nos pagamentos com boleto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:446
+#: admin/src/Admin/Settings/Registry.php:474
 msgid "A porcentagem ou o valor descontado quando o mínimo é atingido."
 msgstr ""
 
@@ -95,11 +96,11 @@ msgstr ""
 msgid "À vista"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:48
+#: app/src/components/fields/ElementDesignField.vue:58
 msgid "À vista R$87,30 no boleto bancário"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:46
+#: app/src/components/fields/ElementDesignField.vue:56
 msgid "À vista R$87,30 no Pix"
 msgstr ""
 
@@ -107,33 +108,33 @@ msgstr ""
 msgid "Abrir a configuração"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:494
+#: app/src/components/fields/ElementDesignField.vue:582
 msgid "Acessar o Font Awesome"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:361
+#: admin/src/Admin/Settings/Registry.php:389
 msgid ""
 "Adiciona aos totais do carrinho uma linha com o valor do pedido pago à "
 "vista."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:688
+#: admin/src/Admin/Settings/Registry.php:716
 msgid ""
 "Adiciona um aviso de \"aprovação imediata\" ao Pix e aos cartões de crédito "
 "e de débito."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:622
+#: admin/src/Admin/Settings/Registry.php:650
 msgid ""
 "Adiciona uma taxa aos totais da finalização da compra conforme a forma de "
 "pagamento escolhida."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:750
+#: admin/src/Admin/Settings/Registry.php:778
 msgid "Adicionado ao final de uma parcela com juros."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:751
+#: admin/src/Admin/Settings/Registry.php:779
 msgid "Adicionado ao final de uma parcela sem juros."
 msgstr ""
 
@@ -141,27 +142,27 @@ msgstr ""
 msgid "Alinhamento do grupo de preços"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:867
+#: admin/src/Admin/Settings/Registry.php:895
 msgid "Alinhamento do grupo de preços dentro dos cards de produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:252
+#: admin/src/Admin/Settings/Registry.php:280
 msgid "Antes do formulário de adicionar ao carrinho"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:747
+#: admin/src/Admin/Settings/Registry.php:775
 msgid "Antes do preço com desconto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:749
+#: admin/src/Admin/Settings/Registry.php:777
 msgid "Antes do preço de um produto variável"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:790
+#: admin/src/Admin/Settings/Registry.php:818
 msgid "Antes do preço no boleto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:465
+#: admin/src/Admin/Settings/Registry.php:493
 msgid "Anunciar o desconto por quantidade"
 msgstr ""
 
@@ -171,7 +172,7 @@ msgid ""
 "sua chave. Nada foi enviado ainda, e pular esta etapa não envia nada."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:839
+#: admin/src/Admin/Settings/Registry.php:867
 msgid "Aparência"
 msgstr ""
 
@@ -182,33 +183,33 @@ msgid ""
 "duas vezes."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:457
+#: admin/src/Admin/Settings/Registry.php:485
 msgid ""
 "Aplica o desconto em cada unidade em vez de uma vez só na linha. Em três "
 "unidades a 10%, é a diferença entre 10% e 30%."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:367
+#: admin/src/Admin/Settings/Registry.php:395
 msgid "Aplica o desconto também ao frete, além dos produtos."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:406
+#: admin/src/Admin/Settings/Registry.php:434
 msgid "Aplica um desconto quando o cliente atinge uma quantidade mínima."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:411
+#: admin/src/Admin/Settings/Registry.php:439
 msgid "Aplica-se a"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:173
+#: admin/src/Admin/Settings/Registry.php:201
 msgid "Aplicada a todas as parcelas além das sem juros."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:456
+#: admin/src/Admin/Settings/Registry.php:484
 msgid "Aplicar a cada unidade"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:554
+#: admin/src/Admin/Settings/Registry.php:582
 msgid "Aplicar um desconto"
 msgstr ""
 
@@ -217,21 +218,21 @@ msgstr ""
 msgid "Aprovação imediata"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:959
+#: admin/src/Admin/Settings/Registry.php:987
 msgid ""
 "Armazena o preço com desconto em um metadado para os plugins de feed de "
 "compras lerem."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:861
+#: admin/src/Admin/Settings/Registry.php:889
 msgid "Arredondamento do botão"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:477
+#: app/src/components/fields/ElementDesignField.vue:557
 msgid "As classes do ícone no Font Awesome, por exemplo:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:745
+#: admin/src/Admin/Settings/Registry.php:773
 msgid "As palavras em volta do preço com desconto e da linha de parcelamento."
 msgstr ""
 
@@ -241,11 +242,11 @@ msgid ""
 "qualquer uma delas depois."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:151
+#: admin/src/Admin/Settings/Registry.php:179
 msgid "As regras usadas para montar cada parcela exibida na loja."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:979
+#: admin/src/Admin/Settings/Registry.php:1007
 msgid ""
 "As versões e os limites do servidor que costumam explicar um problema. "
 "Informe-os ao pedir suporte."
@@ -255,20 +256,20 @@ msgstr ""
 msgid "Atenção"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:328
+#: admin/src/Admin/Settings/Registry.php:356
 msgid "Ativa os recursos de desconto para toda a loja."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:627
+#: admin/src/Admin/Settings/Registry.php:655
 msgid "Ativa os recursos de juros para toda a loja."
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:255
-#: admin/src/Admin/Settings/Registry.php:327
+#: admin/src/Admin/Settings/Registry.php:355
 msgid "Ativar descontos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:405
+#: admin/src/Admin/Settings/Registry.php:433
 msgid "Ativar descontos por quantidade"
 msgstr ""
 
@@ -276,11 +277,11 @@ msgstr ""
 msgid "Ativar empilhamento de preços"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:626
+#: admin/src/Admin/Settings/Registry.php:654
 msgid "Ativar juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:492
+#: admin/src/Admin/Settings/Registry.php:520
 msgid "Ativar o desconto no boleto"
 msgstr ""
 
@@ -288,21 +289,21 @@ msgstr ""
 msgid "Ativo"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:315
 msgid "Atualizar o preço com a quantidade"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:472
+#: admin/src/Admin/Settings/Registry.php:500
 msgid ""
 "Automaticamente ao lado do preço, ou onde você colocar o widget do "
 "Elementor."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:474
+#: admin/src/Admin/Settings/Registry.php:502
 msgid "Automaticamente, ao lado do preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:932
+#: admin/src/Admin/Settings/Registry.php:960
 msgid "Avançado"
 msgstr ""
 
@@ -316,16 +317,16 @@ msgid ""
 "outra loja."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:712
+#: admin/src/Admin/Settings/Registry.php:740
 #: app/src/pages/onboarding/OnboardingPage.vue:179
 msgid "Bandeiras de cartão de crédito"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:719
+#: admin/src/Admin/Settings/Registry.php:747
 msgid "Bandeiras de cartão de débito"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:766
+#: admin/src/Admin/Settings/Registry.php:794
 msgid "Bloco de formas de pagamento"
 msgstr ""
 
@@ -333,7 +334,7 @@ msgstr ""
 msgid "Boas-vindas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:692
+#: admin/src/Admin/Settings/Registry.php:720
 msgid "Boleto bancário"
 msgstr ""
 
@@ -349,23 +350,23 @@ msgstr ""
 msgid "Borda da tabela"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:844
+#: admin/src/Admin/Settings/Registry.php:872
 msgid "Botão de parcelas"
 msgstr ""
 
-#: app/src/components/base/BaseSelect.vue:331
+#: app/src/components/base/BaseSelect.vue:333
 msgid "Buscar"
 msgstr ""
 
-#: app/src/components/base/BaseSelect.vue:332
+#: app/src/components/base/BaseSelect.vue:334
 msgid "Buscar…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:415
+#: admin/src/Admin/Settings/Registry.php:443
 msgid "Cada produto individualmente"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:677
+#: admin/src/Admin/Settings/Registry.php:705
 msgid "Cada uma vira uma linha no bloco de formas de pagamento."
 msgstr ""
 
@@ -373,11 +374,11 @@ msgstr ""
 msgid "Cancelar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:698
+#: admin/src/Admin/Settings/Registry.php:726
 msgid "Cartão de crédito"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:704
+#: admin/src/Admin/Settings/Registry.php:732
 msgid "Cartão de débito"
 msgstr ""
 
@@ -389,7 +390,7 @@ msgstr ""
 msgid "Cartões de débito:"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:53
+#: app/src/components/fields/ElementDesignField.vue:63
 msgid "Celular"
 msgstr ""
 
@@ -397,19 +398,19 @@ msgstr ""
 msgid "Centralizado"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:871
+#: admin/src/Admin/Settings/Registry.php:899
 msgid "Centralizar o grupo de preços"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:892
+#: admin/src/Admin/Settings/Registry.php:920
 msgid "Classe de ícone (Font Awesome)"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:484
+#: app/src/components/fields/ElementDesignField.vue:570
 msgid "Classe do ícone"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:192
+#: admin/src/Admin/Settings/Registry.php:220
 msgid ""
 "Cobra uma taxa diferente para cada quantidade de parcelas, em vez de uma "
 "taxa mensal única."
@@ -419,7 +420,7 @@ msgstr ""
 msgid "Cobranças:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:890
+#: admin/src/Admin/Settings/Registry.php:918
 msgid ""
 "Com classes do Font Awesome, o plugin carrega a biblioteca de ícones na "
 "loja. Com imagens, cada elemento usa o ícone enviado em \"Design dos "
@@ -435,27 +436,27 @@ msgstr ""
 msgid "Começar o teste grátis"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:238
+#: admin/src/Admin/Settings/Registry.php:266
 msgid ""
 "Como as formas de pagamento e a tabela completa de parcelas são "
 "apresentadas na página do produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:840
+#: admin/src/Admin/Settings/Registry.php:868
 msgid "Como o plugin aparece dentro do seu tema."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:305
 msgid ""
 "Como os preços se comportam quando o cliente escolhe uma variação ou altera "
 "a quantidade."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:885
+#: admin/src/Admin/Settings/Registry.php:913
 msgid "Como são exibidos os ícones ao lado de cada elemento."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:242
+#: admin/src/Admin/Settings/Registry.php:270
 msgid "Como tabela na página"
 msgstr ""
 
@@ -463,7 +464,7 @@ msgstr ""
 msgid "Compre %d unidades e ganhe %s de desconto"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:52
+#: app/src/components/fields/ElementDesignField.vue:62
 msgid "Computador"
 msgstr ""
 
@@ -471,7 +472,7 @@ msgstr ""
 msgid "Concluído"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:545
+#: app/src/components/fields/ElementDesignField.vue:664
 msgid "Concluir"
 msgstr ""
 
@@ -490,7 +491,7 @@ msgid "Configuração do Parcelas Customizadas"
 msgstr ""
 
 #: admin/src/Admin/Menu.php:90
-#: app/src/pages/settings/SettingsPage.vue:218
+#: app/src/pages/settings/SettingsPage.vue:221
 msgid "Configurações"
 msgstr ""
 
@@ -513,7 +514,7 @@ msgstr ""
 msgid "Configurações salvas."
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:353
+#: app/src/components/fields/ElementDesignField.vue:412
 msgid "Configurar estilos: %s"
 msgstr ""
 
@@ -525,7 +526,7 @@ msgstr ""
 msgid "Confirmar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:938
+#: admin/src/Admin/Settings/Registry.php:966
 msgid "Construtores de páginas e plugins de SEO."
 msgstr ""
 
@@ -542,12 +543,12 @@ msgid "Controles avançados de design"
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:109
-#: app/src/components/fields/ElementDesignField.vue:430
-#: app/src/components/fields/ElementDesignField.vue:435
+#: app/src/components/fields/ElementDesignField.vue:503
+#: app/src/components/fields/ElementDesignField.vue:510
 msgid "Cor de fundo"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:847
+#: admin/src/Admin/Settings/Registry.php:875
 msgid "Cor do botão"
 msgstr ""
 
@@ -556,29 +557,29 @@ msgid "Cor do preço"
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:90
-#: app/src/components/fields/ElementDesignField.vue:412
-#: app/src/components/fields/ElementDesignField.vue:417
+#: app/src/components/fields/ElementDesignField.vue:481
+#: app/src/components/fields/ElementDesignField.vue:488
 msgid "Cor do texto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:388
-#: admin/src/Admin/Settings/Registry.php:647
+#: admin/src/Admin/Settings/Registry.php:416
+#: admin/src/Admin/Settings/Registry.php:675
 msgid "Defina um valor para cada forma de pagamento aceita pela loja."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:191
+#: admin/src/Admin/Settings/Registry.php:219
 msgid "Definir os juros de cada parcela"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:253
+#: admin/src/Admin/Settings/Registry.php:281
 msgid "Depois do formulário de adicionar ao carrinho"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:748
+#: admin/src/Admin/Settings/Registry.php:776
 msgid "Depois do preço com desconto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:791
+#: admin/src/Admin/Settings/Registry.php:819
 msgid "Depois do preço no boleto"
 msgstr ""
 
@@ -590,7 +591,7 @@ msgstr ""
 msgid "Descartar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:560
+#: admin/src/Admin/Settings/Registry.php:588
 msgid "Desconto (%)"
 msgstr ""
 
@@ -598,25 +599,25 @@ msgstr ""
 msgid "Desconto à vista"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:486
+#: admin/src/Admin/Settings/Registry.php:514
 #: admin/src/Core/Features.php:91
-#: admin/src/Frontend/Element_Registry.php:95
+#: admin/src/Frontend/Element_Registry.php:103
 msgid "Desconto no boleto"
 msgstr ""
 
-#: admin/src/Frontend/Element_Registry.php:65
+#: admin/src/Frontend/Element_Registry.php:73
 msgid "Desconto no Pix"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:322
+#: admin/src/Admin/Settings/Registry.php:350
 msgid "Desconto no preço do produto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:387
+#: admin/src/Admin/Settings/Registry.php:415
 msgid "Desconto por forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:317
+#: admin/src/Admin/Settings/Registry.php:345
 msgid "Descontos"
 msgstr ""
 
@@ -624,35 +625,35 @@ msgstr ""
 msgid "Descontos personalizados por produto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:380
+#: admin/src/Admin/Settings/Registry.php:408
 #: admin/src/Core/Features.php:88
 msgid "Descontos por forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:399
+#: admin/src/Admin/Settings/Registry.php:427
 #: admin/src/Core/Features.php:90
 msgid "Descontos por quantidade"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:901
+#: admin/src/Admin/Settings/Registry.php:929
 msgid "Design dos elementos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:574
+#: admin/src/Admin/Settings/Registry.php:602
 msgid "Destaca quanto o cliente economiza."
 msgstr ""
 
 #: admin/src/Admin/Default_Options.php:185
-#: admin/src/Admin/Settings/Registry.php:237
+#: admin/src/Admin/Settings/Registry.php:265
 msgid "Detalhes das parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:967
+#: admin/src/Admin/Settings/Registry.php:995
 msgid "Diagnóstico e dados."
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:361
-#: app/src/components/fields/DesignBoxControl.vue:27
+#: app/src/components/fields/DesignBoxControl.vue:33
 msgid "Direita"
 msgstr ""
 
@@ -661,7 +662,7 @@ msgstr ""
 msgid "Dispensar"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:361
+#: app/src/components/fields/ElementDesignField.vue:420
 msgid "Dispositivo"
 msgstr ""
 
@@ -677,7 +678,7 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: admin/src/Frontend/Element_Registry.php:80
+#: admin/src/Frontend/Element_Registry.php:88
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:493
 msgid "Economia no Pix"
 msgstr ""
@@ -686,11 +687,11 @@ msgstr ""
 msgid "Economize %s no Pix"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:47
+#: app/src/components/fields/ElementDesignField.vue:57
 msgid "Economize R$9,70 no Pix"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:346
+#: app/src/components/fields/ElementDesignField.vue:405
 msgid "Editar"
 msgstr ""
 
@@ -703,34 +704,34 @@ msgstr ""
 msgid "Em até %dx de %s sem juros"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:45
+#: app/src/components/fields/ElementDesignField.vue:55
 msgid "Em até 3x de R$32,33 sem juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1022
+#: admin/src/Admin/Settings/Registry.php:1050
 msgid "Em nenhum lugar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:231
-#: admin/src/Admin/Settings/Registry.php:351
-#: admin/src/Admin/Settings/Registry.php:523
-#: admin/src/Admin/Settings/Registry.php:585
+#: admin/src/Admin/Settings/Registry.php:259
+#: admin/src/Admin/Settings/Registry.php:379
+#: admin/src/Admin/Settings/Registry.php:551
+#: admin/src/Admin/Settings/Registry.php:613
 msgid "Em quais páginas da loja ela aparece."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:254
+#: admin/src/Admin/Settings/Registry.php:282
 msgid "Em um gancho personalizado"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:240
+#: admin/src/Admin/Settings/Registry.php:268
 msgid "Em um popup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:241
+#: admin/src/Admin/Settings/Registry.php:269
 msgid "Em uma sanfona"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:744
+#: admin/src/Admin/Settings/Registry.php:772
 msgid "Em volta do preço"
 msgstr ""
 
@@ -751,7 +752,7 @@ msgid ""
 "Nada foi alterado — você pode revisar tudo na tela de configurações."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:893
+#: admin/src/Admin/Settings/Registry.php:921
 msgid "Enviar ícones (imagem)"
 msgstr ""
 
@@ -759,21 +760,21 @@ msgstr ""
 msgid "Erro"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:291
+#: app/src/components/fields/ElementDesignField.vue:340
 msgid "Escolher ícone"
 msgstr ""
 
-#: app/src/components/base/BaseColorInput.vue:61
+#: app/src/components/base/BaseColorInput.vue:66
 msgid "Escolher uma cor"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:398
-#: app/src/components/fields/ElementDesignField.vue:404
+#: app/src/components/fields/ElementDesignField.vue:467
+#: app/src/components/fields/ElementDesignField.vue:473
 msgid "Espessura do texto"
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:353
-#: app/src/components/fields/DesignBoxControl.vue:29
+#: app/src/components/fields/DesignBoxControl.vue:35
 msgid "Esquerda"
 msgstr ""
 
@@ -795,7 +796,7 @@ msgid ""
 "verifique se o complemento está ativo e atualizado."
 msgstr ""
 
-#: app/src/components/fields/FieldRenderer.vue:156
+#: app/src/components/fields/FieldRenderer.vue:162
 msgid "Este controle faz parte do complemento Pro."
 msgstr ""
 
@@ -815,7 +816,7 @@ msgstr ""
 msgid "Este widget precisa de um recurso que sua licença não cobre no momento."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:850
+#: admin/src/Admin/Settings/Registry.php:878
 msgid "Estilo do botão"
 msgstr ""
 
@@ -827,7 +828,7 @@ msgstr ""
 msgid "Estilos do preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:907
+#: admin/src/Admin/Settings/Registry.php:935
 msgid "Estilos dos elementos"
 msgstr ""
 
@@ -846,103 +847,103 @@ msgid ""
 "WooCommerce."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:220
+#: app/src/pages/settings/SettingsPage.vue:223
 msgid "Exiba parcelamentos, descontos e formas de pagamento na sua loja."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:693
+#: admin/src/Admin/Settings/Registry.php:721
 msgid "Exibe a linha do boleto, com o selo e as instruções."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:699
+#: admin/src/Admin/Settings/Registry.php:727
 msgid "Exibe a linha do cartão de crédito e as bandeiras que você aceita."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:705
+#: admin/src/Admin/Settings/Registry.php:733
 msgid "Exibe a linha do cartão de débito e as bandeiras que você aceita."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:682
+#: admin/src/Admin/Settings/Registry.php:710
 msgid "Exibe a linha do Pix, com o selo e as instruções."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:596
+#: admin/src/Admin/Settings/Registry.php:624
 msgid "Exibe a porcentagem de desconto sobre os produtos em promoção."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:948
+#: admin/src/Admin/Settings/Registry.php:976
 msgid ""
 "Exibe o grupo de preços completo onde um widget mostra o preço de um "
 "produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:156
+#: admin/src/Admin/Settings/Registry.php:184
 msgid "Exibe o parcelamento na listagem de produtos e na página do produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:541
+#: admin/src/Admin/Settings/Registry.php:569
 msgid ""
 "Exibe o seu próprio preço no lugar do preço do WooCommerce em produtos "
 "simples e variáveis."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:493
+#: admin/src/Admin/Settings/Registry.php:521
 msgid ""
 "Exibe um segundo preço com desconto para pagamentos no boleto, abaixo do "
 "desconto principal."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:282
+#: admin/src/Admin/Settings/Registry.php:310
 msgid ""
 "Exibe um único preço inicial em vez da faixa \"de — até\" nos produtos "
 "variáveis."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:466
+#: admin/src/Admin/Settings/Registry.php:494
 msgid "Exibe uma mensagem dizendo ao cliente como ganhá-lo."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:772
+#: admin/src/Admin/Settings/Registry.php:800
 msgid "Exibido abaixo do selo do boleto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:230
+#: admin/src/Admin/Settings/Registry.php:258
 msgid "Exibir a parcela em destaque em"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:372
+#: admin/src/Admin/Settings/Registry.php:400
 msgid "Exibir o desconto na forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:350
+#: admin/src/Admin/Settings/Registry.php:378
 msgid "Exibir o preço com desconto em"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:360
+#: admin/src/Admin/Settings/Registry.php:388
 msgid "Exibir o preço com desconto no carrinho"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:522
+#: admin/src/Admin/Settings/Registry.php:550
 msgid "Exibir o preço no boleto em"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:584
+#: admin/src/Admin/Settings/Registry.php:612
 msgid "Exibir o selo de economia em"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:606
 msgid "Exibir o selo de economia no Pix"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Admin/Settings/Registry.php:623
 msgid "Exibir o selo de promoção"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:631
+#: admin/src/Admin/Settings/Registry.php:659
 msgid "Exibir os juros na forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:155
+#: admin/src/Admin/Settings/Registry.php:183
 msgid "Exibir parcelas nos produtos"
 msgstr ""
 
@@ -967,34 +968,42 @@ msgid "Faça backup ou transfira sua configuração"
 msgstr ""
 
 #: admin/src/Frontend/Components.php:620
-#: app/src/components/base/BaseModal.vue:151
+#: app/src/components/base/BaseModal.vue:176
 msgid "Fechar"
 msgstr ""
 
 #: admin/src/Admin/Default_Options.php:194
 #: admin/src/Admin/Onboarding/Registry.php:101
-#: admin/src/Admin/Settings/Registry.php:671
+#: admin/src/Admin/Settings/Registry.php:699
 msgid "Formas de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:889
+#: admin/src/Admin/Settings/Registry.php:917
 msgid "Formato dos ícones"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:265
+#: admin/src/Admin/Settings/Registry.php:293
 msgid "Gancho personalizado"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:293
+#: admin/src/Admin/Settings/Registry.php:321
 msgid "Gatilhos extras de variação"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:855
+#: admin/src/Admin/Settings/Registry.php:883
 msgid "Grande"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:947
+#: admin/src/Admin/Settings/Registry.php:975
 msgid "Grupo de preços dentro dos widgets"
+msgstr ""
+
+#: app/src/components/fields/ElementDesignField.vue:193
+msgid "Herdar (%s)"
+msgstr ""
+
+#: app/src/components/fields/ElementDesignField.vue:197
+msgid "Herdar de %s"
 msgstr ""
 
 #: wc-custom-installments.php
@@ -1007,15 +1016,15 @@ msgstr ""
 msgid "https://meumouse.com/plugins/wc-custom-installments/"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:473
+#: app/src/components/fields/ElementDesignField.vue:553
 msgid "Ícone"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:884
+#: admin/src/Admin/Settings/Registry.php:912
 msgid "Ícones"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:508
+#: app/src/components/fields/ElementDesignField.vue:607
 msgid "Imagem do ícone"
 msgstr ""
 
@@ -1023,7 +1032,7 @@ msgstr ""
 msgid "Importar configurações"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:984
+#: admin/src/Admin/Settings/Registry.php:1012
 msgid "Importar e exportar"
 msgstr ""
 
@@ -1031,15 +1040,15 @@ msgstr ""
 msgid "Inativo"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:366
+#: admin/src/Admin/Settings/Registry.php:394
 msgid "Incluir o frete no desconto"
 msgstr ""
 
-#: app/src/components/fields/DesignBoxControl.vue:28
+#: app/src/components/fields/DesignBoxControl.vue:34
 msgid "Inferior"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:953
+#: admin/src/Admin/Settings/Registry.php:981
 msgid "Informa aos buscadores o preço com desconto em vez do preço de tabela."
 msgstr ""
 
@@ -1051,15 +1060,15 @@ msgstr ""
 msgid "Inserir %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:772
+#: admin/src/Admin/Settings/Registry.php:800
 msgid "Instruções do boleto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:937
+#: admin/src/Admin/Settings/Registry.php:965
 msgid "Integrações"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:933
+#: admin/src/Admin/Settings/Registry.php:961
 msgid "Integrações, dados estruturados e manutenção."
 msgstr ""
 
@@ -1077,11 +1086,11 @@ msgid ""
 "de entrada ou use outro endereço."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:616
+#: admin/src/Admin/Settings/Registry.php:644
 msgid "Juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:621
+#: admin/src/Admin/Settings/Registry.php:649
 msgid "Juros no total do pedido"
 msgstr ""
 
@@ -1089,18 +1098,18 @@ msgstr ""
 msgid "Juros para %d parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:639
+#: admin/src/Admin/Settings/Registry.php:667
 #: admin/src/Core/Features.php:89
 msgid "Juros por forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:186
+#: admin/src/Admin/Settings/Registry.php:214
 #: admin/src/Core/Features.php:87
 msgid "Juros por parcela"
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:219
-#: app/src/pages/settings/SettingsPage.vue:222
+#: app/src/pages/settings/SettingsPage.vue:225
 msgid "Ler a documentação"
 msgstr ""
 
@@ -1112,23 +1121,23 @@ msgstr ""
 msgid "Limite de tempo do PHP"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:856
+#: admin/src/Admin/Settings/Registry.php:884
 msgid "Link"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:776
+#: admin/src/Admin/Settings/Registry.php:804
 msgid "Link de detalhes das parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:866
+#: admin/src/Admin/Settings/Registry.php:894
 msgid "Listagem de produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:966
+#: admin/src/Admin/Settings/Registry.php:994
 msgid "Manutenção"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:450
+#: app/src/components/fields/ElementDesignField.vue:527
 msgid "Margem"
 msgstr ""
 
@@ -1136,7 +1145,7 @@ msgstr ""
 msgid "Margem externa"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:860
+#: admin/src/Admin/Settings/Registry.php:888
 msgid "Margem inferior do popup ou da sanfona"
 msgstr ""
 
@@ -1144,15 +1153,15 @@ msgstr ""
 msgid "Margem interna"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:859
+#: admin/src/Admin/Settings/Registry.php:887
 msgid "Margem superior do popup ou da sanfona"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:160
+#: admin/src/Admin/Settings/Registry.php:188
 msgid "Máximo de parcelas"
 msgstr ""
 
-#: admin/src/Frontend/Element_Registry.php:57
+#: admin/src/Frontend/Element_Registry.php:65
 msgid "Melhor parcela"
 msgstr ""
 
@@ -1160,7 +1169,7 @@ msgstr ""
 msgid "Melhores parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:794
+#: admin/src/Admin/Settings/Registry.php:822
 msgid "Mensagem de desconto por quantidade"
 msgstr ""
 
@@ -1169,7 +1178,7 @@ msgstr ""
 msgid "MeuMouse.com"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:756
+#: admin/src/Admin/Settings/Registry.php:784
 msgid "Modelos de parcela"
 msgstr ""
 
@@ -1177,7 +1186,7 @@ msgstr ""
 msgid "Modelos de texto de parcelas personalizados"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:971
+#: admin/src/Admin/Settings/Registry.php:999
 msgid "Modo de depuração"
 msgstr ""
 
@@ -1185,7 +1194,7 @@ msgstr ""
 msgid "Modo de depuração do WordPress"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:579
+#: admin/src/Admin/Settings/Registry.php:607
 msgid "Mostra quanto o cliente economiza pagando com Pix."
 msgstr ""
 
@@ -1197,39 +1206,39 @@ msgstr ""
 msgid "Mostrar exatamente o que é enviado"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:325
+#: app/src/components/fields/ElementDesignField.vue:375
 msgid "Mover %s para baixo"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:318
+#: app/src/components/fields/ElementDesignField.vue:368
 msgid "Mover %s para cima"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:660
 msgid ""
 "Na finalização da compra, exibe ao lado do nome de cada forma de pagamento "
 "um selo com a taxa de juros que ela cobra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:373
+#: admin/src/Admin/Settings/Registry.php:401
 msgid ""
 "Na finalização da compra, exibe ao lado do nome de cada forma de pagamento "
 "um selo com o desconto que ela oferece."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:759
+#: admin/src/Admin/Settings/Registry.php:787
 msgid "Na listagem de produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:760
+#: admin/src/Admin/Settings/Registry.php:788
 msgid "Na página do produto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:761
+#: admin/src/Admin/Settings/Registry.php:789
 msgid "Na tabela de parcelas"
 msgstr ""
 
-#: app/src/components/base/BaseSelect.vue:365
+#: app/src/components/base/BaseSelect.vue:367
 msgid "Nada corresponde à sua busca."
 msgstr ""
 
@@ -1258,7 +1267,7 @@ msgstr ""
 msgid "Não foi possível exibir esta seção. Recarregue a página e tente novamente."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:194
+#: app/src/pages/settings/SettingsPage.vue:197
 msgid "Não foi possível exportar as configurações."
 msgstr ""
 
@@ -1271,7 +1280,7 @@ msgid "Não foi possível iniciar esta tela. Recarregue a página."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:60
-#: app/src/pages/settings/SettingsPage.vue:207
+#: app/src/pages/settings/SettingsPage.vue:210
 msgid "Não foi possível ler esse arquivo como configurações."
 msgstr ""
 
@@ -1325,15 +1334,15 @@ msgstr ""
 msgid "Nome"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:854
+#: admin/src/Admin/Settings/Registry.php:882
 msgid "Normal"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:672
+#: admin/src/Admin/Settings/Registry.php:700
 msgid "O bloco de formas de pagamento aceitas exibido na página do produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:845
+#: admin/src/Admin/Settings/Registry.php:873
 msgid ""
 "O botão que abre o popup ou a sanfona de parcelas e o espaçamento em volta "
 "dele."
@@ -1343,23 +1352,23 @@ msgstr ""
 msgid "O complemento Pro já está instalado neste site."
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:500
+#: app/src/components/fields/ElementDesignField.vue:588
 msgid "O endereço de uma imagem pequena, de preferência SVG ou PNG transparente."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:266
+#: admin/src/Admin/Settings/Registry.php:294
 msgid "O gancho de ação ao qual o bloco de formas de pagamento é anexado."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:776
+#: admin/src/Admin/Settings/Registry.php:804
 msgid "O link que abre a tabela completa de parcelas."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:161
+#: admin/src/Admin/Settings/Registry.php:189
 msgid "O maior número de parcelas que a loja aceita."
 msgstr ""
 
-#: admin/src/Assets/Admin_Assets.php:234
+#: admin/src/Assets/Admin_Assets.php:240
 msgid ""
 "O pacote de administração do Parcelas Customizadas para WooCommerce está "
 "ausente. Execute \"npm run build\" no diretório app."
@@ -1377,6 +1386,12 @@ msgstr ""
 msgid ""
 "O Parcelas Customizadas para WooCommerce requer PHP %1$s ou superior. Este "
 "site usa PHP %2$s."
+msgstr ""
+
+#: app/src/components/fields/ElementDesignField.vue:427
+msgid ""
+"O preço exibido ao lado do preço riscado quando o produto está em promoção. "
+"O que ficar em branco segue o elemento \"%s\"."
 msgstr ""
 
 #: app/src/pages/onboarding/components/TrialForm.vue:96
@@ -1416,12 +1431,12 @@ msgstr ""
 msgid "O valor mínimo recomendado é 64M."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:545
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "Observação após o preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:217
-#: admin/src/Admin/Settings/Registry.php:243
+#: admin/src/Admin/Settings/Registry.php:245
+#: admin/src/Admin/Settings/Registry.php:271
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:236
 msgid "Ocultar"
 msgstr ""
@@ -1470,7 +1485,7 @@ msgstr ""
 msgid "Ocultar título"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:471
+#: admin/src/Admin/Settings/Registry.php:499
 msgid "Onde a mensagem aparece"
 msgstr ""
 
@@ -1478,14 +1493,14 @@ msgstr ""
 msgid "Onde aparece"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:250
+#: admin/src/Admin/Settings/Registry.php:278
 msgid ""
 "Onde as formas de pagamento aceitas aparecem na página do produto. Com "
 "\"Shortcode\" ou \"Widget do Elementor\", o bloco aparece somente onde você "
 "o colocar."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:209
+#: admin/src/Admin/Settings/Registry.php:237
 msgid "Onde as parcelas aparecem"
 msgstr ""
 
@@ -1499,17 +1514,17 @@ msgid ""
 "desconto é aplicado a este produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:877
+#: admin/src/Admin/Settings/Registry.php:905
 msgid ""
 "Os seletores aos quais a regra de centralização é aplicada. Altere apenas "
 "se o seu tema precisar."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:713
+#: admin/src/Admin/Settings/Registry.php:741
 msgid "Os selos exibidos na linha do cartão de crédito."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:720
+#: admin/src/Admin/Settings/Registry.php:748
 msgid "Os selos exibidos na linha do cartão de débito."
 msgstr ""
 
@@ -1521,16 +1536,16 @@ msgstr ""
 msgid "Para onde ir a partir daqui."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:214
+#: admin/src/Admin/Settings/Registry.php:242
 msgid "Parcela em destaque"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:150
+#: admin/src/Admin/Settings/Registry.php:178
 msgid "Parcelamento"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:89
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:173
 msgid "Parcelas"
 msgstr ""
 
@@ -1548,11 +1563,11 @@ msgstr ""
 msgid "Parcelas Customizadas para WooCommerce"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:179
+#: admin/src/Admin/Settings/Registry.php:207
 msgid "Parcelas menores que este valor não são oferecidas."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:166
+#: admin/src/Admin/Settings/Registry.php:194
 msgid "Parcelas sem juros"
 msgstr ""
 
@@ -1560,11 +1575,11 @@ msgstr ""
 msgid "Parcelas:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:853
+#: admin/src/Admin/Settings/Registry.php:881
 msgid "Pequeno"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:681
+#: admin/src/Admin/Settings/Registry.php:709
 msgid "Pix"
 msgstr ""
 
@@ -1573,28 +1588,33 @@ msgstr ""
 msgid "Pix: %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:749
+#: admin/src/Admin/Settings/Registry.php:45
+#: app/src/utils/units.js:22
+msgid "Pixel"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:777
 msgid "Por exemplo: \"A partir de\"."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:747
+#: admin/src/Admin/Settings/Registry.php:775
 msgid "Por exemplo: \"À vista\"."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:546
-#: admin/src/Admin/Settings/Registry.php:748
+#: admin/src/Admin/Settings/Registry.php:574
+#: admin/src/Admin/Settings/Registry.php:776
 msgid "Por exemplo: \"no Pix\"."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1053
+#: admin/src/Admin/Settings/Registry.php:1081
 msgid "Porcentagem"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:249
+#: admin/src/Admin/Settings/Registry.php:277
 msgid "Posição do bloco de formas de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:210
+#: admin/src/Admin/Settings/Registry.php:238
 msgid "Posição e apresentação das informações de parcelamento."
 msgstr ""
 
@@ -1606,7 +1626,7 @@ msgstr ""
 msgid "Pré-visualização"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:528
+#: app/src/components/fields/ElementDesignField.vue:634
 msgid "Pré-visualizar"
 msgstr ""
 
@@ -1618,6 +1638,10 @@ msgstr ""
 msgid "Preço antigo"
 msgstr ""
 
+#: admin/src/Frontend/Element_Registry.php:59
+msgid "Preço com desconto"
+msgstr ""
+
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:475
 msgid "Preço com desconto no Boleto"
 msgstr ""
@@ -1626,12 +1650,12 @@ msgstr ""
 msgid "Preço com desconto no Pix"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:952
+#: admin/src/Admin/Settings/Registry.php:980
 #: admin/src/Core/Features.php:96
 msgid "Preço com desconto nos dados estruturados"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:958
+#: admin/src/Admin/Settings/Registry.php:986
 msgid "Preço com desconto nos feeds de produtos"
 msgstr ""
 
@@ -1647,7 +1671,7 @@ msgstr ""
 msgid "Preencha seu nome, e-mail e telefone."
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:458
+#: app/src/components/fields/ElementDesignField.vue:536
 msgid "Preenchimento"
 msgstr ""
 
@@ -1665,11 +1689,11 @@ msgstr ""
 msgid "Pro"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:520
+#: app/src/components/fields/ElementDesignField.vue:619
 msgid "Procurar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:276
+#: admin/src/Admin/Settings/Registry.php:304
 msgid "Produtos variáveis"
 msgstr ""
 
@@ -1685,19 +1709,19 @@ msgstr ""
 msgid "Quais formas de pagamento e bandeiras exibir."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:676
+#: admin/src/Admin/Settings/Registry.php:704
 msgid "Quais formas exibir"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:215
+#: admin/src/Admin/Settings/Registry.php:243
 msgid "Qual parcela aparece em destaque abaixo do preço."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:167
+#: admin/src/Admin/Settings/Registry.php:195
 msgid "Quantas delas são oferecidas sem juros."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:146
+#: admin/src/Admin/Settings/Registry.php:174
 msgid "Quantas parcelas a loja oferece, quanto custam e onde aparecem."
 msgstr ""
 
@@ -1705,17 +1729,17 @@ msgstr ""
 msgid "Quantas parcelas você aceita e quanto elas custam."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:426
+#: admin/src/Admin/Settings/Registry.php:454
 msgid ""
 "Quantas unidades o cliente precisa comprar para o desconto valer. No modo "
 "por produto, vale para os produtos que não definem a sua própria regra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:425
+#: admin/src/Admin/Settings/Registry.php:453
 msgid "Quantidade mínima"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:561
+#: admin/src/Admin/Settings/Registry.php:589
 msgid "Quanto descontar do preço exibido."
 msgstr ""
 
@@ -1723,61 +1747,68 @@ msgstr ""
 msgid "Quanto o cliente economiza pagando de uma vez."
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:44
+#: app/src/components/fields/ElementPreview.vue:177
+msgid "R$120,00"
+msgstr ""
+
+#: app/src/components/fields/ElementPreview.vue:179
 msgid "R$97,00"
 msgstr ""
 
 #: admin/src/Integrations/Elementor/Widgets/Style_Controls.php:210
-#: app/src/components/fields/ElementDesignField.vue:466
+#: app/src/components/fields/ElementDesignField.vue:545
 msgid "Raio da borda"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:288
+#: admin/src/Admin/Settings/Registry.php:316
 msgid ""
 "Recalcula o preço exibido e as parcelas conforme o cliente altera a "
 "quantidade."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:400
+#: admin/src/Admin/Settings/Registry.php:428
 msgid "Recompense os clientes que compram mais unidades do mesmo produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:318
+#: admin/src/Admin/Settings/Registry.php:346
 msgid "Recompense os clientes que pagam à vista."
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:422
-#: app/src/components/fields/ElementDesignField.vue:440
+#: app/src/components/fields/ElementDesignField.vue:197
 msgid "Redefinir para a cor padrão"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:757
+#: admin/src/Admin/Settings/Registry.php:785
 msgid ""
 "Reescreva a linha de parcelamento por completo. Variáveis disponíveis: {{ "
 "parcelas }} (número de parcelas), {{ valor }} (valor da parcela), {{ juros "
 "}} (com ou sem juros) e {{ total }} (soma das parcelas)."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:535
-#: admin/src/Admin/Settings/Registry.php:540
+#: admin/src/Admin/Settings/Registry.php:563
+#: admin/src/Admin/Settings/Registry.php:568
 msgid "Reescrever o preço exibido"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:972
+#: admin/src/Admin/Settings/Registry.php:1000
 msgid "Registra detalhes adicionais em WooCommerce > Status > Logs."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:943
+#: admin/src/Admin/Settings/Registry.php:971
 msgid "Registra os widgets do plugin no editor do Elementor."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:908
+#: app/src/components/fields/ElementDesignField.vue:624
+msgid "Remover ícone"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:936
 msgid ""
 "Reordene os elementos com as setas e clique em \"Editar\" para estilizar "
 "cada um."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:617
+#: admin/src/Admin/Settings/Registry.php:645
 msgid "Repassa ao pedido o custo de processamento de uma forma de pagamento."
 msgstr ""
 
@@ -1806,45 +1837,45 @@ msgstr ""
 msgid "Salvar alterações"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:412
+#: admin/src/Admin/Settings/Registry.php:440
 msgid "Se a regra é definida uma vez para a loja ou por produto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:333
+#: admin/src/Admin/Settings/Registry.php:361
 msgid "Se o desconto é uma porcentagem do preço ou um valor fixo."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:502
+#: admin/src/Admin/Settings/Registry.php:530
 msgid "Se o desconto no boleto é uma porcentagem ou um valor fixo."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:436
+#: admin/src/Admin/Settings/Registry.php:464
 msgid "Se o desconto por quantidade é uma porcentagem ou um valor fixo."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:235
+#: app/src/pages/settings/SettingsPage.vue:238
 msgid "Seções de configurações"
 msgstr ""
 
-#: app/src/components/base/BaseSelect.vue:289
+#: app/src/components/base/BaseSelect.vue:291
 msgid "Selecione uma opção"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:876
+#: admin/src/Admin/Settings/Registry.php:904
 msgid "Seletores CSS"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:294
+#: admin/src/Admin/Settings/Registry.php:322
 msgid ""
 "Seletores CSS, separados por vírgula, para temas que trocam as variações do "
 "próprio jeito em vez de usar o formulário do WooCommerce."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:687
+#: admin/src/Admin/Settings/Registry.php:715
 msgid "Selo de aprovação imediata"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:786
+#: admin/src/Admin/Settings/Registry.php:814
 #: admin/src/Core/Features.php:92
 msgid "Selo de economia no Pix"
 msgstr ""
@@ -1853,11 +1884,11 @@ msgstr ""
 msgid "Selo de promoção"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:601
 msgid "Selos de economia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:781
+#: admin/src/Admin/Settings/Registry.php:809
 msgid "Selos e mensagens"
 msgstr ""
 
@@ -1887,7 +1918,7 @@ msgid ""
 "seu e-mail."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:255
+#: admin/src/Admin/Settings/Registry.php:283
 msgid "Shortcode"
 msgstr ""
 
@@ -1912,19 +1943,19 @@ msgstr ""
 msgid "Solicitando…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1021
+#: admin/src/Admin/Settings/Registry.php:1049
 msgid "Somente a listagem de produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1020
+#: admin/src/Admin/Settings/Registry.php:1048
 msgid "Somente a página do produto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:475
+#: admin/src/Admin/Settings/Registry.php:503
 msgid "Somente onde eu colocar o widget"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:978
+#: admin/src/Admin/Settings/Registry.php:1006
 msgid "Status do sistema"
 msgstr ""
 
@@ -1938,23 +1969,23 @@ msgstr ""
 msgid "Suas configurações já foram importadas, então nada se perde com a troca."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:187
+#: admin/src/Admin/Settings/Registry.php:215
 msgid ""
 "Substitua a taxa mensal única por uma taxa para cada quantidade de "
 "parcelas, igual à que sua adquirente cobra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:536
+#: admin/src/Admin/Settings/Registry.php:564
 msgid ""
 "Substitua o preço exibido na loja por um seu e adicione uma observação "
 "depois dele. O carrinho e a finalização da compra não são afetados."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:309
 msgid "Substituir a faixa de preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:555
+#: admin/src/Admin/Settings/Registry.php:583
 msgid "Subtrai uma porcentagem do preço antes de exibi-lo."
 msgstr ""
 
@@ -1962,19 +1993,19 @@ msgstr ""
 msgid "Sucesso"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:750
+#: admin/src/Admin/Settings/Registry.php:778
 msgid "Sufixo com juros"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:751
+#: admin/src/Admin/Settings/Registry.php:779
 msgid "Sufixo sem juros"
 msgstr ""
 
-#: app/src/components/fields/DesignBoxControl.vue:26
+#: app/src/components/fields/DesignBoxControl.vue:32
 msgid "Superior"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:198
+#: admin/src/Admin/Settings/Registry.php:226
 msgid "Tabela de juros"
 msgstr ""
 
@@ -1986,8 +2017,8 @@ msgstr ""
 msgid "Talvez depois"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:369
-#: app/src/components/fields/ElementDesignField.vue:378
+#: app/src/components/fields/ElementDesignField.vue:437
+#: app/src/components/fields/ElementDesignField.vue:447
 msgid "Tamanho do texto"
 msgstr ""
 
@@ -1999,11 +2030,11 @@ msgstr ""
 msgid "Tamanho máximo de envio do PHP"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:172
+#: admin/src/Admin/Settings/Registry.php:200
 msgid "Taxa de juros mensal (%)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:646
+#: admin/src/Admin/Settings/Registry.php:674
 msgid "Taxa de juros por forma de pagamento"
 msgstr ""
 
@@ -2031,19 +2062,19 @@ msgid ""
 "automática."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:739
+#: admin/src/Admin/Settings/Registry.php:767
 msgid "Textos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:782
+#: admin/src/Admin/Settings/Registry.php:810
 msgid ""
 "Textos do selo de economia, do preço no boleto e da mensagem de desconto "
 "por quantidade."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:332
-#: admin/src/Admin/Settings/Registry.php:435
-#: admin/src/Admin/Settings/Registry.php:501
+#: admin/src/Admin/Settings/Registry.php:360
+#: admin/src/Admin/Settings/Registry.php:463
+#: admin/src/Admin/Settings/Registry.php:529
 msgid "Tipo de desconto"
 msgstr ""
 
@@ -2059,37 +2090,37 @@ msgstr ""
 msgid "Tipografia da tabela"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:902
+#: admin/src/Admin/Settings/Registry.php:930
 msgid ""
 "Tipografia, espaçamento, cores e ícone de cada elemento do grupo de preços, "
 "para computador e celular."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:775
+#: admin/src/Admin/Settings/Registry.php:803
 msgid "Título da tabela de parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:769
+#: admin/src/Admin/Settings/Registry.php:797
 msgid "Título do bloco"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:771
+#: admin/src/Admin/Settings/Registry.php:799
 msgid "Título do boleto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:773
+#: admin/src/Admin/Settings/Registry.php:801
 msgid "Título do cartão de crédito"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:774
+#: admin/src/Admin/Settings/Registry.php:802
 msgid "Título do cartão de débito"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:770
+#: admin/src/Admin/Settings/Registry.php:798
 msgid "Título do Pix"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:767
+#: admin/src/Admin/Settings/Registry.php:795
 msgid "Títulos dentro do bloco de formas de pagamento aceitas."
 msgstr ""
 
@@ -2100,17 +2131,17 @@ msgid ""
 "desfeito, então exporte antes se quiser recuperá-las."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:414
+#: admin/src/Admin/Settings/Registry.php:442
 msgid "Todos os produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:740
+#: admin/src/Admin/Settings/Registry.php:768
 msgid ""
 "Todos os textos que o plugin exibe na loja. Deixe um texto em branco para "
 "não exibi-lo. É possível usar HTML simples, como <strong>."
 msgstr ""
 
-#: admin/src/Frontend/Render_Elements.php:387
+#: admin/src/Frontend/Render_Elements.php:396
 #. translators: %s: the copy shown after the discounted price, e.g. "with Pix"
 msgid "Total %s"
 msgstr ""
@@ -2119,7 +2150,7 @@ msgstr ""
 msgid "Transferências:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:985
+#: admin/src/Admin/Settings/Registry.php:1013
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr ""
 
@@ -2127,17 +2158,17 @@ msgstr ""
 msgid "Tudo está salvo."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:381
+#: admin/src/Admin/Settings/Registry.php:409
 msgid ""
 "Um desconto diferente para cada forma de pagamento, aplicado aos totais da "
 "finalização da compra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:487
+#: admin/src/Admin/Settings/Registry.php:515
 msgid "Um desconto separado para clientes que pagam com boleto bancário."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:323
+#: admin/src/Admin/Settings/Registry.php:351
 msgid ""
 "Um único desconto aplicado ao preço exibido, para pagamentos à vista como o "
 "Pix."
@@ -2149,54 +2180,54 @@ msgid ""
 "esta chave na tela de licença dele."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:640
+#: admin/src/Admin/Settings/Registry.php:668
 msgid ""
 "Uma taxa diferente para cada forma de pagamento, aplicada aos totais da "
 "finalização da compra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:227
 msgid ""
 "Uma taxa por quantidade de parcelas com juros. Deixe uma linha vazia para "
 "usar a taxa global."
 msgstr ""
 
-#: app/src/components/fields/DesignBoxControl.vue:70
-#: app/src/components/fields/DesignBoxControl.vue:75
+#: app/src/components/fields/DesignBoxControl.vue:77
+#: app/src/components/fields/DesignBoxControl.vue:82
 msgid "Unidade"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:388
+#: app/src/components/fields/ElementDesignField.vue:457
 msgid "Unidade do tamanho do texto"
 msgstr ""
 
-#: app/src/components/fields/ElementDesignField.vue:292
+#: app/src/components/fields/ElementDesignField.vue:341
 msgid "Usar este ícone"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:795
+#: admin/src/Admin/Settings/Registry.php:823
 msgid "Use %d para a quantidade e %s para o desconto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:787
+#: admin/src/Admin/Settings/Registry.php:815
 msgid "Use %s onde o valor economizado deve aparecer."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:872
+#: admin/src/Admin/Settings/Registry.php:900
 msgid "Útil para temas cujos cards de produto são centralizados."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:339
-#: admin/src/Admin/Settings/Registry.php:445
-#: admin/src/Admin/Settings/Registry.php:511
+#: admin/src/Admin/Settings/Registry.php:367
+#: admin/src/Admin/Settings/Registry.php:473
+#: admin/src/Admin/Settings/Registry.php:539
 msgid "Valor do desconto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1054
+#: admin/src/Admin/Settings/Registry.php:1082
 msgid "Valor fixo"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:178
+#: admin/src/Admin/Settings/Registry.php:206
 msgid "Valor mínimo da parcela"
 msgstr ""
 
@@ -2216,7 +2247,7 @@ msgstr ""
 msgid "Ver sua loja"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:227
+#: app/src/pages/settings/SettingsPage.vue:230
 msgid "Versão %s"
 msgstr ""
 
@@ -2253,7 +2284,7 @@ msgstr ""
 msgid "Voltar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:256
+#: admin/src/Admin/Settings/Registry.php:284
 msgid "Widget do Elementor"
 msgstr ""
 
@@ -2261,7 +2292,7 @@ msgstr ""
 msgid "Widgets adicionais do Elementor"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:942
+#: admin/src/Admin/Settings/Registry.php:970
 msgid "Widgets do Elementor"
 msgstr ""
 

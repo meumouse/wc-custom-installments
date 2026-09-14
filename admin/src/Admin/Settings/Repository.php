@@ -306,6 +306,9 @@ class Repository {
 	 * array(...), 'desktop' => array(...) ) ) )`. Only elements the registry
 	 * knows and only the style properties the stylesheet writes are kept.
 	 *
+	 * An element with a `parent` inherits every property left empty, so for
+	 * those an empty value is kept as empty rather than read as zero.
+	 *
 	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @param array<string,mixed> $definition | Field definition
@@ -316,13 +319,14 @@ class Repository {
 			return (array) ( $definition['default'] ?? array() );
 		}
 
-		$units = (array) ( $definition['units'] ?? array( 'px', 'em', 'rem', '%' ) );
+		$units = (array) ( $definition['units'] ?? Registry::UNITS );
 		$weights = (array) ( $definition['weights'] ?? array( '400' ) );
 		$clean = array();
 
 		foreach ( \MeuMouse\WC_Custom_Installments\Frontend\Element_Registry::all() as $key => $element ) {
 			$stored = isset( $value[ $key ] ) && is_array( $value[ $key ] ) ? $value[ $key ] : array();
 			$icon = isset( $stored['icon'] ) && is_array( $stored['icon'] ) ? $stored['icon'] : array();
+			$inherits = ! empty( $element['parent'] );
 
 			$clean[ $key ] = array(
 				'order' => isset( $stored['order'] ) ? max( 1, absint( $stored['order'] ) ) : (int) $element['order'],
@@ -342,14 +346,14 @@ class Repository {
 				$font_weight = (string) ( $styles['font_weight'] ?? $base['font_weight'] );
 
 				$clean[ $key ]['styles'][ $device ] = array(
-					'font_size' => self::sanitize_length( $styles['font_size'] ?? $base['font_size'], $base['font_size'] ),
+					'font_size' => self::sanitize_length( $styles['font_size'] ?? $base['font_size'], $base['font_size'], $inherits ),
 					'font_unit' => in_array( $font_unit, $units, true ) ? $font_unit : $base['font_unit'],
 					'font_weight' => in_array( $font_weight, $weights, true ) ? $font_weight : $base['font_weight'],
 					'font_color' => '' !== $font_color ? $font_color : $base['font_color'],
 					'background_color' => '' !== $background ? $background : $base['background_color'],
-					'margin' => self::sanitize_box( $styles['margin'] ?? array(), $base['margin'], $units ),
-					'padding' => self::sanitize_box( $styles['padding'] ?? array(), $base['padding'], $units ),
-					'border_radius' => self::sanitize_box( $styles['border_radius'] ?? array(), $base['border_radius'], $units ),
+					'margin' => self::sanitize_box( $styles['margin'] ?? array(), $base['margin'], $units, $inherits ),
+					'padding' => self::sanitize_box( $styles['padding'] ?? array(), $base['padding'], $units, $inherits ),
+					'border_radius' => self::sanitize_box( $styles['border_radius'] ?? array(), $base['border_radius'], $units, $inherits ),
 				);
 			}
 		}
@@ -379,14 +383,15 @@ class Repository {
 	 * @param mixed $value | Incoming value
 	 * @param array<string,string> $fallback | Values to fall back on
 	 * @param array<int,string> $units | Accepted units
+	 * @param bool $allow_empty | Whether an empty side is kept, meaning "inherit"
 	 * @return array<string,string>
 	 */
-	private static function sanitize_box( $value, $fallback, $units ) {
+	private static function sanitize_box( $value, $fallback, $units, $allow_empty = false ) {
 		$value = is_array( $value ) ? $value : array();
 		$box = array();
 
 		foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
-			$box[ $side ] = self::sanitize_length( $value[ $side ] ?? ( $fallback[ $side ] ?? '0' ), $fallback[ $side ] ?? '0' );
+			$box[ $side ] = self::sanitize_length( $value[ $side ] ?? ( $fallback[ $side ] ?? '0' ), $fallback[ $side ] ?? '0', $allow_empty );
 		}
 
 		$unit = (string) ( $value['unit'] ?? ( $fallback['unit'] ?? 'rem' ) );
@@ -402,13 +407,14 @@ class Repository {
 	 * @since 6.0.0
 	 * @param mixed $value | Incoming value
 	 * @param string $fallback | Value when the input is not a number
+	 * @param bool $allow_empty | Whether an empty value is kept, meaning "inherit"
 	 * @return string
 	 */
-	private static function sanitize_length( $value, $fallback ) {
+	private static function sanitize_length( $value, $fallback, $allow_empty = false ) {
 		$raw = str_replace( ',', '.', trim( (string) $value ) );
 
 		if ( '' === $raw ) {
-			return '0';
+			return $allow_empty ? '' : '0';
 		}
 
 		return is_numeric( $raw ) ? (string) ( 0 + $raw ) : (string) $fallback;

@@ -115,6 +115,7 @@ th.final-price .amount  {
 .woo-custom-installments-group .wci-icon-ticket-discount,
 .woo-custom-installments-group .discounted-price,
 .woo-custom-installments-group .wci-icon-main-price,
+.woo-custom-installments-group .wci-icon-price,
 .woo-custom-installments-group .wci-icon-best-installments,
 .woo-custom-installments-group .variation-text,
 .woo-custom-installments-group .discount-before-discount-ticket,
@@ -505,9 +506,11 @@ table tbody>tr:nth-child(odd)>th {
     order: 1;
 }
 
+/* Same order as the icon and the struck-out price, so the markup decides:
+   "starting from" reads before the price it qualifies, struck one included. */
 .woo-custom-installments-group-main-price .woo-custom-installments-starting-from {
     margin-right: 0.5rem;
-    order: 2;
+    order: 1;
 }
 
 #wci-variation-prices .wci-variation-item {

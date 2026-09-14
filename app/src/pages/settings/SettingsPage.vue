@@ -124,11 +124,14 @@ const showsActionBar = computed(() => !currentSection.value?.component || isDirt
 const sectionContext = computed(() => ({ rest: props.bootstrap.rest || {} }));
 
 // The interest table renders one row per installment the store offers, so it
-// has to follow that setting as the reader changes it.
+// has to follow that setting as the reader changes it. The design preview
+// follows the icon format and the copy the price is printed with.
 const fieldContext = computed(() => ({
   maxInstallments: settings.max_qtd_installments,
   firstInstallment: (Number(settings.max_qtd_installments_without_fee) || 0) + 1,
   iconFormat: settings.icon_format_elements,
+  startingFrom: settings.text_initial_variables,
+  saleBadge: settings.enable_sale_badge === 'yes',
 }));
 
 /**

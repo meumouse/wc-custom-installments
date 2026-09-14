@@ -2,6 +2,8 @@
 
 namespace MeuMouse\WC_Custom_Installments\Assets;
 
+use MeuMouse\WC_Custom_Installments\Core\Scripts;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -12,6 +14,14 @@ defined('ABSPATH') || exit;
  * @author MeuMouse.com
  */
 abstract class Abstract_Assets {
+
+	/**
+	 * Style handle of the bundled Font Awesome Free.
+	 *
+	 * @since 6.0.0
+	 * @var string
+	 */
+	const FONT_AWESOME_HANDLE = 'wc-custom-installments-font-awesome';
 
 	/**
 	 * Base URL of the static assets directory.
@@ -57,5 +67,30 @@ abstract class Abstract_Assets {
 		$this->version = defined('WC_CUSTOM_INSTALLMENTS_VERSION') ? WC_CUSTOM_INSTALLMENTS_VERSION : '';
 		$this->debug_mode = defined('WC_CUSTOM_INSTALLMENTS_DEBUG_MODE') ? (bool) WC_CUSTOM_INSTALLMENTS_DEBUG_MODE : false;
 		$this->dev_mode = defined('WC_CUSTOM_INSTALLMENTS_DEV_MODE') ? (bool) WC_CUSTOM_INSTALLMENTS_DEV_MODE : false;
+	}
+
+
+	/**
+	 * Enqueue the stylesheet of the bundled Font Awesome Free.
+	 *
+	 * Served from the plugin itself, so loading it reaches no external server.
+	 *
+	 * @since 6.0.0
+	 * @return void
+	 */
+	protected function enqueue_font_awesome_styles() {
+		$assets = Scripts::get_entry_assets('src/entries/font-awesome.js');
+
+		if ( empty( $assets['styles'] ) ) {
+			return;
+		}
+
+		$version = ! empty( $assets['version'] ) ? $assets['version'] : $this->version;
+
+		foreach ( array_values( (array) $assets['styles'] ) as $index => $style_url ) {
+			$handle = 0 === $index ? self::FONT_AWESOME_HANDLE : self::FONT_AWESOME_HANDLE . '-' . $index;
+
+			wp_enqueue_style( $handle, $style_url, array(), $version );
+		}
 	}
 }

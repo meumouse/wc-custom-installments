@@ -87,7 +87,13 @@ const controlProps = computed(() => {
       };
 
     case 'element-design':
-      return { ...shared, field, iconFormat: props.context.iconFormat || 'class' };
+      return {
+        ...shared,
+        field,
+        iconFormat: props.context.iconFormat || 'class',
+        startingFrom: props.context.startingFrom || '',
+        saleBadge: Boolean(props.context.saleBadge),
+      };
 
     case 'toggle':
     case 'color':

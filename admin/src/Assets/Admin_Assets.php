@@ -110,10 +110,16 @@ class Admin_Assets extends Abstract_Assets {
 
 		$handle = $this->handles[ $page ];
 
-		// The element design panel picks icon images from the media library,
-		// as the 5.x settings page did.
-		if ( 'settings' === $this->bootstrap[ $page ]['page'] && current_user_can('upload_files') ) {
-			wp_enqueue_media();
+		if ( 'settings' === $this->bootstrap[ $page ]['page'] ) {
+			// The element design panel previews each icon the way the store
+			// prints it, Font Awesome classes included.
+			$this->enqueue_font_awesome_styles();
+
+			// It also picks icon images from the media library, as the 5.x
+			// settings page did.
+			if ( current_user_can('upload_files') ) {
+				wp_enqueue_media();
+			}
 		}
 
 		wp_enqueue_script( $handle, $assets['script'], array( 'wp-i18n' ), $asset_version, true );

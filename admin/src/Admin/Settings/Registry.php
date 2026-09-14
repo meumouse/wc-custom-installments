@@ -23,6 +23,34 @@ defined('ABSPATH') || exit;
 class Registry {
 
 	/**
+	 * The units every measurement offers, in the order its selector lists them.
+	 *
+	 * @since 6.0.0
+	 * @var array<int,string>
+	 */
+	const UNITS = array( 'rem', 'em', 'px', '%' );
+
+
+	/**
+	 * How a unit reads in a selector.
+	 *
+	 * @since 6.0.0
+	 * @param string $unit | CSS unit
+	 * @return string
+	 */
+	public static function unit_label( $unit ) {
+		$labels = array(
+			'rem' => 'REM',
+			'em' => 'EM',
+			'px' => __( 'Pixel', 'wc-custom-installments' ),
+			'%' => '%',
+		);
+
+		return $labels[ $unit ] ?? (string) $unit;
+	}
+
+
+	/**
 	 * Build the full schema.
 	 *
 	 * @since 6.0.0
@@ -102,7 +130,7 @@ class Registry {
 							'feature' => $field['feature'] ?? '',
 							'options' => array_map(
 								static function( $unit ) {
-									return array( 'value' => $unit, 'label' => $unit );
+									return array( 'value' => $unit, 'label' => self::unit_label( $unit ) );
 								},
 								(array) ( $field['units'] ?? array() )
 							),
@@ -908,7 +936,7 @@ class Registry {
 							__( 'Reordene os elementos com as setas e clique em "Editar" para estilizar cada um.', 'wc-custom-installments' ),
 							array(
 								'feature' => 'advanced_design',
-								'units' => array( 'px', 'em', 'rem', '%' ),
+								'units' => self::UNITS,
 								'weights' => array( '100', '200', '300', '400', '500', '600', '700', '800', '900' ),
 							)
 						),
@@ -1245,7 +1273,7 @@ class Registry {
 	private static function unit( $key, $unit_key, $label, $description, $extra = array() ) {
 		return self::field( 'unit', $key, $label, $description, array_merge( array(
 			'unit_key' => $unit_key,
-			'units' => array( 'px', 'rem', 'em', '%' ),
+			'units' => self::UNITS,
 			'step' => '0.05',
 		), $extra ) );
 	}

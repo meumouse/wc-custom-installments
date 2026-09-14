@@ -88,6 +88,7 @@ Sim. Em um site configurado em inglês, o plugin aparece como "Custom Installmen
 * Tela de configurações redesenhada, com o logo do plugin no cabeçalho.
 * Textos em português do Brasil, com a tradução para o inglês incluída.
 * Todas as opções da versão 5.5.9 de volta às configurações, incluindo a sanfona, as duas melhores parcelas, o shortcode e o widget das formas de pagamento, o estilo do botão de parcelas e o painel de design dos elementos.
+* Estilos próprios para o preço com desconto, pré-visualização dos ícones no painel de design e as unidades REM, EM, Pixel e % em todas as medidas.
 
 == Upgrade Notice ==
 

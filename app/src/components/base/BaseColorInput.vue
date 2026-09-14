@@ -6,6 +6,9 @@
  * from a style guide should not have to find it on a colour wheel. The swatch
  * opens the browser's own picker, which stays out of sight.
  *
+ * `fluid` lets the text field take whatever width the column has, for a grid
+ * too narrow for the fixed one; the `append` slot sits beside it.
+ *
  * @since 6.0.0
  */
 import { computed, ref } from 'vue';
@@ -16,6 +19,8 @@ const props = defineProps({
   id: { type: String, default: '' },
   disabled: { type: Boolean, default: false },
   ariaLabel: { type: String, default: '' },
+  placeholder: { type: String, default: '' },
+  fluid: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -54,7 +59,7 @@ const swatch = computed({
 </script>
 
 <template>
-  <div class="flex items-center gap-3">
+  <div class="flex items-center gap-3" :class="fluid ? 'w-full min-w-0' : ''">
     <button
       type="button"
       :disabled="disabled"
@@ -80,7 +85,11 @@ const swatch = computed({
       spellcheck="false"
       :disabled="disabled"
       :aria-label="ariaLabel || undefined"
-      class="w-56 max-w-full rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+      :placeholder="placeholder || undefined"
+      class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-[14px] uppercase leading-5 text-slate-700 transition-colors placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+      :class="fluid ? 'min-w-0 flex-1' : 'w-56 max-w-full'"
     />
+
+    <slot name="append" />
   </div>
 </template>

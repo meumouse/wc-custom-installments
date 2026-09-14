@@ -211,6 +211,41 @@ class Helpers {
 
 
 	/**
+	 * The regular price of a variable product's cheapest variation.
+	 *
+	 * Not the lowest regular price: that may belong to another variation, and
+	 * striking it out beside the lowest current price would pair two numbers
+	 * no single variation has.
+	 *
+	 * @since 6.0.0
+	 * @param object $product | Product object
+	 * @return float Zero when the product has no priced variation.
+	 */
+	public static function cheapest_variation_regular_price( $product ) {
+		if ( ! $product instanceof \WC_Product || ! $product->is_type('variable') ) {
+			return 0.0;
+		}
+
+		$variation_prices = $product->get_variation_prices( true );
+		$cheapest = null;
+		$regular = 0.0;
+
+		foreach ( (array) ( $variation_prices['price'] ?? array() ) as $variation_id => $price ) {
+			if ( '' === $price || is_null( $price ) ) {
+				continue;
+			}
+
+			if ( null === $cheapest || (float) $price < $cheapest ) {
+				$cheapest = (float) $price;
+				$regular = (float) ( $variation_prices['regular_price'][ $variation_id ] ?? 0 );
+			}
+		}
+
+		return $regular;
+	}
+
+
+	/**
 	 * Resolve the product the current request is about.
 	 *
 	 * @since 6.0.0

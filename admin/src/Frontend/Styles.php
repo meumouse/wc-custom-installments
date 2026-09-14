@@ -145,7 +145,8 @@ class Styles {
 		foreach ( array_keys( Element_Registry::all() ) as $key ) {
 			$element = Element_Registry::get( $key, $stored );
 
-			if ( empty( $element['selector'] ) ) {
+			// A part of another element sits wherever its parent puts it.
+			if ( empty( $element['selector'] ) || ! empty( $element['parent'] ) ) {
 				continue;
 			}
 
@@ -206,31 +207,36 @@ class Styles {
 			}
 
 			$selector = '.woo-custom-installments-group ' . $element['selector'];
-			$font = $styles['font_size'] . ( $styles['font_unit'] ?? 'rem' );
+			$font = '' !== (string) $styles['font_size'] ? $styles['font_size'] . ( $styles['font_unit'] ?? 'rem' ) : '';
 
-			$declarations = sprintf(
-				'font-size:%s;font-weight:%s;color:%s;background-color:%s;margin:%s;padding:%s;border-radius:%s;',
-				$font,
-				$styles['font_weight'],
-				$styles['font_color'],
-				$styles['background_color'],
-				$this->box( $styles['margin'] ),
-				$this->box( $styles['padding'] ),
-				$this->box( $styles['border_radius'] )
-			);
+			// An element that is part of another one writes only what the store
+			// set on it; an empty property inherits from the parent. The others
+			// are always complete, the sanitizer sees to that.
+			$declarations = $this->declarations( array(
+				'font-size' => $font,
+				'font-weight' => $styles['font_weight'],
+				'color' => $styles['font_color'],
+				'background-color' => $styles['background_color'],
+				'margin' => $this->box( $styles['margin'] ),
+				'padding' => $this->box( $styles['padding'] ),
+				'border-radius' => $this->box( $styles['border_radius'] ),
+			) );
 
-			$rules .= $selector . '{' . $declarations . '}';
+			if ( '' !== $declarations ) {
+				$rules .= $selector . '{' . $declarations . '}';
+			}
 
 			// WooCommerce wraps every formatted price in `.amount`, and its own
 			// styles are specific enough that the parent rule alone loses.
-			$rules .= sprintf(
-				'%s .amount{font-size:%s%s;font-weight:%s;color:%s;}',
-				$selector,
-				$font,
-				$important,
-				$styles['font_weight'],
-				$styles['font_color']
-			);
+			$amount = $this->declarations( array(
+				'font-size' => '' !== $font ? $font . $important : '',
+				'font-weight' => $styles['font_weight'],
+				'color' => $styles['font_color'],
+			) );
+
+			if ( '' !== $amount ) {
+				$rules .= $selector . ' .amount{' . $amount . '}';
+			}
 
 			// The struck-out regular price reads as secondary next to the
 			// current one, as it did in 5.x.
@@ -346,25 +352,50 @@ class Styles {
 
 
 	/**
+	 * Join CSS declarations, leaving out the ones without a value.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,string> $properties | Property => value
+	 * @return string
+	 */
+	private function declarations( $properties ) {
+		$css = '';
+
+		foreach ( $properties as $property => $value ) {
+			if ( '' !== (string) $value ) {
+				$css .= $property . ':' . $value . ';';
+			}
+		}
+
+		return $css;
+	}
+
+
+	/**
 	 * Format a four-sided box property.
+	 *
+	 * A box with every side empty inherits, so it has no value; once one side
+	 * is set, the empty ones read as zero.
 	 *
 	 * @since 6.0.0
 	 * @param array<string,string> $box | Top, right, bottom, left and the unit
 	 * @return string
 	 */
 	private function box( $box ) {
+		$sides = array();
+
+		foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
+			$sides[ $side ] = (string) ( $box[ $side ] ?? '0' );
+		}
+
+		if ( '' === implode( '', $sides ) ) {
+			return '';
+		}
+
 		$unit = $box['unit'] ?? 'rem';
 
-		return sprintf(
-			'%s%s %s%s %s%s %s%s',
-			$box['top'] ?? '0',
-			$unit,
-			$box['right'] ?? '0',
-			$unit,
-			$box['bottom'] ?? '0',
-			$unit,
-			$box['left'] ?? '0',
-			$unit
-		);
+		return implode( ' ', array_map( static function( $amount ) use ( $unit ) {
+			return ( '' !== $amount ? $amount : '0' ) . $unit;
+		}, $sides ) );
 	}
 }

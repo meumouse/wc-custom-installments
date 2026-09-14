@@ -216,6 +216,15 @@ class Render_Elements {
 						$html .= '<span class="woo-custom-installments-starting-from">' . wp_kses_post( $prefix ) . '</span>';
 					}
 
+					// The price the cheapest variation had before its sale, so
+					// "starting from" reads as a discount the way a simple
+					// product on sale does.
+					$cheapest_regular = Helpers::cheapest_variation_regular_price( $product );
+
+					if ( $product->is_on_sale() && $cheapest_regular > $min_current ) {
+						$html .= '<span class="woo-custom-installments-price original-price has-discount">' . wc_price( $cheapest_regular ) . '</span>';
+					}
+
 					$html .= '<span class="woo-custom-installments-price sale-price">' . wc_price( $min_current );
 					$html .= $show_sale_badge && $product->is_on_sale() ? $components->sale_badge( $product ) : '';
 					$html .= '</span>';

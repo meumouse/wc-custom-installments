@@ -219,6 +219,36 @@ check( 'an rgba colour is kept', 'rgba(38, 171, 91, 1)', $design['price']['style
 check( 'a partial box keeps its unit', 'px', $design['price']['styles']['desktop']['margin']['unit'] );
 check( 'and the sides it did not send', '0', $design['price']['styles']['desktop']['margin']['left'] );
 check( 'every other element is filled in', true, isset( $design['discount_pix']['styles']['mobile']['padding']['top'] ) );
+check( 'a part left alone inherits its size', '', $design['sale_price']['styles']['desktop']['font_size'] );
+check( 'and its colour', '', $design['sale_price']['styles']['desktop']['font_color'] );
+check( 'and its spacing', '', $design['sale_price']['styles']['desktop']['margin']['top'] );
+
+Repository::save_settings( array(
+	'elements_design' => array(
+		'price' => array(
+			'styles' => array( 'desktop' => array( 'margin' => array( 'left' => '' ) ) ),
+		),
+		'sale_price' => array(
+			'styles' => array(
+				'desktop' => array(
+					'font_size' => '1,4',
+					'font_weight' => '',
+					'font_color' => '#e11d48',
+					'padding' => array( 'top' => '0.25', 'left' => '' ),
+				),
+			),
+		),
+	),
+) );
+
+$design = Repository::get('elements_design');
+
+check( 'a part keeps the size it was given', '1.4', $design['sale_price']['styles']['desktop']['font_size'] );
+check( 'and an emptied weight stays inherited', '', $design['sale_price']['styles']['desktop']['font_weight'] );
+check( 'and its colour', '#e11d48', $design['sale_price']['styles']['desktop']['font_color'] );
+check( 'and the side it set', '0.25', $design['sale_price']['styles']['desktop']['padding']['top'] );
+check( 'while an empty side stays empty', '', $design['sale_price']['styles']['desktop']['padding']['left'] );
+check( 'a top-level element still reads an empty side as zero', '0', $design['price']['styles']['desktop']['margin']['left'] );
 
 echo PHP_EOL, 'Hook aliases', PHP_EOL;
 

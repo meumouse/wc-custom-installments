@@ -21,6 +21,7 @@ require_once __DIR__ . '/../admin/src/Frontend/Styles.php';
 
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
 use MeuMouse\WC_Custom_Installments\Frontend\Styles;
@@ -190,6 +191,45 @@ $lapsed = desktop_rule( $styles->build_css() );
 check( 'a lapsed store falls back to the shipped colour', true, str_contains( $lapsed, 'background-color:rgba(34, 197, 94, 0.15)' ) );
 check( 'and keeps its spacing', true, str_contains( $lapsed, 'padding:0.65rem 0.85rem 0.65rem 0.85rem' ) );
 check( 'while the customisation stays stored', '#ff0000', Repository::get('elements_design')['discount_pix']['styles']['desktop']['background_color'] );
+
+echo PHP_EOL, 'The discounted price', PHP_EOL;
+
+$sale_selector = '.woo-custom-installments-group .woo-custom-installments-group-main-price .woo-custom-installments-price.has-discount ~ .woo-custom-installments-price.sale-price';
+
+check( 'is not ordered on its own', false, str_contains( $styles->build_css(), $sale_selector . '{order:' ) );
+check( 'writes nothing while it inherits', false, str_contains( $styles->build_css(), $sale_selector ) );
+
+// The design field is written only while the licence is valid.
+add_filter( 'WC_Custom_Installments/Features/Is_Available', '__return_true' );
+Features::flush();
+
+$design = Repository::get('elements_design');
+$design['sale_price']['styles']['desktop']['font_color'] = '#e11d48';
+$design['sale_price']['styles']['desktop']['font_size'] = '1.5';
+Repository::save_settings( array( 'elements_design' => $design ) );
+
+$css = $styles->build_css();
+
+check( 'writes only what was set on it', true, str_contains( $css, $sale_selector . '{font-size:1.5rem;color:#e11d48;}' ) );
+check( 'down to the amount WooCommerce wraps it in', true, str_contains( $css, $sale_selector . ' .amount{font-size:1.5rem;color:#e11d48;}' ) );
+// The order rules and the mobile block come before the desktop one.
+check( 'and leaves the mobile rules inheriting', false, str_contains( (string) strstr( $css, '@media screen and (min-width:993px)', true ), 'has-discount ~' ) );
+
+echo PHP_EOL, 'A variable product on sale', PHP_EOL;
+
+$variable = wc_test_product( 0, array(
+	'type' => 'variable',
+	'variation_prices' => array(
+		'price' => array( 11 => '150', 12 => '97', 13 => '110' ),
+		'regular_price' => array( 11 => '150', 12 => '120', 13 => '100' ),
+		'sale_price' => array( 11 => '', 12 => '97', 13 => '' ),
+	),
+) );
+
+// The lowest regular price is 100, but it belongs to another variation:
+// striking it out beside 97 would promise a discount nobody gets.
+check( 'strikes out the cheapest variation\'s own regular price', 120.0, Helpers::cheapest_variation_regular_price( $variable ) );
+check( 'and a simple product has none', 0.0, Helpers::cheapest_variation_regular_price( wc_test_product( 50 ) ) );
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 
