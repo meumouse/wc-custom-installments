@@ -141,19 +141,31 @@ class Calculate_Installments {
 			return '';
 		}
 
-		foreach ( $installments as $key => $installment ) {
-			if ( 'no-fee' !== $installment['class'] ) {
-				unset( $installments[ $key ] );
-			}
-		}
+		$best = self::pick_best_without_interest( $installments );
 
-		$best = end( $installments );
-
-		if ( false === $best ) {
+		if ( null === $best ) {
 			return '';
 		}
 
 		return self::render_best( $best, $product, 'without-fee' );
+	}
+
+
+	/**
+	 * The largest interest-free instalment.
+	 *
+	 * @since 6.0.0
+	 * @param array $installments | Every instalment
+	 * @return array<string,mixed>|null Null when every instalment carries interest.
+	 */
+	public static function pick_best_without_interest( $installments ) {
+		$without_interest = array_filter( (array) $installments, static function( $installment ) {
+			return 'no-fee' === $installment['class'];
+		} );
+
+		$best = end( $without_interest );
+
+		return false === $best ? null : $best;
 	}
 
 
@@ -170,23 +182,41 @@ class Calculate_Installments {
 			return '';
 		}
 
+		$best = self::pick_best_with_interest( $installments );
+
+		if ( null === $best ) {
+			return '';
+		}
+
+		return self::render_best( $best, $product, 'with-fee' );
+	}
+
+
+	/**
+	 * The largest instalment, the one that carries interest when there is one.
+	 *
+	 * @since 6.0.0
+	 * @param array $installments | Every instalment
+	 * @return array<string,mixed>|null Null when none is worth showing.
+	 */
+	public static function pick_best_with_interest( $installments ) {
+		$installments = (array) $installments;
+
 		// When both are shown, this one must not repeat the interest-free row.
 		if ( 'both' === Repository::get('get_type_best_installments') ) {
-			foreach ( $installments as $key => $installment ) {
-				if ( 'fee-included' !== $installment['class'] ) {
-					unset( $installments[ $key ] );
-				}
-			}
+			$installments = array_filter( $installments, static function( $installment ) {
+				return 'fee-included' === $installment['class'];
+			} );
 		}
 
 		$installments = array_values( $installments );
 		$best = end( $installments );
 
 		if ( false === $best || $best['installment_price'] < (float) Repository::get('min_value_installments') ) {
-			return '';
+			return null;
 		}
 
-		return self::render_best( $best, $product, 'with-fee' );
+		return $best;
 	}
 
 

@@ -108,11 +108,7 @@ class Components {
 			return '';
 		}
 
-		$price = $product->is_type('variable')
-			? (float) $product->get_variation_price( 'min', true )
-			: (float) $product->get_price();
-
-		$installments = Calculate_Installments::installments_list( array(), $price, $product );
+		$installments = Calculate_Installments::installments_list( array(), self::highlight_price( $product ), $product );
 		$type = Repository::get('get_type_best_installments');
 		$best = '';
 
@@ -130,6 +126,23 @@ class Components {
 		}
 
 		return ' <span class="woo-custom-installments-card-container">' . $best . ' </span>';
+	}
+
+
+	/**
+	 * The price the highlighted instalment is built from.
+	 *
+	 * The lowest price of a variable product, because the highlight reads as
+	 * "starting from". The instalment table uses the highest instead.
+	 *
+	 * @since 6.0.0
+	 * @param object $product | Product object
+	 * @return float
+	 */
+	public static function highlight_price( $product ) {
+		return $product->is_type('variable')
+			? (float) $product->get_variation_price( 'min', true )
+			: (float) $product->get_price();
 	}
 
 

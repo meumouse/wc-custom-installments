@@ -245,6 +245,7 @@ class Default_Options {
 			'enable_elementor_widgets' => 'yes',
 			'enable_price_grid_in_widgets' => 'yes',
 			'enable_debug_mode' => 'no',
+			'headless_mode' => 'no',
 
 			// Pro.
 			'display_discount_price_schema' => 'no',

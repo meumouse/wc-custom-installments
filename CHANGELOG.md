@@ -73,6 +73,8 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - A "Discounted price" element in the design panel, listed under the product price: its own typography, colours and spacing for the price shown beside the struck-out one. Everything left blank inherits from the product price, so a store that restyled the price sees no change. An add-on element can be a part of another one through a `parent` key.
 - The design panel previews each element with its icon, Font Awesome class or uploaded image, and draws the product price in its fullest shape: a variable product on sale, with "starting from", the struck-out price, the discounted price and the sale badge.
 - Every measurement selector offers the same units, REM, EM, Pixel and %, in the same order.
+- Headless mode, in Advanced: for a store with its own frontend. Nothing renders on the storefront (the price group, the payment methods, the shortcodes, the widgets, the CSS and the runtime), while the admin, the REST routes and the pricing logic behind the cart keep working. `WC_Custom_Installments/Headless/Is_Enabled` forces it from code. It stands down the same classes `Conflict_Guard` does, and the Elementor controls the 5.x plugin injected into other widgets join that list.
+- The instalment plan and the discounts in the WooCommerce Store API, under `extensions.wc-custom-installments` of every product and of the cart: the instalment table, the highlighted instalments, the upfront and bank-slip prices, and the store's copy, as minor-unit amounts with the currency.
 - A variable product whose range is replaced by "starting from" strikes out its cheapest variation's regular price while that variation is on sale, as a simple product on sale does.
 
 ### Fixed

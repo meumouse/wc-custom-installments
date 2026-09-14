@@ -315,6 +315,7 @@ php tests/migration-test.php
 php tests/engine-test.php
 php tests/extensions-test.php
 php tests/onboarding-test.php
+php tests/headless-test.php
 ```
 
 Write the expected values **by hand**. The engine harness exists because a rounding change throws no

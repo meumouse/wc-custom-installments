@@ -23,6 +23,7 @@ use MeuMouse\WC_Custom_Installments\Admin\Settings\Transfer;
 use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Compatibility\Conflict_Guard;
 use MeuMouse\WC_Custom_Installments\Core\Migrator;
+use MeuMouse\WC_Custom_Installments\Frontend\Headless_Mode;
 
 $passed = 0;
 $failed = 0;
@@ -229,7 +230,7 @@ $all = array(
 
 $kept = Conflict_Guard::withhold_storefront( $all );
 
-check( 'nothing that renders a price survives the guard', array(), array_values( array_intersect( $kept, Conflict_Guard::STOREFRONT_CLASSES ) ) );
+check( 'nothing that renders a price survives the guard', array(), array_values( array_intersect( $kept, Headless_Mode::storefront_classes() ) ) );
 
 // The admin has to keep working: this is where the store owner reads the
 // notice and presses the button that resolves it.

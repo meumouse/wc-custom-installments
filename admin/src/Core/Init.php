@@ -4,6 +4,7 @@ namespace MeuMouse\WC_Custom_Installments\Core;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use MeuMouse\WC_Custom_Installments\Compatibility\Conflict_Guard;
+use MeuMouse\WC_Custom_Installments\Frontend\Headless_Mode;
 use ReflectionClass;
 use Throwable;
 
@@ -194,9 +195,10 @@ class Init {
 			return;
 		}
 
-		// Before the instantiation pass, because what it decides is which
+		// Before the instantiation pass, because what they decide is which
 		// classes that pass is allowed to build.
 		Conflict_Guard::bootstrap();
+		Headless_Mode::bootstrap();
 
 		add_action( 'init', array( $this, 'instance_classes' ), 5 );
 	}

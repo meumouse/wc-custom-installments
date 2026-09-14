@@ -990,6 +990,18 @@ class Registry {
 					),
 				),
 				array(
+					'id' => 'advanced-headless',
+					'title' => __( 'Headless', 'wc-custom-installments' ),
+					'description' => __( 'Para lojas com um frontend próprio, que leem os preços pela Store API do WooCommerce.', 'wc-custom-installments' ),
+					'fields' => array(
+						self::toggle(
+							'headless_mode',
+							__( 'Modo headless', 'wc-custom-installments' ),
+							__( 'Deixa de exibir os elementos do plugin na loja: grupo de preços, parcelas, formas de pagamento, shortcodes, widgets, estilos e scripts. Os valores continuam disponíveis na Store API, na chave extensions.wc-custom-installments de cada produto e do carrinho.', 'wc-custom-installments' )
+						),
+					),
+				),
+				array(
 					'id' => 'advanced-maintenance',
 					'title' => __( 'Manutenção', 'wc-custom-installments' ),
 					'description' => __( 'Diagnóstico e dados.', 'wc-custom-installments' ),

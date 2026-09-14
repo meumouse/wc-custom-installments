@@ -12,6 +12,7 @@ usually one filter away.
 - [Adding a per-product field](#adding-a-per-product-field)
 - [Adding a REST route](#adding-a-rest-route)
 - [Adding a storefront element](#adding-a-storefront-element)
+- [Headless stores and the Store API](#headless-stores-and-the-store-api)
 - [The browser side](#the-browser-side)
 - [Hook reference](#hook-reference)
 - [Names that cannot change](#names-that-cannot-change)
@@ -260,6 +261,58 @@ $elements['my_part'] = array(
 ## The browser side
 
 The settings screen resolves a field's control through a registry published on the window. A
+## Headless stores and the Store API
+
+**Advanced > Headless > Modo headless** turns the storefront off: the price group, the payment
+methods, the shortcodes, the Elementor widgets, the CSS and the runtime are never built, and
+`price_html` goes back to WooCommerce's own. The settings screen, the REST routes and the pricing
+logic behind the cart (the Pro gateway rates and quantity discounts, the tier and dynamic pricing
+integrations) keep running. To force the mode from code, whatever the setting says:
+
+```php
+add_filter( 'WC_Custom_Installments/Headless/Is_Enabled', '__return_true' );
+```
+
+An add-on that prints markup of its own appends its classes to
+`WC_Custom_Installments/Storefront/Classes`. They then stand down with the rest, in headless mode and
+while the 5.x plugin is still active.
+
+The numbers are in the WooCommerce Store API, headless or not, under
+`extensions.wc-custom-installments` of every product (`/wp-json/wc/store/v1/products`) and of the
+cart (`/wp-json/wc/store/v1/cart`). Amounts are strings in the currency's minor unit, like every
+Store API price, with the `currency_*` properties beside them:
+
+```json
+{
+  "installments": [
+    { "count": 1, "amount": "30000", "total": "30000", "has_interest": false },
+    { "count": 3, "amount": "10000", "total": "30000", "has_interest": false },
+    { "count": 4, "amount": "7879", "total": "31516", "has_interest": true }
+  ],
+  "best_installments": {
+    "without_interest": { "count": 3, "amount": "10000", "total": "30000", "has_interest": false },
+    "with_interest": null
+  },
+  "discounts": {
+    "main": { "price": "27000", "savings": "3000", "text_before": "À vista", "text_after": "no Pix" },
+    "ticket": null
+  },
+  "labels": { "without_interest": "sem juros", "with_interest": "com juros" },
+  "currency_code": "BRL",
+  "currency_minor_unit": 2
+}
+```
+
+The values follow the store's settings and each product's opt-outs, exactly as the storefront would
+print them. `installments` is empty when a product is not sold in instalments. A highlight or a
+discount the store does not offer is `null`. For a variable product whose variations differ in price,
+the table starts from the highest price and the highlight from the lowest, as on the storefront.
+The placement settings are left out, since where each value goes is the frontend's call. The cart
+carries `discounts.main` with the upfront `total` and its `discount`.
+
+`WC_Custom_Installments/Store_Api/Product_Data` and `WC_Custom_Installments/Store_Api/Cart_Data`
+filter the data. `WC_Custom_Installments/Store_Api/Enabled` switches it off.
+
 separately built bundle can add to it:
 
 ```js
@@ -284,7 +337,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_66 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_71 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -319,6 +372,7 @@ _66 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Init/Class_Hook` | filter | — | `admin/src/Core/Init.php` |
 | `WC_Custom_Installments/Init/Instance_Classes` | filter | — | `admin/src/Core/Init.php` |
 | `WC_Custom_Installments/Installments/All_Installments` | filter | `Woo_Custom_Installments/Installments/All_Installments` | `admin/src/Engine/Calculate_Installments.php` |
+| `WC_Custom_Installments/Headless/Is_Enabled` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
 | `WC_Custom_Installments/Installments/Final_Price` | filter | `Woo_Custom_Installments/Installments/Final_Price` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Get_Fee` | filter | `Woo_Custom_Installments/Installments/Get_Fee` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Installments/With_Fees` | filter | `Woo_Custom_Installments/Installments/With_Fees` | `admin/src/Engine/Calculate_Values.php` |
@@ -352,6 +406,10 @@ _66 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Styles/Force_Important` | filter | `Woo_Custom_Installments/Styles/Force_Important` | `admin/src/Frontend/Styles.php` |
 | `WC_Custom_Installments/Templates/Theme_Override_Wins` | filter | `Woo_Custom_Installments/Templates/Theme_Override_Wins` | `admin/src/Frontend/Templates.php` |
 | `WC_Custom_Installments/Widgets/Align_Price_Group` | filter | `Woo_Custom_Installments/Widgets/Align_Price_Group` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
+| `WC_Custom_Installments/Store_Api/Cart_Data` | filter | — | `admin/src/Integrations/Store_Api.php` |
+| `WC_Custom_Installments/Store_Api/Enabled` | filter | — | `admin/src/Integrations/Store_Api.php` |
+| `WC_Custom_Installments/Store_Api/Product_Data` | filter | — | `admin/src/Integrations/Store_Api.php` |
+| `WC_Custom_Installments/Storefront/Classes` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
 | `WC_Custom_Installments/Widgets/Enable_Grid_Price` | filter | `Woo_Custom_Installments/Widgets/Enable_Grid_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 | `WC_Custom_Installments/Widgets/Hidden_Old_Price` | filter | `Woo_Custom_Installments/Widgets/Hidden_Old_Price` | `admin/src/Integrations/Elementor/Widgets/Style_Controls.php` |
 

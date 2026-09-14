@@ -2,6 +2,7 @@
 
 namespace MeuMouse\WC_Custom_Installments\Integrations;
 
+use MeuMouse\WC_Custom_Installments\Frontend\Headless_Mode;
 
 defined('ABSPATH') || exit;
 
@@ -31,6 +32,13 @@ class Tiered_Pricing_Table {
 
 		add_filter( 'WC_Custom_Installments/Price/Set_Values_Price', array( $this, 'set_tier_price' ), 10, 2 );
 		add_filter( 'WC_Custom_Installments/Assets/Frontend_Params', array( $this, 'announce_plugin' ) );
+
+		// The markup only goes to make room for the price group. A headless
+		// store has no price group, and the tier plugin's wrapper is then the
+		// only price markup there is.
+		if ( Headless_Mode::is_enabled() ) {
+			return;
+		}
 
 		// Late enough for the plugin to have registered its own price filters.
 		add_action( 'init', array( $this, 'remove_price_markup' ), 20 );

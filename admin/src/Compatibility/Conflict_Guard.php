@@ -4,6 +4,7 @@ namespace MeuMouse\WC_Custom_Installments\Compatibility;
 
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Core\Migrator;
+use MeuMouse\WC_Custom_Installments\Frontend\Headless_Mode;
 
 defined('ABSPATH') || exit;
 
@@ -25,27 +26,6 @@ defined('ABSPATH') || exit;
  * @author MeuMouse.com
  */
 class Conflict_Guard {
-
-	/**
-	 * Classes that put something on the storefront.
-	 *
-	 * Everything else — the settings screen, the REST routes, the migrator —
-	 * carries on, because none of it is visible to a shopper.
-	 *
-	 * @since 6.0.0
-	 * @var array<int,string>
-	 */
-	const STOREFRONT_CLASSES = array(
-		'MeuMouse\\WC_Custom_Installments\\Frontend\\Render_Elements',
-		'MeuMouse\\WC_Custom_Installments\\Frontend\\Shortcodes',
-		'MeuMouse\\WC_Custom_Installments\\Frontend\\Styles',
-		'MeuMouse\\WC_Custom_Installments\\Frontend\\Templates',
-		'MeuMouse\\WC_Custom_Installments\\Assets\\Storefront_Assets',
-		'MeuMouse\\WC_Custom_Installments\\Integrations\\Elementor',
-		'MeuMouse\\WC_Custom_Installments\\Integrations\\Theme_Compatibility',
-		'MeuMouse\\WC_Custom_Installments\\Integrations\\Woodmart',
-	);
-
 
 	/**
 	 * Withhold the storefront classes, before anything is built.
@@ -99,15 +79,16 @@ class Conflict_Guard {
 	 *
 	 * Withholding them is better than letting each one check for itself: the
 	 * check lives in one place, and a class added later cannot forget it —
-	 * it simply is not on this list and renders, which is the safe default for
-	 * anything that is not a price.
+	 * it simply is not on the list and renders, which is the safe default for
+	 * anything that is not a price. The list is the one headless mode uses, so
+	 * the settings screen, the REST routes and the migrator carry on here too.
 	 *
 	 * @since 6.0.0
 	 * @param array<int,string> $classes | Classes about to be instantiated
 	 * @return array<int,string>
 	 */
 	public static function withhold_storefront( $classes ) {
-		return array_values( array_diff( (array) $classes, self::STOREFRONT_CLASSES ) );
+		return Headless_Mode::withhold_storefront( $classes );
 	}
 
 

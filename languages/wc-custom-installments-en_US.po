@@ -28,7 +28,7 @@ msgstr "%s (Pro)"
 msgid "%s à vista"
 msgstr "%s paying upfront"
 
-#: admin/src/Frontend/Components.php:314
+#: admin/src/Frontend/Components.php:327
 #: app/src/components/fields/ElementPreview.vue:162
 #. translators: %s: discount percentage, e.g. "20%"
 msgid "%s OFF"
@@ -38,7 +38,7 @@ msgstr "%s OFF"
 msgid "A cor do texto e da borda do botão é obtida a partir desta cor."
 msgstr "The button's text and border colour are taken from this colour."
 
-#: admin/src/Admin/Settings/Registry.php:1047
+#: admin/src/Admin/Settings/Registry.php:1059
 msgid "A listagem de produtos e a página do produto"
 msgstr "The shop loop and the product page"
 
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Aparência"
 msgstr "Appearance"
 
-#: admin/src/Compatibility/Conflict_Guard.php:132
+#: admin/src/Compatibility/Conflict_Guard.php:113
 msgid ""
 "Apenas o antigo está exibindo preços na sua loja. Este aguarda até que o "
 "plugin antigo seja desativado, para que os clientes nunca vejam o preço "
@@ -220,8 +220,8 @@ msgstr "Apply it to every unit"
 msgid "Aplicar um desconto"
 msgstr "Take a discount off it"
 
-#: admin/src/Frontend/Components.php:346
-#: admin/src/Frontend/Components.php:484
+#: admin/src/Frontend/Components.php:359
+#: admin/src/Frontend/Components.php:497
 msgid "Aprovação imediata"
 msgstr "Approved instantly"
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "As regras usadas para montar cada parcela exibida na loja."
 msgstr "The rules used to build every installment shown on the storefront."
 
-#: admin/src/Admin/Settings/Registry.php:1007
+#: admin/src/Admin/Settings/Registry.php:1019
 msgid ""
 "As versões e os limites do servidor que costumam explicar um problema. "
 "Informe-os ao pedir suporte."
@@ -433,7 +433,7 @@ msgstr ""
 "Charge a different rate for each installment count instead of one monthly "
 "rate."
 
-#: admin/src/Frontend/Components.php:388
+#: admin/src/Frontend/Components.php:401
 msgid "Cobranças:"
 msgstr "Charges:"
 
@@ -594,6 +594,18 @@ msgstr "Set an amount for each payment method your store accepts."
 msgid "Definir os juros de cada parcela"
 msgstr "Set the interest of each installment"
 
+#: admin/src/Admin/Settings/Registry.php:1000
+msgid ""
+"Deixa de exibir os elementos do plugin na loja: grupo de preços, parcelas, "
+"formas de pagamento, shortcodes, widgets, estilos e scripts. Os valores "
+"continuam disponíveis na Store API, na chave "
+"extensions.wc-custom-installments de cada produto e do carrinho."
+msgstr ""
+"Stops showing the plugin's elements on the store: the price group, "
+"installments, payment methods, shortcodes, widgets, styles and scripts. The "
+"values remain available in the Store API, under the "
+"extensions.wc-custom-installments key of every product and of the cart."
+
 #: admin/src/Admin/Settings/Registry.php:281
 msgid "Depois do formulário de adicionar ao carrinho"
 msgstr "After the add-to-cart form"
@@ -606,7 +618,7 @@ msgstr "After the discounted price"
 msgid "Depois do preço no boleto"
 msgstr "After the bank slip price"
 
-#: admin/src/Compatibility/Conflict_Guard.php:138
+#: admin/src/Compatibility/Conflict_Guard.php:119
 msgid "Desativar o plugin antigo"
 msgstr "Deactivate the older plugin"
 
@@ -671,7 +683,7 @@ msgstr "Highlight how much the customer saves."
 msgid "Detalhes das parcelas"
 msgstr "Installment details"
 
-#: admin/src/Admin/Settings/Registry.php:995
+#: admin/src/Admin/Settings/Registry.php:1007
 msgid "Diagnóstico e dados."
 msgstr "Diagnostics and data."
 
@@ -693,7 +705,7 @@ msgstr "Device"
 msgid "Documentação"
 msgstr "Documentation"
 
-#: admin/src/Compatibility/Conflict_Guard.php:131
+#: admin/src/Compatibility/Conflict_Guard.php:112
 msgid "Duas versões do Parcelas Customizadas estão ativas."
 msgstr "Two versions of Custom Installments are active."
 
@@ -731,7 +743,7 @@ msgstr "Up to %dx of %s interest free"
 msgid "Em até 3x de R$32,33 sem juros"
 msgstr "Up to 3x $32.33 interest-free"
 
-#: admin/src/Admin/Settings/Registry.php:1050
+#: admin/src/Admin/Settings/Registry.php:1062
 msgid "Em nenhum lugar"
 msgstr "Nowhere"
 
@@ -1009,7 +1021,7 @@ msgstr "OpenSSL extension"
 msgid "Faça backup ou transfira sua configuração"
 msgstr "Back up or move your configuration"
 
-#: admin/src/Frontend/Components.php:620
+#: admin/src/Frontend/Components.php:633
 #: app/src/components/base/BaseModal.vue:176
 msgid "Fechar"
 msgstr "Close"
@@ -1039,6 +1051,10 @@ msgstr "Large"
 #: admin/src/Admin/Settings/Registry.php:975
 msgid "Grupo de preços dentro dos widgets"
 msgstr "Price group inside widgets"
+
+#: admin/src/Admin/Settings/Registry.php:994
+msgid "Headless"
+msgstr "Headless"
 
 #: app/src/components/fields/ElementDesignField.vue:193
 msgid "Herdar (%s)"
@@ -1074,7 +1090,7 @@ msgstr "Icon image"
 msgid "Importar configurações"
 msgstr "Import settings"
 
-#: admin/src/Admin/Settings/Registry.php:1012
+#: admin/src/Admin/Settings/Registry.php:1024
 msgid "Importar e exportar"
 msgstr "Import and export"
 
@@ -1177,7 +1193,7 @@ msgstr "Installment details link"
 msgid "Listagem de produtos"
 msgstr "Shop loop"
 
-#: admin/src/Admin/Settings/Registry.php:994
+#: admin/src/Admin/Settings/Registry.php:1006
 msgid "Manutenção"
 msgstr "Maintenance"
 
@@ -1230,13 +1246,17 @@ msgstr "Installment templates"
 msgid "Modelos de texto de parcelas personalizados"
 msgstr "Custom installment text templates"
 
-#: admin/src/Admin/Settings/Registry.php:999
+#: admin/src/Admin/Settings/Registry.php:1011
 msgid "Modo de depuração"
 msgstr "Debug mode"
 
 #: admin/src/Rest/Settings_Bootstrap.php:119
 msgid "Modo de depuração do WordPress"
 msgstr "WordPress debug mode"
+
+#: admin/src/Admin/Settings/Registry.php:999
+msgid "Modo headless"
+msgstr "Headless mode"
 
 #: admin/src/Admin/Settings/Registry.php:607
 msgid "Mostra quanto o cliente economiza pagando com Pix."
@@ -1430,7 +1450,7 @@ msgstr ""
 "The Custom Installments for WooCommerce admin bundle is missing. Run \"npm "
 "run build\" in the app directory."
 
-#: admin/src/Core/Init.php:426
+#: admin/src/Core/Init.php:428
 #. translators: %s: required WooCommerce version
 msgid ""
 "O Parcelas Customizadas para WooCommerce requer o WooCommerce %s ou "
@@ -1439,7 +1459,7 @@ msgstr ""
 "Custom Installments for WooCommerce requires WooCommerce %s or higher to be "
 "installed and active."
 
-#: admin/src/Core/Init.php:405
+#: admin/src/Core/Init.php:407
 #. translators: 1: required PHP version, 2: current PHP version
 msgid ""
 "O Parcelas Customizadas para WooCommerce requer PHP %1$s ou superior. Este "
@@ -1605,6 +1625,14 @@ msgstr "The badges shown in the debit card row."
 msgid "Os testes não estão disponíveis a partir deste site no momento."
 msgstr "Trials are not available from this site right now."
 
+#: admin/src/Admin/Settings/Registry.php:995
+msgid ""
+"Para lojas com um frontend próprio, que leem os preços pela Store API do "
+"WooCommerce."
+msgstr ""
+"For stores with a frontend of their own that read prices through the "
+"WooCommerce Store API."
+
 #: admin/src/Admin/Onboarding/Registry.php:120
 msgid "Para onde ir a partir daqui."
 msgstr "Where to go from here."
@@ -1656,7 +1684,7 @@ msgstr "Small"
 msgid "Pix"
 msgstr "Pix"
 
-#: admin/src/Frontend/Components.php:341
+#: admin/src/Frontend/Components.php:354
 #. translators: %s: discounted price
 msgid "Pix: %s"
 msgstr "Pix: %s"
@@ -1679,7 +1707,7 @@ msgstr "For example: \"Cash price\"."
 msgid "Por exemplo: \"no Pix\"."
 msgstr "For example: \"with Pix\"."
 
-#: admin/src/Admin/Settings/Registry.php:1081
+#: admin/src/Admin/Settings/Registry.php:1093
 msgid "Porcentagem"
 msgstr "Percentage"
 
@@ -1872,7 +1900,7 @@ msgstr ""
 msgid "Reescrever o preço exibido"
 msgstr "Rewrite the displayed price"
 
-#: admin/src/Admin/Settings/Registry.php:1000
+#: admin/src/Admin/Settings/Registry.php:1012
 msgid "Registra detalhes adicionais em WooCommerce > Status > Logs."
 msgstr "Log additional detail to WooCommerce > Status > Logs."
 
@@ -2029,11 +2057,11 @@ msgstr "Last name"
 msgid "Solicitando…"
 msgstr "Requesting…"
 
-#: admin/src/Admin/Settings/Registry.php:1049
+#: admin/src/Admin/Settings/Registry.php:1061
 msgid "Somente a listagem de produtos"
 msgstr "The shop loop only"
 
-#: admin/src/Admin/Settings/Registry.php:1048
+#: admin/src/Admin/Settings/Registry.php:1060
 msgid "Somente a página do produto"
 msgstr "The product page only"
 
@@ -2041,7 +2069,7 @@ msgstr "The product page only"
 msgid "Somente onde eu colocar o widget"
 msgstr "Only where I place the widget"
 
-#: admin/src/Admin/Settings/Registry.php:1006
+#: admin/src/Admin/Settings/Registry.php:1018
 msgid "Status do sistema"
 msgstr "System status"
 
@@ -2053,7 +2081,7 @@ msgstr ""
 "Your store is showing instalment plans. From here you can fine-tune the "
 "wording, the placement and the appearance."
 
-#: admin/src/Compatibility/Conflict_Guard.php:126
+#: admin/src/Compatibility/Conflict_Guard.php:107
 msgid "Suas configurações já foram importadas, então nada se perde com a troca."
 msgstr "Your settings have already been imported, so nothing is lost by switching."
 
@@ -2252,7 +2280,7 @@ msgstr "Total %s"
 msgid "Transferências:"
 msgstr "Transfers:"
 
-#: admin/src/Admin/Settings/Registry.php:1013
+#: admin/src/Admin/Settings/Registry.php:1025
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr "Move this configuration to another store, or restore the defaults."
 
@@ -2333,7 +2361,7 @@ msgstr "Useful for themes whose product cards are centre-aligned."
 msgid "Valor do desconto"
 msgstr "Discount amount"
 
-#: admin/src/Admin/Settings/Registry.php:1082
+#: admin/src/Admin/Settings/Registry.php:1094
 msgid "Valor fixo"
 msgstr "Fixed amount"
 
@@ -2377,7 +2405,7 @@ msgstr "WooCommerce version"
 msgid "Versão do WordPress"
 msgstr "WordPress version"
 
-#: admin/src/Compatibility/Conflict_Guard.php:162
+#: admin/src/Compatibility/Conflict_Guard.php:143
 #: admin/src/Core/Onboarding.php:180
 msgid "Você não tem permissão para fazer isso."
 msgstr "You are not allowed to do that."
