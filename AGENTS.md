@@ -31,7 +31,9 @@ file.
    `Co-Authored-By`, "Generated with …", or any other co-authorship or tool-attribution line — not
    in commits, pull requests, the changelog or the code.
 8. **The admin UI is built from components, never hand-written HTML.** See §7. Vue 3 is the
-   framework; do not bring a second one into the bundle.
+   framework; do not bring a second one into the bundle. **Never use the browser's own widgets** —
+   date and time fields, the colour picker, `alert()`/`confirm()`/`prompt()`: always the dedicated
+   Vue component, and when one is missing, build it in `components/base/` first.
 
 ---
 
@@ -239,11 +241,27 @@ Pages and feature components are assembled from components. Nothing else renders
 
 - Native controls — `button`, `input`, `select`, `textarea`, `label`, `a`, `form`, `dialog` — appear
   **only inside `app/src/components/base/`**. Anywhere else, use the `Base*` component.
+- **The browser's own widgets are never used, not even inside `components/base/`.** They look
+  different in every browser and system and cannot wear the design system. Always the dedicated
+  component:
+
+  | Instead of | Use |
+  |---|---|
+  | `<input type="date">`, `datetime-local`, `time`, `month`, `week` | `BaseDatePicker` (`with-time` for date and time) |
+  | `<select>`, `<datalist>` | `BaseSelect`, or `BaseMultiSelect` for several values |
+  | `alert()`, `confirm()`, `prompt()` | `BaseConfirmDialog`, `BaseModal`, a toast |
+  | `<input type="color">` | a Vue colour picker (`BaseColorInput` still opens the native one: it is debt to repay, not a model) |
+
+  When the component a screen needs does not exist, build it in `components/base/` — on the design
+  tokens, keyboard-accessible, teleported into the portal when it floats — rather than reaching for
+  the native widget "for now". Joinotify's components are the reference to port from.
 - Layout and text tags (`div`, `span`, `p`, `h1`–`h3`, `ul`, `li`) are fine in any template.
 - No `v-html`, no `innerHTML`. Icons are components (`BaseIcon`), not SVG strings.
 - A visual pattern used twice becomes a component. A "Pro" pill is `BaseBadge`, a callout is
   `BaseNotice`, a dialog is `BaseModal`.
-- `npm run lint:ui` enforces the list above and runs in the build.
+- `npm run lint:ui` enforces the list above and runs in the build. The native pickers and dialogs
+  are refused everywhere, `components/base/` included; `NATIVE_WIDGET_DEBT` in
+  `scripts/lint-ui.mjs` lists the few still waiting for their component, and only shrinks.
 
 PHP renders admin markup only where WordPress or WooCommerce owns it:
 
@@ -302,7 +320,7 @@ summary card beside it. Everything is in memory; each action answers with the fr
 
 | Folder | Components |
 |---|---|
-| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput` (dates too: `type="datetime-local"`), `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseMultiSelect` (chips over a search the caller supplies), `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
+| `components/base/` | `BaseButton` (renders `<a>` when given `href`), `BaseIconButton`, `BaseIcon`, `BaseInput` (text and numbers only), `BaseInputGroup`, `BaseTextarea`, `BaseSelect`, `BaseMultiSelect` (chips over a search the caller supplies), `BaseDatePicker` (a calendar, with the hour and minute under `with-time`), `BaseSwitch`, `BaseCheckbox`, `BaseColorInput`, `BaseFileInput`, `BaseLabel`, `BaseBadge`, `BaseNotice`, `BaseModal`, `BaseConfirmDialog`, `BaseTabs`, `BaseProgress`, `BaseStepper`, `BaseCode`, `BaseForm` |
 | `components/brand/` | `BrandMark` |
 | `components/layout/` | `PageHeader`, `SettingsPanel` (also the panel of every other page), `SettingsActionBar` |
 | `components/fields/` | `FieldGroup`, `FieldRow`, `FieldRenderer`, the field controls and `fieldRegistry` |

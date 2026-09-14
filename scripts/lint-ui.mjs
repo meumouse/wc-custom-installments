@@ -7,6 +7,12 @@
  * uses the `Base*` component. `v-html` and `innerHTML` are refused outright:
  * they are markup that no component owns.
  *
+ * The browser's own widgets are refused everywhere, `components/base` included:
+ * the date, time, month, week and colour pickers an `<input type>` opens, and
+ * `alert()`, `confirm()` and `prompt()`. They cannot wear the design system and
+ * look different in every browser; each has a dedicated component instead
+ * (BaseDatePicker, BaseConfirmDialog, ...).
+ *
  * The storefront runtime (`app/src/storefront/`) is out of scope. It runs on
  * customer themes with no framework, and its markup is the §5 contract.
  *
@@ -24,9 +30,23 @@ const CONTROL_TAGS = ['button', 'input', 'select', 'textarea', 'label', 'a', 'fo
 const TAG_PATTERN = new RegExp(`<(${CONTROL_TAGS.join('|')})(?=[\\s/>])`, 'g');
 const RAW_HTML_PATTERN = /\bv-html\b|\.innerHTML\b|\.outerHTML\b|insertAdjacentHTML/g;
 
+// `type="date"`, `type: 'color'`, `:type="'time'"`… and the blocking dialogs.
+const NATIVE_PICKER_TYPES = ['date', 'datetime-local', 'time', 'month', 'week', 'color'];
+const NATIVE_PICKER_PATTERN = new RegExp(
+	`\\btype\\s*[=:]\\s*["'\`]{1,2}(${NATIVE_PICKER_TYPES.join('|')})["'\`]`,
+	'g',
+);
+const NATIVE_DIALOG_PATTERN = /(?:\bwindow\.|(?<![\w.$]))(alert|confirm|prompt)\s*\(/g;
+
 // Relative to app/src. `components/base` wraps the native controls; the
 // storefront has no framework by design.
 const EXEMPT = ['components/base/', 'storefront/'];
+
+// Native widgets still waiting for their component, with what is allowed.
+// Each entry is a debt, not a precedent: replace the widget, then remove it.
+const NATIVE_WIDGET_DEBT = {
+	'components/base/BaseColorInput.vue': ['color'],
+};
 
 /**
  * List the source files under a directory.
@@ -71,20 +91,59 @@ function blank(text) {
 }
 
 /**
+ * Strip the comments out of a file, keeping its line breaks.
+ *
+ * Comments may talk about <button>, innerHTML or type="date" freely; only code
+ * counts.
+ *
+ * @param {string} file - Absolute path.
+ * @return {string} The code.
+ */
+function readCode(file) {
+	return readFileSync(file, 'utf8')
+		.replace(/\r\n/g, '\n')
+		.replace(/<!--[\s\S]*?-->/g, blank)
+		.replace(/\/\*[\s\S]*?\*\//g, blank)
+		.replace(/(^|[^:'"`])\/\/[^\n]*/g, (match, lead) => lead + blank(match.slice(lead.length)));
+}
+
+/**
+ * Find the browser widgets a file opens instead of a component.
+ *
+ * @param {string} file - Absolute path.
+ * @param {string} relative - Path relative to app/src.
+ * @return {{line: number, message: string}[]} Violations.
+ */
+function inspectWidgets(file, relative) {
+	const code = readCode(file);
+	const allowed = NATIVE_WIDGET_DEBT[relative] || [];
+	const problems = [];
+
+	for (const match of code.matchAll(NATIVE_PICKER_PATTERN)) {
+		if (!allowed.includes(match[1])) {
+			problems.push({
+				line: lineOf(code, match.index),
+				message: `native ${match[1]} picker — use the dedicated component (BaseDatePicker, …)`,
+			});
+		}
+	}
+
+	for (const match of code.matchAll(NATIVE_DIALOG_PATTERN)) {
+		problems.push({ line: lineOf(code, match.index), message: `native ${match[1]}() — use BaseConfirmDialog or a toast` });
+	}
+
+	return problems;
+}
+
+/**
  * Find the violations in one file.
  *
  * @param {string} file - Absolute path.
  * @return {{line: number, message: string}[]} Violations.
  */
 function inspect(file) {
-	const source = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
+	const code = readCode(file);
 	const problems = [];
-
-	// Comments may talk about <button> and innerHTML freely; only code counts.
-	const code = source
-		.replace(/<!--[\s\S]*?-->/g, blank)
-		.replace(/\/\*[\s\S]*?\*\//g, blank)
-		.replace(/(^|[^:'"`])\/\/[^\n]*/g, (match, lead) => lead + blank(match.slice(lead.length)));
 
 	for (const match of code.matchAll(RAW_HTML_PATTERN)) {
 		problems.push({ line: lineOf(code, match.index), message: `raw HTML through "${match[0]}"` });
@@ -117,28 +176,34 @@ function inspect(file) {
  */
 export function lintUi(root) {
 	const srcDir = path.join(root, 'app', 'src');
-	const files = collect(srcDir).filter((file) => {
-		const relative = path.relative(srcDir, file).replace(/\\/g, '/');
-
-		return !EXEMPT.some((prefix) => relative.startsWith(prefix));
-	});
+	const relativeOf = (file) => path.relative(srcDir, file).replace(/\\/g, '/');
+	const all = collect(srcDir).filter((file) => !relativeOf(file).startsWith('storefront/'));
+	const files = all.filter((file) => !EXEMPT.some((prefix) => relativeOf(file).startsWith(prefix)));
 
 	let count = 0;
 
+	const report = (file, problem) => {
+		count += 1;
+		console.error(`${path.relative(root, file).replace(/\\/g, '/')}:${problem.line}  ${problem.message}`);
+	};
+
 	for (const file of files) {
-		for (const problem of inspect(file)) {
-			count += 1;
-			console.error(`${path.relative(root, file).replace(/\\/g, '/')}:${problem.line}  ${problem.message}`);
-		}
+		inspect(file).forEach((problem) => report(file, problem));
+	}
+
+	for (const file of all) {
+		inspectWidgets(file, relativeOf(file)).forEach((problem) => report(file, problem));
 	}
 
 	if (count > 0) {
-		console.error(`\nUI lint failed: ${count} problem(s). Native controls belong in app/src/components/base (AGENTS.md §7).`);
+		console.error(
+			`\nUI lint failed: ${count} problem(s). Native controls belong in app/src/components/base, and the browser's own pickers and dialogs are not used at all (AGENTS.md §7).`,
+		);
 
 		return false;
 	}
 
-	console.log(`UI lint passed: ${files.length} file(s), no native controls outside components/base.`);
+	console.log(`UI lint passed: ${all.length} file(s), no native controls outside components/base, no native pickers or dialogs.`);
 
 	return true;
 }

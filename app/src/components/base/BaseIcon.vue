@@ -24,6 +24,8 @@ import Calendar from '@boxicons/vue/Calendar';
 import Check from '@boxicons/vue/Check';
 import CheckCircle from '@boxicons/vue/CheckCircle';
 import ChevronDown from '@boxicons/vue/ChevronDown';
+import ChevronLeft from '@boxicons/vue/ChevronLeft';
+import ChevronRight from '@boxicons/vue/ChevronRight';
 import Cog from '@boxicons/vue/Cog';
 import Copy from '@boxicons/vue/Copy';
 import Desktop from '@boxicons/vue/Desktop';
@@ -67,6 +69,8 @@ const ICONS = {
   check: Check,
   'check-circle': CheckCircle,
   'chevron-down': ChevronDown,
+  'chevron-left': ChevronLeft,
+  'chevron-right': ChevronRight,
   cog: Cog,
   copy: Copy,
   desktop: Desktop,

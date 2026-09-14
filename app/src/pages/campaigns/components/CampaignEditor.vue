@@ -12,6 +12,7 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import CampaignSummary from './CampaignSummary.vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseConfirmDialog from '../../../components/base/BaseConfirmDialog.vue';
+import BaseDatePicker from '../../../components/base/BaseDatePicker.vue';
 import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseInputGroup from '../../../components/base/BaseInputGroup.vue';
 import BaseMultiSelect from '../../../components/base/BaseMultiSelect.vue';
@@ -393,11 +394,27 @@ function keeps(value) {
             "
           >
             <FieldRow :label="__('Começa em')" control-id="wcci-campaign-starts">
-              <BaseInput id="wcci-campaign-starts" v-model="form.rules.starts_at" type="datetime-local" :aria-label="__('Começa em')" />
+              <BaseDatePicker
+                id="wcci-campaign-starts"
+                v-model="form.rules.starts_at"
+                with-time
+                default-time="00:00"
+                :aria-label="__('Começa em')"
+                :placeholder="__('Assim que for ativada')"
+              />
             </FieldRow>
 
             <FieldRow :label="__('Termina em')" :description="__('A campanha vale até o último segundo deste minuto.')" control-id="wcci-campaign-ends">
-              <BaseInput id="wcci-campaign-ends" v-model="form.rules.ends_at" type="datetime-local" :aria-label="__('Termina em')" />
+              <BaseDatePicker
+                id="wcci-campaign-ends"
+                v-model="form.rules.ends_at"
+                with-time
+                default-time="23:59"
+                :min="form.rules.starts_at"
+                :invalid="Boolean(errors.ends_at)"
+                :aria-label="__('Termina em')"
+                :placeholder="__('Até ser desativada')"
+              />
               <p v-if="errors.ends_at" class="mt-2 text-[13px] text-rose-600">{{ errors.ends_at }}</p>
             </FieldRow>
           </FieldGroup>
