@@ -49,6 +49,11 @@ class Transfer {
 	 * imported into an unlicensed store leaves that setting untouched, exactly
 	 * as if it had been submitted from the settings screen.
 	 *
+	 * They are written as a patch. An export carries every setting with its
+	 * value spelled out, so for a current file this changes nothing; but a file
+	 * from a version that predates a toggle does not carry it, and that is not
+	 * the store switching it off.
+	 *
 	 * @since 6.0.0
 	 * @param mixed $payload | Decoded export document
 	 * @return array<string,mixed>|\WP_Error
@@ -75,6 +80,6 @@ class Transfer {
 			);
 		}
 
-		return Repository::save_settings( $payload['settings'] );
+		return Repository::patch_settings( $payload['settings'] );
 	}
 }

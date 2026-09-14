@@ -94,10 +94,50 @@ $payload = array(
 	'selectors_group_for_center_elements' => '.hacked',
 );
 
-Repository::save_settings( array_intersect_key( $payload, array_flip( $allowed ) ) );
+Repository::patch_settings( array_intersect_key( $payload, array_flip( $allowed ) ) );
 
 check( 'the allowed setting is written', '6', Repository::get('max_qtd_installments') );
 check( 'the one out of reach is untouched', $before, Repository::get('selectors_group_for_center_elements') );
+
+echo PHP_EOL, 'A step leaves every setting it does not carry alone', PHP_EOL;
+
+// A step carries a handful of settings. Written as a full save, every toggle
+// missing from it read as switched off, so finishing the instalment step turned
+// off instalments on every product, the cart instalments and the Elementor
+// widgets.
+Repository::reset_settings();
+
+// The store switched the cart instalments off before opening the wizard.
+Repository::patch_settings( array( 'display_installments_cart' => 'no' ) );
+
+Repository::patch_settings( array_intersect_key( array( 'max_qtd_installments' => '10' ), array_flip( $allowed ) ) );
+
+check( 'the step writes what it carries', '10', Repository::get('max_qtd_installments') );
+check( 'instalments on every product stay on', 'yes', Repository::get('enable_installments_all_products') );
+check( 'the Elementor widgets stay on', 'yes', Repository::get('enable_elementor_widgets') );
+check( 'a toggle the wizard shows but this step does not carry stays on', 'yes', Repository::get('enable_all_discount_options') );
+check( 'a toggle the store switched off stays off', 'no', Repository::get('display_installments_cart') );
+
+Repository::patch_settings( array_intersect_key( array(
+	'enable_all_discount_options' => 'no',
+	'enable_pix_method_payment_form' => 'yes',
+), array_flip( $allowed ) ) );
+
+check( 'a step can still switch a toggle off', 'no', Repository::get('enable_all_discount_options') );
+check( 'and one on', 'yes', Repository::get('enable_pix_method_payment_form') );
+check( 'the earlier step is kept', '10', Repository::get('max_qtd_installments') );
+check( 'and so is everything else', 'yes', Repository::get('enable_installments_all_products') );
+
+// There is no add-on in this harness, so the sale badge is locked.
+Repository::patch_settings( array( 'enable_sale_badge' => 'yes' ) );
+
+check( 'a partial write still refuses a locked field', 'no', Repository::get('enable_sale_badge') );
+
+// The settings screen is the other kind of writer: it submits every setting,
+// so a toggle missing from its payload was unticked.
+Repository::save_settings( array( 'max_qtd_installments' => '10' ) );
+
+check( 'a full save still reads an absent toggle as off', 'no', Repository::get('enable_installments_all_products') );
 
 echo PHP_EOL, 'The trial stays silent unless asked', PHP_EOL;
 

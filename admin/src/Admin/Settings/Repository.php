@@ -82,7 +82,12 @@ class Repository {
 
 
 	/**
-	 * Persist a settings payload and return what was stored.
+	 * Persist the whole settings screen and return what was stored.
+	 *
+	 * The payload is expected to carry every setting, so a toggle it leaves out
+	 * is read as switched off. A writer carrying only some settings — a wizard
+	 * step, an imported file — uses `patch_settings()` instead, or it switches
+	 * off every toggle it did not mention.
 	 *
 	 * Unknown keys are ignored, locked fields keep their stored value, and every
 	 * accepted value is sanitized by its declared type.
@@ -92,6 +97,35 @@ class Repository {
 	 * @return array<string,mixed>
 	 */
 	public static function save_settings( $incoming ) {
+		return self::write( $incoming, false );
+	}
+
+
+	/**
+	 * Persist some settings, leaving every other one as it is.
+	 *
+	 * Only the keys the payload carries are touched: a toggle it leaves out
+	 * keeps its stored value. Otherwise the same rules as `save_settings()`
+	 * apply, the feature gate included.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $incoming | Settings to change
+	 * @return array<string,mixed>
+	 */
+	public static function patch_settings( $incoming ) {
+		return self::write( $incoming, true );
+	}
+
+
+	/**
+	 * Sanitize a payload against the schema, store it and return what was stored.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $incoming | Payload submitted by the client
+	 * @param bool $partial | Whether the payload carries only the settings it changes
+	 * @return array<string,mixed>
+	 */
+	private static function write( $incoming, $partial ) {
 		$incoming = is_array( $incoming ) ? $incoming : array();
 		$definitions = Registry::get_field_definitions();
 		$current = self::get_settings();
@@ -106,8 +140,10 @@ class Repository {
 				continue;
 			}
 
-			// An absent toggle means "off": an unchecked box submits nothing.
-			if ( 'toggle' === ( $definition['type'] ?? '' ) && ! array_key_exists( $key, $incoming ) ) {
+			// An absent toggle means "off": an unchecked box submits nothing. That
+			// holds only for the whole screen; a partial payload is silent about
+			// everything it does not carry.
+			if ( ! $partial && 'toggle' === ( $definition['type'] ?? '' ) && ! array_key_exists( $key, $incoming ) ) {
 				$sanitized[ $key ] = 'no';
 
 				continue;

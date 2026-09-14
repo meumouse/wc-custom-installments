@@ -201,6 +201,16 @@ Transfer::import( $document );
 
 check( 'a valid file is applied', '24', Repository::get('max_qtd_installments') );
 
+// A file exported before a toggle existed does not carry it. That is not the
+// store switching it off, so this store keeps its own value.
+Repository::patch_settings( array( 'enable_elementor_widgets' => 'yes' ) );
+
+$older = $document;
+unset( $older['settings']['enable_elementor_widgets'] );
+Transfer::import( $older );
+
+check( 'a toggle the file does not carry is left as it is', 'yes', Repository::get('enable_elementor_widgets') );
+
 echo PHP_EOL, 'Numeric limits', PHP_EOL;
 
 Repository::save_settings( array(

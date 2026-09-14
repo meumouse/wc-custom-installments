@@ -155,6 +155,9 @@ value forever with nothing reporting it.
 One option, `wc_custom_installments_settings`. `Settings\Registry` builds the schema — sections →
 cards → fields, every label translated in PHP so the payload reaches the browser in the site's
 language. `Settings\Repository` reads and writes, sanitizing per declared field type.
+`save_settings()` takes the whole settings screen and reads a toggle missing from the payload as
+switched off; anything writing only some settings — the wizard, an import, an add-on — uses
+`patch_settings()`, or it switches off every toggle it did not mention.
 
 The settings **key names are the 5.x ones**, so migrating is a copy rather than a translation
 table. `Core\Migrator` imports the 5.x option plus the three sidecar options that held the gateway

@@ -40,7 +40,9 @@ class Onboarding_Step extends Abstract_Route {
 	 *
 	 * The payload is narrowed to what the wizard is allowed to write before it
 	 * reaches the repository, so a malformed step can never touch a setting the
-	 * wizard does not show.
+	 * wizard does not show. It is then written as a patch: the wizard carries a
+	 * handful of settings, and a full save would read every toggle it does not
+	 * show as switched off.
 	 *
 	 * @since 6.0.0
 	 * @param WP_REST_Request $request | REST request instance
@@ -52,7 +54,7 @@ class Onboarding_Step extends Abstract_Route {
 		$incoming = ( isset( $payload['settings'] ) && is_array( $payload['settings'] ) ) ? $payload['settings'] : array();
 
 		$allowed = array_intersect_key( $incoming, array_flip( Registry::allowed_keys() ) );
-		$saved = Repository::save_settings( $allowed );
+		$saved = Repository::patch_settings( $allowed );
 
 		if ( '' !== $step ) {
 			Onboarding::update_state( array( 'step' => $step ) );
