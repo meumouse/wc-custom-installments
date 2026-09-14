@@ -5,7 +5,9 @@
  * A listbox rather than a native <select>, so it can be styled like every other
  * control and searched when the list is long. The panel is teleported into the
  * portal and positioned against the trigger: rendered in place it would be
- * clipped by the sticky save bar and by any card that scrolls.
+ * clipped by the sticky save bar and by any card that scrolls. It stacks above
+ * the modal backdrop, since a select inside a dialog opens over it, and below
+ * the toasts.
  *
  * Keyboard: Enter, Space or the arrows open it; the arrows, Home and End move;
  * Enter picks; Escape and Tab close it.
@@ -301,7 +303,7 @@ onBeforeUnmount(() => {
       <div
         v-if="isOpen"
         ref="panel"
-        class="fixed z-[100010] overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-dropdown"
+        class="fixed z-[100070] overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-dropdown"
         :class="position.placement === 'top' ? '-translate-y-full' : ''"
         :style="{
           top: `${position.top}px`,
