@@ -224,7 +224,7 @@ class Registry {
 							'installment-fees',
 							'custom_fee_installments',
 							__( 'Tabela de juros', 'wc-custom-installments' ),
-							__( 'Uma taxa por quantidade de parcelas com juros. Deixe uma linha vazia para usar a taxa global.', 'wc-custom-installments' ),
+							__( 'Para cada quantidade de parcelas com juros, um valor fixo, um percentual sobre o preço ou os dois, como cobram alguns meios de pagamento (R$ 2,99 + 3% em 4x, por exemplo). O valor fixo é somado uma vez ao total. Uma linha vazia é oferecida sem juros.', 'wc-custom-installments' ),
 							array(
 								'feature' => 'fee_per_installment',
 								'depends_on' => array( 'set_fee_per_installment' => 'yes' ),

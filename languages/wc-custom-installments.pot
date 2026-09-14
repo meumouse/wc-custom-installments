@@ -14,11 +14,11 @@ msgstr ""
 msgid "{{ parcelas }}x de {{ valor }} {{ juros }}"
 msgstr ""
 
-#: app/src/components/fields/InstallmentFeesField.vue:75
+#: app/src/components/fields/InstallmentFeesField.vue:132
 msgid "%dx"
 msgstr ""
 
-#: app/src/pages/onboarding/components/PricePreview.vue:85
+#: app/src/pages/onboarding/components/PricePreview.vue:78
 msgid "%s à vista"
 msgstr ""
 
@@ -492,7 +492,7 @@ msgstr ""
 #: admin/src/Admin/Menu.php:75
 #: admin/src/Admin/Menu.php:76
 #: admin/src/Admin/Menu.php:294
-#: app/src/pages/settings/SettingsPage.vue:221
+#: app/src/pages/settings/SettingsPage.vue:223
 msgid "Configurações"
 msgstr ""
 
@@ -743,7 +743,7 @@ msgstr ""
 msgid "Em até {{ parcelas }}x de {{ valor }} {{ juros }}"
 msgstr ""
 
-#: app/src/pages/onboarding/components/PricePreview.vue:81
+#: app/src/pages/onboarding/components/PricePreview.vue:74
 msgid "Em até %dx de %s sem juros"
 msgstr ""
 
@@ -843,7 +843,7 @@ msgid ""
 "verifique se o complemento está ativo e atualizado."
 msgstr ""
 
-#: app/src/components/fields/FieldRenderer.vue:162
+#: app/src/components/fields/FieldRenderer.vue:163
 msgid "Este controle faz parte do complemento Pro."
 msgstr ""
 
@@ -887,6 +887,10 @@ msgstr ""
 msgid "Etapas da configuração"
 msgstr ""
 
+#: app/src/components/fields/InstallmentFeesField.vue:113
+msgid "Exemplo: um produto de %s em %dx fica em %dx de %s, total de %s."
+msgstr ""
+
 #: wc-custom-installments.php
 #. Description of the plugin
 msgid ""
@@ -894,7 +898,7 @@ msgid ""
 "WooCommerce."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:223
+#: app/src/pages/settings/SettingsPage.vue:225
 msgid "Exiba parcelamentos, descontos e formas de pagamento na sua loja."
 msgstr ""
 
@@ -1149,7 +1153,7 @@ msgstr ""
 msgid "Juros no total do pedido"
 msgstr ""
 
-#: app/src/components/fields/InstallmentFeesField.vue:87
+#: app/src/components/fields/InstallmentFeesField.vue:165
 msgid "Juros para %d parcelas"
 msgstr ""
 
@@ -1164,7 +1168,7 @@ msgid "Juros por parcela"
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:219
-#: app/src/pages/settings/SettingsPage.vue:225
+#: app/src/pages/settings/SettingsPage.vue:227
 msgid "Ler a documentação"
 msgstr ""
 
@@ -1326,7 +1330,7 @@ msgstr ""
 msgid "Não foi possível exibir esta seção. Recarregue a página e tente novamente."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:197
+#: app/src/pages/settings/SettingsPage.vue:199
 msgid "Não foi possível exportar as configurações."
 msgstr ""
 
@@ -1339,7 +1343,7 @@ msgid "Não foi possível iniciar esta tela. Recarregue a página."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:60
-#: app/src/pages/settings/SettingsPage.vue:210
+#: app/src/pages/settings/SettingsPage.vue:212
 msgid "Não foi possível ler esse arquivo como configurações."
 msgstr ""
 
@@ -1607,6 +1611,14 @@ msgstr ""
 msgid "Outras opções"
 msgstr ""
 
+#: admin/src/Admin/Settings/Registry.php:227
+msgid ""
+"Para cada quantidade de parcelas com juros, um valor fixo, um percentual "
+"sobre o preço ou os dois, como cobram alguns meios de pagamento (R$ 2,99 + "
+"3% em 4x, por exemplo). O valor fixo é somado uma vez ao total. Uma linha "
+"vazia é oferecida sem juros."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:995
 msgid ""
 "Para lojas com um frontend próprio, que leem os preços pela Store API do "
@@ -1710,7 +1722,7 @@ msgstr ""
 msgid "Posição na loja e na página do produto."
 msgstr ""
 
-#: app/src/pages/onboarding/components/PricePreview.vue:74
+#: app/src/pages/onboarding/components/PricePreview.vue:67
 msgid "Pré-visualização"
 msgstr ""
 
@@ -1947,7 +1959,7 @@ msgstr ""
 msgid "Se o desconto por quantidade é uma porcentagem ou um valor fixo."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:238
+#: app/src/pages/settings/SettingsPage.vue:240
 msgid "Seções de configurações"
 msgstr ""
 
@@ -2291,12 +2303,6 @@ msgid ""
 "finalização da compra."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:227
-msgid ""
-"Uma taxa por quantidade de parcelas com juros. Deixe uma linha vazia para "
-"usar a taxa global."
-msgstr ""
-
 #: app/src/components/fields/DesignBoxControl.vue:77
 #: app/src/components/fields/DesignBoxControl.vue:82
 msgid "Unidade"
@@ -2347,6 +2353,10 @@ msgstr ""
 msgid "Valor fixo"
 msgstr ""
 
+#: app/src/components/fields/InstallmentFeesField.vue:148
+msgid "Valor fixo para %d parcelas"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:206
 msgid "Valor mínimo da parcela"
 msgstr ""
@@ -2367,7 +2377,7 @@ msgstr ""
 msgid "Ver sua loja"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:230
+#: app/src/pages/settings/SettingsPage.vue:232
 msgid "Versão %s"
 msgstr ""
 

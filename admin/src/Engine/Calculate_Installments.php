@@ -95,11 +95,12 @@ class Calculate_Installments {
 
 		for ( $i = 1; $i <= $config['max']; $i++ ) {
 			$fee_rate = Product_Config::fee_rate( $config, $i );
+			$fee_fixed = Product_Config::fee_fixed( $config, $i );
 
-			if ( $i <= $config['without_fee'] || 0.0 === (float) $fee_rate ) {
+			if ( $i <= $config['without_fee'] || ( 0.0 === (float) $fee_rate && 0.0 === (float) $fee_fixed ) ) {
 				$info = self::get_installments_without_interest( $price, $i );
 			} else {
-				$info = self::get_installments_with_interest( $price, $fee_rate, $i, $config['fee_per_installment'] );
+				$info = self::get_installments_with_interest( $price, $fee_rate, $i, $config['fee_per_installment'], $fee_fixed );
 			}
 
 			// The single payment is always offered: it is the price itself, and
@@ -374,10 +375,11 @@ class Calculate_Installments {
 	 * @param float $fee | Interest rate
 	 * @param int $i | Number of instalments
 	 * @param bool|null $fee_per_installment | Whether the rate comes from a per-instalment table; the store's setting when null
+	 * @param float $fixed | Amount a per-instalment table adds once to the total
 	 * @return array<string,mixed>
 	 */
-	public static function get_installments_with_interest( $total, $fee, $i, $fee_per_installment = null ) {
-		$price = Calculate_Values::calculate_installment_with_fee( $total, $fee, $i, $fee_per_installment );
+	public static function get_installments_with_interest( $total, $fee, $i, $fee_per_installment = null, $fixed = 0.0 ) {
+		$price = Calculate_Values::calculate_installment_with_fee( $total, $fee, $i, $fee_per_installment, $fixed );
 		$final_price = Calculate_Values::calculate_final_price( $price, $i );
 
 		return self::set_installment_info( $price, $final_price, true, 'fee-included', $i );

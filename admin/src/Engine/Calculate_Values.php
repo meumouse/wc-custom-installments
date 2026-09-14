@@ -27,7 +27,8 @@ class Calculate_Values {
 	 *
 	 * Two formulas, and which one applies is a business decision rather than a
 	 * detail: with a per-instalment table the rate is a flat surcharge on the
-	 * whole price, because that is how the acquirer quotes it. With one global
+	 * whole price, because that is how the acquirer quotes it, and the table may
+	 * add a fixed amount to the total as well ("R$ 2,99 + 3%"). With one global
 	 * rate it is compound interest over the instalment count.
 	 *
 	 * @since 6.0.0
@@ -35,9 +36,10 @@ class Calculate_Values {
 	 * @param float $fee | Interest rate, as a percentage
 	 * @param int $installments | Number of instalments
 	 * @param bool|null $fee_per_installment | Whether the rate comes from a per-instalment table; the store's setting when null
+	 * @param float $fixed | Amount a per-instalment table adds once to the total
 	 * @return float
 	 */
-	public static function calculate_installment_with_fee( $value, $fee, $installments, $fee_per_installment = null ) {
+	public static function calculate_installment_with_fee( $value, $fee, $installments, $fee_per_installment = null, $fixed = 0.0 ) {
 		$percentage = floatval( wc_format_decimal( $fee ) ) / 100.00;
 
 		if ( $installments <= 0 ) {
@@ -48,10 +50,13 @@ class Calculate_Values {
 			$fee_per_installment = Repository::is_active('set_fee_per_installment');
 		}
 
-		if ( $percentage <= 0 ) {
+		// A fixed amount belongs to the table; the compounding rate has none.
+		$fixed = $fee_per_installment ? max( 0, (float) $fixed ) : 0.0;
+
+		if ( $percentage <= 0 && $fixed <= 0 ) {
 			$installment_price = $value / $installments;
 		} elseif ( $fee_per_installment ) {
-			$installment_price = ( $value * $percentage + $value ) / $installments;
+			$installment_price = ( $value * $percentage + $value + $fixed ) / $installments;
 		} else {
 			$denominator = ( ( 1 + $percentage ) ** $installments ) - 1;
 
@@ -70,9 +75,10 @@ class Calculate_Values {
 		 * @param float $value | Base amount
 		 * @param float $fee | Interest rate
 		 * @param int $installments | Number of instalments
+		 * @param float $fixed | Fixed amount added to the total (6.0.0)
 		 * @return float
 		 */
-		return Hook_Aliases::apply_filters( 'WC_Custom_Installments/Installments/With_Fees', $installment_price, $value, $fee, $installments );
+		return Hook_Aliases::apply_filters( 'WC_Custom_Installments/Installments/With_Fees', $installment_price, $value, $fee, $installments, $fixed );
 	}
 
 

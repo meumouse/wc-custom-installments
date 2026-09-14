@@ -103,6 +103,51 @@ Repository::save_settings( array( 'set_fee_per_installment' => 'yes' ) );
 
 check_money( 'a per-instalment rate is a flat surcharge', 103.00, Calculate_Values::calculate_installment_with_fee( 1000, 3, 10 ) );
 
+echo PHP_EOL, 'A fixed amount on top of the rate', PHP_EOL;
+
+// Some acquirers quote a row as "R$ 2,99 + 3%". The fixed amount is added once
+// to the total, not to each instalment:
+//   100 + 3.00 + 2.99 = 105.99, over 4 = 26.4975, billed as 26.50 x 4 = 106.00.
+check_money( 'R$ 2,99 + 3% on 100 in 4x', 26.4975, Calculate_Values::calculate_installment_with_fee( 100, 3, 4, true, 2.99 ) );
+check_money( 'and the total is the rounded instalment times four', 106.00, Calculate_Values::calculate_final_price( 26.4975, 4 ) );
+
+// A row with only a fixed amount still charges: (100 + 2.99) / 4 = 25.7475.
+check_money( 'R$ 2,99 + 0% still charges', 25.7475, Calculate_Values::calculate_installment_with_fee( 100, 0, 4, true, 2.99 ) );
+
+// The single compounding rate has no fixed amount to add.
+check_money( 'the compound formula ignores a fixed amount', 94.56, Calculate_Values::calculate_installment_with_fee( 1000, 2, 12, false, 50 ) );
+
+Repository::save_settings( array(
+	'set_fee_per_installment' => 'yes',
+	'max_qtd_installments' => '6',
+	'max_qtd_installments_without_fee' => '1',
+	'min_value_installments' => '0',
+	'custom_fee_installments' => array(
+		2 => array( 'amount' => '' ),
+		4 => array( 'amount' => '3,0', 'fixed' => '2,99' ),
+		5 => array( 'amount' => '', 'fixed' => '' ),
+		6 => array( 'fixed' => '2.99' ),
+	),
+) );
+
+$table = Repository::get('custom_fee_installments');
+
+check( 'the table keeps both halves of a row, commas read as points', array( 'amount' => '3', 'fixed' => '2.99' ), $table[4] ?? null );
+check( 'a row with only a fixed amount is kept, at 0%', array( 'amount' => '0', 'fixed' => '2.99' ), $table[6] ?? null );
+check( 'an empty row is dropped', array( 4, 6 ), array_keys( $table ) );
+
+$plan = Calculate_Installments::installments_list( array(), 100.00, wc_test_product( 100.00 ) );
+$by_count = array_column( $plan, null, 'installments_total' );
+
+check( 'a count with no row is interest-free', 'no-fee', $by_count[5]['class'] );
+check( 'a fixed-only row carries interest', 'fee-included', $by_count[6]['class'] );
+check_money( 'the 4x row is billed 26.50 each', 106.00, $by_count[4]['final_price'] );
+check( 'the storefront gets the fixed amount per count', 2.99, Helpers::get_fee_fixed( wc_test_product( 100.00 ), 4 ) );
+check( 'and nothing where the row has none', 0.0, Helpers::get_fee_fixed( wc_test_product( 100.00 ), 3 ) );
+
+Repository::reset_settings();
+Repository::save_settings( array( 'set_fee_per_installment' => 'yes' ) );
+
 echo PHP_EOL, 'The total paid', PHP_EOL;
 
 // The instalment is rounded before being multiplied, because that is what the

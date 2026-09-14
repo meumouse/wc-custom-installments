@@ -148,9 +148,29 @@ class Product_Config {
 	 */
 	public static function fee_rate( $config, $installments ) {
 		if ( ! empty( $config['fee_per_installment'] ) ) {
-			return floatval( $config['fees'][ $installments ]['amount'] ?? 0 );
+			return max( 0, floatval( $config['fees'][ $installments ]['amount'] ?? 0 ) );
 		}
 
 		return (float) ( $config['fee'] ?? 0 );
+	}
+
+
+	/**
+	 * The fixed amount one instalment count adds to the total, under a plan.
+	 *
+	 * Only a per-instalment table carries one ("R$ 2,99 + 3%", as some
+	 * acquirers quote it); the single compounding rate has none.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $config | Plan from installments()
+	 * @param int $installments | Number of instalments
+	 * @return float
+	 */
+	public static function fee_fixed( $config, $installments ) {
+		if ( empty( $config['fee_per_installment'] ) ) {
+			return 0.0;
+		}
+
+		return max( 0, floatval( $config['fees'][ $installments ]['fixed'] ?? 0 ) );
 	}
 }

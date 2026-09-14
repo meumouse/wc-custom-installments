@@ -368,7 +368,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_77 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_78 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -410,6 +410,7 @@ _77 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Installments/All_Installments` | filter | `Woo_Custom_Installments/Installments/All_Installments` | `admin/src/Engine/Calculate_Installments.php` |
 | `WC_Custom_Installments/Installments/Final_Price` | filter | `Woo_Custom_Installments/Installments/Final_Price` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Get_Fee` | filter | `Woo_Custom_Installments/Installments/Get_Fee` | `admin/src/Core/Helpers.php` |
+| `WC_Custom_Installments/Installments/Get_Fee_Fixed` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Installments/With_Fees` | filter | `Woo_Custom_Installments/Installments/With_Fees` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Without_Fee` | filter | `Woo_Custom_Installments/Installments/Without_Fee` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Integrations/Theme_Rules` | filter | — | `admin/src/Integrations/Theme_Compatibility.php` |

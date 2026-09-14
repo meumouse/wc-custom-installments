@@ -502,9 +502,10 @@ class Repository {
 	/**
 	 * Sanitize the per-installment interest table.
 	 *
-	 * Shape: `array( 2 => array( 'amount' => '1.99' ) )` — the shape the 5.x
-	 * option used, kept so the ported calculation reads migrated data without a
-	 * conversion step.
+	 * Shape: `array( 4 => array( 'amount' => '3', 'fixed' => '2.99' ) )`. The
+	 * percentage sits under `amount`, the key the 5.x option used, so the ported
+	 * calculation reads migrated data without a conversion step; `fixed` is the
+	 * amount added once to the total, and is left out when there is none.
 	 *
 	 * An empty row is dropped rather than stored as zero. Both charge nothing -
 	 * a count with no row is interest-free, as in 5.x - but only a row the
@@ -523,14 +524,22 @@ class Repository {
 
 		foreach ( $value as $installment => $fee ) {
 			$installment = (int) $installment;
-			$amount = is_array( $fee ) ? ( $fee['amount'] ?? '' ) : $fee;
-			$amount = str_replace( ',', '.', (string) $amount );
+			$amount = str_replace( ',', '.', (string) ( is_array( $fee ) ? ( $fee['amount'] ?? '' ) : $fee ) );
+			$fixed = str_replace( ',', '.', (string) ( is_array( $fee ) ? ( $fee['fixed'] ?? '' ) : '' ) );
+			$has_amount = '' !== trim( $amount ) && is_numeric( $amount );
+			$has_fixed = '' !== trim( $fixed ) && is_numeric( $fixed );
 
-			if ( $installment < 1 || '' === trim( $amount ) || ! is_numeric( $amount ) ) {
+			if ( $installment < 1 || ( ! $has_amount && ! $has_fixed ) ) {
 				continue;
 			}
 
-			$clean[ $installment ] = array( 'amount' => (string) max( 0, (float) $amount ) );
+			$row = array( 'amount' => $has_amount ? (string) max( 0, (float) $amount ) : '0' );
+
+			if ( $has_fixed && (float) $fixed > 0 ) {
+				$row['fixed'] = (string) (float) $fixed;
+			}
+
+			$clean[ $installment ] = $row;
 		}
 
 		ksort( $clean );

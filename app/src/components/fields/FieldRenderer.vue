@@ -84,6 +84,7 @@ const controlProps = computed(() => {
         field,
         maxInstallments: props.context.maxInstallments ?? 12,
         firstInstallment: props.context.firstInstallment ?? 1,
+        environment: props.context.environment || {},
       };
 
     case 'element-design':

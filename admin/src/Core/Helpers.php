@@ -307,6 +307,33 @@ class Helpers {
 
 
 	/**
+	 * The fixed amount one instalment count adds to the total.
+	 *
+	 * Zero unless the interest comes from a per-instalment table with a fixed
+	 * amount on that row.
+	 *
+	 * @since 6.0.0
+	 * @param object|bool $product | Product object, when there is one
+	 * @param int $installments | Number of instalments
+	 * @return float
+	 */
+	public static function get_fee_fixed( $product = false, $installments = 1 ) {
+		$fixed = Product_Config::fee_fixed( Product_Config::installments( $product ?: null ), (int) $installments );
+
+		/**
+		 * Filter the fixed amount an instalment count adds to the total.
+		 *
+		 * @since 6.0.0
+		 * @param float $fixed | Fixed amount
+		 * @param object|bool $product | Product object
+		 * @param int $installments | Number of instalments
+		 * @return float
+		 */
+		return (float) apply_filters( 'WC_Custom_Installments/Installments/Get_Fee_Fixed', $fixed, $product, $installments );
+	}
+
+
+	/**
 	 * The tokens a copy template can carry, and what they stand for.
 	 *
 	 * The token names are Portuguese because they are in the wild: store owners

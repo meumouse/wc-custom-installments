@@ -31,6 +31,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Field components for measurements, tokenised text, per-gateway rates and the interest table, resolved through a registry an add-on can extend.
 - `preview.html` and `tests/dump-bootstrap.php`, which render the real admin bundle against a generated fixture with no WordPress and no database.
 - Instalment and discount engine ported from the 5.x plugin, with its rounding and both interest formulas intact.
+- Each row of the Pro interest table takes a fixed amount as well as a percentage, as some payment methods charge ("R$ 2,99 + 3%" for 4x). The fixed amount is added once to the total, the storefront recalculates with it, and the table shows a worked example on a R$ 100,00 product. Rows stored by 5.x read unchanged.
 - `Engine\Product_Config`, the one place deciding which discount and which instalment plan a product answers to. The rendered price, the Store API, the storefront runtime and the Pro add-on's checkout fees all ask it, and `WC_Custom_Installments/Product/Discount_Rule` and `WC_Custom_Installments/Product/Installments_Config` let a rule from outside the product join in.
 - Storefront rendering: the price group, the payment methods block as a panel or a dialog, the instalment table, and the discount and savings badges.
 - `Frontend\Element_Registry`, which moves the price group's elements out of the settings default and into code.

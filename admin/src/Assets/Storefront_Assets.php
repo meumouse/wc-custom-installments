@@ -217,9 +217,11 @@ class Storefront_Assets extends Abstract_Assets {
 		$plan = Product_Config::installments( $product instanceof \WC_Product ? $product : null );
 		$max_installments = $plan['max'];
 		$fees = array();
+		$fees_fixed = array();
 
 		for ( $i = 1; $i <= $max_installments; $i++ ) {
 			$fees[ $i ] = Helpers::get_fee( $product, $i );
+			$fees_fixed[ $i ] = Helpers::get_fee_fixed( $product, $i );
 		}
 
 		$tiered_pricing_active = class_exists('TierPricingTable\\Plugin') || class_exists('TierPricingTable\\PriceManager');
@@ -268,6 +270,7 @@ class Storefront_Assets extends Abstract_Assets {
 				'min_installment' => $plan['min_value'],
 				'fee' => Helpers::get_fee( $product ),
 				'fees' => $fees,
+				'fees_fixed' => $fees_fixed,
 			),
 			'product' => $this->product_params( $product ),
 		);

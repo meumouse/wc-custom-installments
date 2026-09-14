@@ -10,6 +10,7 @@
 import { computed } from 'vue';
 import BaseBadge from '../../../components/base/BaseBadge.vue';
 import { __, sprintf } from '../../../utils/i18n';
+import { formatMoney } from '../../../utils/money';
 
 const props = defineProps({
   settings: { type: Object, required: true },
@@ -25,15 +26,7 @@ const props = defineProps({
  * @return {string} The formatted price.
  */
 function money(amount) {
-  const decimals = props.environment.decimal_separator ?? ',';
-  const thousands = props.environment.thousand_separator ?? '.';
-  const [whole, fraction] = Number(amount).toFixed(2).split('.');
-  const number = `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, thousands)}${decimals}${fraction}`;
-
-  // %s is the symbol and %v the number, so "R$ %v" and "%v €" keep their order.
-  const format = props.environment.price_format || '%s%v';
-
-  return format.replace('%s', props.environment.currency_symbol ?? 'R$').replace('%v', number);
+  return formatMoney(amount, props.environment);
 }
 
 const best = computed(() => {
