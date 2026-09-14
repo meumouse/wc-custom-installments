@@ -55,14 +55,16 @@ export function buildPlan(price) {
       // A per-instalment table is a flat surcharge on the price; a single
       // global rate compounds. Same split as the server.
       if (params.fee_per_installment) {
-        total = base + base * percentage;
-        value = total / count;
+        value = (base + base * percentage) / count;
       } else {
         const power = (1 + percentage) ** count;
 
         value = (base * percentage * power) / (power - 1);
-        total = round(value) * count;
       }
+
+      // Either way the total is what the customer is billed: the instalment
+      // rounded to the cent, times the count.
+      total = round(value) * count;
     }
 
     // The single payment is always offered: it is the price itself.

@@ -506,9 +506,9 @@ class Repository {
 	 * option used, kept so the ported calculation reads migrated data without a
 	 * conversion step.
 	 *
-	 * An empty row is dropped rather than stored as zero: zero means "charge no
-	 * interest", which is a different statement from "fall back to the global
-	 * rate".
+	 * An empty row is dropped rather than stored as zero. Both charge nothing -
+	 * a count with no row is interest-free, as in 5.x - but only a row the
+	 * store filled in is kept.
 	 *
 	 * @since 6.0.0
 	 * @param mixed $value | Incoming value

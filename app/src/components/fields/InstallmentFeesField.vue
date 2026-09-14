@@ -3,8 +3,8 @@
  * InstallmentFeesField.vue - one interest rate per installment count.
  *
  * The stored shape is the 5.x one: { 2: { amount: '1.99' } }. An empty row is
- * left out rather than stored as zero, because zero means "charge no interest"
- * and blank means "use the global rate" - two different instructions.
+ * left out rather than stored as zero; either way that count is offered
+ * interest-free, as in 5.x.
  *
  * @since 6.0.0
  */
