@@ -58,6 +58,12 @@ add_filter( 'WC_Custom_Installments/Features/Is_Available', function( $available
 }, 10, 2 );
 ```
 
+Add that listener on `plugins_loaded`, never later. The plugin's classes are built on `init` at
+priority 5 and read settings in their constructors, which resolves every feature and caches the
+answer for the request. A listener that arrives during that pass — including one on a class handed
+to `WC_Custom_Installments/Init/Instance_Classes` — is too late, and a licensed store sees every Pro
+feature locked.
+
 ## Adding a settings field
 
 The schema is sections → cards → fields. Append to any of the three.
