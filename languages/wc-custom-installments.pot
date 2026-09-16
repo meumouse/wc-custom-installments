@@ -111,7 +111,7 @@ msgstr ""
 msgid "A campanha termina antes de começar."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:407
+#: app/src/pages/campaigns/components/CampaignEditor.vue:429
 msgid "A campanha vale até o último segundo deste minuto."
 msgstr ""
 
@@ -310,8 +310,8 @@ msgstr ""
 msgid "Aplicada a todas as parcelas além das sem juros."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:323
-#: app/src/pages/campaigns/components/CampaignEditor.vue:328
+#: app/src/pages/campaigns/components/CampaignEditor.vue:345
+#: app/src/pages/campaigns/components/CampaignEditor.vue:350
 msgid "Aplicar a"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 msgid "Arredondamento do botão"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:622
+#: app/src/pages/campaigns/components/CampaignEditor.vue:656
 msgid "As alterações feitas nesta campanha serão perdidas."
 msgstr ""
 
@@ -370,7 +370,7 @@ msgstr ""
 msgid "As regras usadas para montar cada parcela exibida na loja."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:335
+#: app/src/pages/campaigns/components/CampaignEditor.vue:357
 msgid "As subcategorias entram junto."
 msgstr ""
 
@@ -380,7 +380,7 @@ msgid ""
 "Informe-os ao pedir suporte."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:403
+#: app/src/pages/campaigns/components/CampaignEditor.vue:425
 msgid "Assim que for ativada"
 msgstr ""
 
@@ -392,7 +392,7 @@ msgstr ""
 msgid "Até %s"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:416
+#: app/src/pages/campaigns/components/CampaignEditor.vue:438
 msgid "Até ser desativada"
 msgstr ""
 
@@ -400,7 +400,7 @@ msgstr ""
 msgid "Atenção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:279
+#: app/src/pages/campaigns/components/CampaignEditor.vue:301
 msgid "Ativa"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Bandeiras de cartão de débito"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:307
+#: app/src/pages/campaigns/components/CampaignEditor.vue:329
 msgid "Black Friday de calçados"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgstr ""
 msgid "Buscar campanhas"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:344
+#: app/src/pages/campaigns/components/CampaignEditor.vue:366
 msgid "Buscar e escolher"
 msgstr ""
 
@@ -563,7 +563,7 @@ msgid "Cadastro de bandeiras de cartão"
 msgstr ""
 
 #: admin/src/Campaigns/Post_Type.php:77
-#: app/src/pages/campaigns/components/CampaignEditor.vue:302
+#: app/src/pages/campaigns/components/CampaignEditor.vue:324
 msgid "Campanha"
 msgstr ""
 
@@ -571,7 +571,7 @@ msgstr ""
 msgid "Campanha %s ativa"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:275
+#: app/src/pages/campaigns/components/CampaignEditor.vue:297
 msgid "Campanha ativa"
 msgstr ""
 
@@ -583,7 +583,7 @@ msgstr ""
 msgid "Campanha salva."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:263
+#: app/src/pages/campaigns/components/CampaignEditor.vue:285
 msgid "Campanha sem nome"
 msgstr ""
 
@@ -618,7 +618,7 @@ msgstr ""
 msgid "Campanhas fazem parte do Pro"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:290
+#: app/src/pages/campaigns/components/CampaignEditor.vue:312
 msgid ""
 "Campanhas fazem parte do Pro. Você pode ver esta campanha, mas salvar exige "
 "uma licença ativa."
@@ -654,11 +654,11 @@ msgstr ""
 msgid "Cartões de débito:"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:88
+#: app/src/pages/campaigns/components/CampaignEditor.vue:89
 msgid "Categorias"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:372
+#: app/src/pages/campaigns/components/CampaignEditor.vue:394
 msgid "Categorias deixadas de fora"
 msgstr ""
 
@@ -692,16 +692,16 @@ msgstr ""
 msgid "Cobranças:"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:472
-#: app/src/pages/campaigns/components/CampaignEditor.vue:480
-msgid "Cobrar na forma de pagamento"
+#: app/src/pages/campaigns/components/CampaignEditor.vue:494
+#: app/src/pages/campaigns/components/CampaignEditor.vue:501
+msgid "Cobrar nas formas de pagamento"
 msgstr ""
 
 #: app/src/components/base/BaseColorInput.vue:854
 msgid "Código hexadecimal"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:364
+#: app/src/pages/campaigns/components/CampaignEditor.vue:386
 msgid "Com as subcategorias."
 msgstr ""
 
@@ -710,6 +710,12 @@ msgid ""
 "Com classes do Font Awesome, o plugin carrega a biblioteca de ícones na "
 "loja. Com imagens, cada elemento usa o ícone enviado em \"Design dos "
 "elementos\"."
+msgstr ""
+
+#: app/src/pages/campaigns/components/CampaignEditor.vue:495
+msgid ""
+"Com formas marcadas, o desconto também é aplicado no checkout quando o "
+"cliente paga com uma delas."
 msgstr ""
 
 #: admin/src/Admin/Default_Options.php:205
@@ -722,18 +728,12 @@ msgid ""
 "parcelamento com início e fim. As campanhas já salvas continuam guardadas."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:96
+#: app/src/pages/campaigns/components/CampaignEditor.vue:97
 msgid "Com ou sem promoção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:473
-msgid ""
-"Com uma forma escolhida, o desconto também é aplicado no checkout quando o "
-"cliente paga com ela."
-msgstr ""
-
-#: app/src/pages/campaigns/components/CampaignEditor.vue:396
-#: app/src/pages/campaigns/components/CampaignEditor.vue:402
+#: app/src/pages/campaigns/components/CampaignEditor.vue:418
+#: app/src/pages/campaigns/components/CampaignEditor.vue:424
 msgid "Começa em"
 msgstr ""
 
@@ -748,7 +748,7 @@ msgid ""
 "apresentadas na página do produto."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:302
+#: app/src/pages/campaigns/components/CampaignEditor.vue:324
 msgid ""
 "Como ela aparece na lista, e quem vence quando duas valem para o mesmo "
 "produto."
@@ -772,7 +772,7 @@ msgstr ""
 msgid "Como tabela na página"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:553
+#: app/src/pages/campaigns/components/CampaignEditor.vue:587
 msgid "Composta, aplicada a cada parcela além das sem juros."
 msgstr ""
 
@@ -905,8 +905,8 @@ msgid ""
 "terminar."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:426
-#: app/src/pages/campaigns/components/CampaignEditor.vue:432
+#: app/src/pages/campaigns/components/CampaignEditor.vue:448
+#: app/src/pages/campaigns/components/CampaignEditor.vue:454
 msgid "Dar um desconto"
 msgstr ""
 
@@ -939,11 +939,11 @@ msgid ""
 "extensions.wc-custom-installments de cada produto e do carrinho."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:363
+#: app/src/pages/campaigns/components/CampaignEditor.vue:385
 msgid "Deixar de fora estas categorias"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:350
+#: app/src/pages/campaigns/components/CampaignEditor.vue:372
 msgid "Deixar de fora estes produtos"
 msgstr ""
 
@@ -982,7 +982,7 @@ msgstr ""
 msgid "Descartar"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:423
+#: app/src/pages/campaigns/components/CampaignEditor.vue:445
 msgid "Desconto"
 msgstr ""
 
@@ -1084,7 +1084,7 @@ msgstr ""
 msgid "Diagnóstico e dados."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:345
+#: app/src/pages/campaigns/components/CampaignEditor.vue:367
 msgid "Digite para buscar"
 msgstr ""
 
@@ -1154,7 +1154,7 @@ msgstr ""
 msgid "Em até 3x de R$32,33 sem juros"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:255
+#: app/src/pages/campaigns/components/CampaignEditor.vue:277
 msgid "Em branco, vale o da loja: %s."
 msgstr ""
 
@@ -1223,7 +1223,7 @@ msgstr ""
 msgid "Escolha ao menos um produto, categoria, tag ou marca."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:265
+#: app/src/pages/campaigns/components/CampaignEditor.vue:287
 msgid ""
 "Escolha os produtos, o período e o que muda neles. Um produto com desconto "
 "próprio mantém o dele."
@@ -1578,7 +1578,7 @@ msgstr ""
 msgid "Importar e exportar"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:279
+#: app/src/pages/campaigns/components/CampaignEditor.vue:301
 #: app/src/pages/campaigns/components/CampaignList.vue:41
 #: app/src/pages/campaigns/components/CampaignSummary.vue:32
 msgid "Inativa"
@@ -1647,8 +1647,8 @@ msgid ""
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:644
-#: app/src/pages/campaigns/components/CampaignEditor.vue:541
-#: app/src/pages/campaigns/components/CampaignEditor.vue:546
+#: app/src/pages/campaigns/components/CampaignEditor.vue:575
+#: app/src/pages/campaigns/components/CampaignEditor.vue:580
 msgid "Juros"
 msgstr ""
 
@@ -1728,7 +1728,7 @@ msgstr ""
 msgid "Manutenção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:90
+#: app/src/pages/campaigns/components/CampaignEditor.vue:91
 msgid "Marcas"
 msgstr ""
 
@@ -1757,8 +1757,8 @@ msgid "Matiz"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:188
-#: app/src/pages/campaigns/components/CampaignEditor.vue:501
-#: app/src/pages/campaigns/components/CampaignEditor.vue:502
+#: app/src/pages/campaigns/components/CampaignEditor.vue:535
+#: app/src/pages/campaigns/components/CampaignEditor.vue:536
 msgid "Máximo de parcelas"
 msgstr ""
 
@@ -1832,8 +1832,8 @@ msgstr ""
 msgid "Mover para a lixeira"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:490
-#: app/src/pages/campaigns/components/CampaignEditor.vue:496
+#: app/src/pages/campaigns/components/CampaignEditor.vue:524
+#: app/src/pages/campaigns/components/CampaignEditor.vue:530
 msgid "Mudar o parcelamento"
 msgstr ""
 
@@ -1957,11 +1957,11 @@ msgstr ""
 msgid "Não salva"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:357
+#: app/src/pages/campaigns/components/CampaignEditor.vue:379
 msgid "Nenhum"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:373
+#: app/src/pages/campaigns/components/CampaignEditor.vue:395
 msgid "Nenhuma"
 msgstr ""
 
@@ -1981,6 +1981,10 @@ msgstr ""
 msgid "Nenhuma campanha foi alterada. Recarregue a página e tente novamente."
 msgstr ""
 
+#: app/src/pages/campaigns/components/CampaignEditor.vue:515
+msgid "Nenhuma forma de pagamento cadastrada no WooCommerce."
+msgstr ""
+
 #: app/src/components/fields/GatewayRatesField.vue:78
 msgid "Nenhuma forma de pagamento está ativa no WooCommerce ainda."
 msgstr ""
@@ -1989,7 +1993,7 @@ msgstr ""
 msgid "no boleto bancário"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:391
+#: app/src/pages/campaigns/components/CampaignEditor.vue:413
 msgid ""
 "No horário da loja (%s). Sem início, vale assim que for ativada; sem fim, "
 "até ser desativada."
@@ -2000,8 +2004,8 @@ msgstr ""
 msgid "no Pix"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:303
-#: app/src/pages/campaigns/components/CampaignEditor.vue:308
+#: app/src/pages/campaigns/components/CampaignEditor.vue:325
+#: app/src/pages/campaigns/components/CampaignEditor.vue:330
 #: app/src/pages/onboarding/components/TrialForm.vue:40
 msgid "Nome"
 msgstr ""
@@ -2019,7 +2023,7 @@ msgstr ""
 msgid "Nos produtos em comum vale só uma: a de maior prioridade."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:263
+#: app/src/pages/campaigns/components/CampaignEditor.vue:285
 #: app/src/pages/campaigns/components/CampaignList.vue:169
 msgid "Nova campanha"
 msgstr ""
@@ -2220,7 +2224,7 @@ msgid ""
 "desconto é aplicado a este produto."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:107
+#: app/src/pages/campaigns/components/CampaignEditor.vue:108
 msgid "Os juros da loja"
 msgstr ""
 
@@ -2254,7 +2258,7 @@ msgid ""
 "vazia é oferecida sem juros."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:577
+#: app/src/pages/campaigns/components/CampaignEditor.vue:611
 msgid ""
 "Para cada quantidade de parcelas com juros, um valor fixo, um percentual "
 "sobre o preço ou os dois. O valor fixo é somado uma vez ao total. Uma linha "
@@ -2281,7 +2285,7 @@ msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:260
 #: admin/src/Admin/Settings/Registry.php:178
-#: app/src/pages/campaigns/components/CampaignEditor.vue:487
+#: app/src/pages/campaigns/components/CampaignEditor.vue:521
 msgid "Parcelamento"
 msgstr ""
 
@@ -2310,8 +2314,8 @@ msgid "Parcelas menores que este valor não são oferecidas."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:194
-#: app/src/pages/campaigns/components/CampaignEditor.vue:505
-#: app/src/pages/campaigns/components/CampaignEditor.vue:513
+#: app/src/pages/campaigns/components/CampaignEditor.vue:539
+#: app/src/pages/campaigns/components/CampaignEditor.vue:547
 msgid "Parcelas sem juros"
 msgstr ""
 
@@ -2323,11 +2327,11 @@ msgstr ""
 msgid "Pequeno"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:102
+#: app/src/pages/campaigns/components/CampaignEditor.vue:103
 msgid "Percentual (%)"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:388
+#: app/src/pages/campaigns/components/CampaignEditor.vue:410
 msgid "Período"
 msgstr ""
 
@@ -2436,8 +2440,8 @@ msgstr ""
 msgid "Prefixo e sufixo"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:314
-#: app/src/pages/campaigns/components/CampaignEditor.vue:318
+#: app/src/pages/campaigns/components/CampaignEditor.vue:336
+#: app/src/pages/campaigns/components/CampaignEditor.vue:340
 msgid "Prioridade"
 msgstr ""
 
@@ -2457,20 +2461,20 @@ msgstr ""
 msgid "Procurar"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:322
+#: app/src/pages/campaigns/components/CampaignEditor.vue:344
 msgid "Produtos"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:356
+#: app/src/pages/campaigns/components/CampaignEditor.vue:378
 msgid "Produtos deixados de fora"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:377
-#: app/src/pages/campaigns/components/CampaignEditor.vue:382
+#: app/src/pages/campaigns/components/CampaignEditor.vue:399
+#: app/src/pages/campaigns/components/CampaignEditor.vue:404
 msgid "Produtos em promoção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:87
+#: app/src/pages/campaigns/components/CampaignEditor.vue:88
 msgid "Produtos escolhidos"
 msgstr ""
 
@@ -2498,7 +2502,7 @@ msgstr ""
 msgid "Quais formas exibir"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:322
+#: app/src/pages/campaigns/components/CampaignEditor.vue:344
 msgid "Quais produtos a campanha alcança. As variações seguem o produto."
 msgstr ""
 
@@ -2510,7 +2514,7 @@ msgstr ""
 msgid "Qualquer forma de pagamento"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:315
+#: app/src/pages/campaigns/components/CampaignEditor.vue:337
 msgid ""
 "Quando duas campanhas valem para o mesmo produto, vence a de maior "
 "prioridade."
@@ -2643,15 +2647,15 @@ msgid "Resumo"
 msgstr ""
 
 #: admin/src/Rest/Campaigns_Save.php:57
-#: app/src/pages/campaigns/components/CampaignEditor.vue:293
+#: app/src/pages/campaigns/components/CampaignEditor.vue:315
 msgid "Revise os campos destacados antes de salvar."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:623
+#: app/src/pages/campaigns/components/CampaignEditor.vue:657
 msgid "Sair sem salvar"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:621
+#: app/src/pages/campaigns/components/CampaignEditor.vue:655
 msgid "Sair sem salvar?"
 msgstr ""
 
@@ -2667,8 +2671,8 @@ msgstr ""
 msgid "Salvar alterações"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:284
-#: app/src/pages/campaigns/components/CampaignEditor.vue:600
+#: app/src/pages/campaigns/components/CampaignEditor.vue:306
+#: app/src/pages/campaigns/components/CampaignEditor.vue:634
 msgid "Salvar campanha"
 msgstr ""
 
@@ -2795,15 +2799,15 @@ msgstr ""
 msgid "Sim, restaurar os padrões"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:97
+#: app/src/pages/campaigns/components/CampaignEditor.vue:98
 msgid "Só os produtos em promoção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:98
+#: app/src/pages/campaigns/components/CampaignEditor.vue:99
 msgid "Só os produtos sem promoção"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:303
+#: app/src/pages/campaigns/components/CampaignEditor.vue:325
 msgid "Só você vê este nome."
 msgstr ""
 
@@ -2866,13 +2870,13 @@ msgid ""
 "depois dele. O carrinho e a finalização da compra não são afetados."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:424
+#: app/src/pages/campaigns/components/CampaignEditor.vue:446
 msgid ""
 "Substitui o desconto à vista da loja (Pix e boleto) nos produtos da "
 "campanha."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:488
+#: app/src/pages/campaigns/components/CampaignEditor.vue:522
 msgid ""
 "Substitui o parcelamento da loja nos produtos da campanha. O que ficar em "
 "branco continua como na loja."
@@ -2906,7 +2910,7 @@ msgstr ""
 msgid "Tabela de juros"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:576
+#: app/src/pages/campaigns/components/CampaignEditor.vue:610
 msgid "Tabela de juros da campanha"
 msgstr ""
 
@@ -2918,7 +2922,7 @@ msgstr ""
 msgid "Tabela de parcelas"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:89
+#: app/src/pages/campaigns/components/CampaignEditor.vue:90
 msgid "Tags"
 msgstr ""
 
@@ -2939,8 +2943,8 @@ msgstr ""
 msgid "Tamanho máximo de envio do PHP"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:552
-#: app/src/pages/campaigns/components/CampaignEditor.vue:564
+#: app/src/pages/campaigns/components/CampaignEditor.vue:586
+#: app/src/pages/campaigns/components/CampaignEditor.vue:598
 msgid "Taxa de juros mensal"
 msgstr ""
 
@@ -2956,8 +2960,8 @@ msgstr ""
 msgid "Telefone"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:407
-#: app/src/pages/campaigns/components/CampaignEditor.vue:415
+#: app/src/pages/campaigns/components/CampaignEditor.vue:429
+#: app/src/pages/campaigns/components/CampaignEditor.vue:437
 msgid "Termina em"
 msgstr ""
 
@@ -2996,8 +3000,8 @@ msgstr ""
 #: admin/src/Admin/Settings/Registry.php:360
 #: admin/src/Admin/Settings/Registry.php:463
 #: admin/src/Admin/Settings/Registry.php:529
-#: app/src/pages/campaigns/components/CampaignEditor.vue:438
-#: app/src/pages/campaigns/components/CampaignEditor.vue:443
+#: app/src/pages/campaigns/components/CampaignEditor.vue:460
+#: app/src/pages/campaigns/components/CampaignEditor.vue:465
 msgid "Tipo de desconto"
 msgstr ""
 
@@ -3055,7 +3059,7 @@ msgstr ""
 msgid "Todas (%d)"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:261
+#: app/src/pages/campaigns/components/CampaignEditor.vue:283
 msgid "Todas as campanhas"
 msgstr ""
 
@@ -3068,7 +3072,7 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:442
 #: app/src/composables/useCampaigns.js:201
-#: app/src/pages/campaigns/components/CampaignEditor.vue:86
+#: app/src/pages/campaigns/components/CampaignEditor.vue:87
 msgid "Todos os produtos"
 msgstr ""
 
@@ -3135,7 +3139,7 @@ msgstr ""
 msgid "Uma imagem pequena, de preferência SVG ou PNG com fundo transparente."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:109
+#: app/src/pages/campaigns/components/CampaignEditor.vue:110
 msgid "Uma tabela por quantidade de parcelas"
 msgstr ""
 
@@ -3145,7 +3149,7 @@ msgid ""
 "finalização da compra."
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:108
+#: app/src/pages/campaigns/components/CampaignEditor.vue:109
 msgid "Uma taxa mensal única"
 msgstr ""
 
@@ -3200,8 +3204,8 @@ msgstr ""
 #: admin/src/Admin/Settings/Registry.php:367
 #: admin/src/Admin/Settings/Registry.php:473
 #: admin/src/Admin/Settings/Registry.php:539
-#: app/src/pages/campaigns/components/CampaignEditor.vue:447
-#: app/src/pages/campaigns/components/CampaignEditor.vue:460
+#: app/src/pages/campaigns/components/CampaignEditor.vue:469
+#: app/src/pages/campaigns/components/CampaignEditor.vue:482
 msgid "Valor do desconto"
 msgstr ""
 
@@ -3214,7 +3218,7 @@ msgstr ""
 msgid "Valor fixo"
 msgstr ""
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:103
+#: app/src/pages/campaigns/components/CampaignEditor.vue:104
 msgid "Valor fixo (%s)"
 msgstr ""
 
@@ -3223,8 +3227,8 @@ msgid "Valor fixo para %d parcelas"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:206
-#: app/src/pages/campaigns/components/CampaignEditor.vue:518
-#: app/src/pages/campaigns/components/CampaignEditor.vue:535
+#: app/src/pages/campaigns/components/CampaignEditor.vue:552
+#: app/src/pages/campaigns/components/CampaignEditor.vue:569
 msgid "Valor mínimo da parcela"
 msgstr ""
 

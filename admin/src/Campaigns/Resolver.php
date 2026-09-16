@@ -80,7 +80,8 @@ class Resolver {
 		return array(
 			'method' => $campaign['discount']['method'],
 			'amount' => $campaign['discount']['amount'],
-			'gateway' => $campaign['discount']['gateway'],
+			// An index compiled before a discount could name several methods holds one.
+			'gateways' => $campaign['discount']['gateways'] ?? (array) ( $campaign['discount']['gateway'] ?? array() ),
 			'source' => 'campaign',
 			'source_id' => $campaign['id'],
 		);

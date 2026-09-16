@@ -77,7 +77,7 @@ class Rules {
 				'enabled' => false,
 				'method' => 'percentage',
 				'amount' => '',
-				'gateway' => '',
+				'gateways' => array(),
 			),
 			'installments' => array(
 				'enabled' => false,
@@ -130,7 +130,7 @@ class Rules {
 				'enabled' => self::is_on( $discount['enabled'] ?? false ),
 				'method' => in_array( $method, array( 'percentage', 'fixed' ), true ) ? $method : 'percentage',
 				'amount' => self::sanitize_decimal( $discount['amount'] ?? '' ),
-				'gateway' => sanitize_key( (string) ( $discount['gateway'] ?? '' ) ),
+				'gateways' => self::sanitize_gateways( $discount ),
 			),
 			'installments' => array(
 				'enabled' => self::is_on( $installments['enabled'] ?? false ),
@@ -236,7 +236,7 @@ class Rules {
 			? array(
 				'method' => $rules['discount']['method'],
 				'amount' => $rules['discount']['amount'],
-				'gateway' => $rules['discount']['gateway'],
+				'gateways' => $rules['discount']['gateways'],
 			)
 			: null;
 
@@ -370,6 +370,26 @@ class Rules {
 		} );
 
 		return array_values( array_unique( $ids ) );
+	}
+
+
+	/**
+	 * The payment methods a discount is charged for at checkout.
+	 *
+	 * None means the discount only replaces the upfront price. A campaign saved
+	 * before a discount could name several methods held one, as `gateway`.
+	 *
+	 * @since 6.0.0
+	 * @param array<string,mixed> $discount | Discount rules, as sent
+	 * @return array<int,string>
+	 */
+	private static function sanitize_gateways( $discount ) {
+		$value = $discount['gateways'] ?? ( $discount['gateway'] ?? array() );
+		$gateways = array_filter( array_map( static function( $gateway ) {
+			return sanitize_key( (string) $gateway );
+		}, (array) $value ) );
+
+		return array_values( array_unique( $gateways ) );
 	}
 
 

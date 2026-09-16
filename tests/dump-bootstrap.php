@@ -123,7 +123,7 @@ $campaigns_payload = array(
 			'starts_at' => '2026-11-27T00:00',
 			'ends_at' => '2026-11-30T23:59',
 			'target' => array( 'scope' => 'categories', 'ids' => array( 12, 14 ), 'exclude_products' => array( 501 ) ),
-			'discount' => array( 'enabled' => true, 'method' => 'percentage', 'amount' => '20', 'gateway' => 'pix' ),
+			'discount' => array( 'enabled' => true, 'method' => 'percentage', 'amount' => '20', 'gateways' => array( 'pix', 'bacs' ) ),
 			'installments' => array( 'enabled' => true, 'without_fee' => '10' ),
 		), array( 'products' => array( 501 => 'Tênis Runner (TR-01)' ), 'terms' => array( 12 => 'Calçados', 14 => 'Calçados › Botas' ) ) ),
 		$campaign( 32, 'Semana do Pix', 'publish', 'running', array(

@@ -112,6 +112,12 @@ $all = campaign_rules( array(
 check( 'the whole store needs no list, and keeps none', array(), $all['rules']['target']['ids'] );
 check( 'a date that is not one is dropped', '', campaign_rules( array( 'starts_at' => '2026-02-31T10:00' ) )['rules']['starts_at'] );
 
+$gateways = campaign_rules( array( 'discount' => array( 'gateways' => array( 'pix', 'Bacs', '', 'pix' ) ) ) );
+
+check( 'a discount keeps each payment method once', array( 'pix', 'bacs' ), $gateways['rules']['discount']['gateways'] );
+check( 'no method means none', array(), campaign_rules( array() )['rules']['discount']['gateways'] );
+check( 'a campaign saved with one method keeps it', array( 'pix' ), Rules::sanitize( array( 'discount' => array( 'gateway' => 'pix' ) ) )['rules']['discount']['gateways'] );
+
 echo PHP_EOL, 'What cannot work', PHP_EOL;
 
 $errors = campaign_rules( array(
@@ -298,6 +304,12 @@ check_money( 'a product\'s own discount wins: 5.00 off', 95.00, Calculate_Values
 check_money( 'a variation follows its product\'s category', 80.00, Calculate_Values::get_discounted_price( wc_test_product( 100, array( 'id' => 900, 'parent_id' => 100, 'type' => 'variation' ) ) ) );
 check_money( 'the bank slip takes the campaign\'s discount too', 80.00, Calculate_Values::get_discounted_price( wc_test_product( 100, array( 'id' => 100 ) ), 'ticket' ) );
 check( 'the rule says where it came from', array( 'campaign', 1 ), array_values( array_intersect_key( (array) Product_Config::discount_rule( 100 ), array_flip( array( 'source', 'source_id' ) ) ) ) );
+
+index_campaigns( array( 1 => array_merge_recursive( $black_friday, array( 'discount' => array( 'gateways' => array( 'pix', 'bacs' ) ) ) ) ) );
+
+check( 'the rule carries every payment method the campaign names', array( 'pix', 'bacs' ), Product_Config::discount_rule( 100 )['gateways'] );
+
+index_campaigns( array( 1 => $black_friday ) );
 
 at_moment( Rules::to_timestamp('2026-11-26T23:59') );
 check_money( 'a minute before it starts, the store\'s price', 90.00, Calculate_Values::get_discounted_price( wc_test_product( 100, array( 'id' => 100 ) ) ) );

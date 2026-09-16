@@ -689,10 +689,10 @@ msgstr ""
 msgid "Cobranças:"
 msgstr "Charges:"
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:472
-#: app/src/pages/campaigns/components/CampaignEditor.vue:480
-msgid "Cobrar na forma de pagamento"
-msgstr "Charge with the payment method"
+#: app/src/pages/campaigns/components/CampaignEditor.vue:494
+#: app/src/pages/campaigns/components/CampaignEditor.vue:501
+msgid "Cobrar nas formas de pagamento"
+msgstr "Charge with the payment methods"
 
 #: app/src/pages/campaigns/components/CampaignEditor.vue:364
 msgid "Com as subcategorias."
@@ -723,13 +723,13 @@ msgstr ""
 msgid "Com ou sem promoção"
 msgstr "On sale or not"
 
-#: app/src/pages/campaigns/components/CampaignEditor.vue:473
+#: app/src/pages/campaigns/components/CampaignEditor.vue:495
 msgid ""
-"Com uma forma escolhida, o desconto também é aplicado no checkout quando o "
-"cliente paga com ela."
+"Com formas marcadas, o desconto também é aplicado no checkout quando o "
+"cliente paga com uma delas."
 msgstr ""
-"With a payment method chosen, the discount is also applied at checkout when "
-"the customer pays with it."
+"With payment methods ticked, the discount is also applied at checkout when "
+"the customer pays with one of them."
 
 #: app/src/pages/campaigns/components/CampaignEditor.vue:396
 #: app/src/pages/campaigns/components/CampaignEditor.vue:402
@@ -1953,6 +1953,10 @@ msgstr "No campaign matches this filter."
 #: admin/src/Rest/Campaigns_Action.php:64
 msgid "Nenhuma campanha foi alterada. Recarregue a página e tente novamente."
 msgstr "No campaign was changed. Reload the page and try again."
+
+#: app/src/pages/campaigns/components/CampaignEditor.vue:515
+msgid "Nenhuma forma de pagamento cadastrada no WooCommerce."
+msgstr "No payment method is registered in WooCommerce."
 
 #: app/src/components/fields/GatewayRatesField.vue:78
 msgid "Nenhuma forma de pagamento está ativa no WooCommerce ainda."

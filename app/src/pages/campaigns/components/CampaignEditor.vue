@@ -11,6 +11,7 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import CampaignSummary from './CampaignSummary.vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
+import BaseCheckbox from '../../../components/base/BaseCheckbox.vue';
 import BaseConfirmDialog from '../../../components/base/BaseConfirmDialog.vue';
 import BaseDatePicker from '../../../components/base/BaseDatePicker.vue';
 import BaseInput from '../../../components/base/BaseInput.vue';
@@ -109,7 +110,28 @@ const interestOptions = [
   { value: 'table', label: __('Uma tabela por quantidade de parcelas') },
 ];
 
-const gatewayOptions = computed(() => props.bootstrap.gateways || []);
+// "Any payment method" is having none ticked. A method the campaign names but
+// the store no longer registers stays listed, so saving does not quietly drop it.
+const gatewayOptions = computed(() => {
+  const known = (props.bootstrap.gateways || []).filter((option) => option.value !== '');
+  const missing = form.rules.discount.gateways.filter((value) => !known.some((option) => option.value === value));
+
+  return [...known, ...missing.map((value) => ({ value, label: value }))];
+});
+
+/**
+ * Tick or untick a payment method the discount is charged for.
+ *
+ * @since 6.0.0
+ * @param {string} value - Gateway ID.
+ * @param {boolean} checked - Whether it is now ticked.
+ * @return {void}
+ */
+function toggleGateway(value, checked) {
+  const others = form.rules.discount.gateways.filter((gateway) => gateway !== value);
+
+  form.rules.discount.gateways = checked ? [...others, value] : others;
+}
 
 const scopeSearch = computed(() => {
   const type = SCOPE_TYPES[form.rules.target.scope];
@@ -469,16 +491,28 @@ function keeps(value) {
               </FieldRow>
 
               <FieldRow
-                :label="__('Cobrar na forma de pagamento')"
-                :description="__('Com uma forma escolhida, o desconto também é aplicado no checkout quando o cliente paga com ela.')"
-                control-id="wcci-campaign-discount-gateway"
+                :label="__('Cobrar nas formas de pagamento')"
+                :description="__('Com formas marcadas, o desconto também é aplicado no checkout quando o cliente paga com uma delas.')"
               >
-                <BaseSelect
-                  id="wcci-campaign-discount-gateway"
-                  v-model="form.rules.discount.gateway"
-                  :options="gatewayOptions"
-                  :aria-label="__('Cobrar na forma de pagamento')"
-                />
+                <div
+                  v-if="gatewayOptions.length"
+                  id="wcci-campaign-discount-gateways"
+                  role="group"
+                  :aria-label="__('Cobrar nas formas de pagamento')"
+                  class="grid gap-2 sm:grid-cols-2"
+                >
+                  <BaseCheckbox
+                    v-for="option in gatewayOptions"
+                    :key="option.value"
+                    :model-value="form.rules.discount.gateways.includes(option.value)"
+                    :true-value="true"
+                    :false-value="false"
+                    :label="option.label"
+                    tile
+                    @update:model-value="toggleGateway(option.value, $event)"
+                  />
+                </div>
+                <p v-else class="text-[13px] text-slate-500">{{ __('Nenhuma forma de pagamento cadastrada no WooCommerce.') }}</p>
               </FieldRow>
             </template>
           </FieldGroup>

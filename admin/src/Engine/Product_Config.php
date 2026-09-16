@@ -39,7 +39,7 @@ class Product_Config {
 	 * @since 6.0.0
 	 * @param int $product_id | Product or variation ID
 	 * @param int $parent_id | Parent product ID, 0 or the product's own
-	 * @return array{method:string,amount:string,gateway:string,source:string,source_id:int}|null
+	 * @return array{method:string,amount:string,gateways:array<int,string>,source:string,source_id:int}|null
 	 */
 	public static function discount_rule( $product_id, $parent_id = 0 ) {
 		$product_id = (int) $product_id;
@@ -50,10 +50,12 @@ class Product_Config {
 			$source = Calculate_Values::get_discount_source_id( $product_id, $parent_id );
 
 			if ( 'yes' === get_post_meta( $source, 'enable_discount_per_unit', true ) ) {
+				$gateway = (string) get_post_meta( $source, 'discount_gateway', true );
+
 				$rule = array(
 					'method' => (string) get_post_meta( $source, 'discount_per_unit_method', true ),
 					'amount' => (string) get_post_meta( $source, 'unit_discount_amount', true ),
-					'gateway' => (string) get_post_meta( $source, 'discount_gateway', true ),
+					'gateways' => '' !== $gateway ? array( $gateway ) : array(),
 					'source' => 'product',
 					'source_id' => $source,
 				);
@@ -64,8 +66,8 @@ class Product_Config {
 		 * Filter the discount of its own a product answers to.
 		 *
 		 * Null means the store's discount applies. A rule carries `method`
-		 * (`percentage` or `fixed`), `amount`, `gateway` (the one payment method
-		 * it is charged for at checkout, or empty), `source` and `source_id`.
+		 * (`percentage` or `fixed`), `amount`, `gateways` (the payment methods
+		 * it is charged for at checkout, or none), `source` and `source_id`.
 		 * Leave a rule from the product alone: the product's own setting wins.
 		 *
 		 * @since 6.0.0
@@ -83,7 +85,7 @@ class Product_Config {
 		return array(
 			'method' => (string) ( $rule['method'] ?? '' ),
 			'amount' => (string) ( $rule['amount'] ?? '' ),
-			'gateway' => (string) ( $rule['gateway'] ?? '' ),
+			'gateways' => array_values( array_filter( array_map( 'strval', (array) ( $rule['gateways'] ?? array() ) ) ) ),
 			'source' => (string) ( $rule['source'] ?? '' ),
 			'source_id' => (int) ( $rule['source_id'] ?? 0 ),
 		);
