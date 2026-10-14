@@ -236,6 +236,20 @@ if ( ! function_exists('sanitize_textarea_field') ) {
 	}
 }
 
+if ( ! function_exists('wp_strip_all_tags') ) {
+	/**
+	 * Strip every tag, and the contents of script and style elements.
+	 *
+	 * @param string $text | Text to strip
+	 * @return string
+	 */
+	function wp_strip_all_tags( $text ) {
+		$text = preg_replace( '#<(script|style)[^>]*>.*?</\1>#is', '', (string) $text );
+
+		return trim( strip_tags( $text ) );
+	}
+}
+
 if ( ! function_exists('wp_kses_post') ) {
 	/**
 	 * Keep the markup a post may carry and drop the rest.

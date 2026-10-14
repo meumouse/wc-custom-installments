@@ -89,6 +89,7 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 
 ### Fixed
 
+- An AJAX request with a cart that asked for a payment method's title before anything else read a setting — importing orders, for one — ran out of memory and answered with a blank error 500. Listing the payment methods in the settings asked each one for its checkout title, which the Pro add-on annotates by reading a setting, which listed the payment methods again. The settings now name each payment method by the title set for it, without the checkout badges.
 - A unit or weight selector inside the design dialog opened behind it and could not be used.
 - The design dialog no longer lets the colour fields spill into the next column, and only its content scrolls: the title, the close button and "Done" stay in view.
 

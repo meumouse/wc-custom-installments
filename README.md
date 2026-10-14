@@ -108,6 +108,10 @@ php tests/headless-test.php
 php tests/campaigns-test.php
 ```
 
+```bash
+php tests/settings-schema-test.php
+```
+
 ### Previews
 
 Two static harnesses render the real built bundles with no WordPress and no database. Build first,

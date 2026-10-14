@@ -1122,6 +1122,12 @@ class Registry {
 	 * WooCommerce is not always loaded when the schema is built — during a CLI
 	 * run, for instance — so an empty list is a valid answer rather than a fatal.
 	 *
+	 * The label is the stored title, not get_title(): that runs the
+	 * `woocommerce_gateway_title` filter, where the add-on reads settings to
+	 * annotate the checkout label. Reading a setting builds this schema, so the
+	 * filter would rebuild it again and again until memory runs out — the first
+	 * time an AJAX request with a cart asks for a gateway's title.
+	 *
 	 * @since 6.0.0
 	 * @return array<int,array<string,string>>
 	 */
@@ -1133,9 +1139,15 @@ class Registry {
 		$gateways = array();
 
 		foreach ( WC()->payment_gateways()->get_available_payment_gateways() as $gateway ) {
+			$title = wp_strip_all_tags( (string) $gateway->title );
+
+			if ( '' === $title && ! empty( $gateway->method_title ) ) {
+				$title = wp_strip_all_tags( (string) $gateway->method_title );
+			}
+
 			$gateways[] = array(
 				'id' => $gateway->id,
-				'label' => $gateway->get_title(),
+				'label' => '' !== $title ? $title : $gateway->id,
 			);
 		}
 
