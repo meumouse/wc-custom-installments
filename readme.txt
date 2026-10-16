@@ -41,7 +41,8 @@ Ele exibe o parcelamento abaixo do preço do produto, na listagem da loja e na p
 * Widgets do Elementor para o grupo de preços e a tabela de parcelas
 * Controles de estilo nos widgets de produto do Elementor Pro, do Woodmart e do XStore
 * Compatibilidade com Astra, Woodmart, XStore, Shoptimizer, Machic e Ricky
-* Funciona junto com Tiered Pricing Table, Dynamic Pricing & Discounts e Rank Math
+* Funciona junto com Tiered Pricing Table, Dynamic Pricing & Discounts, Role Based Pricing for Woo e Rank Math
+* Respeita lojas que escondem os preços: com o Role Based Pricing for Woo escondendo o preço de quem não está logado, nenhum elemento do plugin devolve esse preço
 * Um assistente de configuração que deixa uma loja nova exibindo parcelas em cerca de um minuto
 * Ajustes por produto, no painel do produto e na edição rápida
 

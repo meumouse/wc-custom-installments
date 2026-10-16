@@ -629,6 +629,17 @@ if ( ! function_exists('wp_doing_ajax') ) {
 	}
 }
 
+if ( ! function_exists('is_user_logged_in') ) {
+	/**
+	 * Whether a customer is signed in.
+	 *
+	 * @return bool
+	 */
+	function is_user_logged_in() {
+		return ! empty( $GLOBALS['wp_test_is_user_logged_in'] );
+	}
+}
+
 if ( ! function_exists('esc_attr') ) {
 	/**
 	 * Escape a value for an attribute.

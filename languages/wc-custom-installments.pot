@@ -93,7 +93,7 @@ msgstr ""
 msgid "%s no lugar do desconto à vista da loja"
 msgstr ""
 
-#: admin/src/Frontend/Components.php:327
+#: admin/src/Frontend/Components.php:333
 #: app/src/components/fields/ElementPreview.vue:162
 #. translators: %s: discount percentage, e.g. "20%"
 msgid "%s OFF"
@@ -323,8 +323,8 @@ msgstr ""
 msgid "Aplicar um desconto"
 msgstr ""
 
-#: admin/src/Frontend/Components.php:359
-#: admin/src/Frontend/Components.php:503
+#: admin/src/Frontend/Components.php:365
+#: admin/src/Frontend/Components.php:509
 msgid "Aprovação imediata"
 msgstr ""
 
@@ -688,7 +688,7 @@ msgid ""
 "taxa mensal única."
 msgstr ""
 
-#: admin/src/Frontend/Components.php:401
+#: admin/src/Frontend/Components.php:407
 msgid "Cobranças:"
 msgstr ""
 
@@ -1481,7 +1481,7 @@ msgstr ""
 msgid "Faça backup ou transfira sua configuração"
 msgstr ""
 
-#: admin/src/Frontend/Components.php:639
+#: admin/src/Frontend/Components.php:645
 #: app/src/components/base/BaseModal.vue:176
 msgid "Fechar"
 msgstr ""
@@ -2339,7 +2339,7 @@ msgstr ""
 msgid "Pix"
 msgstr ""
 
-#: admin/src/Frontend/Components.php:354
+#: admin/src/Frontend/Components.php:360
 #. translators: %s: discounted price
 msgid "Pix: %s"
 msgstr ""
@@ -3082,7 +3082,7 @@ msgid ""
 "não exibi-lo. É possível usar HTML simples, como <strong>."
 msgstr ""
 
-#: admin/src/Frontend/Render_Elements.php:396
+#: admin/src/Frontend/Render_Elements.php:407
 #. translators: %s: the copy shown after the discounted price, e.g. "with Pix"
 msgid "Total %s"
 msgstr ""

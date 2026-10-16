@@ -121,6 +121,13 @@ class Render_Elements {
 			return $price;
 		}
 
+		// A shortcode reaches this method with price HTML it built itself, so
+		// a store hiding its prices has to be checked here and not only
+		// through the empty `$price` a hiding plugin leaves behind.
+		if ( ! Helpers::is_price_visible( $product ) ) {
+			return $price;
+		}
+
 		ob_start();
 
 		/**
@@ -300,6 +307,10 @@ class Render_Elements {
 			return;
 		}
 
+		if ( ! Helpers::is_price_visible( $product ) ) {
+			return;
+		}
+
 		$product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
 
 		if ( 'yes' === get_post_meta( $product_id, '__disable_installments', true ) || ! $product->is_purchasable() ) {
@@ -471,7 +482,7 @@ class Render_Elements {
 	public function display_message_discount_per_quantity( $product_id = 0 ) {
 		$product = $product_id ? wc_get_product( $product_id ) : Helpers::get_product_from_request();
 
-		if ( ! $product instanceof \WC_Product ) {
+		if ( ! $product instanceof \WC_Product || ! Helpers::is_price_visible( $product ) ) {
 			return;
 		}
 

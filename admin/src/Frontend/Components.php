@@ -42,6 +42,12 @@ class Components {
 			return false;
 		}
 
+		// A store hiding its prices hides everything derived from them. This
+		// is the one gate every element passes through.
+		if ( ! Helpers::is_price_visible() ) {
+			return false;
+		}
+
 		// An editor has no archive and no product page, but the designer still
 		// needs to see what they are laying out.
 		if ( Helpers::is_builder_preview() ) {

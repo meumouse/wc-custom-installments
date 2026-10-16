@@ -6,6 +6,7 @@ use Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema;
 use Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
 use MeuMouse\WC_Custom_Installments\Frontend\Components;
@@ -137,7 +138,7 @@ class Store_Api {
 			),
 		);
 
-		if ( ! $product instanceof \WC_Product ) {
+		if ( ! $product instanceof \WC_Product || ! Helpers::is_price_visible( $product ) ) {
 			return $data;
 		}
 
@@ -213,7 +214,7 @@ class Store_Api {
 			),
 		);
 
-		if ( $cart && Repository::is_active('enable_all_discount_options') ) {
+		if ( $cart && Helpers::is_price_visible() && Repository::is_active('enable_all_discount_options') ) {
 			$total = (float) $cart->get_cart_contents_total() + (float) $cart->get_shipping_total();
 			$discount = (float) Calculate_Values::calculate_total_discount( $cart, Repository::is_active('include_shipping_value_in_discounts') );
 

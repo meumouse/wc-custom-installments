@@ -140,6 +140,40 @@ class Helpers {
 
 
 	/**
+	 * Whether the store is willing to show this product's price at all.
+	 *
+	 * Everything the plugin prints is derived from the price, so a store that
+	 * hides prices - a closed catalogue, a B2B store showing prices only to
+	 * signed-in customers - must not have them handed back by an instalment
+	 * plan, a discount badge, the Store API or the numbers the storefront
+	 * runtime carries in the page source.
+	 *
+	 * WooCommerce has no such flag: a plugin hiding prices does it by emptying
+	 * `woocommerce_get_price_html`, which says nothing about the eight other
+	 * places this plugin renders from. So this is the one gate, and the
+	 * integration of each of those plugins closes it.
+	 *
+	 * @since 6.0.0
+	 * @param object|null $product | Product object, when the answer is about one
+	 * @return bool
+	 */
+	public static function is_price_visible( $product = null ) {
+		/**
+		 * Filter whether the store shows prices to the current customer.
+		 *
+		 * Returning false silences every element the plugin renders, on the
+		 * storefront and in the Store API alike.
+		 *
+		 * @since 6.0.0
+		 * @param bool $visible | Whether prices may be shown
+		 * @param object|null $product | Product object, or null
+		 * @return bool
+		 */
+		return (bool) apply_filters( 'WC_Custom_Installments/Product/Price_Visible', true, $product );
+	}
+
+
+	/**
 	 * Whether a product is one the plugin should price.
 	 *
 	 * @since 6.0.0
@@ -150,6 +184,8 @@ class Helpers {
 		$is_available = true;
 
 		if ( ! $product instanceof \WC_Product ) {
+			$is_available = false;
+		} elseif ( ! self::is_price_visible( $product ) ) {
 			$is_available = false;
 		} else {
 			$price = wc_get_price_to_display( $product );

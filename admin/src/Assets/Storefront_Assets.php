@@ -214,6 +214,15 @@ class Storefront_Assets extends Abstract_Assets {
 			$product = wc_get_product( $product_id );
 		}
 
+		// The runtime parameters are printed in the page source, so a store
+		// hiding its prices would hand them to the visitor as plain numbers.
+		// Dropping the product leaves the runtime with the same parameters it
+		// gets on a page that has no product at all.
+		if ( $product instanceof \WC_Product && ! Helpers::is_price_visible( $product ) ) {
+			$product = null;
+			$product_id = 0;
+		}
+
 		$plan = Product_Config::installments( $product instanceof \WC_Product ? $product : null );
 		$max_installments = $plan['max'];
 		$fees = array();

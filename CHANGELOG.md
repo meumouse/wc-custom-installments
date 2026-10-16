@@ -45,7 +45,8 @@ First release of the rebuilt plugin. The version continues the numbering of "Par
 - Per-product overrides in the product data panel, plus quick edit and bulk edit, driven by a field registry an add-on can extend.
 - All fifteen shortcodes, free, under both the 5.x and the current tag prefix, and usable outside a product template through a `product` attribute.
 - Theme corrections for Astra, Ricky, Machic and Shoptimizer as a registry rather than a class each.
-- Integrations with Woodmart, Tiered Pricing Table and Dynamic Pricing & Discounts.
+- Integrations with Woodmart, Tiered Pricing Table, Dynamic Pricing & Discounts and Role Based Pricing for Woo.
+- `Helpers::is_price_visible()`, the one gate deciding whether the store shows prices at all, with `WC_Custom_Installments/Product/Price_Visible` to close it. A store that hides prices - a closed catalogue, a B2B store pricing only for signed-in customers - no longer has them handed back by an instalment plan, a discount badge, a shortcode, an Elementor widget, the Store API or the numbers the storefront runtime carries in the page source. Role Based Pricing for Woo closes it while its "hide prices for visitors" option is on.
 - Elementor widgets for the price group and the instalment table, keeping their 5.x names.
 - Setup wizard: seven steps, each saving as you leave it, with a live preview of the price the choices produce. It wears the same header, logo and components as the settings screen.
 - A one-time redirect on activation and a dismissible reminder afterwards; the wizard stays reachable by URL.
