@@ -159,7 +159,8 @@ check( 'each card names the switch it carries', array(
 check( 'and that switch is the first of its fields', array_column( $cards, 'primary_key' ), array_map( static fn( $card ) => $card['fields'][0]['key'] ?? '', $cards ) );
 check( 'every card can title its dialog', array(), array_values( array_filter( $cards, static fn( $card ) => empty( $card['modal']['title'] ) ) ) );
 check( 'each card named after its integration', array_column( $catalog, 'title' ), array_column( $cards, 'title' ) );
-check( 'each card says the plugin was not found', array( 'Não instalado' ), array_unique( array_column( array_column( $cards, 'badge' ), 'text' ) ) );
+check( 'no card was found installed on this store', array( false ), array_unique( array_column( $cards, 'active' ) ) );
+check( 'so each one has something to say about it', array(), array_values( array_filter( $cards, static fn( $card ) => empty( $card['not_found_notice'] ) ) ) );
 
 $definitions = Registry::get_field_definitions();
 $declared = array_column( Catalog::fields(), 'key' );

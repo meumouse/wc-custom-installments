@@ -1008,9 +1008,8 @@ class Registry {
 				'active' => (bool) $integration['active'],
 				'primary_key' => $integration['primary_key'],
 				'modal' => $integration['modal'],
-				'badge' => $integration['active']
-					? array( 'tone' => 'success', 'icon' => 'check-circle', 'text' => __( 'Detectado', 'wc-custom-installments' ) )
-					: array( 'tone' => 'neutral', 'icon' => 'info-circle', 'text' => __( 'Não instalado', 'wc-custom-installments' ) ),
+				// Nothing is said when the plugin is there: a card that reads
+				// as usual is the store owner's answer that it was found.
 				'not_found_notice' => __( 'Este plugin não foi encontrado na loja. O que você escolher aqui fica guardado e passa a valer assim que ele for instalado e ativado.', 'wc-custom-installments' ),
 				'fields' => $fields,
 			);

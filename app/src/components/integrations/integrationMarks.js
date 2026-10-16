@@ -11,11 +11,11 @@
  *
  * @since 6.0.0
  */
-import dynamicPricingDiscounts from '@integrations/dynamic-pricing-discounts.svg';
+import dynamicPricingDiscounts from '@integrations/dynamic-pricing-discounts.webp';
 import elementor from '@integrations/elementor.svg';
-import rankMath from '@integrations/rank-math.svg';
-import roleBasedPricing from '@integrations/role-based-pricing.svg';
-import tieredPricingTable from '@integrations/tiered-pricing-table.svg';
+import rankMath from '@integrations/rank-math.jpg';
+import roleBasedPricing from '@integrations/role-based-pricing.png';
+import tieredPricingTable from '@integrations/tiered-pricing-table.png';
 
 const MARKS = {
   'dynamic-pricing-discounts': dynamicPricingDiscounts,

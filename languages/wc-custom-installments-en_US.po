@@ -3233,3 +3233,11 @@ msgstr "Integration with %s"
 #: app/src/components/integrations/IntegrationCard.vue:92
 msgid "Ver"
 msgstr "View"
+
+#: app/src/components/integrations/IntegrationCard.vue:91
+msgid "Ligue a integração para acessar as configurações."
+msgstr "Switch the integration on to reach its settings."
+
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:61
+msgid "Regras de preço aplicadas na exibição, antes chamado Dynamic Pricing & Discounts."
+msgstr "Pricing rules applied at display time, formerly called Dynamic Pricing & Discounts."

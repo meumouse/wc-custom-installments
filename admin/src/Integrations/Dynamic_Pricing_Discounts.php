@@ -51,10 +51,14 @@ class Dynamic_Pricing_Discounts {
 	 * @return array<string,mixed>
 	 */
 	public static function describe() {
+		// The plugin is the one this class has always detected; it was renamed
+		// to Pricepep, so the card wears the name a store owner now sees in
+		// their plugin list. The ID is untouched on purpose: it builds the
+		// setting keys, and renaming it would strand what the store configured.
 		return array(
 			'id' => 'dynamic_pricing_discounts',
-			'title' => 'Dynamic Pricing & Discounts',
-			'description' => __( 'Regras de preço aplicadas na exibição.', 'wc-custom-installments' ),
+			'title' => 'Pricepep',
+			'description' => __( 'Regras de preço aplicadas na exibição, antes chamado Dynamic Pricing & Discounts.', 'wc-custom-installments' ),
 			'url' => 'https://wordpress.org/plugins/rp-woocommerce-dynamic-pricing-discounts/',
 			'active' => self::is_active(),
 			'fields' => array(

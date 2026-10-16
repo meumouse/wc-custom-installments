@@ -119,7 +119,7 @@ msgstr ""
 msgid "A cor do texto e da borda do botão é obtida a partir desta cor."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1121
+#: admin/src/Admin/Settings/Registry.php:1120
 msgid "A listagem de produtos e a página do produto"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 msgid "As subcategorias entram junto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1075
+#: admin/src/Admin/Settings/Registry.php:1074
 msgid ""
 "As versões e os limites do servidor que costumam explicar um problema. "
 "Informe-os ao pedir suporte."
@@ -470,7 +470,7 @@ msgstr ""
 msgid "Automaticamente, ao lado do preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1045
+#: admin/src/Admin/Settings/Registry.php:1044
 msgid "Avançado"
 msgstr ""
 
@@ -562,7 +562,7 @@ msgstr ""
 msgid "Cadastro de bandeiras de cartão"
 msgstr ""
 
-#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:64
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:68
 msgid "Calcular as parcelas pelo preço ajustado"
 msgstr ""
 
@@ -842,7 +842,7 @@ msgid "Configurações salvas."
 msgstr ""
 
 #: admin/src/Integrations/Catalog.php:191
-#: app/src/components/integrations/IntegrationCard.vue:33
+#: app/src/components/integrations/IntegrationCard.vue:36
 msgid "Configurar"
 msgstr ""
 
@@ -940,7 +940,7 @@ msgstr ""
 msgid "Definir os juros de cada parcela"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1056
+#: admin/src/Admin/Settings/Registry.php:1055
 msgid ""
 "Deixa de exibir os elementos do plugin na loja: grupo de preços, parcelas, "
 "formas de pagamento, shortcodes, widgets, estilos e scripts. Os valores "
@@ -1095,11 +1095,7 @@ msgstr ""
 msgid "Detalhes das parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1012
-msgid "Detectado"
-msgstr ""
-
-#: admin/src/Admin/Settings/Registry.php:1063
+#: admin/src/Admin/Settings/Registry.php:1062
 msgid "Diagnóstico e dados."
 msgstr ""
 
@@ -1177,7 +1173,7 @@ msgstr ""
 msgid "Em branco, vale o da loja: %s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1124
+#: admin/src/Admin/Settings/Registry.php:1123
 msgid "Em nenhum lugar"
 msgstr ""
 
@@ -1330,7 +1326,7 @@ msgstr ""
 msgid "Este controle faz parte do complemento Pro."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1014
+#: admin/src/Admin/Settings/Registry.php:1013
 msgid ""
 "Este plugin não foi encontrado na loja. O que você escolher aqui fica "
 "guardado e passa a valer assim que ele for instalado e ativado."
@@ -1552,7 +1548,7 @@ msgstr ""
 msgid "Grupo de preços dentro dos widgets"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1050
+#: admin/src/Admin/Settings/Registry.php:1049
 msgid "Headless"
 msgstr ""
 
@@ -1610,7 +1606,7 @@ msgstr ""
 msgid "Importar configurações"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1080
+#: admin/src/Admin/Settings/Registry.php:1079
 msgid "Importar e exportar"
 msgstr ""
 
@@ -1665,12 +1661,12 @@ msgid "Integração"
 msgstr ""
 
 #: admin/src/Integrations/Catalog.php:211
-#: app/src/components/integrations/IntegrationCard.vue:87
+#: app/src/components/integrations/IntegrationCard.vue:102
 #. translators: %s: the name of the plugin being integrated with.
 msgid "Integração com %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1028
+#: admin/src/Admin/Settings/Registry.php:1027
 msgid "Integrações"
 msgstr ""
 
@@ -1721,6 +1717,10 @@ msgstr ""
 msgid "Ler a documentação"
 msgstr ""
 
+#: app/src/components/integrations/IntegrationCard.vue:94
+msgid "Ligue a integração para acessar as configurações."
+msgstr ""
+
 #: admin/src/Rest/Settings_Bootstrap.php:163
 msgid "Limite de memória do PHP"
 msgstr ""
@@ -1766,7 +1766,7 @@ msgstr ""
 msgid "Mantém o parcelamento da loja"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1062
+#: admin/src/Admin/Settings/Registry.php:1061
 msgid "Manutenção"
 msgstr ""
 
@@ -1843,7 +1843,7 @@ msgstr ""
 msgid "Modelos de texto de parcelas personalizados"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1067
+#: admin/src/Admin/Settings/Registry.php:1066
 msgid "Modo de depuração"
 msgstr ""
 
@@ -1851,11 +1851,11 @@ msgstr ""
 msgid "Modo de depuração do WordPress"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1055
+#: admin/src/Admin/Settings/Registry.php:1054
 msgid "Modo headless"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1046
+#: admin/src/Admin/Settings/Registry.php:1045
 msgid "Modo headless, manutenção e dados."
 msgstr ""
 
@@ -1866,7 +1866,7 @@ msgid ""
 "dez vê o preço da faixa e parcelas calculadas sobre o preço de uma unidade."
 msgstr ""
 
-#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:65
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:69
 msgid ""
 "Monta o plano a partir do preço que aquele plugin ajustou, que é o preço "
 "que o cliente vai pagar. Em um produto variável, parte do preço da variação "
@@ -2027,10 +2027,6 @@ msgid ""
 "produto ou informe um: [wc_custom_installments_group product=\"123\"]."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1013
-msgid "Não instalado"
-msgstr ""
-
 #: app/src/components/fields/CardBrandsField.vue:168
 msgid "Não salva"
 msgstr ""
@@ -2178,7 +2174,7 @@ msgstr ""
 msgid "O que este plugin exibe na sua loja e o que ele precisa de você."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1029
+#: admin/src/Admin/Settings/Registry.php:1028
 msgid ""
 "O que o plugin faz ao lado de cada plugin que você já usa. As opções "
 "continuam aqui mesmo quando o outro plugin está desativado, para que nada "
@@ -2356,7 +2352,7 @@ msgid ""
 "vazia é oferecida sem juros."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1051
+#: admin/src/Admin/Settings/Registry.php:1050
 msgid ""
 "Para lojas com um frontend próprio, que leem os preços pela Store API do "
 "WooCommerce."
@@ -2458,7 +2454,7 @@ msgid "Por padrão, a variação usa o desconto definido no produto."
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:307
-#: admin/src/Admin/Settings/Registry.php:1155
+#: admin/src/Admin/Settings/Registry.php:1154
 msgid "Porcentagem"
 msgstr ""
 
@@ -2552,7 +2548,7 @@ msgid "Privacidade"
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:863
-#: app/src/components/fields/FieldGroup.vue:31
+#: app/src/components/fields/FieldGroup.vue:25
 #: app/src/components/fields/FieldRow.vue:35
 #: app/src/components/pro/ProUpsellModal.vue:30
 msgid "Pro"
@@ -2700,7 +2696,7 @@ msgstr ""
 msgid "Reescrever o preço exibido"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1068
+#: admin/src/Admin/Settings/Registry.php:1067
 msgid "Registra detalhes adicionais em WooCommerce > Status > Logs."
 msgstr ""
 
@@ -2708,8 +2704,10 @@ msgstr ""
 msgid "Registra os widgets do plugin no editor do Elementor."
 msgstr ""
 
-#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:57
-msgid "Regras de preço aplicadas na exibição."
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:61
+msgid ""
+"Regras de preço aplicadas na exibição, antes chamado Dynamic Pricing & "
+"Discounts."
 msgstr ""
 
 #: app/src/components/base/BaseMultiSelect.vue:298
@@ -2937,11 +2935,11 @@ msgstr ""
 msgid "Solicitando…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1123
+#: admin/src/Admin/Settings/Registry.php:1122
 msgid "Somente a listagem de produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1122
+#: admin/src/Admin/Settings/Registry.php:1121
 msgid "Somente a página do produto"
 msgstr ""
 
@@ -2954,7 +2952,7 @@ msgstr ""
 msgid "Somente para esta forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1074
+#: admin/src/Admin/Settings/Registry.php:1073
 msgid "Status do sistema"
 msgstr ""
 
@@ -3205,7 +3203,7 @@ msgstr ""
 msgid "Transferências:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1081
+#: admin/src/Admin/Settings/Registry.php:1080
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr ""
 
@@ -3328,7 +3326,7 @@ msgid "Valor do desconto por quantidade"
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:308
-#: admin/src/Admin/Settings/Registry.php:1156
+#: admin/src/Admin/Settings/Registry.php:1155
 msgid "Valor fixo"
 msgstr ""
 
@@ -3358,11 +3356,7 @@ msgstr ""
 msgid "Veja o que o Pro adiciona"
 msgstr ""
 
-#: app/src/components/integrations/IntegrationCard.vue:92
-msgid "Ver"
-msgstr ""
-
-#: app/src/components/fields/FieldGroup.vue:41
+#: app/src/components/integrations/IntegrationCard.vue:78
 msgid "Ver o plugin"
 msgstr ""
 
