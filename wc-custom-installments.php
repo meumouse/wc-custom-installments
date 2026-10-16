@@ -11,12 +11,12 @@
  * Requires PHP: 			8.1
  * Requires Plugins: 		woocommerce
  * WC requires at least: 	8.0
- * Tested up to: 			6.9
+ * Tested up to: 			7.1
  * Text Domain: 			wc-custom-installments
  * Domain Path: 			/languages
  * License: 				GPLv2 or later
  * License URI: 			https://www.gnu.org/licenses/gpl-2.0.html
- *
+ * Update URI: 				https://cloud.meumouse.com/v1/products/wc-custom-installments
  * @copyright 				2026 MeuMouse.com
  * @license 				GPL-2.0-or-later - See LICENSE for details
  */
@@ -45,7 +45,7 @@ register_activation_hook( __FILE__, function() {
 	if ( class_exists( Onboarding::class ) ) {
 		Onboarding::on_activation();
 	}
-} );
+});
 
 /**
  * Deactivation clears scheduled events only.
@@ -58,7 +58,7 @@ register_deactivation_hook( __FILE__, function() {
 	foreach ( array( 'wc_custom_installments_purge_logs_event' ) as $hook ) {
 		wp_clear_scheduled_hook( $hook );
 	}
-} );
+});
 
 // Initialize the plugin.
 if ( class_exists( Init::class ) ) {
