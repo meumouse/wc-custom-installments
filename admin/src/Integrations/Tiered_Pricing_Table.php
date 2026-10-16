@@ -27,7 +27,7 @@ class Tiered_Pricing_Table {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! self::is_active() ) {
+		if ( ! self::is_active() || ! Catalog::is_enabled('tiered_pricing_table') ) {
 			return;
 		}
 

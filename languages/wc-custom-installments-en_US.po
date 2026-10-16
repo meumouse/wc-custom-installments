@@ -3202,3 +3202,34 @@ msgstr "View the plugin"
 #: admin/src/Integrations/Elementor.php:86
 msgid "Widgets do plugin no editor, e o grupo de preços dentro dos widgets de produto."
 msgstr "The plugin’s widgets in the editor, and the price group inside product widgets."
+
+#: admin/src/Integrations/Catalog.php:191
+#: app/src/components/integrations/IntegrationCard.vue:33
+msgid "Configurar"
+msgstr "Configure"
+
+#: admin/src/Integrations/Catalog.php:212
+msgid "Desligue para que este plugin ignore completamente o outro, mantendo o que você configurou aqui para quando quiser religar."
+msgstr "Switch it off to have this plugin ignore the other one entirely, keeping what you set here for when you want it back."
+
+#: app/src/components/integrations/IntegrationSettingsModal.vue:54
+msgid "Esta integração não tem nada a configurar além de ligá-la."
+msgstr "This integration has nothing to set beyond switching it on."
+
+#: admin/src/Admin/Settings/Registry.php:1014
+msgid "Este plugin não foi encontrado na loja. O que você escolher aqui fica guardado e passa a valer assim que ele for instalado e ativado."
+msgstr "This plugin was not found on the store. What you choose here is kept, and takes effect as soon as it is installed and activated."
+
+#: app/src/components/integrations/IntegrationSettingsModal.vue:28
+msgid "Integração"
+msgstr "Integration"
+
+#: admin/src/Integrations/Catalog.php:211
+#: app/src/components/integrations/IntegrationCard.vue:87
+#. translators: %s: the name of the plugin being integrated with.
+msgid "Integração com %s"
+msgstr "Integration with %s"
+
+#: app/src/components/integrations/IntegrationCard.vue:92
+msgid "Ver"
+msgstr "View"

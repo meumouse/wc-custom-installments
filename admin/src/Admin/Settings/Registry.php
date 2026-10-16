@@ -1000,13 +1000,18 @@ class Registry {
 			}
 
 			$cards[] = array(
-				'id' => 'integration-' . str_replace( '_', '-', $integration['id'] ),
+				'id' => 'integration-' . $integration['slug'],
+				'slug' => $integration['slug'],
 				'title' => $integration['title'],
 				'description' => $integration['description'],
 				'url' => $integration['url'],
+				'active' => (bool) $integration['active'],
+				'primary_key' => $integration['primary_key'],
+				'modal' => $integration['modal'],
 				'badge' => $integration['active']
 					? array( 'tone' => 'success', 'icon' => 'check-circle', 'text' => __( 'Detectado', 'wc-custom-installments' ) )
 					: array( 'tone' => 'neutral', 'icon' => 'info-circle', 'text' => __( 'Não instalado', 'wc-custom-installments' ) ),
+				'not_found_notice' => __( 'Este plugin não foi encontrado na loja. O que você escolher aqui fica guardado e passa a valer assim que ele for instalado e ativado.', 'wc-custom-installments' ),
 				'fields' => $fields,
 			);
 		}
@@ -1014,6 +1019,12 @@ class Registry {
 		return array(
 			'id' => 'integrations',
 			'icon' => 'extension',
+			// A grid of cards rather than the stacked groups every other
+			// section uses: an integration is a thing a store owner recognises
+			// by its name, and finds faster by eye than by reading down a list.
+			// The cards stay in `cards` so the field definitions, the defaults
+			// and the Pro locks are resolved exactly as everywhere else.
+			'component' => 'integrations',
 			'title' => __( 'Integrações', 'wc-custom-installments' ),
 			'description' => __( 'O que o plugin faz ao lado de cada plugin que você já usa. As opções continuam aqui mesmo quando o outro plugin está desativado, para que nada se perca ao reativá-lo.', 'wc-custom-installments' ),
 			'cards' => $cards,

@@ -2,6 +2,8 @@
 
 namespace MeuMouse\WC_Custom_Installments\Integrations;
 
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -99,6 +101,34 @@ class Catalog {
 
 
 	/**
+	 * The setting switching one integration on and off as a whole.
+	 *
+	 * Every integration has one, and it is the switch its card carries. The
+	 * behaviours it declares are the detail behind it, which is why they live
+	 * in the card's dialog rather than on the card.
+	 *
+	 * @since 6.0.0
+	 * @param string $id | Integration ID
+	 * @return string
+	 */
+	public static function primary_key( $id ) {
+		return 'integration_' . $id . '_enabled';
+	}
+
+
+	/**
+	 * Whether the store wants one integration at all.
+	 *
+	 * @since 6.0.0
+	 * @param string $id | Integration ID
+	 * @return bool
+	 */
+	public static function is_enabled( $id ) {
+		return Repository::is_active( self::primary_key( $id ) );
+	}
+
+
+	/**
 	 * Whether one integration's other plugin is installed.
 	 *
 	 * @since 6.0.0
@@ -138,12 +168,48 @@ class Catalog {
 			return null;
 		}
 
-		return array_merge( array(
+		$described = array_merge( array(
 			'title' => '',
 			'description' => '',
 			'url' => '',
 			'active' => false,
 			'fields' => array(),
+			'modal' => array(),
 		), $described );
+
+		$id = (string) $described['id'];
+
+		// The master switch is the catalogue's, not the integration's: every
+		// card carries one, and an integration repeating it would be five
+		// chances to spell the key differently.
+		$described['primary_key'] = self::primary_key( $id );
+		$described['slug'] = str_replace( '_', '-', $id );
+		$described['fields'] = array_merge( array( self::master_field( $id, $described['title'] ) ), (array) $described['fields'] );
+		$described['modal'] = array_merge( array(
+			'title' => $described['title'],
+			'description' => $described['description'],
+			'button_label' => __( 'Configurar', 'wc-custom-installments' ),
+		), (array) $described['modal'] );
+
+		return $described;
+	}
+
+
+	/**
+	 * The master switch of one integration, as a field.
+	 *
+	 * @since 6.0.0
+	 * @param string $id | Integration ID
+	 * @param string $title | The other plugin's name
+	 * @return array<string,mixed>
+	 */
+	private static function master_field( $id, $title ) {
+		return array(
+			'type' => 'toggle',
+			'key' => self::primary_key( $id ),
+			/* translators: %s: the name of the plugin being integrated with. */
+			'label' => sprintf( __( 'Integração com %s', 'wc-custom-installments' ), $title ),
+			'description' => __( 'Desligue para que este plugin ignore completamente o outro, mantendo o que você configurou aqui para quando quiser religar.', 'wc-custom-installments' ),
+		);
 	}
 }

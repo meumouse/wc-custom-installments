@@ -139,7 +139,25 @@ $cards = (array) ( $section['cards'] ?? array() );
 
 check( 'is a section of its own', 'integrations', $section['id'] ?? '' );
 check( 'with an icon the app maps', 'extension', $section['icon'] ?? '' );
+check( 'drawn as the grid rather than stacked groups', 'integrations', $section['component'] ?? '' );
+check( 'while still carrying its cards, which is where the fields are read from', true, count( $cards ) > 0 );
 check( 'and one card per integration', count( $catalog ), count( $cards ) );
+check( 'each card has the slug its mark is found by', array(
+	'elementor',
+	'rank-math',
+	'tiered-pricing-table',
+	'dynamic-pricing-discounts',
+	'role-based-pricing',
+), array_column( $cards, 'slug' ) );
+check( 'each card names the switch it carries', array(
+	'integration_elementor_enabled',
+	'integration_rank_math_enabled',
+	'integration_tiered_pricing_table_enabled',
+	'integration_dynamic_pricing_discounts_enabled',
+	'integration_role_based_pricing_enabled',
+), array_column( $cards, 'primary_key' ) );
+check( 'and that switch is the first of its fields', array_column( $cards, 'primary_key' ), array_map( static fn( $card ) => $card['fields'][0]['key'] ?? '', $cards ) );
+check( 'every card can title its dialog', array(), array_values( array_filter( $cards, static fn( $card ) => empty( $card['modal']['title'] ) ) ) );
 check( 'each card named after its integration', array_column( $catalog, 'title' ), array_column( $cards, 'title' ) );
 check( 'each card says the plugin was not found', array( 'Não instalado' ), array_unique( array_column( array_column( $cards, 'badge' ), 'text' ) ) );
 
@@ -161,6 +179,22 @@ check( 'while the two suspensions start off', array( 'no', 'no' ), array(
 ) );
 check( 'a Pro field in the tab is still locked', true, ! empty( $definitions['display_discount_price_schema']['locked'] ) );
 check( 'and a free one is not', false, ! empty( $definitions['enable_elementor_widgets']['locked'] ) );
+check( 'the master switch of a Pro integration stays free', false, ! empty( $definitions['integration_rank_math_enabled']['locked'] ) );
+check( 'every master switch is on for a new store', array( 'yes', 'yes', 'yes', 'yes', 'yes' ), array_map(
+	static fn( $card ) => $defaults[ $card['primary_key'] ] ?? '',
+	$cards
+) );
+
+echo PHP_EOL, 'The master switch of an integration', PHP_EOL;
+
+check( 'answers for the integration it names', true, Catalog::is_enabled('role_based_pricing') );
+check( 'and is the key the catalogue builds', 'integration_role_based_pricing_enabled', Catalog::primary_key('role_based_pricing') );
+
+set_settings( array( 'integration_role_based_pricing_enabled' => 'no' ) );
+
+check( 'switched off, the catalogue says so', false, Catalog::is_enabled('role_based_pricing') );
+
+set_settings( array( 'integration_role_based_pricing_enabled' => 'yes' ) );
 
 echo PHP_EOL, 'The gate on its own', PHP_EOL;
 

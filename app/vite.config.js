@@ -38,6 +38,9 @@ export default defineConfig({
       // The plugin's brand assets live at the plugin root, beside the other
       // static assets, and are pulled into the bundle from there.
       '@brand': resolve(__dirname, '../assets/brand'),
+      // One mark per integration card, pulled into the bundle the same way:
+      // the previews have no WordPress to build an upload URL from.
+      '@integrations': resolve(__dirname, '../assets/integrations'),
     },
   },
   server: {

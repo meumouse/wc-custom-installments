@@ -30,7 +30,7 @@ class Rank_Math {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! self::is_active() ) {
+		if ( ! self::is_active() || ! Catalog::is_enabled('rank_math') ) {
 			return;
 		}
 

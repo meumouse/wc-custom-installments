@@ -25,7 +25,7 @@ class Dynamic_Pricing_Discounts {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! self::is_active() ) {
+		if ( ! self::is_active() || ! Catalog::is_enabled('dynamic_pricing_discounts') ) {
 			return;
 		}
 

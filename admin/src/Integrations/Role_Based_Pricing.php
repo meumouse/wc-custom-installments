@@ -63,7 +63,7 @@ class Role_Based_Pricing {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! self::is_active() ) {
+		if ( ! self::is_active() || ! Catalog::is_enabled('role_based_pricing') ) {
 			return;
 		}
 

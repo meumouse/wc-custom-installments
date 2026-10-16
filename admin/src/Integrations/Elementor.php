@@ -48,7 +48,11 @@ class Elementor {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! self::is_active() || ! Repository::is_active('enable_elementor_widgets') ) {
+		if ( ! self::is_active() || ! Catalog::is_enabled('elementor') ) {
+			return;
+		}
+
+		if ( ! Repository::is_active('enable_elementor_widgets') ) {
 			return;
 		}
 

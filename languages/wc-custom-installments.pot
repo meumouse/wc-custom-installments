@@ -119,7 +119,7 @@ msgstr ""
 msgid "A cor do texto e da borda do botão é obtida a partir desta cor."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1110
+#: admin/src/Admin/Settings/Registry.php:1121
 msgid "A listagem de produtos e a página do produto"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 msgid "As subcategorias entram junto."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1064
+#: admin/src/Admin/Settings/Registry.php:1075
 msgid ""
 "As versões e os limites do servidor que costumam explicar um problema. "
 "Informe-os ao pedir suporte."
@@ -470,7 +470,7 @@ msgstr ""
 msgid "Automaticamente, ao lado do preço"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1034
+#: admin/src/Admin/Settings/Registry.php:1045
 msgid "Avançado"
 msgstr ""
 
@@ -818,7 +818,7 @@ msgstr ""
 #: admin/src/Admin/Menu.php:83
 #: admin/src/Admin/Menu.php:84
 #: admin/src/Admin/Menu.php:313
-#: app/src/pages/settings/SettingsPage.vue:223
+#: app/src/pages/settings/SettingsPage.vue:224
 msgid "Configurações"
 msgstr ""
 
@@ -839,6 +839,11 @@ msgstr ""
 #: admin/src/Rest/Settings_Save.php:60
 #: app/src/composables/useSettings.js:73
 msgid "Configurações salvas."
+msgstr ""
+
+#: admin/src/Integrations/Catalog.php:191
+#: app/src/components/integrations/IntegrationCard.vue:33
+msgid "Configurar"
 msgstr ""
 
 #: app/src/components/fields/ElementDesignField.vue:400
@@ -935,7 +940,7 @@ msgstr ""
 msgid "Definir os juros de cada parcela"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1045
+#: admin/src/Admin/Settings/Registry.php:1056
 msgid ""
 "Deixa de exibir os elementos do plugin na loja: grupo de preços, parcelas, "
 "formas de pagamento, shortcodes, widgets, estilos e scripts. Os valores "
@@ -1075,6 +1080,12 @@ msgstr ""
 msgid "Design dos elementos"
 msgstr ""
 
+#: admin/src/Integrations/Catalog.php:212
+msgid ""
+"Desligue para que este plugin ignore completamente o outro, mantendo o que "
+"você configurou aqui para quando quiser religar."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:604
 msgid "Destaca quanto o cliente economiza."
 msgstr ""
@@ -1084,11 +1095,11 @@ msgstr ""
 msgid "Detalhes das parcelas"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1008
+#: admin/src/Admin/Settings/Registry.php:1012
 msgid "Detectado"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1052
+#: admin/src/Admin/Settings/Registry.php:1063
 msgid "Diagnóstico e dados."
 msgstr ""
 
@@ -1166,7 +1177,7 @@ msgstr ""
 msgid "Em branco, vale o da loja: %s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1113
+#: admin/src/Admin/Settings/Registry.php:1124
 msgid "Em nenhum lugar"
 msgstr ""
 
@@ -1301,6 +1312,10 @@ msgstr ""
 msgid "Esta campanha não existe mais."
 msgstr ""
 
+#: app/src/components/integrations/IntegrationSettingsModal.vue:54
+msgid "Esta integração não tem nada a configurar além de ligá-la."
+msgstr ""
+
 #: admin/src/Rest/Addon_Page_Bootstrap.php:56
 msgid "Esta página não existe ou o complemento que a cria não está ativo."
 msgstr ""
@@ -1313,6 +1328,12 @@ msgstr ""
 
 #: app/src/components/fields/FieldRenderer.vue:164
 msgid "Este controle faz parte do complemento Pro."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:1014
+msgid ""
+"Este plugin não foi encontrado na loja. O que você escolher aqui fica "
+"guardado e passa a valer assim que ele for instalado e ativado."
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:154
@@ -1376,7 +1397,7 @@ msgid ""
 "WooCommerce."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:225
+#: app/src/pages/settings/SettingsPage.vue:226
 msgid "Exiba parcelamentos, descontos e formas de pagamento na sua loja."
 msgstr ""
 
@@ -1400,7 +1421,7 @@ msgstr ""
 msgid "Exibe a porcentagem de desconto sobre os produtos em promoção."
 msgstr ""
 
-#: admin/src/Integrations/Elementor.php:100
+#: admin/src/Integrations/Elementor.php:104
 msgid ""
 "Exibe o grupo de preços completo onde um widget mostra o preço de um "
 "produto."
@@ -1527,11 +1548,11 @@ msgstr ""
 msgid "Grande"
 msgstr ""
 
-#: admin/src/Integrations/Elementor.php:99
+#: admin/src/Integrations/Elementor.php:103
 msgid "Grupo de preços dentro dos widgets"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1039
+#: admin/src/Admin/Settings/Registry.php:1050
 msgid "Headless"
 msgstr ""
 
@@ -1589,7 +1610,7 @@ msgstr ""
 msgid "Importar configurações"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1069
+#: admin/src/Admin/Settings/Registry.php:1080
 msgid "Importar e exportar"
 msgstr ""
 
@@ -1639,7 +1660,17 @@ msgstr ""
 msgid "Instruções do boleto"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1017
+#: app/src/components/integrations/IntegrationSettingsModal.vue:28
+msgid "Integração"
+msgstr ""
+
+#: admin/src/Integrations/Catalog.php:211
+#: app/src/components/integrations/IntegrationCard.vue:87
+#. translators: %s: the name of the plugin being integrated with.
+msgid "Integração com %s"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:1028
 msgid "Integrações"
 msgstr ""
 
@@ -1686,7 +1717,7 @@ msgid "Juros por parcela"
 msgstr ""
 
 #: app/src/pages/onboarding/OnboardingPage.vue:219
-#: app/src/pages/settings/SettingsPage.vue:227
+#: app/src/pages/settings/SettingsPage.vue:228
 msgid "Ler a documentação"
 msgstr ""
 
@@ -1735,7 +1766,7 @@ msgstr ""
 msgid "Mantém o parcelamento da loja"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1051
+#: admin/src/Admin/Settings/Registry.php:1062
 msgid "Manutenção"
 msgstr ""
 
@@ -1812,7 +1843,7 @@ msgstr ""
 msgid "Modelos de texto de parcelas personalizados"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1056
+#: admin/src/Admin/Settings/Registry.php:1067
 msgid "Modo de depuração"
 msgstr ""
 
@@ -1820,11 +1851,11 @@ msgstr ""
 msgid "Modo de depuração do WordPress"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1044
+#: admin/src/Admin/Settings/Registry.php:1055
 msgid "Modo headless"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1035
+#: admin/src/Admin/Settings/Registry.php:1046
 msgid "Modo headless, manutenção e dados."
 msgstr ""
 
@@ -1942,7 +1973,7 @@ msgstr ""
 msgid "Não foi possível exibir esta seção. Recarregue a página e tente novamente."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:199
+#: app/src/pages/settings/SettingsPage.vue:200
 msgid "Não foi possível exportar as configurações."
 msgstr ""
 
@@ -1955,7 +1986,7 @@ msgid "Não foi possível iniciar esta tela. Recarregue a página."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:65
-#: app/src/pages/settings/SettingsPage.vue:212
+#: app/src/pages/settings/SettingsPage.vue:213
 msgid "Não foi possível ler esse arquivo como configurações."
 msgstr ""
 
@@ -1996,7 +2027,7 @@ msgid ""
 "produto ou informe um: [wc_custom_installments_group product=\"123\"]."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1009
+#: admin/src/Admin/Settings/Registry.php:1013
 msgid "Não instalado"
 msgstr ""
 
@@ -2147,7 +2178,7 @@ msgstr ""
 msgid "O que este plugin exibe na sua loja e o que ele precisa de você."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1018
+#: admin/src/Admin/Settings/Registry.php:1029
 msgid ""
 "O que o plugin faz ao lado de cada plugin que você já usa. As opções "
 "continuam aqui mesmo quando o outro plugin está desativado, para que nada "
@@ -2325,7 +2356,7 @@ msgid ""
 "vazia é oferecida sem juros."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1040
+#: admin/src/Admin/Settings/Registry.php:1051
 msgid ""
 "Para lojas com um frontend próprio, que leem os preços pela Store API do "
 "WooCommerce."
@@ -2358,7 +2389,7 @@ msgstr ""
 #: admin/src/Admin/Menu.php:71
 #: admin/src/Admin/Product_Settings.php:410
 #: admin/src/Admin/Product_Settings.php:503
-#: admin/src/Integrations/Elementor.php:116
+#: admin/src/Integrations/Elementor.php:120
 #: app/src/components/layout/PageHeader.vue:24
 msgid "Parcelas Customizadas"
 msgstr ""
@@ -2427,7 +2458,7 @@ msgid "Por padrão, a variação usa o desconto definido no produto."
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:307
-#: admin/src/Admin/Settings/Registry.php:1144
+#: admin/src/Admin/Settings/Registry.php:1155
 msgid "Porcentagem"
 msgstr ""
 
@@ -2669,11 +2700,11 @@ msgstr ""
 msgid "Reescrever o preço exibido"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1057
+#: admin/src/Admin/Settings/Registry.php:1068
 msgid "Registra detalhes adicionais em WooCommerce > Status > Logs."
 msgstr ""
 
-#: admin/src/Integrations/Elementor.php:94
+#: admin/src/Integrations/Elementor.php:98
 msgid "Registra os widgets do plugin no editor do Elementor."
 msgstr ""
 
@@ -2784,7 +2815,7 @@ msgstr ""
 msgid "Se o desconto por quantidade é uma porcentagem ou um valor fixo."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:240
+#: app/src/pages/settings/SettingsPage.vue:241
 msgid "Seções de configurações"
 msgstr ""
 
@@ -2906,11 +2937,11 @@ msgstr ""
 msgid "Solicitando…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1112
+#: admin/src/Admin/Settings/Registry.php:1123
 msgid "Somente a listagem de produtos"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1111
+#: admin/src/Admin/Settings/Registry.php:1122
 msgid "Somente a página do produto"
 msgstr ""
 
@@ -2923,7 +2954,7 @@ msgstr ""
 msgid "Somente para esta forma de pagamento"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1063
+#: admin/src/Admin/Settings/Registry.php:1074
 msgid "Status do sistema"
 msgstr ""
 
@@ -3174,7 +3205,7 @@ msgstr ""
 msgid "Transferências:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:1070
+#: admin/src/Admin/Settings/Registry.php:1081
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr ""
 
@@ -3297,7 +3328,7 @@ msgid "Valor do desconto por quantidade"
 msgstr ""
 
 #: admin/src/Admin/Product_Settings.php:308
-#: admin/src/Admin/Settings/Registry.php:1145
+#: admin/src/Admin/Settings/Registry.php:1156
 msgid "Valor fixo"
 msgstr ""
 
@@ -3327,6 +3358,10 @@ msgstr ""
 msgid "Veja o que o Pro adiciona"
 msgstr ""
 
+#: app/src/components/integrations/IntegrationCard.vue:92
+msgid "Ver"
+msgstr ""
+
 #: app/src/components/fields/FieldGroup.vue:41
 msgid "Ver o plugin"
 msgstr ""
@@ -3335,7 +3370,7 @@ msgstr ""
 msgid "Ver sua loja"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:232
+#: app/src/pages/settings/SettingsPage.vue:233
 msgid "Versão %s"
 msgstr ""
 
@@ -3380,11 +3415,11 @@ msgstr ""
 msgid "Widgets adicionais do Elementor"
 msgstr ""
 
-#: admin/src/Integrations/Elementor.php:93
+#: admin/src/Integrations/Elementor.php:97
 msgid "Widgets do Elementor"
 msgstr ""
 
-#: admin/src/Integrations/Elementor.php:86
+#: admin/src/Integrations/Elementor.php:90
 msgid ""
 "Widgets do plugin no editor, e o grupo de preços dentro dos widgets de "
 "produto."

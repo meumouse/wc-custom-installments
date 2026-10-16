@@ -24,6 +24,7 @@ import SettingsActionBar from '../../components/layout/SettingsActionBar.vue';
 import SettingsPanel from '../../components/layout/SettingsPanel.vue';
 import ProUpsellModal from '../../components/pro/ProUpsellModal.vue';
 import ExternalSection from '../../components/sections/ExternalSection.vue';
+import IntegrationsSection from '../../components/integrations/IntegrationsSection.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import { isVisible, useSettings } from '../../composables/useSettings';
 import { useToasts } from '../../composables/useToasts';
@@ -251,8 +252,17 @@ async function onImport(document_) {
         {{ currentSection.description }}
       </p>
 
+      <IntegrationsSection
+        v-if="currentSection.component === 'integrations'"
+        :cards="visibleCards"
+        :settings="settings"
+        :context="fieldContext"
+        :is-visible="isVisible"
+        @locked-click="upsellField = $event"
+      />
+
       <ExternalSection
-        v-if="currentSection.component"
+        v-else-if="currentSection.component"
         :key="currentSection.id"
         :name="currentSection.component"
         :context="sectionContext"

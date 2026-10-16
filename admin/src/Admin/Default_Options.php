@@ -277,6 +277,14 @@ class Default_Options {
 	 */
 	private static function integrations() {
 		return array(
+			// The master switch of each card, which `Integrations\Catalog`
+			// names. A store that has the other plugin wants the integration.
+			'integration_elementor_enabled' => 'yes',
+			'integration_rank_math_enabled' => 'yes',
+			'integration_tiered_pricing_table_enabled' => 'yes',
+			'integration_dynamic_pricing_discounts_enabled' => 'yes',
+			'integration_role_based_pricing_enabled' => 'yes',
+
 			'enable_elementor_widgets' => 'yes',
 			'enable_price_grid_in_widgets' => 'yes',
 			'integration_tiered_pricing_use_tier_price' => 'yes',
