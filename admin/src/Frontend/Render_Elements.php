@@ -311,9 +311,7 @@ class Render_Elements {
 			return;
 		}
 
-		$product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
-
-		if ( 'yes' === get_post_meta( $product_id, '__disable_installments', true ) || ! $product->is_purchasable() ) {
+		if ( Components::is_opted_out( $product, '__disable_installments' ) || ! $product->is_purchasable() ) {
 			return;
 		}
 

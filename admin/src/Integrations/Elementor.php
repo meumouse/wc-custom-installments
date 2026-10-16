@@ -48,7 +48,7 @@ class Elementor {
 	 * @return void
 	 */
 	public function __construct() {
-		if ( ! defined('ELEMENTOR_VERSION') || ! Repository::is_active('enable_elementor_widgets') ) {
+		if ( ! self::is_active() || ! Repository::is_active('enable_elementor_widgets') ) {
 			return;
 		}
 
@@ -59,6 +59,48 @@ class Elementor {
 		// product the template itself names comes first.
 		add_filter( 'WC_Custom_Installments/Assets/Set_Product_Id', array( $this, 'set_preview_product' ), 5 );
 		add_filter( 'WC_Custom_Installments/Product/Set_Product', array( $this, 'set_preview_product_object' ), 5 );
+	}
+
+
+	/**
+	 * Whether Elementor is active.
+	 *
+	 * @since 6.0.0
+	 * @return bool
+	 */
+	public static function is_active() {
+		return defined('ELEMENTOR_VERSION');
+	}
+
+
+	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'elementor',
+			'title' => 'Elementor',
+			'description' => __( 'Widgets do plugin no editor, e o grupo de preços dentro dos widgets de produto.', 'wc-custom-installments' ),
+			'url' => 'https://wordpress.org/plugins/elementor/',
+			'active' => self::is_active(),
+			'fields' => array(
+				array(
+					'type' => 'toggle',
+					'key' => 'enable_elementor_widgets',
+					'label' => __( 'Widgets do Elementor', 'wc-custom-installments' ),
+					'description' => __( 'Registra os widgets do plugin no editor do Elementor.', 'wc-custom-installments' ),
+				),
+				array(
+					'type' => 'toggle',
+					'key' => 'enable_price_grid_in_widgets',
+					'label' => __( 'Grupo de preços dentro dos widgets', 'wc-custom-installments' ),
+					'description' => __( 'Exibe o grupo de preços completo onde um widget mostra o preço de um produto.', 'wc-custom-installments' ),
+				),
+			),
+		);
 	}
 
 

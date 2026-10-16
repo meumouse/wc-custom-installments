@@ -1,14 +1,17 @@
 <?php
 
 /**
- * The gate that keeps a hidden price hidden.
+ * The integrations: the catalogue, the settings tab and the two gates.
  *
- * Everything the plugin prints is derived from the price, and a store can be
- * told by another plugin to show no prices at all. There is one gate for that,
- * `Helpers::is_price_visible()`, and what matters is its reach: a gate the
- * instalment list honours while the payment methods block, the Store API and
- * the storefront runtime parameters ignore it would leak the price it was
- * meant to withhold, and nothing would report it.
+ * Both gates matter for their reach rather than their logic. Everything the
+ * plugin prints is derived from the price, so a gate the instalment list
+ * honours while the payment methods block, the Store API and the storefront
+ * runtime parameters ignore would leak exactly what the store asked to
+ * withhold, and nothing would report it.
+ *
+ * The catalogue is checked against the schema, because a field an integration
+ * declares and the schema never carries can be neither written nor seen, and a
+ * default with no field sits at that value forever.
  *
  * Run it with any PHP 8.1+ binary:
  *
@@ -18,12 +21,15 @@
  */
 
 require_once __DIR__ . '/bootstrap.php';
-require_once __DIR__ . '/../admin/src/Integrations/Role_Based_Pricing.php';
 
+use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Engine\Calculate_Installments;
+use MeuMouse\WC_Custom_Installments\Engine\Calculate_Values;
 use MeuMouse\WC_Custom_Installments\Frontend\Components;
+use MeuMouse\WC_Custom_Installments\Integrations\Catalog;
 use MeuMouse\WC_Custom_Installments\Integrations\Role_Based_Pricing;
 use MeuMouse\WC_Custom_Installments\Integrations\Store_Api;
 
@@ -79,7 +85,82 @@ function set_hide_prices( $hide ) {
 	update_option( Role_Based_Pricing::HIDE_PRICES_OPTION, $hide ? 'yes' : 'no' );
 }
 
+/**
+ * Overwrite some settings, leaving the rest as they are.
+ *
+ * Straight to the option: `save_settings()` reads an absent toggle as "off",
+ * which would switch off everything the test did not mention.
+ *
+ * @param array<string,mixed> $values | Setting name => value
+ * @return void
+ */
+function set_settings( $values ) {
+	update_option( Repository::OPTION, array_merge( (array) get_option( Repository::OPTION, array() ), $values ) );
+}
+
+/**
+ * The one section the integrations tab is.
+ *
+ * @return array<string,mixed>
+ */
+function integrations_section() {
+	foreach ( Registry::get_schema() as $section ) {
+		if ( 'integrations' === ( $section['id'] ?? '' ) ) {
+			return $section;
+		}
+	}
+
+	return array();
+}
+
 $product = wc_test_product( 300 );
+
+echo PHP_EOL, 'The catalogue', PHP_EOL;
+
+$catalog = Catalog::all();
+$ids = array_column( $catalog, 'id' );
+
+check( 'lists every integration that has something to decide', array(
+	'elementor',
+	'rank_math',
+	'tiered_pricing_table',
+	'dynamic_pricing_discounts',
+	'role_based_pricing',
+), $ids );
+
+check( 'each one names itself', true, '' === implode( '', array_filter( array_column( $catalog, 'title' ), static fn( $title ) => '' === $title ) ) );
+check( 'each one declares at least one action', array(), array_values( array_filter( $catalog, static fn( $one ) => empty( $one['fields'] ) ) ) );
+check( 'none is detected on a store with none of them installed', array(), array_values( array_filter( $ids, 'MeuMouse\\WC_Custom_Installments\\Integrations\\Catalog::is_detected' ) ) );
+
+echo PHP_EOL, 'The integrations tab', PHP_EOL;
+
+$section = integrations_section();
+$cards = (array) ( $section['cards'] ?? array() );
+
+check( 'is a section of its own', 'integrations', $section['id'] ?? '' );
+check( 'with an icon the app maps', 'extension', $section['icon'] ?? '' );
+check( 'and one card per integration', count( $catalog ), count( $cards ) );
+check( 'each card named after its integration', array_column( $catalog, 'title' ), array_column( $cards, 'title' ) );
+check( 'each card says the plugin was not found', array( 'Não instalado' ), array_unique( array_column( array_column( $cards, 'badge' ), 'text' ) ) );
+
+$definitions = Registry::get_field_definitions();
+$declared = array_column( Catalog::fields(), 'key' );
+$missing = array_values( array_diff( $declared, array_keys( $definitions ) ) );
+
+check( 'every declared field reached the schema', array(), $missing );
+
+$defaults = Default_Options::get_defaults();
+$undefaulted = array_values( array_filter( $declared, static fn( $key ) => ! array_key_exists( $key, $defaults ) ) );
+
+check( 'and every one has a default', array(), $undefaulted );
+check( 'the compatibility behaviours are on by default', 'yes', $defaults['integration_tiered_pricing_use_tier_price'] ?? '' );
+check( 'respecting hidden prices too', 'yes', $defaults['integration_role_pricing_respect_hidden_prices'] ?? '' );
+check( 'while the two suspensions start off', array( 'no', 'no' ), array(
+	$defaults['integration_role_pricing_hide_installments'] ?? '',
+	$defaults['integration_role_pricing_hide_discount'] ?? '',
+) );
+check( 'a Pro field in the tab is still locked', true, ! empty( $definitions['display_discount_price_schema']['locked'] ) );
+check( 'and a free one is not', false, ! empty( $definitions['enable_elementor_widgets']['locked'] ) );
 
 echo PHP_EOL, 'The gate on its own', PHP_EOL;
 
@@ -154,6 +235,58 @@ set_hide_prices( false );
 check( 'and an unset option shows the plan', true, Helpers::is_price_visible( $product ) );
 
 \MeowCrew\RoleAndCustomerBasedPricing\Core\ServiceContainer::$reachable = true;
+
+echo PHP_EOL, 'Withholding the plan and the discount for a rule', PHP_EOL;
+
+// The two suspensions ride on the opt-outs a store owner sets per product, so
+// what matters is that answering for a rule reaches everything the stored
+// opt-out reaches - every element and the Store API alike.
+$priced = wc_test_product( 300, array( 'id' => 70 ) );
+$plain = wc_test_product( 300, array( 'id' => 71 ) );
+$variable = wc_test_product( 300, array(
+	'id' => 72,
+	'type' => 'variable',
+	'children' => array( 73, 74 ),
+	'variation_prices' => array( 'price' => array( 73 => 300.0, 74 => 400.0 ), 'regular_price' => array( 73 => 300.0, 74 => 400.0 ) ),
+) );
+
+$GLOBALS['rcbp_test_rules'] = array( 70, 74 );
+Role_Based_Pricing::flush();
+
+check( 'a rule is seen on the product that has one', true, Role_Based_Pricing::prices_product( $priced ) );
+check( 'and not on the one that has none', false, Role_Based_Pricing::prices_product( $plain ) );
+check( 'a variable product is priced when a variation is', true, Role_Based_Pricing::prices_product( $variable ) );
+
+check( 'while the setting is off the plan still shows', false, Components::is_opted_out( $priced, '__disable_installments' ) );
+
+set_settings( array( 'integration_role_pricing_hide_installments' => 'yes' ) );
+
+check( 'switched on, the priced product reads as opted out', true, Components::is_opted_out( $priced, '__disable_installments' ) );
+check( 'and the Store API carries no instalments for it', array(), Store_Api::build_product_data( $priced, 'strval' )['installments'] );
+check( 'the product with no rule keeps its plan', false, Components::is_opted_out( $plain, '__disable_installments' ) );
+check( 'and the Store API still carries it', 12, count( Store_Api::build_product_data( $plain, 'strval' )['installments'] ) );
+check( 'the upfront discount is untouched by this one', false, Components::is_opted_out( $priced, '__disable_discount_main_price' ) );
+// 10% off 300, through the `strval` formatter this harness passes in place of
+// the Store API's own minor-unit one.
+check( 'so the Store API still prices it upfront', '270', Store_Api::build_product_data( $priced, 'strval' )['discounts']['main']['price'] ?? null );
+
+set_settings( array( 'integration_role_pricing_hide_discount' => 'yes' ) );
+
+check( 'the second switch opts the same product out of the discount', true, Components::is_opted_out( $priced, '__disable_discount_main_price' ) );
+check( 'the Store API drops the upfront price', null, Store_Api::build_product_data( $priced, 'strval' )['discounts']['main'] );
+check( 'and the price engine stops discounting it', 300.0, Calculate_Values::get_discounted_price( $priced ) );
+check( 'while the product with no rule is still discounted', 270.0, Calculate_Values::get_discounted_price( $plain ) );
+
+set_settings( array(
+	'integration_role_pricing_hide_installments' => 'no',
+	'integration_role_pricing_hide_discount' => 'no',
+) );
+Role_Based_Pricing::flush();
+
+check( 'both switched off, nothing is withheld', false, Components::is_opted_out( $priced, '__disable_discount_main_price' ) );
+
+$GLOBALS['rcbp_test_rules'] = array();
+Role_Based_Pricing::flush();
 
 echo PHP_EOL, 'The storefront runtime parameters', PHP_EOL;
 

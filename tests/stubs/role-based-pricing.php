@@ -23,6 +23,31 @@ namespace MeowCrew\RoleAndCustomerBasedPricing {
 	}
 }
 
+namespace MeowCrew\RoleAndCustomerBasedPricing {
+
+	/**
+	 * The rule dispatcher, answering from `$GLOBALS['rcbp_test_rules']`.
+	 *
+	 * The real one returns a rule object or false, and gives a rule to simple
+	 * products and variations only - never to a variable parent, which is the
+	 * case the integration has to walk the variations for.
+	 */
+	class PricingRulesDispatcher {
+
+		/**
+		 * Resolve the rule applying to one product.
+		 *
+		 * @param int $productId | Product or variation ID
+		 * @return object|false
+		 */
+		public static function dispatchRule( $productId ) {
+			return in_array( (int) $productId, (array) ( $GLOBALS['rcbp_test_rules'] ?? array() ), true )
+				? new \stdClass()
+				: false;
+		}
+	}
+}
+
 namespace MeowCrew\RoleAndCustomerBasedPricing\Settings {
 
 	/**

@@ -5,6 +5,7 @@ namespace MeuMouse\WC_Custom_Installments\Engine;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Frontend\Components;
 
 defined('ABSPATH') || exit;
 
@@ -308,6 +309,10 @@ class Calculate_Values {
 			return 0;
 		}
 
+		if ( Components::is_opted_out( $product, '__disable_discount_main_price' ) ) {
+			return $product->is_type('variable') ? (float) $product->get_variation_price( 'min', true ) : (float) $product->get_price();
+		}
+
 		if ( $product->is_type('variable') ) {
 			$lowest = self::get_lowest_variation_discount( $product, $discount_type );
 
@@ -349,7 +354,7 @@ class Calculate_Values {
 			return null;
 		}
 
-		if ( 'yes' === get_post_meta( $product->get_id(), '__disable_discount_main_price', true ) ) {
+		if ( Components::is_opted_out( $product, '__disable_discount_main_price' ) ) {
 			return null;
 		}
 
@@ -402,6 +407,11 @@ class Calculate_Values {
 		}
 
 		if ( $product_id && $parent_product_id ) {
+			// By ID, and not through `Components::is_opted_out()`: this runs
+			// once per variation inside a loop that warmed the whole meta cache
+			// in one query, and resolving a product object for each would undo
+			// that. The product's own opt-out, filter included, is answered by
+			// the callers, which have the object.
 			if ( 'yes' === get_post_meta( $product_id, '__disable_discount_main_price', true ) ) {
 				return $price;
 			}
@@ -471,10 +481,7 @@ class Calculate_Values {
 		$product_id = $product->get_id();
 		$parent_id = $product->get_parent_id();
 
-		$disabled = 'yes' === get_post_meta( $product_id, '__disable_discount_main_price', true );
-		$disabled_in_parent = 'yes' === get_post_meta( $parent_id, '__disable_discount_main_price', true );
-
-		if ( $disabled || $disabled_in_parent ) {
+		if ( Components::is_opted_out( $product, '__disable_discount_main_price' ) ) {
 			return $product->get_price() * $quantity;
 		}
 
@@ -516,7 +523,7 @@ class Calculate_Values {
 			$quantity = $cart_item['quantity'];
 			$parent_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
 
-			if ( 'yes' === get_post_meta( $parent_id, '__disable_discount_main_price', true ) ) {
+			if ( Components::is_opted_out( $product, '__disable_discount_main_price' ) ) {
 				continue;
 			}
 

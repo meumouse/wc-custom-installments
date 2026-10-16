@@ -265,6 +265,8 @@ async function onImport(document_) {
           :title="card.title"
           :description="card.description"
           :locked="Boolean(card.locked)"
+          :badge="card.badge || null"
+          :url="card.url || ''"
         >
           <SystemStatusCard
             v-if="card.component === 'system-status'"

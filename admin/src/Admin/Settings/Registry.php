@@ -4,6 +4,7 @@ namespace MeuMouse\WC_Custom_Installments\Admin\Settings;
 
 use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Integrations\Catalog;
 
 defined('ABSPATH') || exit;
 
@@ -64,6 +65,7 @@ class Registry {
 			self::section_payment_methods(),
 			self::section_texts(),
 			self::section_styles(),
+			self::section_integrations(),
 			self::section_advanced(),
 		);
 
@@ -962,7 +964,65 @@ class Registry {
 
 
 	/**
-	 * Advanced section.
+	 * Build the integrations section, one card per integration.
+	 *
+	 * The cards come from `Integrations\Catalog`, so the schema carries no list
+	 * of its own and an integration stays one file. Every card is built whether
+	 * or not the other plugin is installed: the field definitions are read from
+	 * this schema, and a field that vanished with a deactivated plugin would
+	 * stop being writable and leave the store's choice stranded.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	private static function section_integrations() {
+		$cards = array();
+
+		foreach ( Catalog::all() as $integration ) {
+			$fields = array();
+
+			foreach ( (array) $integration['fields'] as $described ) {
+				if ( empty( $described['key'] ) || empty( $described['type'] ) ) {
+					continue;
+				}
+
+				$fields[] = self::field(
+					$described['type'],
+					$described['key'],
+					$described['label'] ?? '',
+					$described['description'] ?? '',
+					array_diff_key( $described, array_flip( array( 'type', 'key', 'label', 'description' ) ) )
+				);
+			}
+
+			if ( ! $fields ) {
+				continue;
+			}
+
+			$cards[] = array(
+				'id' => 'integration-' . str_replace( '_', '-', $integration['id'] ),
+				'title' => $integration['title'],
+				'description' => $integration['description'],
+				'url' => $integration['url'],
+				'badge' => $integration['active']
+					? array( 'tone' => 'success', 'icon' => 'check-circle', 'text' => __( 'Detectado', 'wc-custom-installments' ) )
+					: array( 'tone' => 'neutral', 'icon' => 'info-circle', 'text' => __( 'Não instalado', 'wc-custom-installments' ) ),
+				'fields' => $fields,
+			);
+		}
+
+		return array(
+			'id' => 'integrations',
+			'icon' => 'extension',
+			'title' => __( 'Integrações', 'wc-custom-installments' ),
+			'description' => __( 'O que o plugin faz ao lado de cada plugin que você já usa. As opções continuam aqui mesmo quando o outro plugin está desativado, para que nada se perca ao reativá-lo.', 'wc-custom-installments' ),
+			'cards' => $cards,
+		);
+	}
+
+
+	/**
+	 * Build the advanced section.
 	 *
 	 * @since 6.0.0
 	 * @return array<string,mixed>
@@ -972,37 +1032,8 @@ class Registry {
 			'id' => 'advanced',
 			'icon' => 'cog',
 			'title' => __( 'Avançado', 'wc-custom-installments' ),
-			'description' => __( 'Integrações, dados estruturados e manutenção.', 'wc-custom-installments' ),
+			'description' => __( 'Modo headless, manutenção e dados.', 'wc-custom-installments' ),
 			'cards' => array(
-				array(
-					'id' => 'advanced-integrations',
-					'title' => __( 'Integrações', 'wc-custom-installments' ),
-					'description' => __( 'Construtores de páginas e plugins de SEO.', 'wc-custom-installments' ),
-					'fields' => array(
-						self::toggle(
-							'enable_elementor_widgets',
-							__( 'Widgets do Elementor', 'wc-custom-installments' ),
-							__( 'Registra os widgets do plugin no editor do Elementor.', 'wc-custom-installments' )
-						),
-						self::toggle(
-							'enable_price_grid_in_widgets',
-							__( 'Grupo de preços dentro dos widgets', 'wc-custom-installments' ),
-							__( 'Exibe o grupo de preços completo onde um widget mostra o preço de um produto.', 'wc-custom-installments' )
-						),
-						self::toggle(
-							'display_discount_price_schema',
-							__( 'Preço com desconto nos dados estruturados', 'wc-custom-installments' ),
-							__( 'Informa aos buscadores o preço com desconto em vez do preço de tabela.', 'wc-custom-installments' ),
-							array( 'feature' => 'seo_schema' )
-						),
-						self::toggle(
-							'enable_post_meta_feed_xml_price',
-							__( 'Preço com desconto nos feeds de produtos', 'wc-custom-installments' ),
-							__( 'Armazena o preço com desconto em um metadado para os plugins de feed de compras lerem.', 'wc-custom-installments' ),
-							array( 'feature' => 'seo_schema' )
-						),
-					),
-				),
 				array(
 					'id' => 'advanced-headless',
 					'title' => __( 'Headless', 'wc-custom-installments' ),

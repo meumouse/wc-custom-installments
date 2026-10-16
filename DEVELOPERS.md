@@ -368,7 +368,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_83 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_85 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -417,6 +417,7 @@ _83 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Installments/Get_Fee_Fixed` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Installments/With_Fees` | filter | `Woo_Custom_Installments/Installments/With_Fees` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Without_Fee` | filter | `Woo_Custom_Installments/Installments/Without_Fee` | `admin/src/Engine/Calculate_Values.php` |
+| `WC_Custom_Installments/Integrations/Catalog` | filter | — | `admin/src/Integrations/Catalog.php` |
 | `WC_Custom_Installments/Integrations/Theme_Rules` | filter | — | `admin/src/Integrations/Theme_Compatibility.php` |
 | `WC_Custom_Installments/Migrate/Completed` | action | — | `admin/src/Core/Migrator.php` |
 | `WC_Custom_Installments/Migrate/Settings` | filter | — | `admin/src/Core/Migrator.php` |
@@ -442,6 +443,7 @@ _83 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Product/Discount_Rule` | filter | — | `admin/src/Engine/Product_Config.php` |
 | `WC_Custom_Installments/Product/Installments_Config` | filter | — | `admin/src/Engine/Product_Config.php` |
 | `WC_Custom_Installments/Product/Is_Available` | filter | `Woo_Custom_Installments/Product/Is_Available` | `admin/src/Core/Helpers.php` |
+| `WC_Custom_Installments/Product/Opted_Out` | filter | — | `admin/src/Frontend/Components.php` |
 | `WC_Custom_Installments/Product/Price_Visible` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Product/Set_Product` | filter | `Woo_Custom_Installments/Product/Set_Product` | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Settings/Reset` | action | — | `admin/src/Admin/Settings/Repository.php` |

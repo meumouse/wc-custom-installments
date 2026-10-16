@@ -50,6 +50,43 @@ class Rank_Math {
 
 
 	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * The feed setting is not Rank Math's, but it answers the same question -
+	 * which price the store publishes to somebody else - so it reads better
+	 * here than on its own.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'rank_math',
+			'title' => 'Rank Math',
+			'description' => __( 'Qual preço a loja publica para buscadores e feeds de compras.', 'wc-custom-installments' ),
+			'url' => 'https://wordpress.org/plugins/seo-by-rank-math/',
+			'active' => self::is_active(),
+			'fields' => array(
+				array(
+					'type' => 'toggle',
+					'key' => 'display_discount_price_schema',
+					'label' => __( 'Preço com desconto nos dados estruturados', 'wc-custom-installments' ),
+					'description' => __( 'Informa aos buscadores o preço com desconto em vez do preço de tabela.', 'wc-custom-installments' ),
+					'feature' => 'seo_schema',
+				),
+				array(
+					'type' => 'toggle',
+					'key' => 'enable_post_meta_feed_xml_price',
+					'label' => __( 'Preço com desconto nos feeds de produtos', 'wc-custom-installments' ),
+					'description' => __( 'Armazena o preço com desconto em um metadado para os plugins de feed de compras lerem.', 'wc-custom-installments' ),
+					'feature' => 'seo_schema',
+				),
+			),
+		);
+	}
+
+
+	/**
 	 * Put the discounted price into the product's offer.
 	 *
 	 * @since 6.0.0

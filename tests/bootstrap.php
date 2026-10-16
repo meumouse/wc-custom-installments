@@ -732,6 +732,7 @@ if ( ! class_exists('WC_Product') ) {
 				'on_sale' => false,
 				'purchasable' => true,
 				'variation_prices' => array(),
+				'children' => array(),
 			), $data );
 		}
 
@@ -871,6 +872,24 @@ if ( ! class_exists('WC_Product') ) {
 		 */
 		public function get_variation_prices( $display = false ) {
 			return $this->data['variation_prices'];
+		}
+
+
+		/**
+		 * The IDs of the variations a shopper can pick.
+		 *
+		 * Taken from `children` when a test names them, and from the variation
+		 * prices otherwise, which is where most tests describe a variable
+		 * product already.
+		 *
+		 * @return array<int,int>
+		 */
+		public function get_visible_children() {
+			if ( ! empty( $this->data['children'] ) ) {
+				return array_map( 'intval', (array) $this->data['children'] );
+			}
+
+			return array_map( 'intval', array_keys( (array) ( $this->data['variation_prices']['price'] ?? array() ) ) );
 		}
 	}
 }
@@ -1173,6 +1192,16 @@ require_once __DIR__ . '/../admin/src/Campaigns/Resolver.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Values.php';
 require_once __DIR__ . '/../admin/src/Engine/Calculate_Installments.php';
 require_once __DIR__ . '/../admin/src/Admin/Default_Options.php';
+
+// Before the schema: the integrations section is built from the catalogue, and
+// the catalogue asks each integration to describe itself.
+require_once __DIR__ . '/../admin/src/Integrations/Elementor.php';
+require_once __DIR__ . '/../admin/src/Integrations/Rank_Math.php';
+require_once __DIR__ . '/../admin/src/Integrations/Tiered_Pricing_Table.php';
+require_once __DIR__ . '/../admin/src/Integrations/Dynamic_Pricing_Discounts.php';
+require_once __DIR__ . '/../admin/src/Integrations/Role_Based_Pricing.php';
+require_once __DIR__ . '/../admin/src/Integrations/Catalog.php';
+
 require_once __DIR__ . '/../admin/src/Admin/Settings/Registry.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Repository.php';
 require_once __DIR__ . '/../admin/src/Admin/Settings/Transfer.php';

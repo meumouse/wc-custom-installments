@@ -86,13 +86,28 @@ class Components {
 			return false;
 		}
 
-		if ( 'yes' === get_post_meta( $product->get_id(), $meta_key, true ) ) {
-			return true;
+		$opted_out = 'yes' === get_post_meta( $product->get_id(), $meta_key, true );
+
+		if ( ! $opted_out ) {
+			$parent_id = $product->get_parent_id();
+			$opted_out = $parent_id && 'yes' === get_post_meta( $parent_id, $meta_key, true );
 		}
 
-		$parent_id = $product->get_parent_id();
-
-		return $parent_id && 'yes' === get_post_meta( $parent_id, $meta_key, true );
+		/**
+		 * Filter whether a product opted out of an element.
+		 *
+		 * Where the stored opt-out answers for one product a store owner
+		 * ticked, this answers for a rule: an integration opts out every
+		 * product another plugin prices, and every element and the Store API
+		 * follow, because they all ask here.
+		 *
+		 * @since 6.0.0
+		 * @param bool $opted_out | Whether the product is opted out
+		 * @param object $product | Product object
+		 * @param string $meta_key | The opt-out being asked about
+		 * @return bool
+		 */
+		return (bool) apply_filters( 'WC_Custom_Installments/Product/Opted_Out', $opted_out, $product, $meta_key );
 	}
 
 

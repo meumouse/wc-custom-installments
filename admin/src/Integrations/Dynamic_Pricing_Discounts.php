@@ -2,6 +2,8 @@
 
 namespace MeuMouse\WC_Custom_Installments\Integrations;
 
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -43,6 +45,31 @@ class Dynamic_Pricing_Discounts {
 
 
 	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'dynamic_pricing_discounts',
+			'title' => 'Dynamic Pricing & Discounts',
+			'description' => __( 'Regras de preço aplicadas na exibição.', 'wc-custom-installments' ),
+			'url' => 'https://wordpress.org/plugins/rp-woocommerce-dynamic-pricing-discounts/',
+			'active' => self::is_active(),
+			'fields' => array(
+				array(
+					'type' => 'toggle',
+					'key' => 'integration_dynamic_pricing_use_adjusted_price',
+					'label' => __( 'Calcular as parcelas pelo preço ajustado', 'wc-custom-installments' ),
+					'description' => __( 'Monta o plano a partir do preço que aquele plugin ajustou, que é o preço que o cliente vai pagar. Em um produto variável, parte do preço da variação mais barata.', 'wc-custom-installments' ),
+				),
+			),
+		);
+	}
+
+
+	/**
 	 * Use the plugin's adjusted price.
 	 *
 	 * A variable product is priced from its cheapest variation, as in 5.x: the
@@ -57,6 +84,10 @@ class Dynamic_Pricing_Discounts {
 	 */
 	public function set_adjusted_price( $price, $product ) {
 		if ( ! $product instanceof \WC_Product || ! self::is_active() ) {
+			return $price;
+		}
+
+		if ( ! Repository::is_active('integration_dynamic_pricing_use_adjusted_price') ) {
 			return $price;
 		}
 

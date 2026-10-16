@@ -43,6 +43,7 @@ Ele exibe o parcelamento abaixo do preço do produto, na listagem da loja e na p
 * Compatibilidade com Astra, Woodmart, XStore, Shoptimizer, Machic e Ricky
 * Funciona junto com Tiered Pricing Table, Dynamic Pricing & Discounts, Role Based Pricing for Woo e Rank Math
 * Respeita lojas que escondem os preços: com o Role Based Pricing for Woo escondendo o preço de quem não está logado, nenhum elemento do plugin devolve esse preço
+* Uma aba de Integrações nas configurações, com um cartão por plugin integrado, dizendo se ele foi encontrado e o que você decide sobre ele
 * Um assistente de configuração que deixa uma loja nova exibindo parcelas em cerca de um minuto
 * Ajustes por produto, no painel do produto e na edição rápida
 

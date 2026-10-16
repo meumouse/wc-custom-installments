@@ -8,6 +8,7 @@ use MeuMouse\WC_Custom_Installments\Core\Features;
 use MeuMouse\WC_Custom_Installments\Core\Helpers;
 use MeuMouse\WC_Custom_Installments\Core\Scripts;
 use MeuMouse\WC_Custom_Installments\Engine\Product_Config;
+use MeuMouse\WC_Custom_Installments\Frontend\Components;
 
 defined('ABSPATH') || exit;
 
@@ -306,6 +307,18 @@ class Storefront_Assets extends Abstract_Assets {
 	 * @return array<string,mixed>
 	 */
 	private function discount_params( $product ) {
+		// A product opted out of the upfront discount - by its own setting or
+		// by an integration answering for a rule - must not have the runtime
+		// repaint one as the quantity changes.
+		if ( $product instanceof \WC_Product && Components::is_opted_out( $product, '__disable_discount_main_price' ) ) {
+			return array_merge( array(
+				'pix_discount' => 0,
+				'pix_discount_method' => Repository::get('product_price_discount_method'),
+				'slip_bank_discount' => 0,
+				'slip_bank_method' => Repository::get('discount_method_ticket'),
+			), self::discount_rule_params( null ) );
+		}
+
 		$discounts = array(
 			'pix_discount' => Repository::is_active('enable_all_discount_options') ? (float) Repository::get('discount_main_price') : 0,
 			'pix_discount_method' => Repository::get('product_price_discount_method'),

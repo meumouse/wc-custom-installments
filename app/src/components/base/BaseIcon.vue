@@ -33,6 +33,7 @@ import CreditCard from '@boxicons/vue/CreditCard';
 import Crown from '@boxicons/vue/Crown';
 import Discount from '@boxicons/vue/Discount';
 import Edit from '@boxicons/vue/Edit';
+import Extension from '@boxicons/vue/Extension';
 import Image from '@boxicons/vue/Image';
 import InfoCircle from '@boxicons/vue/InfoCircle';
 import Key from '@boxicons/vue/Key';
@@ -78,6 +79,7 @@ const ICONS = {
   crown: Crown,
   discount: Discount,
   edit: Edit,
+  extension: Extension,
   image: Image,
   'info-circle': InfoCircle,
   key: Key,

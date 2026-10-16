@@ -48,6 +48,7 @@ class Default_Options {
 			self::payment_methods(),
 			self::texts(),
 			self::styles(),
+			self::integrations(),
 			self::advanced()
 		);
 
@@ -255,10 +256,34 @@ class Default_Options {
 	 */
 	private static function advanced() {
 		return array(
-			'enable_elementor_widgets' => 'yes',
-			'enable_price_grid_in_widgets' => 'yes',
 			'enable_debug_mode' => 'no',
 			'headless_mode' => 'no',
+		);
+	}
+
+
+	/**
+	 * What the plugin does alongside each plugin it integrates with.
+	 *
+	 * The compatibility behaviours are on by default: a store that installed
+	 * both plugins wants them working together, and a behaviour a store owner
+	 * had to find and switch on would read as a bug until they did.
+	 *
+	 * The two suspensions are off, because they withhold something the store is
+	 * showing today.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	private static function integrations() {
+		return array(
+			'enable_elementor_widgets' => 'yes',
+			'enable_price_grid_in_widgets' => 'yes',
+			'integration_tiered_pricing_use_tier_price' => 'yes',
+			'integration_dynamic_pricing_use_adjusted_price' => 'yes',
+			'integration_role_pricing_respect_hidden_prices' => 'yes',
+			'integration_role_pricing_hide_installments' => 'no',
+			'integration_role_pricing_hide_discount' => 'no',
 
 			// Pro.
 			'display_discount_price_schema' => 'no',

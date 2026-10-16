@@ -2,6 +2,7 @@
 
 namespace MeuMouse\WC_Custom_Installments\Integrations;
 
+use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Frontend\Headless_Mode;
 
 defined('ABSPATH') || exit;
@@ -58,6 +59,31 @@ class Tiered_Pricing_Table {
 
 
 	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * @since 6.0.0
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'tiered_pricing_table',
+			'title' => 'Tiered Pricing Table',
+			'description' => __( 'Preços por faixa de quantidade.', 'wc-custom-installments' ),
+			'url' => 'https://wordpress.org/plugins/tier-pricing-table/',
+			'active' => self::is_active(),
+			'fields' => array(
+				array(
+					'type' => 'toggle',
+					'key' => 'integration_tiered_pricing_use_tier_price',
+					'label' => __( 'Calcular as parcelas pelo preço da faixa', 'wc-custom-installments' ),
+					'description' => __( 'Monta o plano a partir do preço da faixa na quantidade mínima da regra, em vez do preço unitário do produto. Sem isso, um cliente que precisa comprar dez vê o preço da faixa e parcelas calculadas sobre o preço de uma unidade.', 'wc-custom-installments' ),
+				),
+			),
+		);
+	}
+
+
+	/**
 	 * Build the plan from the tier price when one applies.
 	 *
 	 * The price is the tier's at the rule's minimum quantity, as in 5.x: a
@@ -71,6 +97,10 @@ class Tiered_Pricing_Table {
 	 */
 	public function set_tier_price( $price, $product ) {
 		if ( ! $product instanceof \WC_Product || ! self::is_active() ) {
+			return $price;
+		}
+
+		if ( ! Repository::is_active('integration_tiered_pricing_use_tier_price') ) {
 			return $price;
 		}
 
