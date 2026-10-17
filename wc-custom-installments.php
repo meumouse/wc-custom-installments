@@ -3,9 +3,9 @@
 /**
  * Plugin Name: 			Parcelas Customizadas para WooCommerce
  * Description: 			Exiba parcelamentos, descontos e as formas de pagamento aceitas na sua loja WooCommerce.
- * Plugin URI: 				https://meumouse.com/plugins/wc-custom-installments/
+ * Plugin URI: 				https://meumouse.com/plugins/parcelas-customizadas-para-woocommerce/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
  * Author: 					MeuMouse.com
- * Author URI: 				https://meumouse.com/
+ * Author URI: 				https://meumouse.com/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
  * Version: 				6.0.0
  * Requires at least: 		6.5
  * Requires PHP: 			8.1
@@ -17,6 +17,7 @@
  * License: 				GPLv2 or later
  * License URI: 			https://www.gnu.org/licenses/gpl-2.0.html
  * Update URI: 				https://cloud.meumouse.com/v1/products/wc-custom-installments
+ * 
  * @copyright 				2026 MeuMouse.com
  * @license 				GPL-2.0-or-later - See LICENSE for details
  */
