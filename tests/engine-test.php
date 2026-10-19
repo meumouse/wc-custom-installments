@@ -284,6 +284,45 @@ check( 'a lapsed store falls back to the shipped colour', true, str_contains( $l
 check( 'and keeps its spacing', true, str_contains( $lapsed, 'padding:0.65rem 0.85rem 0.65rem 0.85rem' ) );
 check( 'while the customisation stays stored', '#ff0000', Repository::get('elements_design')['discount_pix']['styles']['desktop']['background_color'] );
 
+echo PHP_EOL, 'The stylesheet across the widths', PHP_EOL;
+
+/**
+ * The first width the generated media queries leave out.
+ *
+ * 5.x stopped the mobile rules at 992px and started the desktop ones at
+ * 1024px, so a tablet between the two read the shipped look instead of the
+ * store's own colours — black text and the green Pix pill, right in the
+ * middle of the tablet range.
+ *
+ * @param string $css | The generated stylesheet
+ * @return int | The uncovered width, or zero when every width has a block
+ */
+function uncovered_width( $css ) {
+	preg_match_all( '/@media screen and \((min|max)-width:(\d+)px\)/', $css, $queries, PREG_SET_ORDER );
+
+	for ( $width = 240; $width <= 2560; $width++ ) {
+		$covered = false;
+
+		foreach ( $queries as $query ) {
+			$edge = (int) $query[2];
+
+			if ( ( 'max' === $query[1] && $width <= $edge ) || ( 'min' === $query[1] && $width >= $edge ) ) {
+				$covered = true;
+
+				break;
+			}
+		}
+
+		if ( ! $covered ) {
+			return $width;
+		}
+	}
+
+	return 0;
+}
+
+check( 'the mobile and desktop blocks meet, leaving no width behind', 0, uncovered_width( $styles->build_css() ) );
+
 echo PHP_EOL, 'The discounted price', PHP_EOL;
 
 $sale_selector = '.woo-custom-installments-group .woo-custom-installments-group-main-price .woo-custom-installments-price.has-discount ~ .woo-custom-installments-price.sale-price';

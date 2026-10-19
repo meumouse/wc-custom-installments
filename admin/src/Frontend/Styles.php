@@ -33,6 +33,13 @@ class Styles {
 	/**
 	 * Where the desktop rules start applying.
 	 *
+	 * One pixel past `MOBILE_MAX`, and it has to stay that way. 5.x stopped the
+	 * mobile rules at 992px and started the desktop ones at 1024px, so between
+	 * the two no block applied and the storefront fell back to the shipped
+	 * look — black prices and a green Pix pill, right in the middle of the
+	 * tablet range. `tests/engine-test.php` walks the widths to keep the two
+	 * touching.
+	 *
 	 * @since 6.0.0
 	 * @var string
 	 */
