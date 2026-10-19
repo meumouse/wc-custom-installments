@@ -5,6 +5,12 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- The plugins screen no longer asks api.wordpress.org about this plugin on every load. The Pro add-on requires it by slug, so WordPress looked the dependency up in the directory - where the plugin is not listed yet - and got a 404 it does not cache, repeating the request on every load of the plugins screen and the plugin installer. The lookup is now answered from the plugin's own header, and nothing leaves the site.
+
 ## [6.0.0] - 2026-10-19
 
 First release of the rebuilt plugin. The version continues the numbering of "Parcelas Customizadas para WooCommerce" 5.x, which this plugin replaces.
