@@ -1574,12 +1574,16 @@ msgstr ""
 
 #: wc-custom-installments.php
 #. Author URI of the plugin
-msgid "https://meumouse.com/"
+msgid ""
+"https://meumouse.com/?utm_source=wordpress&utm_medium=plugins_list&utm_"
+"campaign=parcelas_customizadas"
 msgstr ""
 
 #: wc-custom-installments.php
 #. Plugin URI of the plugin
-msgid "https://meumouse.com/plugins/wc-custom-installments/"
+msgid ""
+"https://meumouse.com/plugins/parcelas-customizadas-para-woocommerce/?utm_"
+"source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas"
 msgstr ""
 
 #: app/src/components/fields/ElementDesignField.vue:541
