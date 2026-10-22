@@ -90,6 +90,7 @@ Sim. Em um site configurado em inglês, o plugin aparece como "Custom Installmen
 
 * Escolha em quais páginas da loja o parcelamento e os descontos aparecem: página do produto, listagem, produtos relacionados, resultados de busca, carrinho, finalização de compra e as demais páginas. Disponível com o complemento Pro.
 * Enquanto o plugin não estiver listado no WordPress.org, as atualizações chegam pelo serviço de distribuição da MeuMouse. O plugin continua gratuito: não há licença, chave nem verificação de compra nessa consulta.
+* Novo link "Verificar atualizações" na linha do plugin, em Plugins. O WordPress só procura atualizações duas vezes por dia; agora você pode procurar na hora, e a resposta aparece ali mesmo.
 * A tela de plugins não consulta mais o api.wordpress.org a cada carregamento por causa da dependência declarada pelo complemento Pro.
 
 = 6.0.0 =

@@ -214,6 +214,10 @@ msgstr ""
 msgid "Abrir a configuração"
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:271
+msgid "Abrir a página do plugin"
+msgstr ""
+
 #: app/src/components/fields/ElementDesignField.vue:570
 msgid "Acessar o Font Awesome"
 msgstr ""
@@ -362,6 +366,12 @@ msgstr ""
 msgid "As alterações feitas nesta campanha serão perdidas."
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:268
+msgid ""
+"As atualizações automáticas não estão disponíveis neste site. Baixe a "
+"versão mais recente na sua conta."
+msgstr ""
+
 #: admin/src/Rest/Abstract_Campaign_Route.php:44
 msgid ""
 "As campanhas fazem parte do Parcelas Customizadas Pro. Ative sua licença "
@@ -482,8 +492,18 @@ msgstr ""
 msgid "Ativo"
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:253
+#. translators: %s: version number
+msgid "Atualizar agora"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:332
 msgid "Atualizar o preço com a quantidade"
+msgstr ""
+
+#: admin/src/Distribution/Update_Check.php:253
+#. translators: %s: version number
+msgid "Atualizar para a versão %s"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:517
@@ -1592,6 +1612,10 @@ msgstr ""
 msgid "Grupo de preços dentro dos widgets"
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:249
+msgid "Há uma nova versão do Parcelas Customizadas para WooCommerce disponível."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:1065
 msgid "Headless"
 msgstr ""
@@ -2068,6 +2092,12 @@ msgstr ""
 msgid "Não foi possível salvar. Tente novamente."
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:279
+msgid ""
+"Não foi possível verificar as atualizações agora. Tente novamente em "
+"instantes."
+msgstr ""
+
 #: app/src/pages/onboarding/components/TrialForm.vue:67
 msgid "Não funcionou. Tente novamente."
 msgstr ""
@@ -2199,6 +2229,10 @@ msgstr ""
 msgid ""
 "O pacote de administração do Parcelas Customizadas para WooCommerce está "
 "ausente. Execute \"npm run build\" no diretório app."
+msgstr ""
+
+#: admin/src/Distribution/Update_Check.php:261
+msgid "O Parcelas Customizadas para WooCommerce já está na versão mais recente."
 msgstr ""
 
 #: admin/src/Core/Init.php:435
@@ -3441,6 +3475,14 @@ msgstr ""
 msgid "Ver sua loja"
 msgstr ""
 
+#: admin/src/Distribution/Update_Check.php:103
+msgid "Verificando atualizações…"
+msgstr ""
+
+#: admin/src/Distribution/Update_Check.php:105
+msgid "Verificar atualizações"
+msgstr ""
+
 #: app/src/pages/settings/SettingsPage.vue:233
 msgid "Versão %s"
 msgstr ""
@@ -3459,6 +3501,10 @@ msgstr ""
 
 #: admin/src/Rest/Settings_Bootstrap.php:106
 msgid "Versão do WordPress"
+msgstr ""
+
+#: admin/src/Distribution/Update_Check.php:154
+msgid "Você não tem permissão para atualizar plugins."
 msgstr ""
 
 #: admin/src/Compatibility/Conflict_Guard.php:143

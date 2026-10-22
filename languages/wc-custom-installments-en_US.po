@@ -120,7 +120,7 @@ msgstr "The campaign runs until the last second of this minute."
 msgid "A cor do texto e da borda do botão é obtida a partir desta cor."
 msgstr "The button's text and border colour are taken from this colour."
 
-#: admin/src/Admin/Settings/Registry.php:1135
+#: admin/src/Admin/Settings/Registry.php:1136
 msgid "A listagem de produtos e a página do produto"
 msgstr "The shop loop and the product page"
 
@@ -214,6 +214,10 @@ msgstr "Cash price $87.30 with Pix"
 #: admin/src/Core/Onboarding.php:155
 msgid "Abrir a configuração"
 msgstr "Open the setup"
+
+#: admin/src/Distribution/Update_Check.php:271
+msgid "Abrir a página do plugin"
+msgstr "Open the plugin page"
 
 #: app/src/components/fields/ElementDesignField.vue:570
 msgid "Acessar o Font Awesome"
@@ -357,7 +361,7 @@ msgstr "Take a discount off it"
 msgid "Aprovação imediata"
 msgstr "Approved instantly"
 
-#: admin/src/Integrations/Rank_Math.php:81
+#: admin/src/Integrations/Rank_Math.php:82
 msgid ""
 "Armazena o preço com desconto em um metadado para os plugins de feed de "
 "compras lerem."
@@ -372,6 +376,14 @@ msgstr "Button corner radius"
 #: app/src/pages/campaigns/components/CampaignEditor.vue:656
 msgid "As alterações feitas nesta campanha serão perdidas."
 msgstr "The changes made to this campaign will be lost."
+
+#: admin/src/Distribution/Update_Check.php:268
+msgid ""
+"As atualizações automáticas não estão disponíveis neste site. Baixe a "
+"versão mais recente na sua conta."
+msgstr ""
+"Automatic updates are not available on this site. Download the latest "
+"version from your account."
 
 #: admin/src/Rest/Abstract_Campaign_Route.php:44
 msgid ""
@@ -417,7 +429,7 @@ msgstr "The rules used to build every installment shown on the storefront."
 msgid "As subcategorias entram junto."
 msgstr "Their subcategories are included."
 
-#: admin/src/Admin/Settings/Registry.php:1089
+#: admin/src/Admin/Settings/Registry.php:1090
 msgid ""
 "As versões e os limites do servidor que costumam explicar um problema. "
 "Informe-os ao pedir suporte."
@@ -503,9 +515,19 @@ msgstr ""
 msgid "Ativo"
 msgstr "Active"
 
+#: admin/src/Distribution/Update_Check.php:253
+#. translators: %s: version number
+msgid "Atualizar agora"
+msgstr "Update now"
+
 #: admin/src/Admin/Settings/Registry.php:332
 msgid "Atualizar o preço com a quantidade"
 msgstr "Update the price with the quantity"
+
+#: admin/src/Distribution/Update_Check.php:253
+#. translators: %s: version number
+msgid "Atualizar para a versão %s"
+msgstr "Update to version %s"
 
 #: admin/src/Admin/Settings/Registry.php:517
 msgid ""
@@ -517,7 +539,7 @@ msgstr "Automatically beside the price, or wherever you place the Elementor widg
 msgid "Automaticamente, ao lado do preço"
 msgstr "Automatically, beside the price"
 
-#: admin/src/Admin/Settings/Registry.php:1059
+#: admin/src/Admin/Settings/Registry.php:1060
 msgid "Avançado"
 msgstr "Advanced"
 
@@ -619,11 +641,11 @@ msgstr "Register card brands"
 msgid "Cadastro de bandeiras de cartão"
 msgstr "Card brand registration"
 
-#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:68
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:69
 msgid "Calcular as parcelas pelo preço ajustado"
 msgstr "Build the instalments from the adjusted price"
 
-#: admin/src/Integrations/Tiered_Pricing_Table.php:78
+#: admin/src/Integrations/Tiered_Pricing_Table.php:79
 msgid "Calcular as parcelas pelo preço da faixa"
 msgstr "Build the instalments from the tier price"
 
@@ -918,8 +940,8 @@ msgstr "Settings restored to their defaults."
 msgid "Configurações salvas."
 msgstr "Settings saved."
 
-#: admin/src/Integrations/Catalog.php:191
-#: app/src/components/integrations/IntegrationCard.vue:36
+#: admin/src/Integrations/Catalog.php:198
+#: app/src/components/integrations/IntegrationCard.vue:39
 msgid "Configurar"
 msgstr "Configure"
 
@@ -1019,7 +1041,7 @@ msgstr "Set an amount for each payment method your store accepts."
 msgid "Definir os juros de cada parcela"
 msgstr "Set the interest of each installment"
 
-#: admin/src/Admin/Settings/Registry.php:1070
+#: admin/src/Admin/Settings/Registry.php:1071
 msgid ""
 "Deixa de exibir os elementos do plugin na loja: grupo de preços, parcelas, "
 "formas de pagamento, shortcodes, widgets, estilos e scripts. Os valores "
@@ -1169,7 +1191,7 @@ msgstr "Discounts per quantity"
 msgid "Design dos elementos"
 msgstr "Element design"
 
-#: admin/src/Integrations/Catalog.php:212
+#: admin/src/Integrations/Catalog.php:219
 msgid ""
 "Desligue para que este plugin ignore completamente o outro, mantendo o que "
 "você configurou aqui para quando quiser religar."
@@ -1186,7 +1208,7 @@ msgstr "Highlight how much the customer saves."
 msgid "Detalhes das parcelas"
 msgstr "Installment details"
 
-#: admin/src/Admin/Settings/Registry.php:1077
+#: admin/src/Admin/Settings/Registry.php:1078
 msgid "Diagnóstico e dados."
 msgstr "Diagnostics and data."
 
@@ -1264,7 +1286,7 @@ msgstr "Up to 3x $32.33 interest-free"
 msgid "Em branco, vale o da loja: %s."
 msgstr "Left blank, the store's applies: %s."
 
-#: admin/src/Admin/Settings/Registry.php:1138
+#: admin/src/Admin/Settings/Registry.php:1139
 msgid "Em nenhum lugar"
 msgstr "Nowhere"
 
@@ -1322,7 +1344,7 @@ msgstr ""
 "We found settings from your previous installation and imported them. "
 "Nothing was changed — you can review everything on the settings screen."
 
-#: admin/src/Integrations/Role_Based_Pricing.php:104
+#: admin/src/Integrations/Role_Based_Pricing.php:105
 msgid ""
 "Enquanto o outro plugin estiver escondendo os preços de quem não está "
 "logado, nenhum elemento deste plugin devolve esse preço: nem parcelas, nem "
@@ -1433,7 +1455,7 @@ msgstr ""
 msgid "Este controle faz parte do complemento Pro."
 msgstr "This control comes with the Pro add-on."
 
-#: admin/src/Admin/Settings/Registry.php:1028
+#: admin/src/Admin/Settings/Registry.php:1029
 msgid ""
 "Este plugin não foi encontrado na loja. O que você escolher aqui fica "
 "guardado e passa a valer assim que ele for instalado e ativado."
@@ -1532,7 +1554,7 @@ msgstr "Show the Pix row, with its badge and instructions."
 msgid "Exibe a porcentagem de desconto sobre os produtos em promoção."
 msgstr "Display the discount percentage over products on sale."
 
-#: admin/src/Integrations/Elementor.php:104
+#: admin/src/Integrations/Elementor.php:105
 msgid ""
 "Exibe o grupo de preços completo onde um widget mostra o preço de um "
 "produto."
@@ -1669,11 +1691,15 @@ msgstr "Extra variation triggers"
 msgid "Grande"
 msgstr "Large"
 
-#: admin/src/Integrations/Elementor.php:103
+#: admin/src/Integrations/Elementor.php:104
 msgid "Grupo de preços dentro dos widgets"
 msgstr "Price group inside widgets"
 
-#: admin/src/Admin/Settings/Registry.php:1064
+#: admin/src/Distribution/Update_Check.php:249
+msgid "Há uma nova versão do Parcelas Customizadas para WooCommerce disponível."
+msgstr "A new version of Custom Installments for WooCommerce is available."
+
+#: admin/src/Admin/Settings/Registry.php:1065
 msgid "Headless"
 msgstr "Headless"
 
@@ -1735,7 +1761,7 @@ msgstr "Icon image"
 msgid "Importar configurações"
 msgstr "Import settings"
 
-#: admin/src/Admin/Settings/Registry.php:1094
+#: admin/src/Admin/Settings/Registry.php:1095
 msgid "Importar e exportar"
 msgstr "Import and export"
 
@@ -1761,7 +1787,7 @@ msgstr "Include shipping in the discount"
 msgid "Inferior"
 msgstr "Bottom"
 
-#: admin/src/Integrations/Rank_Math.php:74
+#: admin/src/Integrations/Rank_Math.php:75
 msgid "Informa aos buscadores o preço com desconto em vez do preço de tabela."
 msgstr "Report the discounted price to search engines instead of the list price."
 
@@ -1789,13 +1815,13 @@ msgstr "Bank slip instructions"
 msgid "Integração"
 msgstr "Integration"
 
-#: admin/src/Integrations/Catalog.php:211
-#: app/src/components/integrations/IntegrationCard.vue:102
+#: admin/src/Integrations/Catalog.php:218
+#: app/src/components/integrations/IntegrationCard.vue:105
 #. translators: %s: the name of the plugin being integrated with.
 msgid "Integração com %s"
 msgstr "Integration with %s"
 
-#: admin/src/Admin/Settings/Registry.php:1042
+#: admin/src/Admin/Settings/Registry.php:1043
 msgid "Integrações"
 msgstr "Integrations"
 
@@ -1848,7 +1874,7 @@ msgstr "Interest per installment"
 msgid "Ler a documentação"
 msgstr "Read the documentation"
 
-#: app/src/components/integrations/IntegrationCard.vue:94
+#: app/src/components/integrations/IntegrationCard.vue:97
 msgid "Ligue a integração para acessar as configurações."
 msgstr "Switch the integration on to reach its settings."
 
@@ -1902,7 +1928,7 @@ msgstr "Keeps the store's discount"
 msgid "Mantém o parcelamento da loja"
 msgstr "Keeps the store's installments"
 
-#: admin/src/Admin/Settings/Registry.php:1076
+#: admin/src/Admin/Settings/Registry.php:1077
 msgid "Manutenção"
 msgstr "Maintenance"
 
@@ -1956,7 +1982,7 @@ msgstr "Quantity discount message"
 msgid "Mês anterior"
 msgstr "Previous month"
 
-#: admin/src/Integrations/Role_Based_Pricing.php:116
+#: admin/src/Integrations/Role_Based_Pricing.php:117
 msgid ""
 "Mesma coisa para o desconto à vista, útil quando o preço por cliente já é "
 "um preço negociado."
@@ -1981,7 +2007,7 @@ msgstr "Installment templates"
 msgid "Modelos de texto de parcelas personalizados"
 msgstr "Custom installment text templates"
 
-#: admin/src/Admin/Settings/Registry.php:1081
+#: admin/src/Admin/Settings/Registry.php:1082
 msgid "Modo de depuração"
 msgstr "Debug mode"
 
@@ -1989,15 +2015,15 @@ msgstr "Debug mode"
 msgid "Modo de depuração do WordPress"
 msgstr "WordPress debug mode"
 
-#: admin/src/Admin/Settings/Registry.php:1069
+#: admin/src/Admin/Settings/Registry.php:1070
 msgid "Modo headless"
 msgstr "Headless mode"
 
-#: admin/src/Admin/Settings/Registry.php:1060
+#: admin/src/Admin/Settings/Registry.php:1061
 msgid "Modo headless, manutenção e dados."
 msgstr "Headless mode, maintenance and data."
 
-#: admin/src/Integrations/Tiered_Pricing_Table.php:79
+#: admin/src/Integrations/Tiered_Pricing_Table.php:80
 msgid ""
 "Monta o plano a partir do preço da faixa na quantidade mínima da regra, em "
 "vez do preço unitário do produto. Sem isso, um cliente que precisa comprar "
@@ -2007,7 +2033,7 @@ msgstr ""
 "than from the product’s unit price. Without this, a customer who has to buy "
 "ten sees the tier price beside instalments calculated from the price of one."
 
-#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:69
+#: admin/src/Integrations/Dynamic_Pricing_Discounts.php:70
 msgid ""
 "Monta o plano a partir do preço que aquele plugin ajustou, que é o preço "
 "que o cliente vai pagar. Em um produto variável, parte do preço da variação "
@@ -2101,7 +2127,7 @@ msgstr "Do not apply or show the upfront-payment discount for this product."
 msgid "Não conseguimos acessar o serviço de licenças. Tente novamente em instantes."
 msgstr "We could not reach the licensing service. Please try again in a moment."
 
-#: admin/src/Integrations/Role_Based_Pricing.php:115
+#: admin/src/Integrations/Role_Based_Pricing.php:116
 msgid "Não exibir o desconto à vista em produtos com regra"
 msgstr "Hide the upfront discount on products with a rule"
 
@@ -2109,7 +2135,7 @@ msgstr "Hide the upfront discount on products with a rule"
 msgid "Não exibir o parcelamento para este produto."
 msgstr "Do not show the installment plan for this product."
 
-#: admin/src/Integrations/Role_Based_Pricing.php:109
+#: admin/src/Integrations/Role_Based_Pricing.php:110
 msgid "Não exibir parcelas em produtos com regra"
 msgstr "Hide instalments on products with a rule"
 
@@ -2162,6 +2188,12 @@ msgstr "Could not save the settings."
 #: app/src/pages/onboarding/OnboardingPage.vue:103
 msgid "Não foi possível salvar. Tente novamente."
 msgstr "That did not save. Please try again."
+
+#: admin/src/Distribution/Update_Check.php:279
+msgid ""
+"Não foi possível verificar as atualizações agora. Tente novamente em "
+"instantes."
+msgstr "Could not check for updates right now. Please try again shortly."
 
 #: app/src/pages/onboarding/components/TrialForm.vue:67
 msgid "Não funcionou. Tente novamente."
@@ -2257,7 +2289,7 @@ msgstr ""
 "On the products they share only one applies: the one with the higher "
 "priority."
 
-#: admin/src/Integrations/Role_Based_Pricing.php:110
+#: admin/src/Integrations/Role_Based_Pricing.php:111
 msgid ""
 "Nos produtos que o outro plugin precifica por função ou por cliente, trata "
 "o produto como se tivesse as parcelas desativadas no painel do produto."
@@ -2310,6 +2342,10 @@ msgstr ""
 "The Custom Installments for WooCommerce admin bundle is missing. Run \"npm "
 "run build\" in the app directory."
 
+#: admin/src/Distribution/Update_Check.php:261
+msgid "O Parcelas Customizadas para WooCommerce já está na versão mais recente."
+msgstr "Custom Installments for WooCommerce is already up to date."
+
 #: admin/src/Core/Init.php:435
 #. translators: %s: required WooCommerce version
 msgid ""
@@ -2348,7 +2384,7 @@ msgstr ""
 msgid "O que este plugin exibe na sua loja e o que ele precisa de você."
 msgstr "What this plugin puts on your storefront, and what it needs from you."
 
-#: admin/src/Admin/Settings/Registry.php:1043
+#: admin/src/Admin/Settings/Registry.php:1044
 msgid ""
 "O que o plugin faz ao lado de cada plugin que você já usa. As opções "
 "continuam aqui mesmo quando o outro plugin está desativado, para que nada "
@@ -2559,7 +2595,7 @@ msgstr ""
 "percentage of the price, or both. The fixed amount is added once to the "
 "total. An empty row is offered interest-free."
 
-#: admin/src/Admin/Settings/Registry.php:1065
+#: admin/src/Admin/Settings/Registry.php:1066
 msgid ""
 "Para lojas com um frontend próprio, que leem os preços pela Store API do "
 "WooCommerce."
@@ -2594,7 +2630,7 @@ msgstr "Installments"
 #: admin/src/Admin/Menu.php:71
 #: admin/src/Admin/Product_Settings.php:410
 #: admin/src/Admin/Product_Settings.php:503
-#: admin/src/Integrations/Elementor.php:120
+#: admin/src/Integrations/Elementor.php:121
 #: app/src/components/layout/PageHeader.vue:24
 msgid "Parcelas Customizadas"
 msgstr "Custom Installments"
@@ -2663,7 +2699,7 @@ msgid "Por padrão, a variação usa o desconto definido no produto."
 msgstr "By default, the variation uses the discount set on the product."
 
 #: admin/src/Admin/Product_Settings.php:307
-#: admin/src/Admin/Settings/Registry.php:1190
+#: admin/src/Admin/Settings/Registry.php:1191
 msgid "Porcentagem"
 msgstr "Percentage"
 
@@ -2708,11 +2744,11 @@ msgid "Preço com desconto no Pix"
 msgstr "Pix discounted price"
 
 #: admin/src/Core/Features.php:97
-#: admin/src/Integrations/Rank_Math.php:73
+#: admin/src/Integrations/Rank_Math.php:74
 msgid "Preço com desconto nos dados estruturados"
 msgstr "Discounted price in structured data"
 
-#: admin/src/Integrations/Rank_Math.php:80
+#: admin/src/Integrations/Rank_Math.php:81
 msgid "Preço com desconto nos feeds de produtos"
 msgstr "Discounted price in product feeds"
 
@@ -2923,11 +2959,11 @@ msgstr ""
 msgid "Reescrever o preço exibido"
 msgstr "Rewrite the displayed price"
 
-#: admin/src/Admin/Settings/Registry.php:1082
+#: admin/src/Admin/Settings/Registry.php:1083
 msgid "Registra detalhes adicionais em WooCommerce > Status > Logs."
 msgstr "Log additional detail to WooCommerce > Status > Logs."
 
-#: admin/src/Integrations/Elementor.php:98
+#: admin/src/Integrations/Elementor.php:99
 msgid "Registra os widgets do plugin no editor do Elementor."
 msgstr "Register the plugin widgets in the Elementor editor."
 
@@ -2961,7 +2997,7 @@ msgstr "Reorder the elements with the arrows and click \"Edit\" to style each on
 msgid "Repassa ao pedido o custo de processamento de uma forma de pagamento."
 msgstr "Charge the processing cost of a payment method back to the order."
 
-#: admin/src/Integrations/Role_Based_Pricing.php:103
+#: admin/src/Integrations/Role_Based_Pricing.php:104
 msgid "Respeitar preços escondidos de visitantes"
 msgstr "Respect prices hidden from visitors"
 
@@ -3172,11 +3208,11 @@ msgstr "Overlaps with other campaigns"
 msgid "Solicitando…"
 msgstr "Requesting…"
 
-#: admin/src/Admin/Settings/Registry.php:1137
+#: admin/src/Admin/Settings/Registry.php:1138
 msgid "Somente a listagem de produtos"
 msgstr "The shop loop only"
 
-#: admin/src/Admin/Settings/Registry.php:1136
+#: admin/src/Admin/Settings/Registry.php:1137
 msgid "Somente a página do produto"
 msgstr "The product page only"
 
@@ -3189,7 +3225,7 @@ msgstr "Only where I place the widget"
 msgid "Somente para esta forma de pagamento"
 msgstr "Only for this payment method"
 
-#: admin/src/Admin/Settings/Registry.php:1088
+#: admin/src/Admin/Settings/Registry.php:1089
 msgid "Status do sistema"
 msgstr "System status"
 
@@ -3460,7 +3496,7 @@ msgstr "Total %s"
 msgid "Transferências:"
 msgstr "Transfers:"
 
-#: admin/src/Admin/Settings/Registry.php:1095
+#: admin/src/Admin/Settings/Registry.php:1096
 msgid "Transfira esta configuração para outra loja ou restaure os padrões."
 msgstr "Move this configuration to another store, or restore the defaults."
 
@@ -3591,7 +3627,7 @@ msgid "Valor do desconto por quantidade"
 msgstr "Quantity discount amount"
 
 #: admin/src/Admin/Product_Settings.php:308
-#: admin/src/Admin/Settings/Registry.php:1191
+#: admin/src/Admin/Settings/Registry.php:1192
 msgid "Valor fixo"
 msgstr "Fixed amount"
 
@@ -3621,13 +3657,21 @@ msgstr "PHP max input vars"
 msgid "Veja o que o Pro adiciona"
 msgstr "See what Pro adds"
 
-#: app/src/components/integrations/IntegrationCard.vue:78
+#: app/src/components/integrations/IntegrationCard.vue:81
 msgid "Ver o plugin"
 msgstr "View the plugin"
 
 #: app/src/pages/onboarding/OnboardingPage.vue:216
 msgid "Ver sua loja"
 msgstr "View your shop"
+
+#: admin/src/Distribution/Update_Check.php:103
+msgid "Verificando atualizações…"
+msgstr "Checking for updates…"
+
+#: admin/src/Distribution/Update_Check.php:105
+msgid "Verificar atualizações"
+msgstr "Check for updates"
 
 #: app/src/pages/settings/SettingsPage.vue:233
 msgid "Versão %s"
@@ -3648,6 +3692,10 @@ msgstr "WooCommerce version"
 #: admin/src/Rest/Settings_Bootstrap.php:106
 msgid "Versão do WordPress"
 msgstr "WordPress version"
+
+#: admin/src/Distribution/Update_Check.php:154
+msgid "Você não tem permissão para atualizar plugins."
+msgstr "You do not have permission to update plugins."
 
 #: admin/src/Compatibility/Conflict_Guard.php:143
 #: admin/src/Core/Onboarding.php:180
@@ -3674,7 +3722,7 @@ msgstr "Elementor widget"
 msgid "Widgets adicionais do Elementor"
 msgstr "Additional Elementor widgets"
 
-#: admin/src/Integrations/Elementor.php:97
+#: admin/src/Integrations/Elementor.php:98
 msgid "Widgets do Elementor"
 msgstr "Elementor widgets"
 

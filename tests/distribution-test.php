@@ -32,10 +32,12 @@ function is_admin() {
 
 require_once __DIR__ . '/bootstrap.php';
 require_once __DIR__ . '/../admin/src/Distribution/MDS_Integration.php';
+require_once __DIR__ . '/../admin/src/Distribution/Update_Check.php';
 require_once __DIR__ . '/../admin/src/Compatibility/Dependency_Api.php';
 
 use MeuMouse\WC_Custom_Installments\Compatibility\Dependency_Api;
 use MeuMouse\WC_Custom_Installments\Distribution\MDS_Integration;
+use MeuMouse\WC_Custom_Installments\Distribution\Update_Check;
 
 $passed = 0;
 $failed = 0;
@@ -166,6 +168,33 @@ $thin = (object) array( 'version' => '6.2.0', 'homepage' => '', 'banners' => arr
 $completed = $dependency_api->answer_own_slug( $thin, 'plugin_information', $args );
 
 check( 'an empty field does not overwrite the header', true, '' !== $completed->homepage );
+
+echo PHP_EOL, 'What the update check tells the reader', PHP_EOL;
+
+// Every outcome must carry a type core knows and a message, because the notice
+// and the REST route both print whatever comes back without checking.
+foreach ( array( 'available', 'current', 'unavailable', 'error' ) as $result ) {
+	$outcome = Update_Check::describe_result( $result );
+
+	check( sprintf( '"%s" has a notice type core renders', $result ), true, in_array( $outcome['type'], array( 'info', 'warning', 'error', 'success' ), true ) );
+	check( sprintf( '"%s" says something', $result ), true, '' !== trim( (string) $outcome['message'] ) );
+	check( sprintf( '"%s" has an action with a url and a label, or none at all', $result ), true, null === $outcome['action'] || ( '' !== (string) $outcome['action']['url'] && '' !== (string) $outcome['action']['label'] ) );
+}
+
+// An unknown outcome must not fall through to something reassuring: the
+// default arm is the error, never "you are up to date".
+check( 'an outcome nobody wrote reads as an error', 'error', Update_Check::describe_result('something-else')['type'] );
+
+// Only the "available" arm may offer core's in-place update; anything else
+// pointing at update.php would try to install a release nobody announced.
+check( 'only an available update offers core\'s updater', array( 'available' ), array_values( array_filter(
+	array( 'available', 'current', 'unavailable', 'error' ),
+	static fn( $r ) => ! empty( Update_Check::describe_result( $r )['action']['update'] )
+) ) );
+
+// A shut channel must not claim the plugin is current. With no integration
+// registered - which is what the harness has - that is the only honest answer.
+check( 'a shut channel reports itself, not "up to date"', 'unavailable', Update_Check::run() );
 
 echo PHP_EOL, 'Every other lookup is left alone', PHP_EOL;
 

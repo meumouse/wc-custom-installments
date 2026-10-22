@@ -33,6 +33,7 @@ define( 'WC_CUSTOM_INSTALLMENTS_PRO_PRODUCT_ID', '' );
 // The real plugin file, so the header-reading stubs below parse the header the
 // plugin actually ships rather than a fixture that could drift from it.
 define( 'WC_CUSTOM_INSTALLMENTS_FILE', dirname( __DIR__ ) . '/wc-custom-installments.php' );
+define( 'WC_CUSTOM_INSTALLMENTS_BASENAME', 'wc-custom-installments/wc-custom-installments.php' );
 
 // Also empty on purpose: this is the state every shipped build is in, with the
 // update channel shut and no request ever made.
@@ -1267,6 +1268,60 @@ if ( ! function_exists('is_email') ) {
 	}
 }
 
+if ( ! function_exists('get_site_transient') ) {
+	/**
+	 * Read a network-wide transient.
+	 *
+	 * @param string $name | Transient name
+	 * @return mixed Stored value, or false when there is none.
+	 */
+	function get_site_transient( $name ) {
+		return $GLOBALS['wp_test_site_transients'][ $name ] ?? false;
+	}
+}
+
+if ( ! function_exists('set_site_transient') ) {
+	/**
+	 * Store a network-wide transient.
+	 *
+	 * @param string $name | Transient name
+	 * @param mixed $value | Value to store
+	 * @param int $ttl | Lifetime in seconds, ignored here
+	 * @return bool
+	 */
+	function set_site_transient( $name, $value, $ttl = 0 ) {
+		$GLOBALS['wp_test_site_transients'][ $name ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists('delete_site_transient') ) {
+	/**
+	 * Drop a network-wide transient.
+	 *
+	 * @param string $name | Transient name
+	 * @return bool
+	 */
+	function delete_site_transient( $name ) {
+		unset( $GLOBALS['wp_test_site_transients'][ $name ] );
+
+		return true;
+	}
+}
+
+if ( ! function_exists('network_admin_url') ) {
+	/**
+	 * An address inside the network admin.
+	 *
+	 * @param string $path | Path relative to the network admin
+	 * @return string
+	 */
+	function network_admin_url( $path = '' ) {
+		return 'https://example.test/wp-admin/network/' . ltrim( (string) $path, '/' );
+	}
+}
+
 if ( ! function_exists('plugin_basename') ) {
 	/**
 	 * The plugin file as WordPress names it: directory plus file.
@@ -1344,6 +1399,7 @@ if ( ! function_exists('wpautop') ) {
 }
 
 $GLOBALS['wp_test_transients'] = array();
+$GLOBALS['wp_test_site_transients'] = array();
 
 // The classes under test, loaded directly: the harness has no autoloader.
 require_once __DIR__ . '/../admin/src/Core/Features.php';

@@ -245,11 +245,21 @@ without a `license_key`. The plugin is free and stays free; MDS serves it as `di
 Both credentials ship empty, and empty keeps the channel shut, so a build makes no request at all
 until the product is published.
 
+`Distribution\Update_Check` adds "Verificar atualizações" to the plugin's row, because WordPress
+only looks twice a day and a store owner who knows a release exists should not have to wait. It is
+the same shape as the add-on's: a row-meta link whose `href` is an admin-post handler for the
+no-JavaScript path, which `assets/admin/update-check.js` upgrades into a REST call that answers in
+the row. The route is `/updates/self-check`, **not** `/updates/check` — the add-on already owns that
+path in this plugin's own REST namespace, and two registrations of one path leave whichever plugin
+booted last answering both buttons.
+
 **Nothing else may follow it in.** The SDK's licensing, rollback and admin surfaces stay in the Pro
 add-on; nothing here may check a licence (§3 is still the only gate), and no second update
 mechanism may be added. On submission day, take the whole channel out:
 
 - [ ] delete `admin/src/Distribution/` and `tests/distribution-test.php`
+- [ ] delete `admin/src/Rest/Update_Check.php` and `assets/admin/update-check.js`, which serve the
+      "Verificar atualizações" row link — the directory offers its own check
 - [ ] remove the SDK loader `require_once`, the `mds_sdk_loaded` registration and the
       `shutdown()` call from `wc-custom-installments.php`
 - [ ] remove `WC_CUSTOM_INSTALLMENTS_MDS_API_KEY` and `..._MDS_PUBLIC_KEY` from
