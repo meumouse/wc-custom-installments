@@ -70,6 +70,7 @@ class Tiered_Pricing_Table {
 			'title' => 'Tiered Pricing Table',
 			'description' => __( 'Preços por faixa de quantidade.', 'wc-custom-installments' ),
 			'url' => 'https://wordpress.org/plugins/tier-pricing-table/',
+			'mark' => 'tiered-pricing-table.png',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(

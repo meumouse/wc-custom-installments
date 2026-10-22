@@ -10,8 +10,9 @@ defined('ABSPATH') || exit;
  * Every plugin this one knows how to work alongside, and what the store owner
  * may decide about each.
  *
- * An integration describes itself: its name, what the integration does, whether
- * the other plugin is installed, and the settings that change its behaviour.
+ * An integration describes itself: its name, what the integration does, the mark
+ * its card shows, whether the other plugin is installed, and the settings that
+ * change its behaviour.
  * The settings screen asks here rather than carrying a list of its own, so a
  * new integration is one file and the Pro add-on can append its own.
  *
@@ -172,6 +173,7 @@ class Catalog {
 			'title' => '',
 			'description' => '',
 			'url' => '',
+			'mark' => '',
 			'active' => false,
 			'fields' => array(),
 			'modal' => array(),
@@ -184,6 +186,11 @@ class Catalog {
 		// chances to spell the key differently.
 		$described['primary_key'] = self::primary_key( $id );
 		$described['slug'] = str_replace( '_', '-', $id );
+
+		// The mark is a file name in `assets/integrations/`, resolved to a URL
+		// here, where WordPress can say where the plugin lives.
+		$described['mark'] = self::mark_url( $id, (string) $described['mark'] );
+
 		$described['fields'] = array_merge( array( self::master_field( $id, $described['title'] ) ), (array) $described['fields'] );
 		$described['modal'] = array_merge( array(
 			'title' => $described['title'],
@@ -211,5 +218,45 @@ class Catalog {
 			'label' => sprintf( __( 'Integração com %s', 'wc-custom-installments' ), $title ),
 			'description' => __( 'Desligue para que este plugin ignore completamente o outro, mantendo o que você configurou aqui para quando quiser religar.', 'wc-custom-installments' ),
 		);
+	}
+
+
+	/**
+	 * The URL of the mark one integration's card shows.
+	 *
+	 * An integration names a file in `assets/integrations/`, which is turned
+	 * into a URL here rather than in the browser: a path hard-coded to
+	 * /wp-content/plugins breaks on every install with a moved content
+	 * directory, and only WordPress knows where this one is.
+	 *
+	 * A full URL is passed through untouched, which is how an add-on ships the
+	 * mark of its own integration with its own files.
+	 *
+	 * @since 6.1.0
+	 * @param string $id | Integration ID
+	 * @param string $file | File name under `assets/integrations/`, or a full URL
+	 * @return string
+	 */
+	private static function mark_url( $id, $file ) {
+		$file = trim( $file );
+		$mark = '';
+
+		if ( '' !== $file ) {
+			$mark = preg_match( '#^(?:https?:)?//#', $file ) ? $file : WC_CUSTOM_INSTALLMENTS_ASSETS . 'integrations/' . $file;
+		}
+
+		/**
+		 * Filter the mark one integration card shows.
+		 *
+		 * The URL of an image, or an empty string to leave the card with the
+		 * initial it falls back to.
+		 *
+		 * @since 6.1.0
+		 * @param string $mark | Image URL, or an empty string for no mark
+		 * @param string $id | Integration ID
+		 * @param string $file | What the integration declared
+		 * @return string
+		 */
+		return (string) apply_filters( 'WC_Custom_Installments/Integrations/Mark', $mark, $id, $file );
 	}
 }

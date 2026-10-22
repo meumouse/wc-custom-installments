@@ -99,6 +99,23 @@ function set_settings( $values ) {
 }
 
 /**
+ * One integration, by the ID it describes itself with.
+ *
+ * @param string $id | Integration ID
+ * @return array<string,mixed>
+ */
+function integration( $id ) {
+	foreach ( Catalog::all() as $one ) {
+		if ( $id === ( $one['id'] ?? '' ) ) {
+			return $one;
+		}
+	}
+
+	return array();
+}
+
+
+/**
  * The one section the integrations tab is.
  *
  * @return array<string,mixed>
@@ -112,6 +129,49 @@ function integrations_section() {
 
 	return array();
 }
+
+/**
+ * An add-on's integration, shipping the mark of its card with its own files.
+ *
+ * @since 6.1.0
+ */
+class Mark_Test_Integration {
+
+	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'mark_test',
+			'title' => 'Add-on integration',
+			'mark' => 'https://cdn.example.test/add-on/mark.png',
+		);
+	}
+}
+
+
+/**
+ * An integration that ships no mark at all.
+ *
+ * @since 6.1.0
+ */
+class Mark_Test_Bare_Integration {
+
+	/**
+	 * Describe the integration for the settings screen.
+	 *
+	 * @return array<string,mixed>
+	 */
+	public static function describe() {
+		return array(
+			'id' => 'mark_test_bare',
+			'title' => 'Bare integration',
+		);
+	}
+}
+
 
 $product = wc_test_product( 300 );
 
@@ -142,13 +202,20 @@ check( 'with an icon the app maps', 'extension', $section['icon'] ?? '' );
 check( 'drawn as the grid rather than stacked groups', 'integrations', $section['component'] ?? '' );
 check( 'while still carrying its cards, which is where the fields are read from', true, count( $cards ) > 0 );
 check( 'and one card per integration', count( $catalog ), count( $cards ) );
-check( 'each card has the slug its mark is found by', array(
+check( 'each card has its slug', array(
 	'elementor',
 	'rank-math',
 	'tiered-pricing-table',
 	'dynamic-pricing-discounts',
 	'role-based-pricing',
 ), array_column( $cards, 'slug' ) );
+check( 'and the mark it shows, as a URL and not a path the browser builds', array(
+	'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/elementor.svg',
+	'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/rank-math.svg',
+	'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/tiered-pricing-table.png',
+	'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/dynamic-pricing-discounts.webp',
+	'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/role-based-pricing.png',
+), array_column( $cards, 'mark' ) );
 check( 'each card names the switch it carries', array(
 	'integration_elementor_enabled',
 	'integration_rank_math_enabled',
@@ -185,6 +252,33 @@ check( 'every master switch is on for a new store', array( 'yes', 'yes', 'yes', 
 	static fn( $card ) => $defaults[ $card['primary_key'] ] ?? '',
 	$cards
 ) );
+
+echo PHP_EOL, 'The mark of an integration', PHP_EOL;
+
+add_filter( 'WC_Custom_Installments/Integrations/Mark', function( $mark, $id, $file ) {
+	return 'rank_math' === $id ? 'https://cdn.example.test/marks/' . $file : $mark;
+}, 10, 3 );
+
+check( 'can be replaced by code', 'https://cdn.example.test/marks/rank-math.svg', integration('rank_math')['mark'] ?? '' );
+check( 'leaving every other one where it was', 'https://example.test/wp-content/plugins/wc-custom-installments/assets/integrations/elementor.svg', integration('elementor')['mark'] ?? '' );
+
+$GLOBALS['wp_test_filters']['WC_Custom_Installments/Integrations/Mark'] = array();
+
+// An add-on ships its mark with its own files, so it declares a full URL and
+// the catalogue has nothing to build.
+add_filter( 'WC_Custom_Installments/Integrations/Catalog', function( $classes ) {
+	$classes[] = Mark_Test_Integration::class;
+	$classes[] = Mark_Test_Bare_Integration::class;
+
+	return $classes;
+} );
+
+check( 'and a full URL is passed through untouched', 'https://cdn.example.test/add-on/mark.png', integration('mark_test')['mark'] ?? '' );
+check( 'while an integration with no mark leaves the card its initial', '', integration('mark_test_bare')['mark'] ?? '' );
+
+$GLOBALS['wp_test_filters']['WC_Custom_Installments/Integrations/Catalog'] = array();
+
+check( 'the catalogue is the five again once the add-on is gone', 5, count( Catalog::all() ) );
 
 echo PHP_EOL, 'The master switch of an integration', PHP_EOL;
 

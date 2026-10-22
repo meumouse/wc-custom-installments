@@ -89,6 +89,7 @@ class Elementor {
 			'title' => 'Elementor',
 			'description' => __( 'Widgets do plugin no editor, e o grupo de preços dentro dos widgets de produto.', 'wc-custom-installments' ),
 			'url' => 'https://wordpress.org/plugins/elementor/',
+			'mark' => 'elementor.svg',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(

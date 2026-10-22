@@ -368,7 +368,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_89 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_90 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -420,6 +420,7 @@ _89 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Installments/With_Fees` | filter | `Woo_Custom_Installments/Installments/With_Fees` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Installments/Without_Fee` | filter | `Woo_Custom_Installments/Installments/Without_Fee` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Integrations/Catalog` | filter | — | `admin/src/Integrations/Catalog.php` |
+| `WC_Custom_Installments/Integrations/Mark` | filter | — | `admin/src/Integrations/Catalog.php` |
 | `WC_Custom_Installments/Integrations/Theme_Rules` | filter | — | `admin/src/Integrations/Theme_Compatibility.php` |
 | `WC_Custom_Installments/MDS_Config` | filter | — | `admin/src/Distribution/MDS_Integration.php` |
 | `WC_Custom_Installments/MDS/Enabled` | filter | — | `admin/src/Distribution/MDS_Integration.php` |

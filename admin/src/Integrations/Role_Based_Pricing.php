@@ -95,6 +95,7 @@ class Role_Based_Pricing {
 			'title' => 'Role Based Pricing for Woo',
 			'description' => __( 'Preços por função ou por cliente. As parcelas e o desconto à vista já saem do preço que o cliente logado vai pagar; aqui você decide o que o plugin deixa de exibir.', 'wc-custom-installments' ),
 			'url' => 'https://wordpress.org/plugins/role-and-customer-based-pricing-for-woocommerce/',
+			'mark' => 'role-based-pricing.png',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(

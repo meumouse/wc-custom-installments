@@ -60,6 +60,7 @@ class Dynamic_Pricing_Discounts {
 			'title' => 'Pricepep',
 			'description' => __( 'Regras de preço aplicadas na exibição, antes chamado Dynamic Pricing & Discounts.', 'wc-custom-installments' ),
 			'url' => 'https://pricepep.com/',
+			'mark' => 'dynamic-pricing-discounts.webp',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(

@@ -1020,6 +1020,7 @@ class Registry {
 				'title' => $integration['title'],
 				'description' => $integration['description'],
 				'url' => $integration['url'],
+				'mark' => $integration['mark'],
 				'active' => (bool) $integration['active'],
 				'primary_key' => $integration['primary_key'],
 				'modal' => $integration['modal'],

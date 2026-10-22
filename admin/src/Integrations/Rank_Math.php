@@ -65,6 +65,7 @@ class Rank_Math {
 			'title' => 'Rank Math',
 			'description' => __( 'Qual preço a loja publica para buscadores e feeds de compras.', 'wc-custom-installments' ),
 			'url' => 'https://wordpress.org/plugins/seo-by-rank-math/',
+			'mark' => 'rank-math.svg',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(

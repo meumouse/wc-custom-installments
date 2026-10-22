@@ -46,6 +46,13 @@ add_filter( 'WC_Custom_Installments/Admin/Settings_Schema', function( $schema ) 
 	return $schema;
 } );
 
+// The integration marks reach the browser as URLs, built from the directory
+// WordPress reports the plugin lives in. There is none here, so point them at
+// the files beside `preview.html`, which is served from the plugin root.
+add_filter( 'WC_Custom_Installments/Integrations/Mark', function( $mark, $id, $file ) {
+	return $file && ! preg_match( '#^(?:https?:)?//#', $file ) ? './assets/integrations/' . $file : $mark;
+}, 10, 3 );
+
 // `WCCI_PREVIEW_PRO=1 php tests/dump-bootstrap.php` renders the screen as a
 // licensed store sees it, so the Pro controls can be exercised too.
 if ( getenv('WCCI_PREVIEW_PRO') ) {

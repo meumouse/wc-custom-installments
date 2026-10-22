@@ -11,6 +11,10 @@
  * behind the button, so a grid of cards stays a grid rather than a column of
  * forms, and a card with nothing else to decide simply has no button.
  *
+ * The mark comes resolved from the schema, because only WordPress can say
+ * where the plugin directory is on this install. A card with none falls back to
+ * its initial, which is what an add-on's card gets until it ships one.
+ *
  * A card whose plugin is not installed still switches and still configures:
  * the settings are the store's, not the other plugin's, and a store that
  * deactivates a plugin for an afternoon should find its choices intact.
@@ -20,7 +24,6 @@
 import { computed } from 'vue';
 import BaseButton from '../base/BaseButton.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
-import { markFor } from './integrationMarks';
 import { __, sprintf } from '../../utils/i18n';
 
 const props = defineProps({
@@ -31,7 +34,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'configure']);
 
-const mark = computed(() => markFor(props.card.slug));
+const mark = computed(() => String(props.card.mark || ''));
 const initial = computed(() => String(props.card.title || '?').charAt(0).toUpperCase());
 const buttonLabel = computed(() => props.card.modal?.button_label || __('Configurar'));
 const hasSettings = computed(() => props.configurableCount > 0);
