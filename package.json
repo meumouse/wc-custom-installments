@@ -1,7 +1,7 @@
 {
 	"name": "wc-custom-installments",
 	"private": true,
-	"version": "6.0.0",
+	"version": "6.1.0",
 	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"lint:php": "node scripts/lint-php.mjs",

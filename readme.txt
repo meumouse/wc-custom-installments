@@ -4,7 +4,7 @@ Tags: woocommerce, parcelamento, desconto, pix, formas de pagamento
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 6.0.0
+Stable tag: 6.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,7 +57,9 @@ Os ícones da loja usam o Font Awesome Free 6.7.2, da Fonticons, Inc. (https://f
 
 == External services ==
 
-Este plugin não faz nenhuma requisição externa por conta própria.
+Enquanto este plugin não estiver listado no WordPress.org, as atualizações são entregues pelo serviço de distribuição da MeuMouse em https://cloud.meumouse.com. O plugin continua gratuito: não há licença, chave nem verificação de compra nessa consulta.
+
+A consulta acontece junto com a verificação de atualizações que o próprio WordPress já agenda, no máximo uma vez a cada 12 horas, e nunca em uma visita da loja. Nela são enviados o endereço do site, o domínio, o tipo de ambiente (produção, homologação ou desenvolvimento), as versões do WordPress, do PHP e do plugin instalado. Nenhum dado pessoal, de cliente ou de pedido é enviado, e a resposta é assinada e verificada antes de ser usada. Para desligar a verificação, adicione ao `wp-config.php`: `define( 'MDS_WC_CUSTOM_INSTALLMENTS_FEATURE_UPDATES', false );`
 
 O assistente de configuração oferece um teste grátis do complemento Pro. Se — e somente se — você preencher esse formulário e enviá-lo, seu nome, e-mail e telefone são enviados ao serviço de licenças da MeuMouse em https://cloud.meumouse.com para emitir a chave de teste, que depois é enviada para o seu e-mail. Nada é enviado antes de você enviar o formulário, e pular a etapa não envia nada.
 Termos: https://meumouse.com/termos-condicionais/ — Privacidade: https://meumouse.com/politica-de-privacidade/

@@ -6,7 +6,7 @@
  * Plugin URI: 				https://meumouse.com/plugins/parcelas-customizadas-para-woocommerce/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
- * Version: 				6.0.0
+ * Version: 				6.1.0
  * Requires at least: 		6.5
  * Requires PHP: 			8.1
  * Requires Plugins: 		woocommerce
@@ -24,6 +24,7 @@
 
 use MeuMouse\WC_Custom_Installments\Core\Init;
 use MeuMouse\WC_Custom_Installments\Core\Onboarding;
+use MeuMouse\WC_Custom_Installments\Distribution\MDS_Integration;
 
 defined('ABSPATH') || exit;
 
@@ -34,7 +35,37 @@ if ( file_exists( $wc_custom_installments_autoload ) ) {
 	require_once $wc_custom_installments_autoload;
 }
 
-$wc_custom_installments_plugin_version = '6.0.0';
+/**
+ * The MDS SDK's loader, which carries the plugin's own updates until it is
+ * listed on WordPress.org. See AGENTS.md section 6 - this is temporary, and the
+ * checklist for removing it lives there.
+ *
+ * The loader is not autoloaded by design: it is the file that elects the newest
+ * embedded copy of the SDK across every MeuMouse product on the site, so it has
+ * to run before anything asks for an SDK class. Composer only maps the
+ * namespace.
+ */
+$wc_custom_installments_mds_sdk = plugin_dir_path( __FILE__ ) . 'admin/vendor/meumouse/mds-php-sdk/mds-sdk.php';
+
+if ( file_exists( $wc_custom_installments_mds_sdk ) ) {
+	require_once $wc_custom_installments_mds_sdk;
+}
+
+$wc_custom_installments_plugin_version = '6.1.0';
+
+/**
+ * Open the update channel.
+ *
+ * `mds_sdk_loaded` fires once, on plugins_loaded priority -100, after the
+ * newest embedded copy of the SDK has been elected. Registering anywhere else
+ * would bind the plugin to a copy that may lose that election, so this cannot
+ * move into a discovered class - those are instantiated on `init`, long after.
+ */
+add_action( 'mds_sdk_loaded', function() use ( $wc_custom_installments_plugin_version ) {
+	if ( class_exists( MDS_Integration::class ) ) {
+		MDS_Integration::register( __FILE__, $wc_custom_installments_plugin_version );
+	}
+});
 
 /**
  * Flag a fresh activation so the first admin request opens the setup wizard.
@@ -58,6 +89,10 @@ register_activation_hook( __FILE__, function() {
 register_deactivation_hook( __FILE__, function() {
 	foreach ( array( 'wc_custom_installments_purge_logs_event' ) as $hook ) {
 		wp_clear_scheduled_hook( $hook );
+	}
+
+	if ( class_exists( MDS_Integration::class ) ) {
+		MDS_Integration::shutdown();
 	}
 });
 

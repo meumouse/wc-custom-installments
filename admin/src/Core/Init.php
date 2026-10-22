@@ -145,6 +145,13 @@ class Init {
 			// for a licence against. Empty means the trial step offers a link
 			// instead of a form, and nothing ever leaves the site.
 			'WC_CUSTOM_INSTALLMENTS_PRO_PRODUCT_ID' => '',
+
+			// The credentials of the update channel that carries this plugin
+			// until it is listed on WordPress.org (see AGENTS.md section 6).
+			// Both are empty until the product is published in MDS, and empty
+			// leaves the channel shut: no update check is ever made.
+			'WC_CUSTOM_INSTALLMENTS_MDS_API_KEY'    => '',
+			'WC_CUSTOM_INSTALLMENTS_MDS_PUBLIC_KEY' => '',
 		);
 
 		foreach ( $constants as $key => $value ) {

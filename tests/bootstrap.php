@@ -14,7 +14,7 @@
 
 defined('ABSPATH') || define( 'ABSPATH', __DIR__ . '/' );
 
-define( 'WC_CUSTOM_INSTALLMENTS_VERSION', '6.0.0' );
+define( 'WC_CUSTOM_INSTALLMENTS_VERSION', '6.1.0' );
 define( 'WC_CUSTOM_INSTALLMENTS_DEBUG_MODE', false );
 define( 'WC_CUSTOM_INSTALLMENTS_DEV_MODE', false );
 define( 'WC_CUSTOM_INSTALLMENTS_SLUG', 'wc-custom-installments' );
@@ -29,6 +29,15 @@ define( 'WC_CUSTOM_INSTALLMENTS_API_URL', 'https://cloud.meumouse.com' );
 // Empty on purpose: with no product configured the trial step offers a link
 // and never contacts anything, which is the state the preview should show.
 define( 'WC_CUSTOM_INSTALLMENTS_PRO_PRODUCT_ID', '' );
+
+// The real plugin file, so the header-reading stubs below parse the header the
+// plugin actually ships rather than a fixture that could drift from it.
+define( 'WC_CUSTOM_INSTALLMENTS_FILE', dirname( __DIR__ ) . '/wc-custom-installments.php' );
+
+// Also empty on purpose: this is the state every shipped build is in, with the
+// update channel shut and no request ever made.
+define( 'WC_CUSTOM_INSTALLMENTS_MDS_API_KEY', '' );
+define( 'WC_CUSTOM_INSTALLMENTS_MDS_PUBLIC_KEY', '' );
 
 $GLOBALS['wp_test_options'] = array();
 $GLOBALS['wp_test_filters'] = array();
@@ -1175,6 +1184,82 @@ if ( ! function_exists('is_email') ) {
 	 */
 	function is_email( $value ) {
 		return (bool) filter_var( $value, FILTER_VALIDATE_EMAIL );
+	}
+}
+
+if ( ! function_exists('plugin_basename') ) {
+	/**
+	 * The plugin file as WordPress names it: directory plus file.
+	 *
+	 * @param string $file | Absolute path of a plugin file
+	 * @return string
+	 */
+	function plugin_basename( $file ) {
+		return basename( dirname( $file ) ) . '/' . basename( $file );
+	}
+}
+
+if ( ! function_exists('get_file_data') ) {
+	/**
+	 * Read header fields out of a PHP file's leading comment.
+	 *
+	 * The same single-line pattern WordPress uses, so a header this stub reads
+	 * is a header WordPress would read.
+	 *
+	 * @param string $file | Absolute path of the file
+	 * @param array<string,string> $headers | Map of field name to header label
+	 * @param string $context | Unused; WordPress takes it to add its own fields
+	 * @return array<string,string>
+	 */
+	function get_file_data( $file, $headers, $context = '' ) {
+		$contents = is_readable( $file ) ? (string) file_get_contents( $file ) : '';
+		$data = array();
+
+		foreach ( (array) $headers as $field => $label ) {
+			$pattern = '/^[ \t\/*#@]*' . preg_quote( (string) $label, '/' ) . ':(.*)$/mi';
+			$data[ $field ] = preg_match( $pattern, $contents, $match ) ? trim( $match[1] ) : '';
+		}
+
+		return $data;
+	}
+}
+
+if ( ! function_exists('get_plugin_data') ) {
+	/**
+	 * The plugin header fields WordPress returns, under its own key names.
+	 *
+	 * @param string $file | Absolute path of the plugin main file
+	 * @param bool $markup | Unused; WordPress links the author and the URIs
+	 * @param bool $translate | Unused; there is no text domain loaded here
+	 * @return array<string,string>
+	 */
+	function get_plugin_data( $file, $markup = true, $translate = true ) {
+		return get_file_data( $file, array(
+			'Name' => 'Plugin Name',
+			'PluginURI' => 'Plugin URI',
+			'Version' => 'Version',
+			'Description' => 'Description',
+			'Author' => 'Author',
+			'AuthorURI' => 'Author URI',
+			'TextDomain' => 'Text Domain',
+			'RequiresWP' => 'Requires at least',
+			'RequiresPHP' => 'Requires PHP',
+		) );
+	}
+}
+
+if ( ! function_exists('wpautop') ) {
+	/**
+	 * Wrap a block of text in a paragraph.
+	 *
+	 * @param string $text | Raw text
+	 * @param bool $br | Unused; WordPress also converts single line breaks
+	 * @return string
+	 */
+	function wpautop( $text, $br = true ) {
+		$text = trim( (string) $text );
+
+		return '' === $text ? '' : '<p>' . $text . '</p>';
 	}
 }
 

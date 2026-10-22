@@ -95,6 +95,7 @@ admin/src/
   Campaigns/                 Post_Type, Rules, Repository (and its index), Resolver, Scheduler
   Compatibility/             Hook_Aliases and the 5.x bridges
   Core/                      Init, Features, Functions, Scripts, Helpers, Logger, Migrator, Onboarding
+  Distribution/              MDS_Integration — the update channel, temporary (§6)
   Engine/                    Calculate_Installments, Calculate_Values, Product_Config
   Frontend/                  Render_Elements, Components, Styles, Shortcodes, Element_Registry, Templates
   Integrations/              Themes, Elementor, pricing plugins
@@ -220,15 +221,45 @@ New names are added alongside the old. The old ones stay.
 The free plugin is distributed by WordPress.org, which shapes the architecture more than anything
 else:
 
-- **No code executed from a remote server, and no update mechanism of its own.** The MDS SDK lives
-  exclusively in the Pro add-on. Never add it here.
-- **Nothing contacts an external server before a person asks.** The only outbound request in the
-  free plugin is the trial form, which fires when someone fills it in and presses the button — not
-  on activation, not on page load, and not at all if the step is skipped. It shows the exact request
-  body before sending.
+- **No code executed from a remote server.** Nothing is ever fetched and run. This one has no
+  exception and never will.
+- **Nothing contacts an external server before a person asks**, with the single exception of the
+  update check below. The only other outbound request in the free plugin is the trial form, which
+  fires when someone fills it in and presses the button — not on activation, not on page load, and
+  not at all if the step is skipped. It shows the exact request body before sending.
 - **Every external service declared in `readme.txt`.**
 - **No minified asset without its source**: `app/src` ships alongside `app/dist`.
 - GPLv2 or later.
+
+### The update channel is temporary
+
+The plugin is not on WordPress.org yet. Its header declares
+`Update URI: cloud.meumouse.com`, which stops WordPress asking the directory about it — so until
+the listing exists, nothing can update a store, and the 5.x installed base is being migrated onto
+this plugin. `Distribution\MDS_Integration` answers that header with the MDS SDK until the listing
+does.
+
+It is a distribution channel, not a licence. The SDK runs its `updates_only` preset: the licence
+module is inert, no key is read or written, no heartbeat is scheduled, and the update check goes out
+without a `license_key`. The plugin is free and stays free; MDS serves it as `distribution: free`.
+Both credentials ship empty, and empty keeps the channel shut, so a build makes no request at all
+until the product is published.
+
+**Nothing else may follow it in.** The SDK's licensing, rollback and admin surfaces stay in the Pro
+add-on; nothing here may check a licence (§3 is still the only gate), and no second update
+mechanism may be added. On submission day, take the whole channel out:
+
+- [ ] delete `admin/src/Distribution/` and `tests/distribution-test.php`
+- [ ] remove the SDK loader `require_once`, the `mds_sdk_loaded` registration and the
+      `shutdown()` call from `wc-custom-installments.php`
+- [ ] remove `WC_CUSTOM_INSTALLMENTS_MDS_API_KEY` and `..._MDS_PUBLIC_KEY` from
+      `Core\Init::setup_constants()`, and their stubs from `tests/bootstrap.php`
+- [ ] drop `meumouse/mds-php-sdk` and `ext-sodium` from `admin/composer.json`, then
+      `composer update --lock`
+- [ ] return `Compatibility\Dependency_Api` to priority 10 answering on its own, dropping the merge
+      it does for the SDK's narrower payload
+- [ ] remove the `Update URI` header, so the directory serves the updates
+- [ ] remove the update-check paragraph from `readme.txt`
 
 ---
 

@@ -18,10 +18,20 @@ defined('ABSPATH') || exit;
  * Nothing has to be asked of a remote server to answer it. The plugin being
  * described is the one running, so its own header is a better source than the
  * directory would be, and the dependency row needs no more than the name, the
- * slug and the version. The filter short-circuits `plugins_api` for this one
- * slug and leaves every other lookup untouched.
+ * slug and the version. The filter answers `plugins_api` for this one slug and
+ * leaves every other lookup untouched.
  *
- * @since 6.0.1
+ * It runs late, at priority 30, and *completes* an answer rather than replacing
+ * it. The MDS SDK that carries this plugin's updates answers the same filter at
+ * priority 20 without checking whether anything already had, and its payload is
+ * deliberately narrow - the release, its changelog and the fields core needs to
+ * offer an update. Everything the dependency card and the details modal read
+ * besides that (the author, the description, the icon, the rating counts) it
+ * does not set, and on PHP 8 an absent one surfaces as an undefined property
+ * notice. So the SDK's half wins wherever it has something to say, this class
+ * fills in the rest from the header, and the two sections sit side by side.
+ *
+ * @since 6.1.0
  * @package MeuMouse\WC_Custom_Installments\Compatibility
  * @author MeuMouse.com
  */
@@ -34,7 +44,9 @@ class Dependency_Api {
 	 * is read on plugins.php and plugin-install.php — both well after `init`,
 	 * where this class is built.
 	 *
-	 * @since 6.0.1
+	 * Priority 30 puts this after the MDS SDK's own handler, which sits at 20.
+	 *
+	 * @since 6.1.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -42,22 +54,22 @@ class Dependency_Api {
 			return;
 		}
 
-		add_filter( 'plugins_api', array( $this, 'answer_own_slug' ), 10, 3 );
+		add_filter( 'plugins_api', array( $this, 'answer_own_slug' ), 30, 3 );
 	}
 
 
 	/**
-	 * Short-circuit the directory request for this plugin's slug.
+	 * Answer the directory request for this plugin's slug.
 	 *
-	 * @since 6.0.1
+	 * @since 6.1.0
 	 * @param false|object|array $result Result from an earlier filter, false when none answered.
 	 * @param string $action The information being requested.
 	 * @param object $args Request arguments, carrying the slug.
 	 * @return false|object|array
 	 */
 	public function answer_own_slug( $result, $action, $args ) {
-		// Let another filter's answer, and every other kind of request, through.
-		if ( false !== $result || 'plugin_information' !== $action ) {
+		// Let every other kind of request through.
+		if ( 'plugin_information' !== $action ) {
 			return $result;
 		}
 
@@ -67,7 +79,49 @@ class Dependency_Api {
 			return $result;
 		}
 
-		return $this->plugin_information();
+		return $this->complete( $result, $this->plugin_information() );
+	}
+
+
+	/**
+	 * Fill the gaps in an earlier answer with the header-derived one.
+	 *
+	 * Whatever the earlier filter had to say wins: it knows about a release
+	 * this copy of the plugin does not. Only the keys it left empty are taken
+	 * from the header, and `sections` is merged rather than chosen, so the
+	 * description and the changelog both reach the modal - in that order,
+	 * because the first section is the tab it opens on.
+	 *
+	 * @since 6.1.0
+	 * @param false|object|array $answer Result from an earlier filter.
+	 * @param object $base Everything this plugin can say about itself.
+	 * @return object
+	 */
+	protected function complete( $answer, $base ) {
+		if ( is_array( $answer ) ) {
+			$answer = (object) $answer;
+		}
+
+		if ( ! is_object( $answer ) ) {
+			return $base;
+		}
+
+		$sections = array_merge(
+			(array) ( $base->sections ?? array() ),
+			(array) ( $answer->sections ?? array() )
+		);
+
+		foreach ( get_object_vars( $answer ) as $key => $value ) {
+			if ( 'sections' === $key || null === $value || '' === $value || array() === $value ) {
+				continue;
+			}
+
+			$base->$key = $value;
+		}
+
+		$base->sections = $sections;
+
+		return $base;
 	}
 
 
@@ -77,9 +131,11 @@ class Dependency_Api {
 	 * Every field the details modal reads is declared, because an absent one
 	 * surfaces as an undefined property notice on PHP 8. The counts stay at
 	 * zero and the download link empty: there are no directory ratings to
-	 * report, and the plugin is already installed.
+	 * report, and this is what the plugin knows without asking anyone - the
+	 * update channel's answer, when there is one, fills the link and the
+	 * version in over it.
 	 *
-	 * @since 6.0.1
+	 * @since 6.1.0
 	 * @return object
 	 */
 	protected function plugin_information() {
