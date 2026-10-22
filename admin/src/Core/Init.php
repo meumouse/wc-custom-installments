@@ -150,8 +150,8 @@ class Init {
 			// until it is listed on WordPress.org (see AGENTS.md section 6).
 			// Both are empty until the product is published in MDS, and empty
 			// leaves the channel shut: no update check is ever made.
-			'WC_CUSTOM_INSTALLMENTS_MDS_API_KEY'    => '',
-			'WC_CUSTOM_INSTALLMENTS_MDS_PUBLIC_KEY' => '',
+			'WC_CUSTOM_INSTALLMENTS_MDS_API_KEY'    => 'mds_68b0c6bb927322bfda0c667c9744c179a2b94f705d250cdaadccf3aacc4eba50',
+			'WC_CUSTOM_INSTALLMENTS_MDS_PUBLIC_KEY' => 'fLpjcbSx1ccEDAYjf0BheQDhn9W+iBYaJAxT+eQ0Mac=',
 		);
 
 		foreach ( $constants as $key => $value ) {
