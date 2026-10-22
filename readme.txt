@@ -86,6 +86,12 @@ Sim. Em um site configurado em inglês, o plugin aparece como "Custom Installmen
 
 == Changelog ==
 
+= 6.1.0 =
+
+* Escolha em quais páginas da loja o parcelamento e os descontos aparecem: página do produto, listagem, produtos relacionados, resultados de busca, carrinho, finalização de compra e as demais páginas. Disponível com o complemento Pro.
+* Enquanto o plugin não estiver listado no WordPress.org, as atualizações chegam pelo serviço de distribuição da MeuMouse. O plugin continua gratuito: não há licença, chave nem verificação de compra nessa consulta.
+* A tela de plugins não consulta mais o api.wordpress.org a cada carregamento por causa da dependência declarada pelo complemento Pro.
+
 = 6.0.0 =
 
 * Reconstruído do zero como plugin gratuito. Continua a numeração do Parcelas Customizadas para WooCommerce 5.x.
