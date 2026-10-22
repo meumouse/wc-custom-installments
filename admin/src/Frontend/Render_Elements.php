@@ -311,6 +311,10 @@ class Render_Elements {
 			return;
 		}
 
+		if ( ! Display_Locations::is_enabled() ) {
+			return;
+		}
+
 		if ( Components::is_opted_out( $product, '__disable_installments' ) || ! $product->is_purchasable() ) {
 			return;
 		}
@@ -387,6 +391,11 @@ class Render_Elements {
 	 */
 	public static function display_discount_on_cart() {
 		if ( ! Repository::is_active('enable_all_discount_options') || ! Repository::is_active('display_installments_cart') ) {
+			return;
+		}
+
+		// The cart is one of the places the store can leave out.
+		if ( ! Display_Locations::is_enabled() ) {
 			return;
 		}
 

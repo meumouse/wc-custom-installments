@@ -232,6 +232,9 @@ class Repository {
 
 				return '' !== $color ? $color : (string) ( $definition['default'] ?? '' );
 
+			case 'checkbox-group':
+				return self::sanitize_checkbox_group( $value, $definition );
+
 			case 'gateway-rates':
 				return self::sanitize_gateway_rates( $value, $definition );
 
@@ -342,6 +345,31 @@ class Repository {
 		}
 
 		return '';
+	}
+
+
+	/**
+	 * Keep only the values a checkbox list offers.
+	 *
+	 * The stored order is the list's, not the one the browser happened to
+	 * submit, so the same choice always reads the same. A value that is not a
+	 * list falls back to the default — that is a payload from somewhere else,
+	 * not a choice. An empty list is one, and is kept: it means the store
+	 * ticked nothing.
+	 *
+	 * @since 6.1.0
+	 * @param mixed $value | Incoming value
+	 * @param array<string,mixed> $definition | Field definition
+	 * @return array<int,string>
+	 */
+	private static function sanitize_checkbox_group( $value, $definition ) {
+		if ( ! is_array( $value ) ) {
+			return array_values( (array) ( $definition['default'] ?? array() ) );
+		}
+
+		$allowed = array_column( (array) ( $definition['options'] ?? array() ), 'value' );
+
+		return array_values( array_intersect( $allowed, array_map( 'strval', $value ) ) );
 	}
 
 

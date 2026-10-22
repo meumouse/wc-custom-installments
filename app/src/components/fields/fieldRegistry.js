@@ -18,6 +18,7 @@ import GatewayRatesField from './GatewayRatesField.vue';
 import InstallmentFeesField from './InstallmentFeesField.vue';
 import ElementDesignField from './ElementDesignField.vue';
 import CardBrandsField from './CardBrandsField.vue';
+import CheckboxGroupField from './CheckboxGroupField.vue';
 
 const registry = new Map();
 
@@ -103,6 +104,7 @@ registerFieldComponent('gateway-rates', GatewayRatesField);
 registerFieldComponent('installment-fees', InstallmentFeesField);
 registerFieldComponent('element-design', ElementDesignField);
 registerFieldComponent('card-brands', CardBrandsField);
+registerFieldComponent('checkbox-group', CheckboxGroupField);
 
 /**
  * Publish the registry so a separately built bundle can add to it.

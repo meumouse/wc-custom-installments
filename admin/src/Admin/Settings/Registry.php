@@ -4,6 +4,7 @@ namespace MeuMouse\WC_Custom_Installments\Admin\Settings;
 
 use MeuMouse\WC_Custom_Installments\Admin\Default_Options;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Frontend\Display_Locations;
 use MeuMouse\WC_Custom_Installments\Integrations\Catalog;
 
 defined('ABSPATH') || exit;
@@ -298,6 +299,20 @@ class Registry {
 								'placeholder' => 'woocommerce_single_product_summary',
 								'depends_on' => array( 'hook_payment_form_single_product' => 'custom_hook' ),
 							)
+						),
+					),
+				),
+				array(
+					'id' => 'installments-locations',
+					'title' => __( 'Locais de exibição', 'wc-custom-installments' ),
+					'description' => __( 'As páginas da loja em que o grupo de preço aparece: o parcelamento, os descontos e os selos.', 'wc-custom-installments' ),
+					'fields' => array(
+						self::checkbox_group(
+							'display_locations',
+							__( 'Mostrar em', 'wc-custom-installments' ),
+							__( 'Cada elemento aparece onde a regra dele e esta lista concordam. Com tudo marcado, valem apenas as regras de cada elemento.', 'wc-custom-installments' ),
+							self::display_location_options(),
+							array( 'feature' => 'display_locations' )
 						),
 					),
 				),
@@ -1126,6 +1141,27 @@ class Registry {
 
 
 	/**
+	 * The places the group may appear in, as a checkbox list.
+	 *
+	 * @since 6.1.0
+	 * @return array<int,array<string,string>>
+	 */
+	private static function display_location_options() {
+		$options = array();
+
+		foreach ( Display_Locations::all() as $id => $location ) {
+			$options[] = array(
+				'value' => (string) $id,
+				'label' => (string) ( $location['label'] ?? $id ),
+				'description' => (string) ( $location['description'] ?? '' ),
+			);
+		}
+
+		return $options;
+	}
+
+
+	/**
 	 * The placement spellings the 5.x settings tabs used, and their names now.
 	 *
 	 * The migrator translates them once; the repository accepts them too, so a
@@ -1279,6 +1315,22 @@ class Registry {
 	 */
 	private static function select( $key, $label, $description, $options, $extra = array() ) {
 		return self::field( 'select', $key, $label, $description, array_merge( array( 'options' => $options ), $extra ) );
+	}
+
+
+	/**
+	 * Build a checkbox list field definition.
+	 *
+	 * @since 6.1.0
+	 * @param string $key | Setting name
+	 * @param string $label | Field label
+	 * @param string $description | Field description
+	 * @param array<int,array<string,string>> $options | Checkable options
+	 * @param array<string,mixed> $extra | Additional field keys
+	 * @return array<string,mixed>
+	 */
+	private static function checkbox_group( $key, $label, $description, $options, $extra = array() ) {
+		return self::field( 'checkbox-group', $key, $label, $description, array_merge( array( 'options' => $options ), $extra ) );
 	}
 
 

@@ -26,11 +26,21 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'update:unitValue', 'locked-click']);
 
 // Controls made of several parts: the label names the group, not one input.
-const COMPOSITE = ['unit', 'placeholder-text', 'gateway-rates', 'installment-fees', 'element-design', 'card-brands'];
+const COMPOSITE = [
+  'unit',
+  'placeholder-text',
+  'gateway-rates',
+  'installment-fees',
+  'element-design',
+  'card-brands',
+  'checkbox-group',
+];
 
 const isLocked = computed(() => Boolean(props.field?.locked));
 const isWide = computed(() =>
-  ['gateway-rates', 'installment-fees', 'element-design', 'card-brands', 'textarea'].includes(props.field?.type),
+  ['gateway-rates', 'installment-fees', 'element-design', 'card-brands', 'checkbox-group', 'textarea'].includes(
+    props.field?.type,
+  ),
 );
 
 const controlId = computed(() =>
@@ -77,6 +87,7 @@ const controlProps = computed(() => {
     case 'placeholder-text':
     case 'gateway-rates':
     case 'card-brands':
+    case 'checkbox-group':
       return { ...shared, field };
 
     case 'installment-fees':

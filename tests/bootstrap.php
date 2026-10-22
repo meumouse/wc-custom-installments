@@ -627,6 +627,86 @@ if ( ! function_exists('is_admin') ) {
 	}
 }
 
+if ( ! function_exists('is_search') ) {
+	/**
+	 * Whether a search result page is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_search() {
+		return ! empty( $GLOBALS['wp_test_is_search'] );
+	}
+}
+
+if ( ! function_exists('is_cart') ) {
+	/**
+	 * Whether the cart page is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_cart() {
+		return ! empty( $GLOBALS['wp_test_is_cart'] );
+	}
+}
+
+if ( ! function_exists('is_checkout') ) {
+	/**
+	 * Whether the checkout page is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_checkout() {
+		return ! empty( $GLOBALS['wp_test_is_checkout'] );
+	}
+}
+
+if ( ! function_exists('is_shop') ) {
+	/**
+	 * Whether the shop page is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_shop() {
+		return ! empty( $GLOBALS['wp_test_is_shop'] );
+	}
+}
+
+if ( ! function_exists('is_product_taxonomy') ) {
+	/**
+	 * Whether a product category, tag or brand archive is being rendered.
+	 *
+	 * @return bool
+	 */
+	function is_product_taxonomy() {
+		return ! empty( $GLOBALS['wp_test_is_product_taxonomy'] );
+	}
+}
+
+if ( ! function_exists('wc_get_loop_prop') ) {
+	/**
+	 * Read a property of the product loop being built.
+	 *
+	 * @param string $prop | Property name
+	 * @param mixed $default | Value when the property is unset
+	 * @return mixed
+	 */
+	function wc_get_loop_prop( $prop, $default = '' ) {
+		return $GLOBALS['wp_test_loop_props'][ $prop ] ?? $default;
+	}
+}
+
+if ( ! function_exists('did_action') ) {
+	/**
+	 * How many times an action has fired.
+	 *
+	 * @param string $hook | Action name
+	 * @return int
+	 */
+	function did_action( $hook ) {
+		return (int) ( $GLOBALS['wp_test_did_action'][ $hook ] ?? 0 );
+	}
+}
+
 if ( ! function_exists('wp_doing_ajax') ) {
 	/**
 	 * Whether this is an AJAX request.
@@ -1270,6 +1350,7 @@ require_once __DIR__ . '/../admin/src/Core/Features.php';
 require_once __DIR__ . '/../admin/src/Core/Helpers.php';
 require_once __DIR__ . '/../admin/src/Compatibility/Hook_Aliases.php';
 require_once __DIR__ . '/../admin/src/Frontend/Element_Registry.php';
+require_once __DIR__ . '/../admin/src/Frontend/Display_Locations.php';
 require_once __DIR__ . '/../admin/src/Engine/Product_Config.php';
 require_once __DIR__ . '/../admin/src/Campaigns/Rules.php';
 require_once __DIR__ . '/../admin/src/Campaigns/Repository.php';

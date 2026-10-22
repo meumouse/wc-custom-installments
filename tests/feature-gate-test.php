@@ -26,6 +26,8 @@ use MeuMouse\WC_Custom_Installments\Admin\Settings\Registry;
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
 use MeuMouse\WC_Custom_Installments\Core\Features;
+use MeuMouse\WC_Custom_Installments\Frontend\Components;
+use MeuMouse\WC_Custom_Installments\Frontend\Display_Locations;
 
 $passed = 0;
 $failed = 0;
@@ -137,6 +139,16 @@ Repository::save_settings( array(
 
 check( 'an out-of-range select falls back to its default', 'percentage', Repository::get('product_price_discount_method') );
 check( 'an unrecognised toggle value reads as off', 'no', Repository::get('enable_all_discount_options') );
+
+echo PHP_EOL, 'Display locations without a licence', PHP_EOL;
+
+$GLOBALS['wp_test_did_action']['template_redirect'] = 1;
+$GLOBALS['wp_test_is_cart'] = true;
+
+Repository::save_settings( array( 'display_locations' => array( 'single_product' ) ) );
+
+check( 'the choice is refused', Display_Locations::ids(), Repository::get('display_locations') );
+check( 'and nothing is narrowed', true, Display_Locations::is_enabled() );
 
 echo PHP_EOL, 'Persistence with a licence', PHP_EOL;
 
@@ -382,6 +394,73 @@ add_action( 'Woo_Custom_Installments/Product/After_Price', function( $product_id
 Hook_Aliases::do_action( 'WC_Custom_Installments/Product/After_Price', 42 );
 
 check( 'a 5.x action listener receives its arguments', array( 'legacy:42' ), $fired );
+
+echo PHP_EOL, 'Display locations', PHP_EOL;
+
+check( 'a fresh install allows every place', Display_Locations::ids(), Repository::get('display_locations') );
+
+Repository::save_settings( array( 'display_locations' => array( 'shop_loop', 'nowhere-in-particular', 'single_product' ) ) );
+
+check( 'only the places the list offers are stored', array( 'single_product', 'shop_loop' ), Repository::get('display_locations') );
+
+// The cart page, which the store just left out.
+$GLOBALS['wp_test_is_cart'] = true;
+
+check( 'the cart is where the customer is', 'cart', Display_Locations::current() );
+check( 'so the group stays out of it', false, Display_Locations::is_enabled() );
+check( 'and the elements follow', false, Components::should_display('display_loop_and_single_product') );
+
+// A cross-sell block on that page follows the page, not the carousels.
+$GLOBALS['wp_test_loop_props'] = array( 'name' => 'cross-sells' );
+
+check( 'a cross-sell block on the cart follows the cart', 'cart', Display_Locations::current() );
+
+$GLOBALS['wp_test_is_cart'] = false;
+$GLOBALS['wp_test_is_product'] = true;
+
+check( 'a cross-sell block on a product page is one of those', 'related_products', Display_Locations::current() );
+check( 'which the store left out too', false, Display_Locations::is_enabled() );
+
+$GLOBALS['wp_test_loop_props'] = array();
+
+check( 'the product page itself is in', 'single_product', Display_Locations::current() );
+check( 'so the elements render', true, Components::should_display('display_loop_and_single_product') );
+check( 'unless the element itself asks for the listing only', false, Components::should_display('only_loop') );
+
+$GLOBALS['wp_test_is_product'] = false;
+$GLOBALS['wp_test_is_shop'] = true;
+
+check( 'the listing is in', 'shop_loop', Display_Locations::current() );
+
+$GLOBALS['wp_test_is_search'] = true;
+
+check( 'a search result page is a place of its own', 'search_results', Display_Locations::current() );
+check( 'which the store left out', false, Display_Locations::is_enabled() );
+
+$GLOBALS['wp_test_is_search'] = false;
+$GLOBALS['wp_test_is_shop'] = false;
+
+check( 'any other page the customer reached is "other"', 'other', Display_Locations::current() );
+
+// A request that never reached a template - the Store API fetching a block
+// listing, an AJAX call - has no answer, and a place nobody could name is
+// never narrowed away.
+$GLOBALS['wp_test_did_action']['template_redirect'] = 0;
+
+check( 'a request with no page has no place', '', Display_Locations::current() );
+check( 'and is left alone', true, Display_Locations::is_enabled() );
+
+Repository::save_settings( array( 'display_locations' => array() ) );
+
+check( 'ticking nothing is a choice, and is kept', array(), Repository::get('display_locations') );
+
+$GLOBALS['wp_test_did_action']['template_redirect'] = 1;
+$GLOBALS['wp_test_is_product'] = true;
+
+check( 'with nothing ticked the group renders nowhere', false, Display_Locations::is_enabled() );
+
+$GLOBALS['wp_test_is_product'] = false;
+$GLOBALS['wp_test_did_action']['template_redirect'] = 0;
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 

@@ -93,6 +93,7 @@ class Features {
 			'sale_badge' => __( 'Selo de promoção', 'wc-custom-installments' ),
 			'custom_placeholders' => __( 'Modelos de texto de parcelas personalizados', 'wc-custom-installments' ),
 			'variable_price_range' => __( 'Controle da faixa de preço de produtos variáveis', 'wc-custom-installments' ),
+			'display_locations' => __( 'Escolha dos locais de exibição', 'wc-custom-installments' ),
 			'seo_schema' => __( 'Preço com desconto nos dados estruturados', 'wc-custom-installments' ),
 			'advanced_design' => __( 'Controles avançados de design', 'wc-custom-installments' ),
 			'product_overrides' => __( 'Descontos personalizados por produto', 'wc-custom-installments' ),

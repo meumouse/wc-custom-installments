@@ -54,6 +54,13 @@ class Components {
 			return true;
 		}
 
+		// The store may also have narrowed the places the group appears in.
+		// Both answers have to be yes: this one says which pages of the store
+		// are in, the placement says which of those the element itself wants.
+		if ( ! Display_Locations::is_enabled() ) {
+			return false;
+		}
+
 		if ( in_array( $placement, array( 'display_loop_and_single_product', 'global' ), true ) ) {
 			return true;
 		}
@@ -718,6 +725,12 @@ class Components {
 	 */
 	public function message_for_discount_per_quantity( $product ) {
 		if ( ! Features::is_available('quantity_discounts') ) {
+			return '';
+		}
+
+		// This message carries no placement rule of its own, so the places the
+		// store picked are the whole answer.
+		if ( ! Display_Locations::is_enabled() ) {
 			return '';
 		}
 

@@ -8,7 +8,7 @@ badge, all fifteen shortcodes, the theme integrations and the setup wizard.
 
 ## What the Pro add-on adds
 
-15 capabilities. Each one is a gate: the setting is visible in the free plugin, marked
+16 capabilities. Each one is a gate: the setting is visible in the free plugin, marked
 Pro, and cannot be saved or take effect until a licence answers for it.
 
 | Capability | Gate |
@@ -22,6 +22,7 @@ Pro, and cannot be saved or take effect until a licence answers for it.
 | Selo de promoção | `sale_badge` |
 | Modelos de texto de parcelas personalizados | `custom_placeholders` |
 | Controle da faixa de preço de produtos variáveis | `variable_price_range` |
+| Escolha dos locais de exibição | `display_locations` |
 | Preço com desconto nos dados estruturados | `seo_schema` |
 | Controles avançados de design | `advanced_design` |
 | Descontos personalizados por produto | `product_overrides` |

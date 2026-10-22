@@ -368,7 +368,7 @@ alias, on the same value. There is no deprecation notice — the aliases are sup
 
 <!-- hooks:start -->
 
-_85 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
+_89 hooks, generated from the source by `npm run docs:hooks`. Do not edit by hand._
 
 | Hook | Kind | 5.x name | Declared in |
 |---|---|---|---|
@@ -406,6 +406,8 @@ _85 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Features/Flushed` | action | — | `admin/src/Core/Features.php` |
 | `WC_Custom_Installments/Features/Is_Available` | filter | — | `admin/src/Core/Features.php` |
 | `WC_Custom_Installments/Features/Register` | action | — | `admin/src/Core/Features.php` |
+| `WC_Custom_Installments/Frontend/Current_Display_Location` | filter | — | `admin/src/Frontend/Display_Locations.php` |
+| `WC_Custom_Installments/Frontend/Display_Locations` | filter | — | `admin/src/Frontend/Display_Locations.php` |
 | `WC_Custom_Installments/Frontend/Elements` | filter | — | `admin/src/Frontend/Element_Registry.php` |
 | `WC_Custom_Installments/Frontend/Is_Builder_Preview` | filter | — | `admin/src/Core/Helpers.php` |
 | `WC_Custom_Installments/Headless/Is_Enabled` | filter | — | `admin/src/Frontend/Headless_Mode.php` |
@@ -419,6 +421,8 @@ _85 hooks, generated from the source by `npm run docs:hooks`. Do not edit by han
 | `WC_Custom_Installments/Installments/Without_Fee` | filter | `Woo_Custom_Installments/Installments/Without_Fee` | `admin/src/Engine/Calculate_Values.php` |
 | `WC_Custom_Installments/Integrations/Catalog` | filter | — | `admin/src/Integrations/Catalog.php` |
 | `WC_Custom_Installments/Integrations/Theme_Rules` | filter | — | `admin/src/Integrations/Theme_Compatibility.php` |
+| `WC_Custom_Installments/MDS_Config` | filter | — | `admin/src/Distribution/MDS_Integration.php` |
+| `WC_Custom_Installments/MDS/Enabled` | filter | — | `admin/src/Distribution/MDS_Integration.php` |
 | `WC_Custom_Installments/Migrate/Completed` | action | — | `admin/src/Core/Migrator.php` |
 | `WC_Custom_Installments/Migrate/Settings` | filter | — | `admin/src/Core/Migrator.php` |
 | `WC_Custom_Installments/Onboarding/Allowed_Keys` | filter | — | `admin/src/Admin/Onboarding/Registry.php` |

@@ -4,6 +4,7 @@ namespace MeuMouse\WC_Custom_Installments\Admin;
 
 use MeuMouse\WC_Custom_Installments\Admin\Settings\Repository;
 use MeuMouse\WC_Custom_Installments\Compatibility\Hook_Aliases;
+use MeuMouse\WC_Custom_Installments\Frontend\Display_Locations;
 use MeuMouse\WC_Custom_Installments\Frontend\Element_Registry;
 
 defined('ABSPATH') || exit;
@@ -87,6 +88,7 @@ class Default_Options {
 			'set_custom_hook_payment_form' => '',
 
 			// Pro.
+			'display_locations' => Display_Locations::ids(),
 			'set_fee_per_installment' => 'no',
 			'custom_fee_installments' => array(),
 			'remove_price_range' => 'no',
