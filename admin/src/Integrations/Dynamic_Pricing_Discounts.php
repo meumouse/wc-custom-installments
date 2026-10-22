@@ -59,7 +59,7 @@ class Dynamic_Pricing_Discounts {
 			'id' => 'dynamic_pricing_discounts',
 			'title' => 'Pricepep',
 			'description' => __( 'Regras de preço aplicadas na exibição, antes chamado Dynamic Pricing & Discounts.', 'wc-custom-installments' ),
-			'url' => 'https://wordpress.org/plugins/rp-woocommerce-dynamic-pricing-discounts/',
+			'url' => 'https://pricepep.com/',
 			'active' => self::is_active(),
 			'fields' => array(
 				array(
