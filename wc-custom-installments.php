@@ -6,7 +6,7 @@
  * Plugin URI: 				https://meumouse.com/plugins/parcelas-customizadas-para-woocommerce/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/?utm_source=wordpress&utm_medium=plugins_list&utm_campaign=parcelas_customizadas
- * Version: 				6.1.0
+ * Version: 				6.1.1
  * Requires at least: 		6.5
  * Requires PHP: 			8.1
  * Requires Plugins: 		woocommerce
@@ -51,7 +51,7 @@ if ( file_exists( $wc_custom_installments_mds_sdk ) ) {
 	require_once $wc_custom_installments_mds_sdk;
 }
 
-$wc_custom_installments_plugin_version = '6.1.0';
+$wc_custom_installments_plugin_version = '6.1.1';
 
 /**
  * Open the update channel.

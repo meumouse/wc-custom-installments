@@ -5,6 +5,12 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.1] - 2026-11-13
+
+### Fixed
+
+- The settings schema lists the enabled payment methods without calling `get_available_payment_gateways()`, so a payment method that reads the cart in its own availability check no longer loads the cart during `init` and crashes the wp-admin AJAX requests with an error 502 — the media library not loading, for one.
+
 ## [6.1.0] - 2026-10-22
 
 ### Added

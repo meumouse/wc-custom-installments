@@ -4,7 +4,7 @@ Tags: woocommerce, parcelamento, desconto, pix, formas de pagamento
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 6.1.0
+Stable tag: 6.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ Sim. O parcelamento é calculado a partir do preço da variação selecionada.
 Sim. Em um site configurado em inglês, o plugin aparece como "Custom Installments for WooCommerce", com todos os textos em inglês.
 
 == Changelog ==
+
+= 6.1.1 =
+
+* Corrigido: em lojas com um meio de pagamento que consulta o carrinho para saber se está disponível, as requisições AJAX do painel podiam responder com erro 502 — a biblioteca de mídia não carregava, por exemplo. As configurações passam a listar os meios de pagamento ativos sem perguntar a disponibilidade de cada um.
 
 = 6.1.0 =
 
