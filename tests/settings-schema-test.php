@@ -10,6 +10,12 @@
  * a blank HTTP 500 on any AJAX request with a cart that asked for a gateway's
  * title first, such as an order import. Nothing reported it, so it gets a test.
  *
+ * The list itself is the other half: it comes from the registered gateways
+ * filtered by their "enabled" setting, because asking WooCommerce for the
+ * available ones runs every gateway's is_available(), and a gateway that reads
+ * the cart there loads it from the session while the schema is still being
+ * built on `init` — a 502 on the wp-admin AJAX requests.
+ *
  * Run it with any PHP 8.1+ binary:
  *
  *   php tests/settings-schema-test.php
@@ -57,8 +63,9 @@ function check( $label, $expected, $actual ) {
 
 
 /**
- * A payment gateway as WooCommerce exposes it: a stored title, and get_title()
- * running it through `woocommerce_gateway_title`.
+ * A payment gateway as WooCommerce exposes it: an "enabled" setting, a stored
+ * title, get_title() running it through `woocommerce_gateway_title`, and an
+ * is_available() that stands for the ones reading the cart.
  *
  * @since 6.0.0
  */
@@ -81,18 +88,34 @@ class Test_Gateway {
 
 
 	/**
+	 * @var string
+	 */
+	public $enabled;
+
+
+	/**
+	 * @var bool
+	 */
+	public $available;
+
+
+	/**
 	 * Build a gateway.
 	 *
 	 * @since 6.0.0
 	 * @param string $id | Gateway id
 	 * @param string $title | Title the store owner set
 	 * @param string $method_title | Title the gateway ships with
+	 * @param string $enabled | yes when the gateway is switched on
+	 * @param bool $available | Whether it takes the current cart
 	 * @return void
 	 */
-	public function __construct( $id, $title, $method_title ) {
+	public function __construct( $id, $title, $method_title, $enabled = 'yes', $available = true ) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->method_title = $method_title;
+		$this->enabled = $enabled;
+		$this->available = $available;
 	}
 
 
@@ -105,12 +128,30 @@ class Test_Gateway {
 	public function get_title() {
 		return apply_filters( 'woocommerce_gateway_title', $this->title, $this->id );
 	}
+
+
+	/**
+	 * Whether the gateway takes the current cart. This is where a gateway reads
+	 * the cart, so every call is counted.
+	 *
+	 * @since 6.1.1
+	 * @return bool
+	 */
+	public function is_available() {
+		$GLOBALS['availability_checks']++;
+
+		return 'yes' === $this->enabled && $this->available;
+	}
 }
+
+$GLOBALS['availability_checks'] = 0;
 
 $GLOBALS['wc_test_gateways'] = array(
 	'pix' => new Test_Gateway( 'pix', 'Pix', 'Pix (Banco Inter)' ),
 	'boleto' => new Test_Gateway( 'boleto', '<strong>Boleto</strong> parcelado', 'Boleto' ),
 	'card' => new Test_Gateway( 'card', '', 'Cartão de crédito' ),
+	'bank-slip' => new Test_Gateway( 'bank-slip', 'Boleto à vista', 'Boleto bancário', 'no' ),
+	'boleto-installments' => new Test_Gateway( 'boleto-installments', 'Boleto em parcelas', 'Boleto parcelado', 'yes', false ),
 );
 
 /**
@@ -122,8 +163,17 @@ function WC() {
 	return new class() {
 		public function payment_gateways() {
 			return new class() {
-				public function get_available_payment_gateways() {
+				public function payment_gateways() {
 					return $GLOBALS['wc_test_gateways'];
+				}
+
+				public function get_available_payment_gateways() {
+					return array_filter(
+						$GLOBALS['wc_test_gateways'],
+						static function( $gateway ) {
+							return $gateway->is_available();
+						}
+					);
 				}
 			};
 		}
@@ -168,6 +218,7 @@ try {
 check( 'the schema builds without re-entering the title filter', '', $error );
 check( 'the filter ran once, for the title that was asked for', 1, $GLOBALS['title_filter_calls'] );
 check( 'and the checkout label still carries its badge', 'Pix <span class="badge-discount-checkout">10% de desconto</span>', $annotated );
+check( 'and only the request itself asked the gateways whether they take the cart', count( $GLOBALS['wc_test_gateways'] ), $GLOBALS['availability_checks'] );
 
 echo PHP_EOL, 'The gateways the settings screen lists', PHP_EOL;
 
@@ -181,6 +232,8 @@ check( 'are named by the title the store owner set, with no checkout badge', 'Pi
 check( 'without markup', 'Boleto parcelado', $labels['boleto'] ?? null );
 check( 'or by the title the gateway ships with when that is empty', 'Cartão de crédito', $labels['card'] ?? null );
 check( 'and the interest rates list the same ones', $labels, array_column( Registry::get_field_definitions()['gateway_interests']['gateways'] ?? array(), 'label', 'id' ) );
+check( 'a gateway that is switched off is left out', false, array_key_exists( 'bank-slip', $labels ) );
+check( 'one that is switched on is listed even when it turns the cart down', 'Boleto em parcelas', $labels['boleto-installments'] ?? null );
 
 printf( '%s%d passed, %d failed%s%s', PHP_EOL, $passed, $failed, PHP_EOL, PHP_EOL );
 

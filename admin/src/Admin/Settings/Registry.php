@@ -1206,6 +1206,12 @@ class Registry {
 	 * filter would rebuild it again and again until memory runs out — the first
 	 * time an AJAX request with a cart asks for a gateway's title.
 	 *
+	 * For the same reason the list comes from the registered gateways filtered
+	 * by their "enabled" setting, not from get_available_payment_gateways():
+	 * that one runs every gateway's is_available(), and gateways that check
+	 * the cart there load it from the session while the schema is still being
+	 * built on `init`, re-entering the settings and crashing the request.
+	 *
 	 * @since 6.0.0
 	 * @return array<int,array<string,string>>
 	 */
@@ -1216,7 +1222,11 @@ class Registry {
 
 		$gateways = array();
 
-		foreach ( WC()->payment_gateways()->get_available_payment_gateways() as $gateway ) {
+		foreach ( WC()->payment_gateways()->payment_gateways() as $gateway ) {
+			if ( 'yes' !== $gateway->enabled ) {
+				continue;
+			}
+
 			$title = wp_strip_all_tags( (string) $gateway->title );
 
 			if ( '' === $title && ! empty( $gateway->method_title ) ) {
